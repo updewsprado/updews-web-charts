@@ -71,10 +71,11 @@ for ($l = 0; $l < $count; $l++) {
 	
 	for ($k = 1; $k < $data_cnt; $k++) {
 		$arrayPlot[$count_xy]["date"] = $date;
-		$arrayPlot[$count_xy]["xval"] = $arrayX[$l]["$k"];
-		$arrayPlot[$count_xy]["yval"] = $arrayY[$l]["$k"];
+		//arrayPlot[$count_xy]["xval"] = $arrayX[$l]["$k"];
+		//$arrayPlot[$count_xy]["yval"] = $arrayY[$l]["$k"];
+		$arrayPlot[$count_xy]["yval"] = $k;
 		//$arrayPlot[$count_xy]["yval"] = $arrayX[$l]["$k"];
-		//$arrayPlot[$count_xy]["xval"] = $arrayY[$l]["$k"];
+		$arrayPlot[$count_xy]["xval"] = $arrayY[$l]["$k"];
 		$count_xy++;
 		
 		//echo $date . ",";

@@ -54,10 +54,10 @@ var yAxis = d3.svg.axis().scale(y)
 // Define the line
 var yvalline = d3.svg.line()	
 	//.interpolate("monotone")
-    .x(function(d) { return x(d.xval); })
-    .y(function(d) { return y(d.yval); });
-	//.x(function(d) { return y(d.yval); })
-    //.y(function(d) { return x(d.xval); });
+    //.x(function(d) { return x(d.xval); })
+    //.y(function(d) { return y(d.yval); });
+	.x(function(d) { return y(d.yval); })
+    .y(function(d) { return x(d.xval); });
     
 // Adds the svg canvas
 var svg = d3.select("body")
@@ -83,7 +83,7 @@ d3.json("getPosPlot.php", function(error, data) {
     //x.domain(d3.extent(data, function(d) { return d.xval; }));
     //y.domain([d3.min(data, function(d) { return d.yval; }), d3.max(data, function(d) { return d.yval; })]);
 	x.domain([d3.min(data, function(d) { return d.xval; }), d3.max(data, function(d) { return d.xval; })]);
-	y.domain([d3.min(data, function(d) { return d.yval; }), d3.max(data, function(d) { return d.yval; })]);
+	y.domain([0, 20]);
 
     // Nest the entries by date
     var dataNest = d3.nest()
