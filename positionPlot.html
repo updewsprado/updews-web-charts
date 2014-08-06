@@ -68,6 +68,8 @@ var svg = d3.select("body")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
 
+			  
+var test;
 // Get the data
 d3.json("getPosPlot.php", function(error, data) {
 	/*
@@ -77,13 +79,14 @@ d3.json("getPosPlot.php", function(error, data) {
 		d.yval = +d.yval;
     });
 	*/
+	test = data;
 
 
     // Scale the range of the data
     //x.domain(d3.extent(data, function(d) { return d.xval; }));
     //y.domain([d3.min(data, function(d) { return d.yval; }), d3.max(data, function(d) { return d.yval; })]);
-	x.domain([d3.min(data, function(d) { return d.xval; }), d3.max(data, function(d) { return d.xval; })]);
-	y.domain([0, 20]);
+	x.domain(d3.extent(test, function(d) { return d.xval;}));
+	y.domain(d3.extent(test, function(d) { return d.yval;}));
 
     // Nest the entries by date
     var dataNest = d3.nest()
