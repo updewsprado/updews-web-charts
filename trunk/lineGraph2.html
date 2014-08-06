@@ -57,8 +57,8 @@
 		// Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
 		//var y = d3.scale.linear().domain([0, 10]).range([h, 0]);
 		var y = d3.scale.linear().domain([0, data.length]).range([h, 0]);
-			// automatically determining max range can work something like this
-			// var y = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]);
+		// automatically determining max range can work something like this
+		// var y = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]);
  
 		// create a line function that can convert data[] into x and y points
 		var line = d3.svg.line()
