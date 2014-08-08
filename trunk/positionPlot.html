@@ -32,16 +32,45 @@ path {
   fill: black ;
 }
 
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
 </style>
 <body>
 
 <!-- load the d3.js library -->    
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 <script>
 
 // Set the dimensions of the canvas / graph
-var margin = {top: 30, right: 20, bottom: 70, left: 50},
+var margin = {top: 70, right: 20, bottom: 70, left: 50},
     width = 900 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
@@ -59,13 +88,20 @@ var xAxis = d3.svg.axis().scale(x)
 var yAxis = d3.svg.axis().scale(y)
     .orient("left").ticks(5);
 
+// Tip that displays node info
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>X:</strong> <span style='color:red'>" + d.xval + " m</span><Br/>"
+		+ "<strong>Y:</strong> <span style='color:red'>" + d.yval + " m</span>";
+  })	
+	
 // Define the line
 var yvalline = d3.svg.line()	
 	//.interpolate("monotone")
     .x(function(d) { return x(d.xval); })
     .y(function(d) { return y(d.yval); });
-	//.x(function(d) { return y(d.yval); })
-    //.y(function(d) { return x(d.xval); });
     
 // Adds the svg canvas
 var svg = d3.select("body")
@@ -76,6 +112,8 @@ var svg = d3.select("body")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
 
+svg.call(tip);			  
+			  
 // Get the data
 var jsondata = [];
 d3.json("getPosPlot.php?site=blcb", function(error, data) {
@@ -106,13 +144,14 @@ d3.json("getPosPlot.php?site=blcb", function(error, data) {
             .attr("d", yvalline(d.values));
 
 		svg.selectAll(".dot")
-			  .data(data)
+				.data(data)
 			.enter().append("circle")
-			  .attr("class", "dot")
-			  .attr("r", 5)
-			  .attr("cx", function(d) { return x(d.xval); })
-			  .attr("cy", function(d) { return y(d.yval); })
-			  //.style("fill", "#CFCFCF")
+				.attr("class", "dot")
+				.attr("r", 5)
+				.attr("cx", function(d) { return x(d.xval); })
+				.attr("cy", function(d) { return y(d.yval); })
+				.on('mouseover', tip.show)
+				.on('mouseout', tip.hide);
 			
         // Add the Legend
         svg.append("text")
