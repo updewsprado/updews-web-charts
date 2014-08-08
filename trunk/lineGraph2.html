@@ -53,10 +53,10 @@
  
 		// X scale will fit all values from data[] within pixels 0-w
 		//var x = d3.scale.linear().domain([0, data.length]).range([0, w]);
-		var x = d3.scale.linear().domain(d3.extent(data)).range([0, w]);
+		var xScale = d3.scale.linear().domain(d3.extent(data)).range([0, w]);
 		// Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
 		//var y = d3.scale.linear().domain([0, 10]).range([h, 0]);
-		var y = d3.scale.linear().domain([0, data.length]).range([h, 0]);
+		var yScale = d3.scale.linear().domain([0, data.length]).range([h, 0]);
 		// automatically determining max range can work something like this
 		// var y = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]);
  
@@ -65,17 +65,15 @@
 			// assign the X function to plot our line as we wish
 			.x(function(d,i) { 
 				// verbose logging to show what's actually being done
-				console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
+				//console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
 				// return the X coordinate where we want to plot this datapoint
-				//return x(i); 
-				return x(d); 
+				return xScale(d); 
 			})
 			.y(function(d,i) { 
 				// verbose logging to show what's actually being done
-				console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
+				//console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
 				// return the Y coordinate where we want to plot this datapoint
-				//return y(d); 
-				return y(i); 
+				return yScale(i); 
 			})
  
 			// Add an SVG element with the desired dimensions and margin.
@@ -86,16 +84,15 @@
 			      .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
  
 			// create yAxis
-			var xAxis = d3.svg.axis().scale(x).tickSize(-h).tickSubdivide(true);
+			var xAxis = d3.svg.axis().scale(xScale).tickSize(-h).tickSubdivide(true);
 			// Add the x-axis.
 			graph.append("svg:g")
 			      .attr("class", "x axis")
 			      .attr("transform", "translate(0," + h + ")")
 			      .call(xAxis);
  
- 
 			// create left yAxis
-			var yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient("left");
+			var yAxisLeft = d3.svg.axis().scale(yScale).ticks(4).orient("left");
 			// Add the y-axis to the left
 			graph.append("svg:g")
 			      .attr("class", "y axis")

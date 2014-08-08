@@ -65,7 +65,8 @@ for ($j = 0; $j < $count; $j++) {
 }
 
 $count_xy = 0;
-for ($l = 0; $l < $count; $l++) {
+//for ($l = 0; $l < $count; $l++) {
+for ($l = $count - 5; $l < $count; $l++) {
 	$date = $arrayX[$l]["ts"];
 	$data_cnt = count($keys);
 	
@@ -73,7 +74,7 @@ for ($l = 0; $l < $count; $l++) {
 		$arrayPlot[$count_xy]["date"] = $date;
 		//arrayPlot[$count_xy]["xval"] = $arrayX[$l]["$k"];
 		//$arrayPlot[$count_xy]["yval"] = $arrayY[$l]["$k"];
-		$arrayPlot[$count_xy]["yval"] = $k;
+		$arrayPlot[$count_xy]["yval"] = -$k;
 		//$arrayPlot[$count_xy]["yval"] = $arrayX[$l]["$k"];
 		$arrayPlot[$count_xy]["xval"] = $arrayY[$l]["$k"];
 		$count_xy++;
