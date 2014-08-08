@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.legend {
+    font-size: 16px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+</style>
+
+<head>
+	<title>D3 line graph test</title>
+	<!-- load the d3.js library -->    
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+
+<body>
+<script>
+
+// Set the dimensions of the canvas / graph
+var margin = {top: 30, right: 20, bottom: 70, left: 50},
+    width = 900 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
+
+var jsondata;
+
+/*
+var json = [
+	{"xval":10, "yval":20},
+	{"xval":40, "yval":60},
+	{"xval":50, "yval":70},
+	{"xval":70, "yval":40}
+];
+*/
+
+// Get the data
+d3.json("getPosPlot.php", function(error, json) {
+	jsondata = json;
+
+	var canvas = d3.select("body").append("svg")
+		.attr("width", width)
+		.attr("height", height);
+		
+	var group = canvas.append("g")
+		.attr("transform", "translate(100,100)");
+		
+	var line = d3.svg.line()
+		.x(function(d) {
+			return d.xval * 100;
+		})
+		.y(function(d) {
+			return d.yval * 10;
+		});
+		
+	group.selectAll("path")
+		.data([json])
+		.enter()
+		.append("path")
+		.attr("d", line)
+		.attr("fill", "none")
+		.attr("stroke", "#000")
+		.attr("stroke-width", 10);
+});
+
+</script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -54,10 +54,10 @@ var yAxis = d3.svg.axis().scale(y)
 // Define the line
 var yvalline = d3.svg.line()	
 	//.interpolate("monotone")
-    //.x(function(d) { return x(d.xval); })
-    //.y(function(d) { return y(d.yval); });
-	.x(function(d) { return y(d.yval); })
-    .y(function(d) { return x(d.xval); });
+    .x(function(d) { return x(d.xval); })
+    .y(function(d) { return y(d.yval); });
+	//.x(function(d) { return y(d.yval); })
+    //.y(function(d) { return x(d.xval); });
     
 // Adds the svg canvas
 var svg = d3.select("body")
@@ -68,10 +68,9 @@ var svg = d3.select("body")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
 
-			  
-var test;
 // Get the data
-d3.json("getPosPlot.php", function(error, data) {
+var jsondata = [];
+d3.json("getPosPlot.php?site=blcb", function(error, data) {
 	/*
     data.forEach(function(d) {
 		//d.xval = parseDate(d.xval);
@@ -79,14 +78,16 @@ d3.json("getPosPlot.php", function(error, data) {
 		d.yval = +d.yval;
     });
 	*/
-	test = data;
-
+	jsondata = data;
 
     // Scale the range of the data
-    //x.domain(d3.extent(data, function(d) { return d.xval; }));
+    x.domain(d3.extent(data, function(d) { return parseFloat(d.xval); }));
+	y.domain(d3.extent(data, function(d) { return parseFloat(d.yval); }));
+	//x.domain([-1, 1]);
+	//y.domain([0, 20]);
     //y.domain([d3.min(data, function(d) { return d.yval; }), d3.max(data, function(d) { return d.yval; })]);
-	x.domain(d3.extent(test, function(d) { return d.xval;}));
-	y.domain(d3.extent(test, function(d) { return d.yval;}));
+	//x.domain([d3.min(data, function(d) { return d.xval; }), d3.max(data, function(d) { return d.xval; })]);
+	//y.domain([d3.min(data, function(d) { return d.yval; }), d3.max(data, function(d) { return d.yval; })]);
 
     // Nest the entries by date
     var dataNest = d3.nest()

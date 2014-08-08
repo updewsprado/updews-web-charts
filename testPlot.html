@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.legend {
+    font-size: 16px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+</style>
+
+<head>
+	<title>D3 line graph test</title>
+	<!-- load the d3.js library -->    
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+
+<body>
+<script>
+
+// Set the dimensions of the canvas / graph
+var margin = {top: 30, right: 20, bottom: 70, left: 50},
+    width = 900 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
+
+var jsondata;
+// Get the data
+d3.json("getPosPlot.php", function(error, json) {
+	jsondata = json;
+
+	var canvas = d3.select("body").append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		
+	canvas.selectAll("rect")
+		.data(json)
+		.enter()
+			.append("rect")
+			.attr("width", function(d) {return d.yval * 20;})
+			.attr("height", 18)
+			.attr("y", function(d,i) {return i * 20;})
+			.attr("fill", "blue")
+			
+	canvas.selectAll("text")
+		.data(json)
+		.enter()
+			.append("text")
+			.attr("fill", "white")
+			.attr("y", function(d,i) {return i * 20 + 9;})
+			.text(function(d) {return d.date;})
+});
+
+</script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
