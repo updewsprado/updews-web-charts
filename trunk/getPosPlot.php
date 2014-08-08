@@ -74,6 +74,7 @@ for ($l = $count - 5; $l < $count; $l++) {
 		$arrayPlot[$count_xy]["date"] = $date;
 		//arrayPlot[$count_xy]["xval"] = $arrayX[$l]["$k"];
 		//$arrayPlot[$count_xy]["yval"] = $arrayY[$l]["$k"];
+		$arrayPlot[$count_xy]["node"] = $k;
 		$arrayPlot[$count_xy]["yval"] = -$k;
 		//$arrayPlot[$count_xy]["yval"] = $arrayX[$l]["$k"];
 		$arrayPlot[$count_xy]["xval"] = $arrayY[$l]["$k"];
