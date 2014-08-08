@@ -4,6 +4,8 @@
 
 body { font: 12px Arial;}
 
+#posplot { font: 12px Arial;}
+
 path { 
     stroke: steelblue;
     stroke-width: 2;
@@ -61,11 +63,32 @@ path {
   left: 0;
 }
 </style>
-<body>
-
 <!-- load the d3.js library -->    
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=660212280700219&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+	<FORM NAME="test">
+	<p>
+		Site: <select name="sites" id="selectSite">
+		</select>
+		<input type="button" value="go" onclick="showData(this.form)">
+	</p>
+	</FORM>
+	
+	<div id="posplot"></div>
+	
+	<div class="fb-comments" data-href="http://www.dewslandslide.com/d3graph/positionPlot.html" data-numposts="5" data-colorscheme="light"></div>
+</body>
 
 <script>
 
@@ -106,7 +129,7 @@ var yvalline = d3.svg.line()
     .y(function(d) { return y(d.yval); });
     
 // Adds the svg canvas
-var svg = d3.select("body")
+var svg = d3.select("#posplot")
     .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -116,79 +139,131 @@ var svg = d3.select("body")
 
 svg.call(tip);			  
 			  
-// Get the data
-var jsondata = [];
-d3.json("getPosPlot.php?site=blcb", function(error, data) {
+function showData(frm) {
+	// Get the data
+	var jsondata = [];
+	d3.json("getPosPlot.php?site=" + frm.sites.value, function(error, data) {
 
-	jsondata = data;
+		jsondata = data;
 
-    // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return parseFloat(d.xval); }));
-	y.domain(d3.extent(data, function(d) { return parseFloat(d.yval); }));
+		// Scale the range of the data
+		x.domain(d3.extent(data, function(d) { return parseFloat(d.xval); }));
+		y.domain(d3.extent(data, function(d) { return parseFloat(d.yval); }));
 
-    // Nest the entries by date
-    var dataNest = d3.nest()
-        .key(function(d) {return d.date;})
-        .entries(data);
+		// Nest the entries by date
+		var dataNest = d3.nest()
+			.key(function(d) {return d.date;})
+			.entries(data);
 
-    var color = d3.scale.category10();   // set the colour scale
+		var color = d3.scale.category10();   // set the colour scale
 
-    legendSpace = width/dataNest.length; // spacing for the legend
+		legendSpace = width/dataNest.length; // spacing for the legend
 
-    // Loop through each date / key
-    dataNest.forEach(function(d,i) { 
+		// Loop through each date / key
+		dataNest.forEach(function(d,i) { 
 
-        svg.append("path")
-            .attr("class", "line")
-            .style("stroke", function() { // Add the colours dynamically
-                return d.color = color(d.key); })
-            .attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
-            .attr("d", yvalline(d.values));
+			svg.append("path")
+				.attr("class", "line")
+				.style("stroke", function() { // Add the colours dynamically
+					return d.color = color(d.key); })
+				.attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
+				.attr("d", yvalline(d.values));
 
-		svg.selectAll(".dot")
-				.data(data)
-			.enter().append("circle")
-				.attr("class", "dot")
-				.attr("r", 5)
-				.attr("cx", function(d) { return x(d.xval); })
-				.attr("cy", function(d) { return y(d.yval); })
-				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);
-			
-        // Add the Legend
-        svg.append("text")
-            .attr("x", (legendSpace/2)+i*legendSpace)  // space legend
-            .attr("y", height + (margin.bottom/2)+ 5)
-            .attr("class", "legend")    // style the legend
-            .style("fill", function() { // Add the colours dynamically
-                return d.color = color(d.key); })
-            .on("click", function(){
-                // Determine if current line is visible 
-                var active   = d.active ? false : true,
-                newOpacity = active ? 0 : 1; 
-                // Hide or show the elements based on the ID
-                d3.select("#tag"+d.key.replace(/\s+/g, ''))
-                    .transition().duration(100) 
-                    .style("opacity", newOpacity); 
-                // Upxval whether or not the elements are active
-                d.active = active;
-                })  
-            .text(d.key); 
+			svg.selectAll(".dot")
+					.data(data)
+				.enter().append("circle")
+					.attr("class", "dot")
+					.attr("r", 5)
+					.attr("cx", function(d) { return x(d.xval); })
+					.attr("cy", function(d) { return y(d.yval); })
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
+				
+			// Add the Legend
+			svg.append("text")
+				.attr("x", (legendSpace/2)+i*legendSpace)  // space legend
+				.attr("y", height + (margin.bottom/2)+ 5)
+				.attr("class", "legend")    // style the legend
+				.style("fill", function() { // Add the colours dynamically
+					return d.color = color(d.key); })
+				.on("click", function(){
+					// Determine if current line is visible 
+					var active   = d.active ? false : true,
+					newOpacity = active ? 0 : 1; 
+					// Hide or show the elements based on the ID
+					d3.select("#tag"+d.key.replace(/\s+/g, ''))
+						.transition().duration(100) 
+						.style("opacity", newOpacity); 
+					// Upxval whether or not the elements are active
+					d.active = active;
+					})  
+				.text(d.key); 
 
-    });
+		});
 
-    // Add the X Axis
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+		// Add the X Axis
+		svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis);
 
-    // Add the Y Axis
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
+		// Add the Y Axis
+		svg.append("g")
+			.attr("class", "y axis")
+			.call(yAxis);
 
-});
+	});
+}
 
+var options = ["blcb", "blct", "bolb", "gamb", "gamt",
+				"humb", "humt", "labb", "labt", "lipb",
+				"lipt", "mamb", "mamt", "oslb", "oslt",
+				"plab", "plat", "pugb", "pugt", "sinb",
+				"sinu"];
+
+function popDropDown() {
+	var select = document.getElementById('selectSite');
+	var i;
+	for (i = 0; i < options.length; i++) {
+		var opt = options[i];
+		var el = document.createElement("option");
+		el.textContent = opt;
+		el.value = opt;
+		select.appendChild(el);
+	}
+}
+
+window.onload = popDropDown;	
 </script>
-</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
