@@ -34,6 +34,15 @@ path {
   fill: black ;
 }
 
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+
+.grid path {
+      stroke-width: 0;
+}
+
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -105,11 +114,19 @@ var x = d3.scale.linear().range([0, width]);
 var y = d3.scale.linear().range([height, 0]);
 
 // Define the axes
-var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(5);
+function make_x_axis() {        
+    return d3.svg.axis()
+        .scale(x)
+         .orient("bottom")
+         .ticks(5)
+}
 
-var yAxis = d3.svg.axis().scale(y)
-    .orient("left").ticks(5);
+function make_y_axis() {        
+    return d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(5)
+}
 
 // Tip that displays node info
 var tip = d3.tip()
@@ -143,9 +160,13 @@ function showData(frm) {
 	// Get the data
 	var jsondata = [];
 	d3.json("getPosPlot.php?site=" + frm.sites.value, function(error, data) {
-
 		jsondata = data;
 
+		data.forEach(function(d) {
+			d.xval = parseFloat(d.xval);
+			d.yval = parseFloat(d.yval);
+		});
+		
 		// Scale the range of the data
 		x.domain(d3.extent(data, function(d) { return parseFloat(d.xval); }));
 		y.domain(d3.extent(data, function(d) { return parseFloat(d.yval); }));
@@ -205,13 +226,28 @@ function showData(frm) {
 		svg.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
-			.call(xAxis);
+			.call(make_x_axis());
 
 		// Add the Y Axis
 		svg.append("g")
 			.attr("class", "y axis")
-			.call(yAxis);
+			.call(make_y_axis());
 
+		// Add the Grids
+		svg.append("g")
+			.attr("class", "grid")
+			.attr("transform", "translate(0," + height + ")")
+			.call(make_x_axis()
+				.tickSize(-height, 0, 0)
+				.tickFormat("")
+			);
+
+		svg.append("g")
+			.attr("class", "grid")
+			.call(make_y_axis()
+				.tickSize(-width, 0, 0)
+				.tickFormat("")
+			);
 	});
 }
 
