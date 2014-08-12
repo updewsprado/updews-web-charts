@@ -112,14 +112,16 @@ var margin = {top: 70, right: 20, bottom: 70, left: 50},
     width = 900 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
+var graphDim = {gWidth: width/2, gHeight: height};
+	
 var labelHeight = 16;
 	
 // Parse the xval / time
 var parseDate = d3.time.format("%b %Y").parse;
 
 // Set the ranges
-var x = d3.scale.linear().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
+var x = d3.scale.linear().range([0, graphDim.gWidth]);
+var y = d3.scale.linear().range([graphDim.gHeight, 0]);
 
 // Define the axes
 function make_x_axis() {        
@@ -197,7 +199,7 @@ function showData(frm) {
 		// X axis Label
 		svg.append("text")      // text label for the x axis
 			.attr("class", "axislabel")
-			.attr("x", width / 2)
+			.attr("x", graphDim.gWidth / 2)
 			.attr("y", height + (margin.bottom/2) + labelHeight + 10)
 			.text("X-axis Label");
 			
@@ -226,7 +228,7 @@ function showData(frm) {
 		svg.append("g")
 			.attr("class", "grid")
 			.call(make_y_axis()
-				.tickSize(-width, 0, 0)
+				.tickSize(-graphDim.gWidth, 0, 0)
 				.tickFormat("")
 			);		
 		
