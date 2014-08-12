@@ -23,7 +23,7 @@ path {
 .legend {
     font-size: 16px;
     font-weight: bold;
-    text-anchor: middle;
+    text-anchor: left;
 }
 
 .axislabel {
@@ -254,8 +254,8 @@ function showData(frm) {
 				
 			// Add the Legend
 			svg.append("text")
-				.attr("x", (legendSpace/2)+i*legendSpace)  // space legend
-				.attr("y", height + (margin.bottom/2) + 5)
+				.attr("x", graphDim.gWidth + margin.right)  // space legend
+				.attr("y", i*(labelHeight + 5))
 				.attr("class", "legend")    // style the legend
 				.style("fill", function() { // Add the colours dynamically
 					return d.color = color(d.key); })
