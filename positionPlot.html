@@ -205,15 +205,15 @@ function showData(frm) {
 		svg.append("g")
 			.attr("class", "y axis")
 			.call(make_y_axis());
-		/*
+		
 		// Y axis Label
-		svg.append("text")
+		svg.append("text")		// text label for the y axis
 			.attr("class", "axislabel")
 			.attr("transform", "rotate(-90)")
-			.attr("y", 0 – margin.left)
-			.attr("x",0 - (height / 2))
+			.attr("y", -5 - (margin.left / 2))
+			.attr("x", 0 - (height / 2))
 			.text("Y-axis Label");
-		*/
+		
 		// Add the Grids
 		svg.append("g")
 			.attr("class", "grid")
