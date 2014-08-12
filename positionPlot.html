@@ -200,8 +200,8 @@ function showData(frm) {
 		svg.append("text")      // text label for the x axis
 			.attr("class", "axislabel")
 			.attr("x", graphDim.gWidth / 2)
-			.attr("y", height + (margin.bottom/2) + labelHeight + 10)
-			.text("X-axis Label");
+			.attr("y", height + (margin.bottom/2) + 5)
+			.text("Horizontal Displacement (meters)");
 			
 		// Add the Y Axis
 		svg.append("g")
@@ -214,7 +214,7 @@ function showData(frm) {
 			.attr("transform", "rotate(-90)")
 			.attr("y", -5 - (margin.left / 2))
 			.attr("x", 0 - (height / 2))
-			.text("Y-axis Label");
+			.text("Vertical Displacement (meters)");
 		
 		// Add the Grids
 		svg.append("g")
