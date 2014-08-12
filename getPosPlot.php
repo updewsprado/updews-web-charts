@@ -15,9 +15,8 @@ else {
 } 
  
 // Set your CSV feed
-//$feed = 'blcb';
-$feedX = $path . $feed . ' xy_cs_0.csv';
-$feedY = $path . $feed . ' xy_cs.csv';
+$feedX = $path . $feed . ' xy_cs.csv';	//distance from yaxis or... X Value
+$feedY = $path . $feed . ' x_cs.csv';	//distance from xaxis or... Y Value
  
 // Arrays we'll use later
 $keys = array();
@@ -72,12 +71,12 @@ for ($l = $count - 5; $l < $count; $l++) {
 	
 	for ($k = 1; $k < $data_cnt; $k++) {
 		$arrayPlot[$count_xy]["date"] = $date;
-		//arrayPlot[$count_xy]["xval"] = $arrayX[$l]["$k"];
+		arrayPlot[$count_xy]["xval"] = $arrayX[$l]["$k"];
 		//$arrayPlot[$count_xy]["yval"] = $arrayY[$l]["$k"];
 		$arrayPlot[$count_xy]["node"] = $k;
 		$arrayPlot[$count_xy]["yval"] = -$k;
 		//$arrayPlot[$count_xy]["yval"] = $arrayX[$l]["$k"];
-		$arrayPlot[$count_xy]["xval"] = $arrayY[$l]["$k"];
+		//$arrayPlot[$count_xy]["xval"] = $arrayY[$l]["$k"];
 		$count_xy++;
 		
 		//echo $date . ",";
