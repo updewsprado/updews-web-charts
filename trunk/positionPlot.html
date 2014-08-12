@@ -96,7 +96,14 @@ path {
 	<p>
 		Site: <select name="sites" id="selectSite">
 		</select>
-		<input type="button" value="go" onclick="showData(this.form)">
+		<input type="button" value="go" onclick="showData(this.form)"><Br/>
+		Day Intervals: <select name="interval">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		</select>
 	</p>
 	</FORM>
 	
@@ -169,7 +176,7 @@ svg.call(tip);
 function showData(frm) {
 	// Get the data
 	var jsondata = [];
-	d3.json("getPosPlot.php?site=" + frm.sites.value, function(error, data) {
+	d3.json("getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value, function(error, data) {
 		jsondata = data;
 
 		data.forEach(function(d) {
