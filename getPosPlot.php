@@ -73,7 +73,7 @@ for ($j = 0; $j < $count; $j++) {
 
 $count_xy = 0;
 //for ($l = 0; $l < $count; $l++) {
-for ($l = $count - 5; $l < $count; $l++) {
+for ($l = $count - (5 * $interval); $l < $count; $l = $l + $interval) {
 	$date = $arrayX[$l]["ts"];
 	$data_cnt = count($keys);
 	
