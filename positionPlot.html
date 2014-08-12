@@ -26,6 +26,12 @@ path {
     text-anchor: middle;
 }
 
+.axislabel {
+    font-size: 16px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
 .dot {
   fill: gainsboro;
 }
@@ -106,6 +112,8 @@ var margin = {top: 70, right: 20, bottom: 70, left: 50},
     width = 900 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
+var labelHeight = 16;
+	
 // Parse the xval / time
 var parseDate = d3.time.format("%b %Y").parse;
 
@@ -186,11 +194,26 @@ function showData(frm) {
 			.attr("transform", "translate(0," + height + ")")
 			.call(make_x_axis());
 
+		// X axis Label
+		svg.append("text")      // text label for the x axis
+			.attr("class", "axislabel")
+			.attr("x", width / 2)
+			.attr("y", height + (margin.bottom/2) + labelHeight + 10)
+			.text("X-axis Label");
+			
 		// Add the Y Axis
 		svg.append("g")
 			.attr("class", "y axis")
 			.call(make_y_axis());
-
+		/*
+		// Y axis Label
+		svg.append("text")
+			.attr("class", "axislabel")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 0 – margin.left)
+			.attr("x",0 - (height / 2))
+			.text("Y-axis Label");
+		*/
 		// Add the Grids
 		svg.append("g")
 			.attr("class", "grid")
@@ -230,7 +253,7 @@ function showData(frm) {
 			// Add the Legend
 			svg.append("text")
 				.attr("x", (legendSpace/2)+i*legendSpace)  // space legend
-				.attr("y", height + (margin.bottom/2)+ 5)
+				.attr("y", height + (margin.bottom/2) + 5)
 				.attr("class", "legend")    // style the legend
 				.style("fill", function() { // Add the colours dynamically
 					return d.color = color(d.key); })
