@@ -172,8 +172,18 @@ var svg = d3.select("#posplot")
               "translate(" + margin.left + "," + margin.top + ")");
 
 svg.call(tip);			  
-			  
+			
+function clearData() {
+	svg.selectAll(".dot").remove();
+	svg.selectAll(".line").remove();
+	svg.selectAll(".legend").remove();
+	svg.selectAll(".tick").remove();
+}
+			
 function showData(frm) {
+	// Clear the canvas area first
+	clearData();
+
 	// Get the data
 	var jsondata = [];
 	d3.json("getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value, function(error, data) {
@@ -248,16 +258,6 @@ function showData(frm) {
 					return d.color = color(d.key); })
 				.attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
 				.attr("d", yvalline(d.values));
-
-			svg.selectAll(".dot")
-					.data(data)
-				.enter().append("circle")
-					.attr("class", "dot")
-					.attr("r", 5)
-					.attr("cx", function(d) { return x(d.xval); })
-					.attr("cy", function(d) { return y(d.yval); })
-					.on('mouseover', tip.show)
-					.on('mouseout', tip.hide);
 				
 			// Add the Legend
 			svg.append("text")
@@ -281,6 +281,18 @@ function showData(frm) {
 
 		});
 
+		// Loop through each date / key
+		dataNest.forEach(function(d,i) { 
+			svg.selectAll(".dot")
+					.data(data)
+				.enter().append("circle")
+					.attr("class", "dot")
+					.attr("r", 5)
+					.attr("cx", function(d) { return x(d.xval); })
+					.attr("cy", function(d) { return y(d.yval); })
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
+		});
 
 	});
 }
