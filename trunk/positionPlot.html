@@ -204,9 +204,10 @@ function clearData() {
 	svg.selectAll(".line").remove();
 	svg.selectAll(".legend").remove();
 	svg.selectAll(".tick").remove();
+	svg.selectAll(".axislabel").remove();
 }
 
-function generatePlotData(url, xOffset, isLegends, graphNum) {
+function generatePlotData(url, title, xOffset, isLegends, graphNum) {
 	// Get the data
 	var jsondata = [];
 	d3.json(url, function(error, data) {
@@ -237,6 +238,13 @@ function generatePlotData(url, xOffset, isLegends, graphNum) {
 			.attr("transform", "translate(" + xOffset + "," + height + ")")
 			.call(make_x_axis());
 
+		// Graph Label
+		svg.append("text")      // text label for the x axis
+			.attr("class", "axislabel")
+			.attr("x", xOffset + (graphDim.gWidth / 2))
+			.attr("y", 0 -(margin.top/2))
+			.text(title);
+			
 		// X axis Label
 		svg.append("text")      // text label for the x axis
 			.attr("class", "axislabel")
@@ -329,11 +337,13 @@ function showData(frm) {
 
 	// Generate the XY Graph
 	urlXY = "getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value;
-	generatePlotData(urlXY, 0, true, 1);
+	titleXY = frm.sites.value + " XY Column Position";
+	generatePlotData(urlXY, titleXY, 0, true, 1);
 	
 	// Generate the XZ Graph
-	urlXZ = "getPosPlot.php?site=gamt&interval=" + frm.interval.value;
-	generatePlotData(urlXZ, width * 0.6, false, 2);
+	urlXZ = "getPosPlot.php?xz&site=" + frm.sites.value + "&interval=" + frm.interval.value;
+	titleXZ = frm.sites.value + " XZ Column Position";
+	generatePlotData(urlXZ, titleXZ, width * 0.6, false, 2);
 }
 
 var options = ["blcb", "blct", "bolb", "gamb", "gamt",
