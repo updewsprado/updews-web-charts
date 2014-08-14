@@ -22,8 +22,12 @@ else {
 } 
 
 // Set your CSV feed
-//$feed = 'blcb';
-$feedX = $path . $feed . ' xy_cs.csv';	//distance from yaxis or... X Value
+if(isset($_GET['xz'])) {
+	$feedX = $path . $feed . ' xz_cs.csv';	//distance from yaxis or... X Value
+}
+else {
+	$feedX = $path . $feed . ' xy_cs.csv';	//distance from yaxis or... X Value
+}
 $feedY = $path . $feed . ' x_cs.csv';	//Y Value
  
 // Arrays we'll use later
