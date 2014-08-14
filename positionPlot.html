@@ -259,6 +259,7 @@ function generatePlotData(url, xOffset, isLegends) {
 
 			svg.append("path")
 				.attr("class", "line")
+				.attr("transform", "translate(" + xOffset + ",0)")
 				.style("stroke", function() { // Add the colours dynamically
 					return d.color = color(d.key); })
 				.attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
@@ -269,6 +270,7 @@ function generatePlotData(url, xOffset, isLegends) {
 				svg.append("text")
 					.attr("x", graphDim.gWidth + margin.right)  // space legend
 					.attr("y", i*(labelHeight + 5))
+					.attr("transform", "translate(" + xOffset + ",0)")
 					.attr("class", "legend")    // style the legend
 					.style("fill", function() { // Add the colours dynamically
 						return d.color = color(d.key); })
@@ -293,8 +295,9 @@ function generatePlotData(url, xOffset, isLegends) {
 					.data(data)
 				.enter().append("circle")
 					.attr("class", "dot")
+					//.attr("transform", "translate(" + xOffset + ",0)")
 					.attr("r", 5)
-					.attr("cx", function(d) { return x(d.xval); })
+					.attr("cx", function(d) { return x(d.xval) + xOffset; })
 					.attr("cy", function(d) { return y(d.yval); })
 					.on('mouseover', tip.show)
 					.on('mouseout', tip.hide);
@@ -307,8 +310,13 @@ function showData(frm) {
 	// Clear the canvas area first
 	clearData();
 
+	// Generate the XY Graph
 	urlXY = "getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value;
-	generatePlotData(urlXY, 200, false);
+	generatePlotData(urlXY, 0, true);
+	
+	// Generate the XZ Graph
+	urlXZ = "getPosPlot.php?site=gamt&interval=" + frm.interval.value;
+	generatePlotData(urlXZ, width * 0.6, false);
 }
 
 var options = ["blcb", "blct", "bolb", "gamb", "gamt",
