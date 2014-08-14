@@ -103,6 +103,7 @@ path {
 		<option value="3">3</option>
 		<option value="4">4</option>
 		<option value="5">5</option>
+		<option value="6">6</option>
 		</select>
 	</p>
 	</FORM>
@@ -116,11 +117,14 @@ path {
 <script>
 
 // Set the dimensions of the canvas / graph
-var margin = {top: 70, right: 20, bottom: 70, left: 50},
-    width = 900 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+var cWidth = 1300,
+	cHeight = 600;
 
-var graphDim = {gWidth: width/2, gHeight: height};
+var margin = {top: 70, right: 20, bottom: 70, left: 50},
+    width = cWidth - margin.left - margin.right,
+    height = cHeight - margin.top - margin.bottom;
+
+var graphDim = {gWidth: width * 0.4, gHeight: height};
 	
 var labelHeight = 16;
 	
@@ -180,7 +184,7 @@ function clearData() {
 	svg.selectAll(".legend").remove();
 	svg.selectAll(".tick").remove();
 }
-			
+		
 function showData(frm) {
 	// Clear the canvas area first
 	clearData();
