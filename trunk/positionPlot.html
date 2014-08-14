@@ -40,6 +40,22 @@ path {
   fill: black ;
 }
 
+.dot1 {
+  fill: gainsboro;
+}
+
+.dot1:hover {
+  fill: black ;
+}
+
+.dot2 {
+  fill: gainsboro;
+}
+
+.dot2:hover {
+  fill: black ;
+}
+
 .grid .tick {
     stroke: lightgrey;
     opacity: 0.7;
@@ -128,6 +144,8 @@ var graphDim = {gWidth: width * 0.4, gHeight: height};
 	
 var labelHeight = 16;
 	
+var graphCount = 0;
+	
 // Parse the xval / time
 var parseDate = d3.time.format("%b %Y").parse;
 
@@ -179,13 +197,16 @@ var svg = d3.select("#posplot")
 svg.call(tip);			  
 			
 function clearData() {
+	graphCount = 0;
 	svg.selectAll(".dot").remove();
+	svg.selectAll(".dot1").remove();
+	svg.selectAll(".dot2").remove();
 	svg.selectAll(".line").remove();
 	svg.selectAll(".legend").remove();
 	svg.selectAll(".tick").remove();
 }
 
-function generatePlotData(url, xOffset, isLegends) {
+function generatePlotData(url, xOffset, isLegends, graphNum) {
 	// Get the data
 	var jsondata = [];
 	d3.json(url, function(error, data) {
@@ -257,6 +278,17 @@ function generatePlotData(url, xOffset, isLegends) {
 		// Loop through each date / key
 		dataNest.forEach(function(d,i) { 
 
+			svg.selectAll(".dot" + graphNum + "")
+					.data(jsondata)
+				.enter().append("circle")
+					.attr("class", "dot" + graphNum + "")
+					//.attr("transform", "translate(" + xOffset + ",0)")
+					.attr("r", 5)
+					.attr("cx", function(d) { return x(d.xval) + xOffset; })
+					.attr("cy", function(d) { return y(d.yval); })
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
+		
 			svg.append("path")
 				.attr("class", "line")
 				.attr("transform", "translate(" + xOffset + ",0)")
@@ -288,21 +320,6 @@ function generatePlotData(url, xOffset, isLegends) {
 					.text(d.key); 
 			}
 		});
-
-		// Loop through each date / key
-		dataNest.forEach(function(d,i) { 
-			svg.selectAll(".dot")
-					.data(data)
-				.enter().append("circle")
-					.attr("class", "dot")
-					//.attr("transform", "translate(" + xOffset + ",0)")
-					.attr("r", 5)
-					.attr("cx", function(d) { return x(d.xval) + xOffset; })
-					.attr("cy", function(d) { return y(d.yval); })
-					.on('mouseover', tip.show)
-					.on('mouseout', tip.hide);
-		});
-
 	});
 }
 		
@@ -312,11 +329,11 @@ function showData(frm) {
 
 	// Generate the XY Graph
 	urlXY = "getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value;
-	generatePlotData(urlXY, 0, true);
+	generatePlotData(urlXY, 0, true, 1);
 	
 	// Generate the XZ Graph
 	urlXZ = "getPosPlot.php?site=gamt&interval=" + frm.interval.value;
-	generatePlotData(urlXZ, width * 0.6, false);
+	generatePlotData(urlXZ, width * 0.6, false, 2);
 }
 
 var options = ["blcb", "blct", "bolb", "gamb", "gamt",
