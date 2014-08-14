@@ -139,8 +139,8 @@ var y = d3.scale.linear().range([graphDim.gHeight, 0]);
 function make_x_axis() {        
     return d3.svg.axis()
         .scale(x)
-         .orient("bottom")
-         .ticks(5)
+        .orient("bottom")
+        .ticks(5)
 }
 
 function make_y_axis() {        
@@ -184,14 +184,11 @@ function clearData() {
 	svg.selectAll(".legend").remove();
 	svg.selectAll(".tick").remove();
 }
-		
-function showData(frm) {
-	// Clear the canvas area first
-	clearData();
 
+function generatePlotData(url, xOffset, isLegends) {
 	// Get the data
 	var jsondata = [];
-	d3.json("getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value, function(error, data) {
+	d3.json(url, function(error, data) {
 		jsondata = data;
 
 		data.forEach(function(d) {
@@ -215,33 +212,35 @@ function showData(frm) {
 		// Add the X Axis
 		svg.append("g")
 			.attr("class", "x axis")
-			.attr("transform", "translate(0," + height + ")")
+			//.attr("transform", "translate(0," + height + ")")
+			.attr("transform", "translate(" + xOffset + "," + height + ")")
 			.call(make_x_axis());
 
 		// X axis Label
 		svg.append("text")      // text label for the x axis
 			.attr("class", "axislabel")
-			.attr("x", graphDim.gWidth / 2)
+			.attr("x", xOffset + (graphDim.gWidth / 2))
 			.attr("y", height + (margin.bottom/2) + 5)
 			.text("Horizontal Displacement (meters)");
 			
 		// Add the Y Axis
 		svg.append("g")
 			.attr("class", "y axis")
+			.attr("transform", "translate(" + xOffset + ",0)")
 			.call(make_y_axis());
 		
 		// Y axis Label
 		svg.append("text")		// text label for the y axis
 			.attr("class", "axislabel")
 			.attr("transform", "rotate(-90)")
-			.attr("y", -5 - (margin.left / 2))
+			.attr("y", xOffset -5 - (margin.left / 2))
 			.attr("x", 0 - (height / 2))
 			.text("Vertical Displacement (meters)");
 		
 		// Add the Grids
 		svg.append("g")
 			.attr("class", "grid")
-			.attr("transform", "translate(0," + height + ")")
+			.attr("transform", "translate(" + xOffset + "," + height + ")")
 			.call(make_x_axis()
 				.tickSize(-height, 0, 0)
 				.tickFormat("")
@@ -249,6 +248,7 @@ function showData(frm) {
 
 		svg.append("g")
 			.attr("class", "grid")
+			.attr("transform", "translate(" + xOffset + ",0)")
 			.call(make_y_axis()
 				.tickSize(-graphDim.gWidth, 0, 0)
 				.tickFormat("")
@@ -265,25 +265,26 @@ function showData(frm) {
 				.attr("d", yvalline(d.values));
 				
 			// Add the Legend
-			svg.append("text")
-				.attr("x", graphDim.gWidth + margin.right)  // space legend
-				.attr("y", i*(labelHeight + 5))
-				.attr("class", "legend")    // style the legend
-				.style("fill", function() { // Add the colours dynamically
-					return d.color = color(d.key); })
-				.on("click", function(){
-					// Determine if current line is visible 
-					var active   = d.active ? false : true,
-					newOpacity = active ? 0 : 1; 
-					// Hide or show the elements based on the ID
-					d3.select("#tag"+d.key.replace(/\s+/g, ''))
-						.transition().duration(100) 
-						.style("opacity", newOpacity); 
-					// Upxval whether or not the elements are active
-					d.active = active;
-					})  
-				.text(d.key); 
-
+			if(isLegends){
+				svg.append("text")
+					.attr("x", graphDim.gWidth + margin.right)  // space legend
+					.attr("y", i*(labelHeight + 5))
+					.attr("class", "legend")    // style the legend
+					.style("fill", function() { // Add the colours dynamically
+						return d.color = color(d.key); })
+					.on("click", function(){
+						// Determine if current line is visible 
+						var active   = d.active ? false : true,
+						newOpacity = active ? 0 : 1; 
+						// Hide or show the elements based on the ID
+						d3.select("#tag"+d.key.replace(/\s+/g, ''))
+							.transition().duration(100) 
+							.style("opacity", newOpacity); 
+						// Upxval whether or not the elements are active
+						d.active = active;
+						})  
+					.text(d.key); 
+			}
 		});
 
 		// Loop through each date / key
@@ -300,6 +301,14 @@ function showData(frm) {
 		});
 
 	});
+}
+		
+function showData(frm) {
+	// Clear the canvas area first
+	clearData();
+
+	urlXY = "getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value;
+	generatePlotData(urlXY, 200, false);
 }
 
 var options = ["blcb", "blct", "bolb", "gamb", "gamt",
