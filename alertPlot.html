@@ -157,7 +157,7 @@ function make_yOrd_axis() {
     return d3.svg.axis()
         .scale(yOrd)
         .orient("left")
-        .ticks(5)
+        .ticks(10)
 }
 
 // Tip that displays node info
@@ -212,7 +212,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		});
 		
 		// Scale the range of the data
-		x.domain(d3.extent(data, function(d) { return parseFloat(d.xval); }));
+		x.domain(d3.extent(data, function(d) { return parseFloat(d.node); }));
 		yOrd.domain(data.map(function(d) { return d.site; }));
 		
 		// Add the X Axis
