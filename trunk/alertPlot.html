@@ -215,10 +215,20 @@ function clearData() {
 }
 
 var siteMaxNodes = [];
+var maxNode;
 function getSiteMaxNodes() {
 	url = "getSiteMaxNodes.php";
 	d3.json(url, function(error, data) {
 		siteMaxNodes = data;
+		
+		maxNode = d3.max(data, function(d) { return parseFloat(d.nodes); });
+		
+		// Scale the range of the data
+		x.domain([1, d3.max(data, function(d) { return parseFloat(d.nodes) + 1; })]);
+		yOrd.domain(data.map(function(d) { return d.site; }));
+		
+		var cellw = (graphDim.gWidth / maxNode) * 0.9;
+		var cellh = yOrd.rangeBand(); //9;
 	});
 }
 
@@ -238,11 +248,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		});
 		
 		alertdata = data;
-		maxNode = d3.max(alertdata, function(d) { return parseFloat(d.node); });
-		
-		// Scale the range of the data
-		x.domain(d3.extent(data, function(d) { return parseFloat(d.node); }));
-		yOrd.domain(data.map(function(d) { return d.site; }));
+		//maxNode = d3.max(alertdata, function(d) { return parseFloat(d.node); });
 		
 		var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
 		// Add the X Axis
@@ -278,7 +284,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		var cellh = yOrd.rangeBand(); //9;
 
 		svg.selectAll(".cell")
-				.data(jsondata)
+				.data(data)
 			.enter().append("rect")
 				.attr("class", "cell")
 				.attr('x', function(d){
