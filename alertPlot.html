@@ -32,6 +32,14 @@ path {
     text-anchor: middle;
 }
 
+.cell {
+  fill: blue;
+}
+
+.cell:hover {
+  fill: green ;
+}
+
 .dot {
   fill: orangered;
 }
@@ -247,7 +255,50 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				.tickSize(-graphDim.gWidth, 0, 0)
 				.tickFormat("")
 			);		
-	
+
+		var cellw = 15;
+		var cellh = yOrd.rangeBand(); //9;
+
+		var row = svg.selectAll('.row')
+				   .data(jsondata)
+				   .enter()
+				   .append('svg:g')
+				   .attr('class', 'row')
+
+		svg.selectAll(".cell")
+				.data(jsondata)
+			.enter().append("rect")
+				.attr("class", "cell")
+				.attr('x', function(d){
+					return x(d.node) + xOffset;
+				})
+				.attr('y', function(d){
+					return yOrd(d.site);
+				})
+				.attr('width', cellw)
+				.attr('height', cellh)
+				.on('mouseover', tip.show)
+				.on('mouseout', tip.hide);					   
+/*				   
+		var col = row.selectAll('.cell')
+				   .data(function(d) { return d; })
+				   .enter().append('rect')
+				   .attr('class', 'cell')
+				   .attr('x', function(d){
+						return x(d.node) + xOffset;
+					})
+				   .attr('y', function(d){
+						return yOrd(d.site);
+					})
+				   .attr('width', cellw)
+				   .attr('height', cellh)
+				   .attr('fill', function(d){
+					return zscale(d[2]);
+				   })
+					.on('mousemove', function(d){mousemove(d)})
+					.on("mouseover", mouseover)
+					.on("mouseout", mouseout);
+*/			
 		svg.selectAll(".dot")
 				.data(jsondata)
 			.enter().append("circle")
