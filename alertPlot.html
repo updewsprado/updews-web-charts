@@ -32,12 +32,16 @@ path {
     text-anchor: middle;
 }
 
+.cell_default {
+  fill: #03899C;
+}
+
 .cell {
-  fill: blue;
+  fill: #FFAE00;
 }
 
 .cell:hover {
-  fill: green ;
+  fill: #FF1300 ;
 }
 
 .dot {
@@ -216,7 +220,7 @@ function clearData() {
 
 var siteMaxNodes = [];
 var maxNode;
-function getSiteMaxNodes() {
+function getSiteMaxNodes(xOffset) {
 	url = "getSiteMaxNodes.php";
 	d3.json(url, function(error, data) {
 		siteMaxNodes = data;
@@ -229,6 +233,22 @@ function getSiteMaxNodes() {
 		
 		var cellw = (graphDim.gWidth / maxNode) * 0.9;
 		var cellh = yOrd.rangeBand(); //9;
+		
+		for (i = 0; i < siteMaxNodes.length; i++) { 
+			//text += siteMaxNodes[i] + "<br>";
+
+			
+			svg.append("rect")
+				.attr("class", "cell_default")
+				.attr('x', function(){
+					return x(siteMaxNodes[i].nodes) + xOffset;
+				})
+				.attr('y', function(){
+					return yOrd(siteMaxNodes[i].site);
+				})
+				.attr('width', cellw)
+				.attr('height', cellh);
+		}
 	});
 }
 
@@ -236,7 +256,7 @@ var alertdata = [];
 function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	// Get the data
 	var jsondata = [];
-	getSiteMaxNodes();
+	getSiteMaxNodes(xOffset);
 	d3.json(url, function(error, data) {
 		jsondata = data;
 
