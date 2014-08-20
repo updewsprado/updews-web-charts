@@ -37,7 +37,7 @@ path {
 }
 
 .cell {
-  fill: #FFAE00;
+  /*fill: #FFAE00;*/
 }
 
 .cell:hover {
@@ -283,23 +283,6 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 			.attr("class", "y axis")
 			.attr("transform", "translate(" + xOffset + ",0)")
 			.call(make_yOrd_axis());
-	
-		// Add the Grids
-		svg.append("g")
-			.attr("class", "grid")
-			.attr("transform", "translate(" + xOffset + "," + height + ")")
-			.call(make_x_axis2(maxNode)
-				.tickSize(-height, 0, 0)
-				.tickFormat("")
-			);
-
-		svg.append("g")
-			.attr("class", "grid")
-			.attr("transform", "translate(" + xOffset + ",0)")
-			.call(make_yOrd_axis()
-				.tickSize(-graphDim.gWidth, 0, 0)
-				.tickFormat("")
-			);		
 
 		var cellw = (graphDim.gWidth / maxNode) * 0.9;
 		var cellh = yOrd.rangeBand(); //9;
@@ -314,7 +297,12 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				.attr('y', function(d){
 					return yOrd(d.site);
 				})
-				//.attr('width', cellw)
+				.attr('fill', function(d){
+					var r = 85 * (d.xalert + d.yalert + d.zalert);
+					var g = 180 - (d.xalert + d.yalert + d.zalert) * 60;
+					var b = 255 - (d.xalert + d.yalert + d.zalert) * 80;					
+					return color = d3.rgb(r, 174, b);
+				})
 				.attr('width', cellw)
 				.attr('height', cellh)
 				.on('mouseover', tip.show)
