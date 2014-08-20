@@ -214,6 +214,14 @@ function clearData() {
 	svg.selectAll(".axislabel").remove();
 }
 
+var siteMaxNodes = [];
+function getSiteMaxNodes() {
+	url = "getSiteMaxNodes.php";
+	d3.json(url, function(error, data) {
+		siteMaxNodes = data;
+	}
+}
+
 var alertdata = [];
 function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	// Get the data
@@ -282,17 +290,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				.attr('width', cellw)
 				.attr('height', cellh)
 				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);					   
-		
-		svg.selectAll(".dot")
-				.data(jsondata)
-			.enter().append("circle")
-				.attr("class", "dot")
-				.attr("r", 5)
-				.attr("cx", function(d) { return x(d.node) + xOffset; })
-				.attr("cy", function(d) { return yOrd(d.site); })	
-				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);				
+				.on('mouseout', tip.hide);					   			
 	});
 }
 
