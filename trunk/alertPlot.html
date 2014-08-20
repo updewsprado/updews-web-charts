@@ -235,10 +235,11 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		x.domain(d3.extent(data, function(d) { return parseFloat(d.node); }));
 		yOrd.domain(data.map(function(d) { return d.site; }));
 		
+		var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
 		// Add the X Axis
 		svg.append("g")
 			.attr("class", "x axis")
-			.attr("transform", "translate(" + xOffset + "," + height + ")")
+			.attr("transform", "translate(" + horOff + "," + height + ")")
 			.call(make_x_axis2(maxNode));
 			
 		// Add the Y Axis
