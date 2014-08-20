@@ -155,6 +155,13 @@ function make_x_axis() {
         .ticks(40)
 }
 
+function make_x_axis2(tick) {        
+    return d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(tick)
+}
+
 function make_y_axis() {        
     return d3.svg.axis()
         .scale(y)
@@ -222,6 +229,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		});
 		
 		alertdata = data;
+		maxNode = d3.max(alertdata, function(d) { return parseFloat(d.node); });
 		
 		// Scale the range of the data
 		x.domain(d3.extent(data, function(d) { return parseFloat(d.node); }));
@@ -231,7 +239,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		svg.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(" + xOffset + "," + height + ")")
-			.call(make_x_axis());
+			.call(make_x_axis2(maxNode));
 			
 		// Add the Y Axis
 		svg.append("g")
@@ -243,7 +251,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		svg.append("g")
 			.attr("class", "grid")
 			.attr("transform", "translate(" + xOffset + "," + height + ")")
-			.call(make_x_axis()
+			.call(make_x_axis2(maxNode)
 				.tickSize(-height, 0, 0)
 				.tickFormat("")
 			);
@@ -256,14 +264,8 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				.tickFormat("")
 			);		
 
-		var cellw = 15;
+		var cellw = (graphDim.gWidth / maxNode) * 0.9;
 		var cellh = yOrd.rangeBand(); //9;
-
-		var row = svg.selectAll('.row')
-				   .data(jsondata)
-				   .enter()
-				   .append('svg:g')
-				   .attr('class', 'row')
 
 		svg.selectAll(".cell")
 				.data(jsondata)
@@ -275,30 +277,12 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				.attr('y', function(d){
 					return yOrd(d.site);
 				})
+				//.attr('width', cellw)
 				.attr('width', cellw)
 				.attr('height', cellh)
 				.on('mouseover', tip.show)
 				.on('mouseout', tip.hide);					   
-/*				   
-		var col = row.selectAll('.cell')
-				   .data(function(d) { return d; })
-				   .enter().append('rect')
-				   .attr('class', 'cell')
-				   .attr('x', function(d){
-						return x(d.node) + xOffset;
-					})
-				   .attr('y', function(d){
-						return yOrd(d.site);
-					})
-				   .attr('width', cellw)
-				   .attr('height', cellh)
-				   .attr('fill', function(d){
-					return zscale(d[2]);
-				   })
-					.on('mousemove', function(d){mousemove(d)})
-					.on("mouseover", mouseover)
-					.on("mouseout", mouseout);
-*/			
+		
 		svg.selectAll(".dot")
 				.data(jsondata)
 			.enter().append("circle")
