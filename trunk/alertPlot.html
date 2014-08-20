@@ -219,13 +219,14 @@ function getSiteMaxNodes() {
 	url = "getSiteMaxNodes.php";
 	d3.json(url, function(error, data) {
 		siteMaxNodes = data;
-	}
+	});
 }
 
 var alertdata = [];
 function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	// Get the data
 	var jsondata = [];
+	getSiteMaxNodes();
 	d3.json(url, function(error, data) {
 		jsondata = data;
 
