@@ -123,7 +123,7 @@ var margin = {top: 70, right: 20, bottom: 70, left: 50},
     width = cWidth - margin.left - margin.right,
     height = cHeight - margin.top - margin.bottom;
 
-var graphDim = {gWidth: width * 0.4, gHeight: height};
+var graphDim = {gWidth: width * 0.6, gHeight: height};
 	
 var labelHeight = 16;
 	
@@ -136,6 +136,7 @@ var parseDate = d3.time.format("%b %Y").parse;
 var x = d3.scale.linear().range([0, graphDim.gWidth]);
 var y = d3.scale.linear().range([graphDim.gHeight, 0]);
 var yOrd = d3.scale.ordinal()
+				//.rangeRoundBands([graphDim.gHeight, margin.top], 0.05);
 				.rangeRoundBands([graphDim.gHeight, 0], .1);
 
 // Define the axes
@@ -143,7 +144,7 @@ function make_x_axis() {
     return d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .ticks(5)
+        .ticks(40)
 }
 
 function make_y_axis() {        
@@ -157,7 +158,7 @@ function make_yOrd_axis() {
     return d3.svg.axis()
         .scale(yOrd)
         .orient("left")
-        .ticks(10)
+        .ticks(1)
 }
 
 // Tip that displays node info
@@ -198,6 +199,7 @@ function clearData() {
 	svg.selectAll(".axislabel").remove();
 }
 
+var alertdata = [];
 function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	// Get the data
 	var jsondata = [];
@@ -208,7 +210,10 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 			d.node = parseInt(d.node);
 			d.xalert = parseInt(d.xalert);
 			d.yalert = parseInt(d.yalert);
+			d.zalert = parseInt(d.zalert);
 		});
+		
+		alertdata = data;
 		
 		// Scale the range of the data
 		x.domain(d3.extent(data, function(d) { return parseFloat(d.node); }));
@@ -225,7 +230,24 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 			.attr("class", "y axis")
 			.attr("transform", "translate(" + xOffset + ",0)")
 			.call(make_yOrd_axis());
-			
+	
+		// Add the Grids
+		svg.append("g")
+			.attr("class", "grid")
+			.attr("transform", "translate(" + xOffset + "," + height + ")")
+			.call(make_x_axis()
+				.tickSize(-height, 0, 0)
+				.tickFormat("")
+			);
+
+		svg.append("g")
+			.attr("class", "grid")
+			.attr("transform", "translate(" + xOffset + ",0)")
+			.call(make_yOrd_axis()
+				.tickSize(-graphDim.gWidth, 0, 0)
+				.tickFormat("")
+			);		
+	
 		svg.selectAll(".dot")
 				.data(jsondata)
 			.enter().append("circle")
