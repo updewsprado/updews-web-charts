@@ -236,18 +236,19 @@ function getSiteMaxNodes(xOffset) {
 		
 		for (i = 0; i < siteMaxNodes.length; i++) { 
 			//text += siteMaxNodes[i] + "<br>";
-
 			
-			svg.append("rect")
-				.attr("class", "cell_default")
-				.attr('x', function(){
-					return x(siteMaxNodes[i].nodes) + xOffset;
-				})
-				.attr('y', function(){
-					return yOrd(siteMaxNodes[i].site);
-				})
-				.attr('width', cellw)
-				.attr('height', cellh);
+			for (j = 1; j < siteMaxNodes[i].nodes; j++) { 
+				svg.append("rect")
+					.attr("class", "cell_default")
+					.attr('x', function(){
+						return x(j) + xOffset;
+					})
+					.attr('y', function(){
+						return yOrd(siteMaxNodes[i].site);
+					})
+					.attr('width', cellw)
+					.attr('height', cellh);
+			}
 		}
 	});
 }
