@@ -237,7 +237,7 @@ function getSiteMaxNodes(xOffset) {
 		for (i = 0; i < siteMaxNodes.length; i++) { 
 			//text += siteMaxNodes[i] + "<br>";
 			
-			for (j = 1; j < siteMaxNodes[i].nodes; j++) { 
+			for (j = 1; j <= siteMaxNodes[i].nodes; j++) { 
 				svg.append("rect")
 					.attr("class", "cell_default")
 					.attr('x', function(){
