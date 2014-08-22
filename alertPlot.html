@@ -321,14 +321,39 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				})
 				.attr('fill', function(d){
 					var r = 85 * (d.xalert + d.yalert + d.zalert);
-					var g = 180 - (d.xalert + d.yalert + d.zalert) * 60;
 					var b = 255 - (d.xalert + d.yalert + d.zalert) * 80;					
 					return color = d3.rgb(r, 174, b);
 				})
 				.attr('width', cellw)
 				.attr('height', cellh)
 				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);					   			
+				.on('mouseout', tip.hide);		
+
+		// Add the Legend
+		if(isLegends){
+			for (i = 1; i <= 3; i++) { 
+				var desc;
+				
+				if (i <= 1) {
+					desc = i + " axis alert";
+				}
+				else {
+					desc = i + " axes alerts";
+				}
+			
+				svg.append("text")
+					.attr("x", graphDim.gWidth + margin.right)  // space legend
+					.attr("y", i*(labelHeight + 5))
+					.attr("transform", "translate(" + xOffset + ",0)")
+					.attr("class", "legend")    // style the legend
+					.style("fill", function() { // Add the colours dynamically
+						var r = 85 * i;
+						var b = 255 - i * 80;					
+						return color = d3.rgb(r, 174, b);
+					})
+					.text(desc); 
+			}
+		}				
 	});
 }
 
