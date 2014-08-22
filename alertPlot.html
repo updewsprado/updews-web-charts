@@ -331,7 +331,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 
 		// Add the Legend
 		if(isLegends){
-			for (i = 1; i <= 3; i++) { 
+			for (i = 0; i <= 3; i++) { 
 				var desc;
 				
 				if (i <= 1) {
@@ -340,16 +340,39 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				else {
 					desc = i + " axes alerts";
 				}
-			
+	
+				svg.append("rect")
+					.attr("class", "cell")
+					.attr("x", graphDim.gWidth + margin.right)
+					.attr("y", i*(labelHeight + 5) - cellh * 0.8)
+					.attr("transform", "translate(" + xOffset + ",0)")
+					.attr('width', cellw)
+					.attr('height', cellh)
+					.style("fill", function() { // Add the colours dynamically
+						if(i > 0) {
+							var r = 85 * i;
+							var b = 255 - i * 80;							
+							return color = d3.rgb(r, 174, b);
+						}
+						else {
+							return color = d3.rgb(3, 137, 156);
+						}
+					});
+	
 				svg.append("text")
-					.attr("x", graphDim.gWidth + margin.right)  // space legend
+					.attr("class", "legend")    // style the legend
+					.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
 					.attr("y", i*(labelHeight + 5))
 					.attr("transform", "translate(" + xOffset + ",0)")
-					.attr("class", "legend")    // style the legend
 					.style("fill", function() { // Add the colours dynamically
-						var r = 85 * i;
-						var b = 255 - i * 80;					
-						return color = d3.rgb(r, 174, b);
+						if(i > 0) {
+							var r = 85 * i;
+							var b = 255 - i * 80;							
+							return color = d3.rgb(r, 174, b);
+						}
+						else {
+							return color = d3.rgb(3, 137, 156);
+						}
 					})
 					.text(desc); 
 			}
