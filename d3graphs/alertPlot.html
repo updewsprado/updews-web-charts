@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+#posplot { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.legend {
+    font-size: 16px;
+    font-weight: bold;
+    text-anchor: left;
+}
+
+.axislabel {
+    font-size: 16px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.cell_default {
+  fill: #03899C;
+}
+
+.cell {
+  /*fill: #FFAE00;*/
+}
+
+.cell:hover {
+  fill: #FF1300 ;
+}
+
+.dot {
+  fill: orangered;
+}
+
+.dot:hover {
+  fill: black ;
+}
+
+.dot1 {
+  fill: gainsboro;
+}
+
+.dot1:hover {
+  fill: black ;
+}
+
+.dot2 {
+  fill: gainsboro;
+}
+
+.dot2:hover {
+  fill: black ;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+
+.grid path {
+      stroke-width: 0;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+</style>
+<!-- load the d3.js library -->    
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=660212280700219&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+	<div id="posplot"></div>
+	
+	<div class="fb-comments" data-href="http://www.dewslandslide.com/d3graph/alertPlot.html" data-numposts="5" data-colorscheme="light"></div>
+</body>
+
+<script>
+
+// Set the dimensions of the canvas / graph
+var cWidth = 1400,
+	cHeight = 600;
+
+var margin = {top: 70, right: 20, bottom: 70, left: 90},
+    width = cWidth - margin.left - margin.right,
+    height = cHeight - margin.top - margin.bottom;
+
+var graphDim = {gWidth: width * 0.6, gHeight: height};
+	
+var labelHeight = 16;
+	
+var graphCount = 0;
+	
+// Parse the xval / time
+var parseDate = d3.time.format("%b %Y").parse;
+
+// Set the ranges
+var x = d3.scale.linear().range([0, graphDim.gWidth]);
+var y = d3.scale.linear().range([graphDim.gHeight, 0]);
+var yOrd = d3.scale.ordinal()
+				//.rangeRoundBands([graphDim.gHeight, margin.top], 0.05);
+				.rangeRoundBands([graphDim.gHeight, 0], .1);
+
+// Define the axes
+function make_x_axis() {        
+    return d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(40)
+}
+
+function make_x_axis2(tick) {        
+    return d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(tick)
+}
+
+function make_y_axis() {        
+    return d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(5)
+}
+
+function make_yOrd_axis() {        
+    return d3.svg.axis()
+        .scale(yOrd)
+        .orient("left")
+        .ticks(1)
+}
+
+// Tip that displays node info
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
+		+ "<strong>Node ID:</strong> <span style='color:red'>" + d.node + "</span><Br/>"
+		+ "<strong>Alerts:</strong> <span style='color:red'>" + d.xalert + ", " + d.yalert + ", " + d.zalert +"</span>"
+  })	
+	
+// Define the line
+var yvalline = d3.svg.line()	
+	//.interpolate("monotone")
+    .x(function(d) { return x(d.xval); })
+    .y(function(d) { return y(d.yval); });
+    
+// Adds the svg canvas
+var svg = d3.select("#posplot")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);			  
+			
+function clearData() {
+	graphCount = 0;
+	svg.selectAll(".dot").remove();
+	svg.selectAll(".dot1").remove();
+	svg.selectAll(".dot2").remove();
+	svg.selectAll(".line").remove();
+	svg.selectAll(".legend").remove();
+	svg.selectAll(".tick").remove();
+	svg.selectAll(".axislabel").remove();
+}
+
+var siteMaxNodes = [];
+var maxNode;
+function getSiteMaxNodes(xOffset) {
+	url = "getSiteMaxNodes.php";
+	d3.json(url, function(error, data) {
+		siteMaxNodes = data;
+		
+		maxNode = d3.max(data, function(d) { return parseFloat(d.nodes); });
+		
+		// Scale the range of the data
+		x.domain([1, d3.max(data, function(d) { return parseFloat(d.nodes) + 1; })]);
+		yOrd.domain(data.map(function(d) { return d.site; }));
+		
+		var cellw = (graphDim.gWidth / maxNode) * 0.9;
+		var cellh = yOrd.rangeBand(); //9;
+		
+		for (i = 0; i < siteMaxNodes.length; i++) { 
+			//text += siteMaxNodes[i] + "<br>";
+			
+			for (j = 1; j <= siteMaxNodes[i].nodes; j++) { 
+				svg.append("rect")
+					.attr("class", "cell_default")
+					.attr('x', function(){
+						return x(j) + xOffset;
+					})
+					.attr('y', function(){
+						return yOrd(siteMaxNodes[i].site);
+					})
+					.attr('width', cellw)
+					.attr('height', cellh);
+			}
+		}
+	});
+}
+
+var alertdata = [];
+function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
+	// Get the data
+	var jsondata = [];
+	getSiteMaxNodes(xOffset);
+	d3.json(url, function(error, data) {
+		jsondata = data;
+
+		data.forEach(function(d) {
+			d.node = parseInt(d.node);
+			d.xalert = parseInt(d.xalert);
+			d.yalert = parseInt(d.yalert);
+			d.zalert = parseInt(d.zalert);
+		});
+		
+		alertdata = data;
+		//maxNode = d3.max(alertdata, function(d) { return parseFloat(d.node); });
+		
+		var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
+		// Add the X Axis
+		svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(" + horOff + "," + height + ")")
+			.call(make_x_axis2(maxNode));
+			
+		// Graph Label
+		svg.append("text")      // text label for the x axis
+			.attr("class", "axislabel")
+			.attr("x", xOffset + (graphDim.gWidth / 2))
+			.attr("y", 0 -(margin.top/2))
+			.text(title);			
+
+		// X axis Label
+		svg.append("text")      // text label for the x axis
+			.attr("class", "axislabel")
+			.attr("x", xOffset + (graphDim.gWidth / 2))
+			.attr("y", height + (margin.bottom/2) + 5)
+			.text("Nodes");
+			
+		// Add the Y Axis
+		svg.append("g")
+			.attr("class", "y axis")
+			.attr("transform", "translate(" + xOffset + ",0)")
+			.call(make_yOrd_axis());
+
+		// Y axis Label
+		svg.append("text")		// text label for the y axis
+			.attr("class", "axislabel")
+			.attr("transform", "rotate(-90)")
+			.attr("y", xOffset -5 - (margin.left / 2))
+			.attr("x", 0 - (height / 2))
+			.text("Column/Site");			
+			
+		var cellw = (graphDim.gWidth / maxNode) * 0.9;
+		var cellh = yOrd.rangeBand(); //9;
+
+		svg.selectAll(".cell")
+				.data(data)
+			.enter().append("rect")
+				.attr("class", "cell")
+				.attr('x', function(d){
+					return x(d.node) + xOffset;
+				})
+				.attr('y', function(d){
+					return yOrd(d.site);
+				})
+				.attr('fill', function(d){
+					var r = 85 * (d.xalert + d.yalert + d.zalert);
+					var b = 255 - (d.xalert + d.yalert + d.zalert) * 80;					
+					return color = d3.rgb(r, 174, b);
+				})
+				.attr('width', cellw)
+				.attr('height', cellh)
+				.on('mouseover', tip.show)
+				.on('mouseout', tip.hide);		
+
+		// Add the Legend
+		if(isLegends){
+			for (i = 0; i <= 3; i++) { 
+				var desc;
+				
+				if (i <= 1) {
+					desc = i + " axis alert";
+				}
+				else {
+					desc = i + " axes alerts";
+				}
+	
+				svg.append("rect")
+					.attr("class", "cell")
+					.attr("x", graphDim.gWidth + margin.right)
+					.attr("y", i*(labelHeight + 5) - cellh * 0.8)
+					.attr("transform", "translate(" + xOffset + ",0)")
+					.attr('width', cellw)
+					.attr('height', cellh)
+					.style("fill", function() { // Add the colours dynamically
+						if(i > 0) {
+							var r = 85 * i;
+							var b = 255 - i * 80;							
+							return color = d3.rgb(r, 174, b);
+						}
+						else {
+							return color = d3.rgb(3, 137, 156);
+						}
+					});
+	
+				svg.append("text")
+					.attr("class", "legend")    // style the legend
+					.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
+					.attr("y", i*(labelHeight + 5))
+					.attr("transform", "translate(" + xOffset + ",0)")
+					.style("fill", function() { // Add the colours dynamically
+						if(i > 0) {
+							var r = 85 * i;
+							var b = 255 - i * 80;							
+							return color = d3.rgb(r, 174, b);
+						}
+						else {
+							return color = d3.rgb(3, 137, 156);
+						}
+					})
+					.text(desc); 
+			}
+		}				
+	});
+}
+
+function generatePlotData(url, title, xOffset, isLegends, graphNum) {
+	// Get the data
+	var jsondata = [];
+	d3.json(url, function(error, data) {
+		jsondata = data;
+
+		data.forEach(function(d) {
+			d.xval = parseFloat(d.xval);
+			d.yval = parseFloat(d.yval);
+		});
+		
+		// Scale the range of the data
+		x.domain(d3.extent(data, function(d) { return parseFloat(d.xval); }));
+		y.domain(d3.extent(data, function(d) { return parseFloat(d.yval); }));
+
+		// Nest the entries by date
+		var dataNest = d3.nest()
+			.key(function(d) {return d.date;})
+			.entries(data);
+
+		var color = d3.scale.category10();   // set the colour scale
+
+		legendSpace = width/dataNest.length; // spacing for the legend
+
+		// Add the X Axis
+		svg.append("g")
+			.attr("class", "x axis")
+			//.attr("transform", "translate(0," + height + ")")
+			.attr("transform", "translate(" + xOffset + "," + height + ")")
+			.call(make_x_axis());
+
+		// Graph Label
+		svg.append("text")      // text label for the x axis
+			.attr("class", "axislabel")
+			.attr("x", xOffset + (graphDim.gWidth / 2))
+			.attr("y", 0 -(margin.top/2))
+			.text(title);
+			
+		// X axis Label
+		svg.append("text")      // text label for the x axis
+			.attr("class", "axislabel")
+			.attr("x", xOffset + (graphDim.gWidth / 2))
+			.attr("y", height + (margin.bottom/2) + 5)
+			.text("Horizontal Displacement (meters)");
+			
+		// Add the Y Axis
+		svg.append("g")
+			.attr("class", "y axis")
+			.attr("transform", "translate(" + xOffset + ",0)")
+			.call(make_y_axis());
+		
+		// Y axis Label
+		svg.append("text")		// text label for the y axis
+			.attr("class", "axislabel")
+			.attr("transform", "rotate(-90)")
+			.attr("y", xOffset -5 - (margin.left / 2))
+			.attr("x", 0 - (height / 2))
+			.text("Vertical Displacement (meters)");
+		
+		// Add the Grids
+		svg.append("g")
+			.attr("class", "grid")
+			.attr("transform", "translate(" + xOffset + "," + height + ")")
+			.call(make_x_axis()
+				.tickSize(-height, 0, 0)
+				.tickFormat("")
+			);
+
+		svg.append("g")
+			.attr("class", "grid")
+			.attr("transform", "translate(" + xOffset + ",0)")
+			.call(make_y_axis()
+				.tickSize(-graphDim.gWidth, 0, 0)
+				.tickFormat("")
+			);		
+		
+		// Loop through each date / key
+		dataNest.forEach(function(d,i) { 
+
+			svg.selectAll(".dot" + graphNum + "")
+					.data(jsondata)
+				.enter().append("circle")
+					.attr("class", "dot" + graphNum + "")
+					//.attr("transform", "translate(" + xOffset + ",0)")
+					.attr("r", 5)
+					.attr("cx", function(d) { return x(d.xval) + xOffset; })
+					.attr("cy", function(d) { return y(d.yval); })
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
+		
+			svg.append("path")
+				.attr("class", "line")
+				.attr("transform", "translate(" + xOffset + ",0)")
+				.style("stroke", function() { // Add the colours dynamically
+					return d.color = color(d.key); })
+				.attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
+				.attr("d", yvalline(d.values));
+				
+			// Add the Legend
+			if(isLegends){
+				svg.append("text")
+					.attr("x", graphDim.gWidth + margin.right)  // space legend
+					.attr("y", i*(labelHeight + 5))
+					.attr("transform", "translate(" + xOffset + ",0)")
+					.attr("class", "legend")    // style the legend
+					.style("fill", function() { // Add the colours dynamically
+						return d.color = color(d.key); })
+					.on("click", function(){
+						// Determine if current line is visible 
+						var active   = d.active ? false : true,
+						newOpacity = active ? 0 : 1; 
+						// Hide or show the elements based on the ID
+						d3.select("#tag"+d.key.replace(/\s+/g, ''))
+							.transition().duration(100) 
+							.style("opacity", newOpacity); 
+						// Upxval whether or not the elements are active
+						d.active = active;
+						})  
+					.text(d.key); 
+			}
+		});
+	});
+}
+		
+function showData() {
+	generateAlertPlot("getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
+	/*
+	// Clear the canvas area first
+	clearData();
+
+	// Generate the XY Graph
+	urlXY = "getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value;
+	titleXY = frm.sites.value + " XY Column Position";
+	generatePlotData(urlXY, titleXY, 0, true, 1);
+	
+	// Generate the XZ Graph
+	urlXZ = "getPosPlot.php?xz&site=" + frm.sites.value + "&interval=" + frm.interval.value;
+	titleXZ = frm.sites.value + " XZ Column Position";
+	generatePlotData(urlXZ, titleXZ, width * 0.6, false, 2);
+	*/
+}
+
+window.onload = showData;	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
