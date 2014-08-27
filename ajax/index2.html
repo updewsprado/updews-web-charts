@@ -1,0 +1,300 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DEWS Landslide</title>
+	<meta name="keywords" content="DEWS Landslide" />
+	<meta name="description" content="DEWS Landslide" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="templatemo_style_fix_menu.css" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css">
+	<link href="templatemo_style.css" rel="stylesheet" type="text/css">
+ 
+	<script src="./ajax/development-bundle/jquery-1.10.2.js"></script>
+	<script src="./ajax/js/jquery-ui-1.10.4.custom.js"></script> 
+	<link href="./ajax/css/pepper-grinder/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	<script src="./ajax/development-bundle/ui/jquery.ui.core.js"></script>
+	<script src="./ajax/development-bundle/ui/jquery.ui.widget.js"></script>
+	<script src="./ajax/development-bundle/ui/jquery.ui.tabs.js"></script>
+ 
+  <!-- HTML 5 shim for IE backwards compatibility -->
+  <!-- [if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+  </script>
+  <![endif]-->
+  <script type="text/javascript"> 
+	function updateObjectIframe(which){
+		document.getElementById('page_container').innerHTML = '<'+'object id="foo" name="foo" type="text/html" data="'+which.href+'"><\/object>';
+	}
+	
+	function updateObjectIframeAnalysis(which){
+		document.getElementById('page_analysis').innerHTML = '<'+'object id="obj_analysis" name="obj_analysis" type="text/html" data="'+which.href+'"><\/object>';
+	}
+	
+	function showSensorMaintenance() {
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else { // code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		  
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById("sidebarMaintenance").innerHTML = xmlhttp.responseText;
+			}
+		}
+		xmlhttp.open("GET","ajax/getMaintenance.php",true);
+		xmlhttp.send();
+	}	
+	
+	var CreateTabs = {
+		onReady: function() {
+			$( "#testtabs" ).tabs();
+		}
+	};
+	 
+	$(document).ready(CreateTabs.onReady);	
+	
+	window.onload = showSensorMaintenance;
+  </script>
+</head>
+<body>
+
+<div id="fb-root"></div>
+<script>
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=660212280700219&version=v2.0";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
+
+  <header>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="http://www.dewslandslide.com/" target="_parent"><img src="images/senslope.jpg" alt="senslope logo"> DEWS Landslide Monitoring</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <div class="contentBox">
+  
+  	<div id="sidebarMaintenance"></div>
+  
+	<div class="contentCenter">
+	  <section class="container" id="page_container">
+		<script type="text/javascript">
+		function JSON2CSV(objArray) {
+			var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+
+			var str = '';
+			var line = '';
+
+			if ($("#labels").is(':checked')) {
+				var head = array[0];
+				if ($("#quote").is(':checked')) {
+					for (var index in array[0]) {
+						var value = index + "";
+						line += '"' + value.replace(/"/g, '""') + '",';
+					}
+				} else {
+					for (var index in array[0]) {
+						line += index + ',';
+					}
+				}
+
+				line = line.slice(0, -1);
+				str += line + '\r\n';
+			}
+
+			for (var i = 0; i < array.length; i++) {
+				var line = '';
+
+				if ($("#quote").is(':checked')) {
+					for (var index in array[i]) {
+						var value = array[i][index] + "";
+						line += '"' + value.replace(/"/g, '""') + '",';
+					}
+				} else {
+					for (var index in array[i]) {
+						line += array[i][index] + ',';
+					}
+				}
+
+				line = line.slice(0, -1);
+				str += line + '\r\n';
+			}
+			return str;
+			
+		}
+	
+		function initialize() {
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} 
+			else { // code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+						var opts = {
+				lines: 11, // The number of lines to draw
+				length: 6, // The length of each line
+				width: 3, // The line thickness
+				radius: 8, // The radius of the inner circle
+				corners: 1, // Corner roundness (0..1)
+				rotate: 0, // The rotation offset
+				direction: 1, // 1: clockwise, -1: counterclockwise
+				color: '#000', // #rgb or #rrggbb or array of colors
+				speed: 1.1, // Rounds per second
+				trail: 58, // Afterglow percentage
+				shadow: false, // Whether to render a shadow
+				hwaccel: false, // Whether to use hardware acceleration
+				className: 'spinner', // The CSS class to assign to the spinner
+				zIndex: 2e9, // The z-index (defaults to 2000000000)
+				top: '50%', // Top position relative to parent
+				left: '50%' // Left position relative to parent
+			};
+
+			var target = document.getElementById('map-canvas');
+			var spinner = new Spinner(opts).spin();
+			target.appendChild(spinner.el);
+			
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var siteCoords = JSON.parse(xmlhttp.responseText);
+					//var csv = JSON2CSV(siteData );
+					spinner.stop();	
+
+					marker = [];
+					for (var i = 0 ; i < siteCoords.length; i++){
+						marker[i] = new google.maps.Marker({
+							position: new google.maps.LatLng(
+								parseFloat(siteCoords[i]['lat']), 
+								parseFloat(siteCoords[i]['long'])
+							),
+							map: map,
+							title: siteCoords[i]['name'].toLowerCase() + '\n'
+									+ siteCoords[i]['place_installed']
+						});
+
+						var siteName = siteCoords[i]['name'].toLowerCase();
+						
+						google.maps.event.addListener(marker[i], 'click', function() {
+							
+                            alert("test");
+                            infowindow = new google.maps.InfoWindow({
+								content: "testing"
+							});
+							infowindow.open(map,marker);
+							
+						});
+					}
+				}
+			}
+			
+			//var url ="getSitesCoordJSON.php";
+			var url = "getSenslopeData.php?coord";
+			xmlhttp.open("GET",url,true);	  
+			xmlhttp.send();
+			
+			var mapOptions = {
+				center: new google.maps.LatLng(14.5995, 120.9842),
+				zoom: 5
+			};
+
+			var map = new google.maps.Map(document.getElementById("map-canvas"),
+				mapOptions);
+				
+			/*
+			google.maps.event.addListener(marker, 'click', function() {
+				map.setZoom(8);
+				map.setCenter(marker.getPosition());
+			});
+			*/
+		}
+		
+		/*
+		google.maps.event.addListener(marker, 'click', function() {
+			map.setZoom(8);
+			map.setCenter(marker.getPosition());
+		});
+		*/
+		google.maps.event.addDomListener(window, 'load', initialize);
+	  
+		
+    </script>
+	  </section>
+	  <div id="testtabs">
+		<ul>
+			<li><a href="#tabs-1">Node Health</a></li>
+			<li><a href="#tabs-2">Site Health</a></li>
+			<li><a href="#tabs-3">Accelerometer Data</a></li>
+			<li><a href="#tabs-4">Accelerometer + Rainfall</a></li>
+		</ul>
+		<div id="tabs-1">
+			<object id="obj_analysis" name="obj_analysis" type="text/html" data="ajax/healthbars.html"></object>			
+		</div>
+		<div id="tabs-2">
+			<object id="obj_analysis" name="obj_analysis" type="text/html" data="ajax/sitehealth.html"></object>			
+		</div>
+		<div id="tabs-3">
+			<object id="obj_analysis" name="obj_analysis" type="text/html" data="ajax/simplechart.html"></object>
+		</div>
+		<div id="tabs-4">
+			<object id="obj_analysis" name="obj_analysis" type="text/html" data="ajax/simplechart2.html"></object>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="sidebarAlert">
+		<p><input type="text" /> <input type="submit" value="Go" /></p>
+		<br />
+		<h3></h3>
+		<br />
+
+		<div class="scrollingBox">
+			<h3></h3>
+			<br /><br />
+			
+		</div>
+
+		<br />
+		<h3></h3>
+		<p></p>
+	</div>	
+	
+  </div>
+  
+  <!--
+  <footer>
+    <div class="container">        
+      <div id= "latest" class="row">        
+       
+       <section class="span4 rp_box_wrapper">
+       
+        <div class="fb-comments" data-href="http://dewslandslide.com" data-numposts="6" data-colorscheme="dark"></div>
+        
+      </section>
+      
+    </div>
+      <div class="credit" id="div_credit">
+        <p id="templatemo_cr_bar">
+          Copyright © 2013 <a href="#">DEWS Landslide</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  </body>
+</html>
+
