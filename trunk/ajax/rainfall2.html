@@ -10,7 +10,6 @@
 	<script src="./development-bundle/ui/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 	<script type="text/javascript" src="http://dygraphs.com/dygraph-combined.js"></script>
-	<link rel="stylesheet" href="/development-bundle/demos/demos.css">
 	<script>
 	$(function() {
 		$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
@@ -90,6 +89,14 @@
 		left: '50%' // Left position relative to parent
 	};
 	var target = document.getElementById('raindiv');
+    
+    var xmlhttp;
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else { // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
 	
 	function showDataCors(frm) {
 	
@@ -100,13 +107,14 @@
 		//else
 		//	alert("The field contains the date: " + frm.dateinput.value + " and site: " + frm.sites.value);
 
+        /*
 		var url = "http://weather.asti.dost.gov.ph/home/index.php/api/data/" + frm.sites.value + "/from/" + frm.dateinput.value + "/to/" + frm.dateinput2.value;
 		var xmlhttp = createCORSRequest('GET', url);
 		if (!xmlhttp) {
 			alert('CORS not supported');
 			return;
 		}
-		
+		*/
 		var target = document.getElementById('raindiv');
 		var spinner = new Spinner().spin();
 		target.appendChild(spinner.el);
@@ -114,27 +122,35 @@
 		// Response handlers.
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+				//document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
 				
-				var rdatajson = JSON.parse(xmlhttp.responseText);
-				var rdatacsv = JSON2CSV(rdatajson.data);	
+                //var rdatajson = JSON.parse(xmlhttp.responseText);
+				var rdatacsv = JSON2CSV(xmlhttp.responseText);	
 				//document.getElementById("txtHint").innerHTML = rdatacsv;
-				
-				spinner.stop();
-
+				//document.getElementById("txtHint").innerHTML = rdatacsv;
+                spinner.stop();
+                
 				g2 = new Dygraph(
 					document.getElementById("raindiv"),
 					rdatacsv,
 					{
 						ylabel: "Rain Intensity (mm)",
-						visibility: [true, false]
+                        labels: ["Timestamp","24h Rain","15m Rain"],
+                        ylabel: "Rain Intensity",
+                        
+						//visibility: [true, false]
 					}// options
 				);
 				//var json = JSON.parse(xmlhttp.responseText);
 				//document.getElementById("txtHint").innerHTML = json.data[0].dateTimeRead;
+                
 			}
 		};
-		
+        
+        var url = "getRainfall.php?rsite=" + frm.sites.value + "&fdate=" + frm.datepicker.value + "&tdate=" + frm.datepicker2.value;
+        document.getElementById("txtHint").innerHTML = url;
+		//xmlhttp.open("GET","http://weather.asti.dost.gov.ph/home/index.php/api/data/" + frm.sites.value + "/from/" + frm.dateinput.value + "/to/" + frm.dateinput2.value,true);
+		xmlhttp.open("GET",url,true);
 		xmlhttp.send();
 	}
 	
@@ -278,7 +294,10 @@
 				document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
 			}
 		}
+        
+        //var url = "getRainfall.php?rsite=" + frm.sites.value + "&fdate=" + frm.datepicker.value + "&tdate=" + frm.datepicker2.value;
 		xmlhttp.open("GET","http://weather.asti.dost.gov.ph/home/index.php/api/data/" + frm.sites.value + "/from/" + frm.dateinput.value + "/to/" + frm.dateinput2.value,true);
+		//xmlhttp.open("GET",url,true);
 		xmlhttp.send();
 	}
 	

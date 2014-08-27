@@ -332,12 +332,17 @@
             var spinner2 = new Spinner(opts).spin();
             target2.appendChild(spinner2.el);
         
-            var xmlhttp_rain = createCORSRequest('GET', urls[1]);
+            var xmlhttp_rain = getXHR();
+            //var xmlhttp_rain = createCORSRequest('GET', urls[1]);
+            var url = "getRainfall.php?rsite=" + rsiteid + "&fdate=" + frm.dateinput.value + "&tdate=" + frm.dateinput2.value;
+            //xmlhttp.open("GET","http://weather.asti.dost.gov.ph/home/index.php/api/data/" + frm.sites.value + "/from/" + frm.dateinput.value + "/to/" + frm.dateinput2.value,true);
+            xmlhttp_rain.open("GET",url,true);
+            
             xmlhttp_rain.onreadystatechange = function() {
                 if (xmlhttp_rain.readyState == 4 && xmlhttp_rain.status == 200) {
                     
-                    var rdatajson = JSON.parse(xmlhttp_rain.responseText);
-                    var rdatacsv = JSON2CSV(rdatajson.data);
+                    //var rdatajson = JSON.parse(xmlhttp_rain.responseText);
+                    var rdatacsv = JSON2CSV(xmlhttp_rain.responseText);
                     
                     spinner2.stop();
                     
@@ -347,8 +352,7 @@
                         rdatacsv,
                         {
                             ylabel: "Rain Intensity (mm)",
-                            visibility: [true,false],
-                            labels: ["Timestamp","Rain",""],
+                            labels: ["Timestamp","24 hours","15 minutes"],
                             dateWindow: column_plot_range,
                             strokeWidth: 1.5,
                             dateWindow: gs[0].xAxisRange(),
