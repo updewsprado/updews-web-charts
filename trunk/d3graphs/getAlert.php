@@ -5,7 +5,7 @@
  
 header('Content-type: application/json');
 
-$file = 'lsbalerts.csv';
+$file = 'lsbalerts2.csv';
 $path = '../ajax/csvmonitoring/';
 
 // Set your CSV feed

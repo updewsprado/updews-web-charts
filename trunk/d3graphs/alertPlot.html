@@ -263,9 +263,9 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 
 		data.forEach(function(d) {
 			d.node = parseInt(d.node);
-			d.xalert = parseInt(d.xalert);
-			d.yalert = parseInt(d.yalert);
-			d.zalert = parseInt(d.zalert);
+			d.xalert = parseFloat(d.xalert);
+			d.yalert = parseFloat(d.yalert);
+			d.zalert = parseFloat(d.zalert);
 		});
 		
 		alertdata = data;
@@ -320,8 +320,25 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 					return yOrd(d.site);
 				})
 				.attr('fill', function(d){
-					var r = 85 * (d.xalert + d.yalert + d.zalert);
-					var b = 255 - (d.xalert + d.yalert + d.zalert) * 80;					
+					var xdata, ydata, zdata;
+				
+					if(d.xalert > 0)
+						xdata = 1;
+					else
+						xdata = 0;
+						
+					if(d.yalert > 0)
+						ydata = 1;
+					else
+						ydata = 0;
+						
+					if(d.zalert > 0)
+						zdata = 1;
+					else
+						zdata = 0;
+				
+					var r = 85 * (xdata + ydata + zdata);
+					var b = 255 - (xdata + ydata + zdata) * 80;					
 					return color = d3.rgb(r, 174, b);
 				})
 				.attr('width', cellw)
