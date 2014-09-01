@@ -249,11 +249,11 @@ function getSiteMaxNodes(xOffset) {
 					.attr('width', cellw)
 					.attr('height', cellh);
 				
-				if (j == 10) {
+				if (j == 8) {
 					var xStart = x(j) + xOffset;
 					var yStart = yOrd(siteMaxNodes[i].site);
-					var xWidth = xStart + cellw;
-					var yHeight = yStart + cellh;
+					var xWidth = xStart + cellw * 0.6;
+					var yHeight = yStart + cellh * 0.6;
 					var points = xStart + "," + yStart + "," +
 								xWidth + "," + yStart + "," +
 								xStart + "," + yHeight + "";
@@ -261,8 +261,7 @@ function getSiteMaxNodes(xOffset) {
 					svg.append("polygon")       // attach a polygon
 						.attr("class", "triangle")
 						.style("stroke", "none")  // colour the line
-						.style("fill", "#FFF500")     // remove any fill colour
-						//.attr("points", "100,50, 200,150, 300,50");  // x,y points 		
+						.style("fill", "#FFF500")     // remove any fill colour		
 						.attr("points", points);  // x,y points 	
 				}
 			}
