@@ -9,7 +9,7 @@ if (mysqli_connect_errno()) {
 	echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$sql_status = "SELECT post_timestamp,date_of_identification,flagger,site,status,comment FROM node_status;";
+$sql_status = "SELECT post_timestamp,date_of_identification,flagger,site,node,status,comment FROM node_status WHERE status <> 'OK';";
 $result = mysqli_query($con, $sql_status);
 $statusAll = [];
 
@@ -19,6 +19,7 @@ while($row = mysqli_fetch_array($result)) {
 	$statusAll[$ctr_nodes]['date_of_identification'] = $row['date_of_identification'];
 	$statusAll[$ctr_nodes]['flagger'] = $row['flagger'];
 	$statusAll[$ctr_nodes]['site'] = $row['site'];
+	$statusAll[$ctr_nodes]['node'] = $row['node'];
 	$statusAll[$ctr_nodes]['status'] = $row['status'];
 	$statusAll[$ctr_nodes]['comment'] = $row['comment'];
 	
