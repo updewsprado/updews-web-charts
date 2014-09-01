@@ -1,0 +1,231 @@
+post_id,post_ts,identification_date,flagger,site,node,status,comments
+NULL,NULL,2014-03-05,Mizpah Capina,blcb,1,Not OK,NULL
+NULL,NULL,2013-08-09,Mizpah Capina,blcb,3,Not OK,NULL
+NULL,NULL,2014-05-01,Mizpah Capina,blcb,5,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,blcb,10,OK,intermittent spikes
+NULL,NULL,NULL,Mizpah Capina,blcb,11,Special Case,NULL
+NULL,NULL,NULL,Mizpah Capina,blcb,12,OK,intermittent 0 value all axis
+NULL,NULL,NULL,Mizpah Capina,blcb,13,Special Case,NULL
+NULL,NULL,NULL,Mizpah Capina,blcb,15,OK,-1 all axis
+NULL,NULL,2014-03-05,Mizpah Capina,blcb,16,Not OK,intermittent 0 value all axis
+NULL,NULL,NULL,Mizpah Capina,blcb,17,Special Case,intermittent 0 value all axis
+NULL,NULL,NULL,Mizpah Capina,blcb,18,Special Case,0 value all axis since Jan 2014
+NULL,NULL,NULL,Mizpah Capina,blcb,19,Special Case,NULL
+NULL,NULL,NULL,Mizpah Capina,blct,12,OK,"strictly monitored; similar trend with LABT 30, LIPT 18, MAMB 3, MAMB 8, MAMB 14, PLAT 1, PLAT 17, PLAT 20, PLAT 21, PLAT 32"
+NULL,NULL,NULL,Mizpah Capina,blct,13,OK,strictly monitored
+NULL,NULL,NULL,Mizpah Capina,blct,14,OK,"strictly monitored; same trend with GAMB 6, GAMB 14, HUMT 15, LABT 3, LABT 21, LABT 26, LIPT 5, LIPT 21, MAMB 11, PLAT 8, PLAT 31, SINB 19, OSLB 21, OSLB 22"
+NULL,NULL,2014-04-30,Mizpah Capina,blct,17,Not OK,
+NULL,NULL,2014-06-23,Mizpah Capina,blct,18,Not OK,invalid data (start date of invalidity is yet to be identified); MAM 14
+NULL,NULL,2014-04-30,Mizpah Capina,blct,19,Not OK,"disregard data from April 29 to April 30, 12:30pm"
+NULL,NULL,NULL,Mizpah Capina,bolb,1,OK,"last data received May 22, 2014"
+NULL,NULL,2012-07-30,Mizpah Capina,bolb,2,Not OK,intermittent 0 value
+NULL,NULL,NULL,Mizpah Capina,bolb,3,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,bolb,4,OK,"last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,5,OK,"last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,7,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,bolb,8,Use with Caution,"decreasing y; last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,10,Use with Caution,"similar trend with BLCT 14; last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,11,OK,NULL
+NULL,NULL,NULL,Mizpah Capina,bolb,12,Use with Caution,"similar trend with BLCT 14; last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,13,OK,"last data received March 16, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,14,OK,"last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,15,Use with Caution,"sudden jump; last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,16,OK,"last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,17,Use with Caution,"similar trend with BLCT 14; last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,19,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,bolb,21,Use with Caution,"increasing x; decreasing y; last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,24,Use with Caution,"similar trend with BLCT 14 (smaller trend); last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,26,Use with Caution,"similar trend with BLCT 14 (smaller trend); last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,27,Use with Caution,"similar trend with BLCT 14 (smaller trend); last data received May 22, 2014"
+NULL,NULL,NULL,Mizpah Capina,bolb,28,Not OK,"last valid data Nov 28, 2013"
+NULL,NULL,2014-07-02,Mizpah Capina,gamb,2,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,gamb,6,OK,same trend with BLCT 14
+NULL,NULL,NULL,Mizpah Capina,gamb,11,OK,increasing x
+NULL,NULL,2014-07-02,Mizpah Capina,gamb,12,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,gamb,14,OK,same trend with BLCT 14
+NULL,NULL,2014-03-21,Mizpah Capina,gamt,8,Not OK,NULL
+NULL,NULL,2013-10-02,Mizpah Capina,gamt,13,Not OK,NULL
+NULL,NULL,2013-09-30,Mizpah Capina,gamt,14,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,gamt,15,Special Case,intermittent 0 all axis
+NULL,NULL,NULL,Mizpah Capina,gamt,17,Special Case,"mid of data trend, 0 all axis"
+NULL,NULL,2014-03-18,Mizpah Capina,humb,7,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,humb,25,OK,"increasing x, decreasing y"
+NULL,NULL,NULL,Mizpah Capina,humt,15,OK,similar trend with BLCT 14
+NULL,NULL,NULL,Mizpah Capina,humt,17,Use with Caution,similar trend with BLCT 12
+NULL,NULL,NULL,Mizpah Capina,humt,21,Use with Caution,decreasing z
+NULL,NULL,2013-06-06,Mizpah Capina,humt,22,Not OK,"last data received June 6, 2013"
+NULL,NULL,NULL,Mizpah Capina,labb,17,OK,"increasing x, decreasing z, constant y"
+NULL,NULL,2013-03-06,Mizpah Capina,labb,23,Not OK,since deployment
+NULL,NULL,NULL,Mizpah Capina,labt,3,Use with Caution,similar trend with BLCT 14
+NULL,NULL,2013-03-06,Mizpah Capina,labt,20,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,labt,21,Use with Caution,"similar trend with BLCT 14; increasing x, decreasing z"
+NULL,NULL,NULL,Mizpah Capina,labt,26,OK,similar trend with BLCT 14
+NULL,NULL,NULL,Mizpah Capina,labt,30,Use with Caution,similar trend with BLCT 12
+NULL,NULL,2013-03-06,Mizpah Capina,labt,37,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,labt,38,Special Case,"0 value all axis since March 3, 2014"
+NULL,NULL,2013-04-23,Mizpah Capina,lipb,5,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,lipb,25,Use with Caution,"similar trend with BLCT 18; decreasing x, y; increasing z"
+NULL,NULL,NULL,Mizpah Capina,lipt,3,OK,noticeable correlated movement
+NULL,NULL,2014-08-13,Mizpah Capina,lipt,5,Not OK,similar trend with BLCT 14
+NULL,NULL,NULL,Mizpah Capina,lipt,13,OK,noticeable correlated movement March 2014
+NULL,NULL,NULL,Mizpah Capina,lipt,18,Use with Caution,similar trend with BLCT 12
+NULL,NULL,NULL,Mizpah Capina,lipt,21,Use with Caution,similar trend with BLCT 14
+NULL,NULL,NULL,Mizpah Capina,lipt,25,Use with Caution,noticeable jumps in data
+NULL,NULL,2014-04-25,Mizpah Capina,mamb,2,Not OK,"0 value all axis since May 24, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamb,3,OK,similar trend BLCT 12; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,mamb,7,OK,for confirmation
+NULL,NULL,NULL,Mizpah Capina,mamb,8,OK,similar trend with BLCT 12; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,mamb,11,OK,similar trend with BCLT 14; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,mamb,14,OK,similar trend BLCT 12/18
+NULL,NULL,2013-12-29,Mizpah Capina,mamb,15,Not OK,big jump in data; no data since January 2014
+NULL,NULL,2012-11-14,Mizpah Capina,mamb,17,Not OK,NULL
+NULL,NULL,2012-09-23,Mizpah Capina,mamb,18,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,mamb,20,Special Case,intermittent 0 value all axis
+NULL,NULL,NULL,Mizpah Capina,mamb,23,Special Case,intermittent 0 value all axis
+NULL,NULL,NULL,Mizpah Capina,mamb,25,OK,for confirmation
+NULL,NULL,2013-07-29,Mizpah Capina,mamb,27,Not OK,"0 value all axis since July 29, 2013"
+NULL,NULL,2013-06-17,Mizpah Capina,mamb,29,Not OK,"0 value all axis since June 17, 2013"
+NULL,NULL,2013-03-09,Mizpah Capina,mamt,1,Not OK,"since March 9, 2013"
+NULL,NULL,NULL,Mizpah Capina,mamt,2,Special Case,"Last data received June 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamt,3,Special Case,"last data received March 21, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamt,4,OK,"last data received Aug 5, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamt,5,OK,"last data received July 29, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamt,6,Special Case,"last data received March 15, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamt,7,Special Case,"last data received March 15, 2014"
+NULL,NULL,2012-10-17,Mizpah Capina,mamt,17,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,mamt,21,Special Case,"last data received June 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamt,22,Special Case,"last data received March 15, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamt,23,OK,"last data received Aug 4, 2014"
+NULL,NULL,NULL,Mizpah Capina,mamt,24,Special Case,"0 value all axis since April 23, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,1,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,2,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,3,Use with Caution,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,4,Use with Caution,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,5,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,6,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,7,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,8,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,9,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,10,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,11,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,12,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,13,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,14,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,15,Use with Caution,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,16,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,17,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,18,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,19,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,20,OK,"last data received July 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,21,Use with Caution,"last data received May 21, 2014"
+NULL,NULL,NULL,Mizpah Capina,oslb,22,Use with Caution,"last data received May 21, 2014"
+NULL,NULL,2013-11-22,Mizpah Capina,oslb,23,Not OK,"last data received Nov 22, 2013"
+NULL,NULL,2014-05-21,Mizpah Capina,oslt,5,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,oslt,7,Special Case,intermittent 0 all axis
+NULL,NULL,2014-05-21,Mizpah Capina,oslt,9,Not OK,NULL
+NULL,NULL,2014-05-21,Mizpah Capina,oslt,10,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,plab,1,OK,"last data received May 10, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,2,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,3,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,4,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,5,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,6,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,7,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,8,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,9,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,10,Use with Caution,"similar trend with BLCT 14; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,11,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,12,Use with Caution,"similar trend with BLCT 14 (smaller magnitude); last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,13,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,14,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,15,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,16,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,17,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,18,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,19,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,20,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,21,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,22,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,23,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,24,Use with Caution,"similar trend with BLCT 12; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,25,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,26,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,27,Use with Caution,"similar trend with BLCT 14; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,28,Use with Caution,"similar trend with BLCT 14 (smaller magnitude); last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,29,Use with Caution,"similar trend with BLCT 14 (smaller magnitude); last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,30,Use with Caution,"similar trend with BLCT 14 (smaller magnitude); last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,31,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,32,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,33,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,34,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,35,Use with Caution,"decreasing z; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,36,OK,"last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,37,Use with Caution,"noticeable correlated movement; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,38,Use with Caution,"noticeable correlated movement; last data received May 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plab,39,Use with Caution,"noticeable correlated movement; last data received May 9, 2014"
+NULL,NULL,2013-08-21,Mizpah Capina,plab,40,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,plat,1,OK,similar trend with BLCT 12
+NULL,NULL,NULL,Mizpah Capina,plat,2,OK,similar trend with BLCT 12; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,plat,3,OK,similar trend with BLCT 12; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,plat,5,OK,noticeable correlated movement
+NULL,NULL,NULL,Mizpah Capina,plat,6,OK,noticeable correlated movement
+NULL,NULL,NULL,Mizpah Capina,plat,8,OK,similar trend with BLCT 14; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,plat,9,OK,similar trend with BLCT 14; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,plat,10,OK,similar trend with BLCT 14; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,plat,11,OK,similar trend with BLCT 14; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,plat,12,OK,similar trend with BLCT 12; smaller magnitude
+NULL,NULL,2014-03-17,Mizpah Capina,plat,13,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,plat,15,OK,similar trend with BLCT 14; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,plat,16,Special Case,"data became invalid after July 19, 2014"
+NULL,NULL,NULL,Mizpah Capina,plat,17,Use with Caution,similar trend with BLCT 12
+NULL,NULL,NULL,Mizpah Capina,plat,18,Special Case,"0 value all axis since April 26, 2014"
+NULL,NULL,NULL,Mizpah Capina,plat,20,OK,similar trend with BLCT 12
+NULL,NULL,NULL,Mizpah Capina,plat,21,OK,similar trend with BLCT 12
+NULL,NULL,NULL,Mizpah Capina,plat,23,Special Case,"0 value all axis since April 14, 2014"
+NULL,NULL,2013-07-10,Mizpah Capina,plat,24,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,plat,25,Special Case,"0 value since April 7, 2014"
+NULL,NULL,NULL,Mizpah Capina,plat,26,Special Case,"0 value since July 17, 2014"
+NULL,NULL,2013-09-23,Mizpah Capina,plat,27,Not OK,"0 value since Sept 23, 2013"
+NULL,NULL,NULL,Mizpah Capina,plat,28,Special Case,"0 value since April 9, 2014"
+NULL,NULL,NULL,Mizpah Capina,plat,31,Use with Caution,similar trend BLCT 14; smaller magnitude
+NULL,NULL,NULL,Mizpah Capina,plat,32,OK,similar trend BLCT 12; smaller magnitude
+NULL,NULL,2013-03-23,Mizpah Capina,plat,36,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,plat,37,Use with Caution,similar trend BLCT 14
+NULL,NULL,2013-04-02,Mizpah Capina,plat,39,Not OK,NULL
+NULL,NULL,2013-04-19,Mizpah Capina,pugb,1,Not OK,"last data received April 19, 2013"
+NULL,NULL,NULL,Mizpah Capina,pugb,3,OK,"last data received May 1, 2014"
+NULL,NULL,NULL,Mizpah Capina,pugb,4,Use with Caution,decreasing z
+NULL,NULL,2012-09-11,Mizpah Capina,pugb,9,Not OK,"last data received Sept 11, 2012"
+NULL,NULL,NULL,Mizpah Capina,pugb,10,OK,"last data received May 1, 2014"
+NULL,NULL,2013-04-18,Mizpah Capina,pugb,12,Not OK,"last data received April 18, 2013"
+NULL,NULL,2013-05-21,Mizpah Capina,pugt,1,Not OK,"last data received May 21, 2013"
+NULL,NULL,NULL,Mizpah Capina,pugt,4,Use with Caution,increasing z; small magnitude
+NULL,NULL,2013-12-24,Mizpah Capina,pugt,6,Not OK,NULL
+NULL,NULL,2013-12-09,Mizpah Capina,pugt,7,Not OK,"last data received Dec 9, 2013"
+NULL,NULL,2011-04-09,Mizpah Capina,pugt,10,Not OK,"last data received April 9, 2011"
+NULL,NULL,NULL,Mizpah Capina,sinb,3,OK,similar magnitude BLCT 14; smaller magnitude
+NULL,NULL,2013-11-25,Mizpah Capina,sinb,6,Not OK,"last data received Nov 25, 2013"
+NULL,NULL,2013-11-25,Mizpah Capina,sinb,7,Not OK,"last data received Nov 25, 2013"
+NULL,NULL,2014-01-02,Mizpah Capina,sinb,9,Not OK,NULL
+NULL,NULL,2014-01-02,Mizpah Capina,sinb,10,Not OK,NULL
+NULL,NULL,2014-01-02,Mizpah Capina,sinb,11,Not OK,NULL
+NULL,NULL,2014-01-02,Mizpah Capina,sinb,12,Not OK,NULL
+NULL,NULL,2014-04-22,Mizpah Capina,sinb,13,Not OK,"last data received April 22, 2014"
+NULL,NULL,2014-03-17,Mizpah Capina,sinb,14,Not OK,NULL
+NULL,NULL,2013-11-25,Mizpah Capina,sinb,15,Not OK,NULL
+NULL,NULL,2012-08-26,Mizpah Capina,sinb,16,Not OK,NULL
+NULL,NULL,2014-01-02,Mizpah Capina,sinb,18,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,sinb,19,OK,similar trend with BLCT 14; smaller magnitude
+NULL,NULL,2014-02-22,Mizpah Capina,sinb,20,Not OK,NULL
+NULL,NULL,2014-02-22,Mizpah Capina,sinb,21,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,sinb,22,Special Case,sudden jump Jan 2 2014
+NULL,NULL,2013-04-20,Mizpah Capina,sinb,24,Not OK,"last data received April 20, 2013"
+NULL,NULL,2013-11-25,Mizpah Capina,sinb,25,Not OK,"last data received Nov 25, 2013"
+NULL,NULL,NULL,Mizpah Capina,sinb,28,Special Case,sudden jump Jan 2 2014
+NULL,NULL,NULL,Mizpah Capina,sinb,29,Special Case,drift
+NULL,NULL,NULL,Mizpah Capina,sinu,6,OK,noticeable correlated movement
+NULL,NULL,2012-09-28,Mizpah Capina,sinu,7,Not OK,NULL
+NULL,NULL,2012-08-13,Mizpah Capina,sinu,15,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,sinu,20,Use with Caution,drifting x and y?
+NULL,NULL,2014-05-19,Mizpah Capina,sinu,25,Not OK,NULL
+NULL,NULL,NULL,Mizpah Capina,sinu,29,Use with Caution,drifting x

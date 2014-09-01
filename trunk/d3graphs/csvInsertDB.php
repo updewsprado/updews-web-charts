@@ -36,14 +36,38 @@
 							echo $data[$c] . ", ";
 						}
 						echo "<br />\n"; 
-/*
+
 						// Put csv data into the query
-						$query = "INSERT INTO users(post_id, post_timestamp, date_of_identification, flagger, site, node, status, comment) VALUES ('$data[0]','$data[1]', '$data[2]', '$data[3]', '$data[4]','$data[5]', '$data[6]', '$data[7]')";
+						$post_id;
+						$post_timestamp;
+						$comment;
+						if($data[0] === NULL) {
+							$post_id = NULL;
+						}
+						else {
+							$post_id = 'NULL';
+						}
+						
+						if($data[1] === NULL) {
+							$post_timestamp = NULL;
+						}
+						else {
+							$post_timestamp = 'NULL';
+						}
+						
+						if($data[7] === NULL) {
+							$comment = NULL;
+						}
+						else {
+							$comment = "'" . $data[7] . "'";
+						}
+						
+						$query = "INSERT INTO node_status(post_id, post_timestamp, date_of_identification, flagger, site, node, status, comment) VALUES ($post_id, $post_timestamp, '$data[2]', '$data[3]', '$data[4]','$data[5]', '$data[6]', $comment)";
 
 						if (!mysqli_query($con,$query)) {
 							die('Error: ' . mysqli_error($con));
 						}
-*/
+
 						echo "1 record added";
 					}
 					fclose($handle);
