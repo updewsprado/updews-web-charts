@@ -187,7 +187,9 @@ var tip = d3.tip()
   .html(function(d) {
     return "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
 		+ "<strong>Node ID:</strong> <span style='color:red'>" + d.node + "</span><Br/>"
-		+ "<strong>Alerts:</strong> <span style='color:red'>" + d.xalert + ", " + d.yalert + ", " + d.zalert +"</span>"
+		+ "<strong>Alerts:</strong> <span style='color:red'>" + Number((d.xalert).toFixed(3)) 
+		+ ", " + Number((d.yalert).toFixed(3)) 
+		+ ", " + Number((d.zalert).toFixed(3)) +"</span>"
   })	
 	
 // Define the line
