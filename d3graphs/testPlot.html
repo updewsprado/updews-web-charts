@@ -189,6 +189,18 @@ var tip = d3.tip()
 		+ "<strong>Node ID:</strong> <span style='color:red'>" + d.node + "</span><Br/>"
 		+ "<strong>Alerts:</strong> <span style='color:red'>" + d.xalert + ", " + d.yalert + ", " + d.zalert +"</span>"
   })	
+  
+// Tip that displays node status
+var stat_tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+	var post_ts, id_ts, flagger, site, node, status, comment;
+  
+    return "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
+		+ "<strong>Node ID:</strong> <span style='color:red'>" + d.node + "</span><Br/>"
+		+ "<strong>Alerts:</strong> <span style='color:red'>" + d.xalert + ", " + d.yalert + ", " + d.zalert +"</span>"
+  })
 	
 // Define the line
 var yvalline = d3.svg.line()	
