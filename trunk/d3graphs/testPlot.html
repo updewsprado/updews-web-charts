@@ -296,38 +296,6 @@ function getNodeStatus(xOffset) {
 		
 		var cellw = (graphDim.gWidth / maxNode) * 0.9;
 		var cellh = yOrd.rangeBand();
-		
-		/*
-		for (i = 0; i < nodeStatuses.length; i++) { 			
-			for (j = 1; j <= nodeStatuses[i].node; j++) { 
-				var xStart = x(j) + xOffset;
-				var yStart = yOrd(nodeStatuses[i].site);
-				var xWidth = xStart + cellw * 0.6;
-				var yHeight = yStart + cellh * 0.6;
-				var points = xStart + "," + yStart + "," +
-							xWidth + "," + yStart + "," +
-							xStart + "," + yHeight + "";
-			
-				svg.append("polygon")       // attach a polygon
-					.attr("class", "triangle")
-					.style("stroke", "none")  // colour the line
-					.style("fill", function(){
-						if(nodeStatuses[i].status == "Not OK") {
-							return "#EA0037";	//Red
-						}
-						else if(nodeStatuses[i].status == "Special Case") {
-							return "#0A64A4";
-						}
-						else if(nodeStatuses[i].status == "Use with Caution") {
-							return "#FFF500";
-						}
-					})     // remove any fill colour		
-					.attr("points", points);  // x,y points 	
-					//.on('mouseover', tip.show)
-					//.on('mouseout', tip.hide);	
-			}
-		}
-		*/
 			
 		svg.selectAll(".triangle")
 				.data(nodeStatuses)
@@ -354,7 +322,9 @@ function getNodeStatus(xOffset) {
 								xWidth + "," + yStart + "," +
 								xStart + "," + yHeight + "";
 					return points;
-				});  // x,y points 
+				})  // x,y points 
+				.on('mouseover', stat_tip.show)
+				.on('mouseout', stat_tip.hide);	
 	});
 }
 
