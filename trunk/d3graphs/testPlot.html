@@ -195,11 +195,28 @@ var stat_tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-	var post_ts, id_ts, flagger, site, node, status, comment;
+	var id_ts, comment;
+	
+	if(id_ts == "0000-00-00") {
+		id_ts = "";
+	}
+	else {
+		id_ts = "<strong>Date Discovered:</strong> <span style='color:red'>" + d.date_of_identification + "</span><Br/>";
+	}
   
-    return "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
+	if(comment == NULL) {
+		comment = "";
+	}
+	else {
+		comment = "<strong>Comment:</strong> <span style='color:red'>" + d.comment + "</span>";
+	}  
+  
+    return id_ts
+		+ "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
 		+ "<strong>Node ID:</strong> <span style='color:red'>" + d.node + "</span><Br/>"
-		+ "<strong>Alerts:</strong> <span style='color:red'>" + d.xalert + ", " + d.yalert + ", " + d.zalert +"</span>"
+		+ "<strong>Status:</strong> <span style='color:red'>" + d.status +"</span><Br/>"
+		+ "<strong>Flagger:</strong> <span style='color:red'>" + d.flagger +"</span><Br/>"
+		+ comment;
   })
 	
 // Define the line
