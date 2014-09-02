@@ -180,6 +180,7 @@ function make_yOrd_axis() {
         .ticks(1)
 }
 
+/*
 // Tip that displays node info
 var tip = d3.tip()
   .attr('class', 'd3-tip')
@@ -191,6 +192,7 @@ var tip = d3.tip()
 		+ ", " + Number((d.yalert).toFixed(3)) 
 		+ ", " + Number((d.zalert).toFixed(3)) +"</span>"
   })	
+*/
   
 var tip = d3.tip()
   .attr('class', 'd3-tip')
@@ -198,7 +200,7 @@ var tip = d3.tip()
   .html(function(d) {
 	var alert,status,id_ts,comment;
 	
-	if((parseInt(d.xalert) > 0) || (parseInt(d.yalert) > 0) || (parseInt(d.zalert) > 0)) {
+	if((parseFloat(d.xalert) > 0) || (parseFloat(d.yalert) > 0) || (parseFloat(d.zalert) > 0)) {
 		alert = "<strong>Alerts:</strong> <span style='color:red'>" + Number((d.xalert).toFixed(3)) 
 				+ ", " + Number((d.yalert).toFixed(3)) 
 				+ ", " + Number((d.zalert).toFixed(3)) +"</span><Br/>"
