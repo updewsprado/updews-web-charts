@@ -483,6 +483,49 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 					})
 					.text(desc); 
 			}
+			
+			//Status Triangles
+			var jctr = 5;
+			for (i = jctr; i <= jctr + 2; i++) { 
+				var desc, color;
+				
+				if (i == jctr) {
+					desc = "Use with Caution";	//Yellow
+					color = "#FFF500";
+				}
+				else if (i == jctr + 1) {
+					desc = "Not OK";	//Red
+					color = "#EA0037";
+				}
+				else if (i == jctr + 2) {
+					desc = "Special Case";	//Blue
+					color = "#0A64A4";
+				}
+				
+				svg.append("polygon")
+					.attr("class", "triangle")
+					.style("stroke", "none")  // colour the line
+					.style("fill", color)
+					.attr("transform", "translate(" + xOffset + ",0)")
+					.attr("points", function() {
+						var xStart = graphDim.gWidth + margin.right;
+						var yStart = i*(labelHeight + 5) - cellh * 0.8;
+						var xWidth = xStart + cellw * 0.6;
+						var yHeight = yStart + cellh * 0.6;
+						var points = xStart + "," + yStart + "," +
+									xWidth + "," + yStart + "," +
+									xStart + "," + yHeight + "";
+						return points;
+					})
+					
+				svg.append("text")
+					.attr("class", "legend")    // style the legend
+					.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
+					.attr("y", i*(labelHeight + 5))
+					.attr("transform", "translate(" + xOffset + ",0)")
+					.style("fill", color)
+					.text(desc); 					
+			}
 		}				
 	});
 	
