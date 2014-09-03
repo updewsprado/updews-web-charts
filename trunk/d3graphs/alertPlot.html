@@ -412,24 +412,29 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				.attr('fill', function(d){
 					var xdata, ydata, zdata;
 				
-					if(d.xalert > 0)
-						xdata = 1;
-					else
-						xdata = 0;
-						
-					if(d.yalert > 0)
-						ydata = 1;
-					else
-						ydata = 0;
-						
-					if(d.zalert > 0)
-						zdata = 1;
-					else
-						zdata = 0;
-				
-					var r = 85 * (xdata + ydata + zdata);
-					var b = 255 - (xdata + ydata + zdata) * 80;					
-					return color = d3.rgb(r, 174, b);
+					if((d.xalert > 0) || (d.yalert > 0) || (d.zalert > 0)) {
+						if(d.xalert > 0)
+							xdata = 1;
+						else
+							xdata = 0;
+							
+						if(d.yalert > 0)
+							ydata = 1;
+						else
+							ydata = 0;
+							
+						if(d.zalert > 0)
+							zdata = 1;
+						else
+							zdata = 0;
+					
+						var r = 85 * (xdata + ydata + zdata);
+						var b = 255 - (xdata + ydata + zdata) * 80;					
+						return color = d3.rgb(r, 174, b);
+					}
+					else {
+						return color = d3.rgb(3, 137, 156);
+					}
 				})
 				.attr('width', cellw)
 				.attr('height', cellh)
