@@ -1,13 +1,19 @@
 <?php
 	require_once('connectDB.php'); 
 
-	$site = $_POST['site'];
-	$node = $_POST['node'];
-	$status = $_POST['status'];
-	$flagger = $_POST['rname'];
-	$comment = $_POST['comment'];
-	$dateID = $_POST['dateinput'];
-
+	if(isset($_POST['site']) && isset($_POST['node']) && isset($_POST['status']) && isset($_POST['rname'])) {
+		$site = $_POST['site'];
+		$node = $_POST['node'];
+		$status = $_POST['status'];
+		$flagger = $_POST['rname'];
+		$comment = $_POST['comment'];
+		$dateID = $_POST['dateinput'];
+	}
+	else {
+		echo "Sorry, access invalid";
+		return;
+	}		
+	
 	// Create connection
 	$con = mysqli_connect($mysql_host, $mysql_user, $mysql_password, $mysql_database);
 
