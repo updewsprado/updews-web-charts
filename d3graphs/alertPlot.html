@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<title>Alert Color Map</title>
+<link href="../ajax/css/south-street/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+<script src="../ajax/development-bundle/jquery-1.10.2.js"></script>
+<script src="../ajax/js/jquery-ui-1.10.4.custom.js"></script>
+<script src="../ajax/development-bundle/ui/jquery.ui.core.js"></script>
+<script src="../ajax/development-bundle/ui/jquery.ui.widget.js"></script>
+<script src="../ajax/development-bundle/ui/jquery.ui.datepicker.js"></script>
+<script>
+    var date = new Date();
+	$(function() {
+    	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+        $( "#datepicker" ).datepicker("setDate", date);        
+	});
+</script>
 <style> /* set the CSS */
 
 body { font: 12px Arial;}
@@ -122,10 +136,81 @@ path {
 
 	<div id="posplot"></div>
 	
+	<div id="reportstatus">
+		<h2>Report a Node Status</h2>
+		<form name="reportForm" id="reportFormID" action="reportStatus.php" onsubmit="return validateForm()" method="post">
+		Site: <select name="site">
+			<option value="blcb">BLCB</option>
+			<option value="blct">BLCT</option>
+			<option value="bolb">BOLB</option>
+			<option value="gamb">GAMB</option>
+			<option value="gamt">GAMT</option>
+			<option value="humb">HUMB</option>
+			<option value="humt">HUMT</option>
+			<option value="labb">LABB</option>
+			<option value="labt">LABT</option>
+			<option value="lipb">LIPB</option>
+			<option value="lipt">LIPT</option>
+			<option value="mamb">MAMB</option>
+			<option value="mamt">MAMT</option>
+			<option value="oslb">OSLB</option>
+			<option value="oslt">OSLT</option>
+			<option value="plab">PLAB</option>
+			<option value="plat">PLAT</option>
+			<option value="pugb">PUGB</option>
+			<option value="pugt">PUGT</option>
+			<option value="sinb">SINB</option>
+			<option value="sint">SINT</option>
+			<option value="sinu">SINU</option>
+		</select><Br/>
+		Node: <input type="text" name="node" value="1" size="1"><Br/>
+		Status: <select name="status">
+			<option value="OK">OK</option>
+			<option value="Use with Caution">Use with Caution</option>
+			<option value="Not OK">Not OK</option>
+			<option value="Special Case">Special Case</option>
+		</select><Br/>
+		Start Date of Anomaly: <input type="text" id="datepicker" name="dateinput" size="20"/><Br/>
+		Reporter: <input type="text" name="rname" value=""><Br/>
+		<input type="submit" value="Submit">
+		</form>
+		<p>Comment/s:</p>
+		<textarea rows="5" cols="50" name="comment" form="reportFormID"></textarea>
+	</div><Br/>
+	
 	<div class="fb-comments" data-href="http://www.dewslandslide.com/d3graph/alertPlot.html" data-numposts="5" data-colorscheme="light"></div>
 </body>
 
 <script>
+
+function validateForm() {
+    var siteName = document.forms["reportForm"]["site"].value;
+	var nodeID = document.forms["reportForm"]["node"].value;
+	var status = document.forms["reportForm"]["status"].value;
+	var rname = document.forms["reportForm"]["rname"].value;
+	var comment = document.forms["reportForm"]["comment"].value;
+	var dateOfID = document.forms["reportForm"]["dateinput"].value;
+	
+    if (siteName == null || siteName == "") {
+        alert("Site must be filled out");
+        return false;
+    }
+	
+	if (nodeID == null || nodeID == "") {
+        alert("Node Number must be filled out");
+        return false;
+    }
+	
+	if (status == null || status == "") {
+        alert("Status must be filled out");
+        return false;
+    }
+	
+	if (rname == null || rname == "") {
+        alert("Status must be filled out");
+        return false;
+    }
+}
 
 // Set the dimensions of the canvas / graph
 var cWidth = 1400,
@@ -180,20 +265,7 @@ function make_yOrd_axis() {
         .ticks(1)
 }
 
-/*
 // Tip that displays node info
-var tip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
-		+ "<strong>Node ID:</strong> <span style='color:red'>" + d.node + "</span><Br/>"
-		+ "<strong>Alerts:</strong> <span style='color:red'>" + Number((d.xalert).toFixed(3)) 
-		+ ", " + Number((d.yalert).toFixed(3)) 
-		+ ", " + Number((d.zalert).toFixed(3)) +"</span>"
-  })	
-*/
-  
 var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
