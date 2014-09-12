@@ -419,337 +419,209 @@ var alertdata = [];
 function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	// Get the data
 	var jsondata = [];
-	getSiteMaxNodes(xOffset);
-	d3.json(url, function(error, data) {
-		jsondata = data;
-
-		data.forEach(function(d) {
-			d.node = parseInt(d.node);
-			d.xalert = parseFloat(d.xalert);
-			d.yalert = parseFloat(d.yalert);
-			d.zalert = parseFloat(d.zalert);
-		});
-		
-		alertdata = data;
-		//maxNode = d3.max(alertdata, function(d) { return parseFloat(d.node); });
-		
-		var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
-		// Add the X Axis
-		svg.append("g")
-			.attr("class", "x axis")
-			.attr("transform", "translate(" + horOff + "," + height + ")")
-			.call(make_x_axis2(maxNode));
-			
-		// Graph Label
-		svg.append("text")      // text label for the x axis
-			.attr("class", "axislabel")
-			.attr("x", xOffset + (graphDim.gWidth / 2))
-			.attr("y", 0 -(margin.top/2))
-			.text(title);			
-
-		// X axis Label
-		svg.append("text")      // text label for the x axis
-			.attr("class", "axislabel")
-			.attr("x", xOffset + (graphDim.gWidth / 2))
-			.attr("y", height + (margin.bottom/2) + 5)
-			.text("Nodes");
-			
-		// Add the Y Axis
-		svg.append("g")
-			.attr("class", "y axis")
-			.attr("transform", "translate(" + xOffset + ",0)")
-			.call(make_yOrd_axis());
-
-		// Y axis Label
-		svg.append("text")		// text label for the y axis
-			.attr("class", "axislabel")
-			.attr("transform", "rotate(-90)")
-			.attr("y", xOffset -5 - (margin.left / 2))
-			.attr("x", 0 - (height / 2))
-			.text("Column/Site");			
-			
-		var cellw = (graphDim.gWidth / maxNode) * 0.9;
-		var cellh = yOrd.rangeBand(); //9;
-
-		svg.selectAll(".cell")
-				.data(data)
-			.enter().append("rect")
-				.attr("class", "cell")
-				.attr('x', function(d){
-					return x(d.node) + xOffset;
-				})
-				.attr('y', function(d){
-					return yOrd(d.site);
-				})
-				.attr('fill', function(d){
-					var xdata, ydata, zdata;
-				
-					if((d.xalert > 0) || (d.yalert > 0) || (d.zalert > 0)) {
-						if(d.xalert > 0)
-							xdata = 1;
-						else
-							xdata = 0;
-							
-						if(d.yalert > 0)
-							ydata = 1;
-						else
-							ydata = 0;
-							
-						if(d.zalert > 0)
-							zdata = 1;
-						else
-							zdata = 0;
-					
-						var r = 85 * (xdata + ydata + zdata);
-						var b = 255 - (xdata + ydata + zdata) * 80;					
-						return color = d3.rgb(r, 174, b);
-					}
-					else {
-						return color = d3.rgb(3, 137, 156);
-					}
-				})
-				.attr('width', cellw)
-				.attr('height', cellh)
-				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);		
-
-		// Add the Legend
-		if(isLegends){
-			for (i = 0; i <= 3; i++) { 
-				var desc;
-				
-				if (i <= 1) {
-					desc = i + " axis alert";
-				}
-				else {
-					desc = i + " axes alerts";
-				}
 	
-				svg.append("rect")
+	getSiteMaxNodes(xOffset);
+	
+	var delay1 = 1000;//1 second
+    setTimeout(function(){	
+	
+		d3.json(url, function(error, data) {
+			jsondata = data;
+
+			data.forEach(function(d) {
+				d.node = parseInt(d.node);
+				d.xalert = parseFloat(d.xalert);
+				d.yalert = parseFloat(d.yalert);
+				d.zalert = parseFloat(d.zalert);
+			});
+			
+			alertdata = data;
+			//maxNode = d3.max(alertdata, function(d) { return parseFloat(d.node); });
+			
+			var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
+			// Add the X Axis
+			svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(" + horOff + "," + height + ")")
+				.call(make_x_axis2(maxNode));
+				
+			// Graph Label
+			svg.append("text")      // text label for the x axis
+				.attr("class", "axislabel")
+				.attr("x", xOffset + (graphDim.gWidth / 2))
+				.attr("y", 0 -(margin.top/2))
+				.text(title);			
+
+			// X axis Label
+			svg.append("text")      // text label for the x axis
+				.attr("class", "axislabel")
+				.attr("x", xOffset + (graphDim.gWidth / 2))
+				.attr("y", height + (margin.bottom/2) + 5)
+				.text("Nodes");
+				
+			// Add the Y Axis
+			svg.append("g")
+				.attr("class", "y axis")
+				.attr("transform", "translate(" + xOffset + ",0)")
+				.call(make_yOrd_axis());
+
+			// Y axis Label
+			svg.append("text")		// text label for the y axis
+				.attr("class", "axislabel")
+				.attr("transform", "rotate(-90)")
+				.attr("y", xOffset -5 - (margin.left / 2))
+				.attr("x", 0 - (height / 2))
+				.text("Column/Site");			
+				
+			var cellw = (graphDim.gWidth / maxNode) * 0.9;
+			var cellh = yOrd.rangeBand(); //9;
+
+			svg.selectAll(".cell")
+					.data(data)
+				.enter().append("rect")
 					.attr("class", "cell")
-					.attr("x", graphDim.gWidth + margin.right)
-					.attr("y", i*(labelHeight + 5) - cellh * 0.8)
-					.attr("transform", "translate(" + xOffset + ",0)")
+					.attr('x', function(d){
+						return x(d.node) + xOffset;
+					})
+					.attr('y', function(d){
+						return yOrd(d.site);
+					})
+					.attr('fill', function(d){
+						var xdata, ydata, zdata;
+					
+						if((d.xalert > 0) || (d.yalert > 0) || (d.zalert > 0)) {
+							if(d.xalert > 0)
+								xdata = 1;
+							else
+								xdata = 0;
+								
+							if(d.yalert > 0)
+								ydata = 1;
+							else
+								ydata = 0;
+								
+							if(d.zalert > 0)
+								zdata = 1;
+							else
+								zdata = 0;
+						
+							var r = 85 * (xdata + ydata + zdata);
+							var b = 255 - (xdata + ydata + zdata) * 80;					
+							return color = d3.rgb(r, 174, b);
+						}
+						else {
+							return color = d3.rgb(3, 137, 156);
+						}
+					})
 					.attr('width', cellw)
 					.attr('height', cellh)
-					.style("fill", function() { // Add the colours dynamically
-						if(i > 0) {
-							var r = 85 * i;
-							var b = 255 - i * 80;							
-							return color = d3.rgb(r, 174, b);
-						}
-						else {
-							return color = d3.rgb(3, 137, 156);
-						}
-					});
-	
-				svg.append("text")
-					.attr("class", "legend")    // style the legend
-					.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
-					.attr("y", i*(labelHeight + 5))
-					.attr("transform", "translate(" + xOffset + ",0)")
-					.style("fill", function() { // Add the colours dynamically
-						if(i > 0) {
-							var r = 85 * i;
-							var b = 255 - i * 80;							
-							return color = d3.rgb(r, 174, b);
-						}
-						else {
-							return color = d3.rgb(3, 137, 156);
-						}
-					})
-					.text(desc); 
-			}
-			
-			//Status Triangles
-			var jctr = 5;
-			for (i = jctr; i <= jctr + 2; i++) { 
-				var desc, color;
-				
-				if (i == jctr) {
-					desc = "Use with Caution";	//Yellow
-					color = "#FFF500";
-				}
-				else if (i == jctr + 1) {
-					desc = "Not OK";	//Red
-					color = "#EA0037";
-				}
-				else if (i == jctr + 2) {
-					desc = "Special Case";	//Blue
-					color = "#0A64A4";
-				}
-				
-				svg.append("polygon")
-					.attr("class", "triangle")
-					.style("stroke", "none")  // colour the line
-					.style("fill", color)
-					.attr("transform", "translate(" + xOffset + ",0)")
-					.attr("points", function() {
-						var xStart = graphDim.gWidth + margin.right;
-						var yStart = i*(labelHeight + 5) - cellh * 0.8;
-						var xWidth = xStart + cellw * 0.6;
-						var yHeight = yStart + cellh * 0.6;
-						var points = xStart + "," + yStart + "," +
-									xWidth + "," + yStart + "," +
-									xStart + "," + yHeight + "";
-						return points;
-					})
-					
-				svg.append("text")
-					.attr("class", "legend")    // style the legend
-					.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
-					.attr("y", i*(labelHeight + 5))
-					.attr("transform", "translate(" + xOffset + ",0)")
-					.style("fill", color)
-					.text(desc); 					
-			}
-		}				
-	});
-	
-	//Draw the node status symbol
-	getNodeStatus(xOffset);	
-}
-
-function generatePlotData(url, title, xOffset, isLegends, graphNum) {
-	// Get the data
-	var jsondata = [];
-	d3.json(url, function(error, data) {
-		jsondata = data;
-
-		data.forEach(function(d) {
-			d.xval = parseFloat(d.xval);
-			d.yval = parseFloat(d.yval);
-		});
-		
-		// Scale the range of the data
-		x.domain(d3.extent(data, function(d) { return parseFloat(d.xval); }));
-		y.domain(d3.extent(data, function(d) { return parseFloat(d.yval); }));
-
-		// Nest the entries by date
-		var dataNest = d3.nest()
-			.key(function(d) {return d.date;})
-			.entries(data);
-
-		var color = d3.scale.category10();   // set the colour scale
-
-		legendSpace = width/dataNest.length; // spacing for the legend
-
-		// Add the X Axis
-		svg.append("g")
-			.attr("class", "x axis")
-			//.attr("transform", "translate(0," + height + ")")
-			.attr("transform", "translate(" + xOffset + "," + height + ")")
-			.call(make_x_axis());
-
-		// Graph Label
-		svg.append("text")      // text label for the x axis
-			.attr("class", "axislabel")
-			.attr("x", xOffset + (graphDim.gWidth / 2))
-			.attr("y", 0 -(margin.top/2))
-			.text(title);
-			
-		// X axis Label
-		svg.append("text")      // text label for the x axis
-			.attr("class", "axislabel")
-			.attr("x", xOffset + (graphDim.gWidth / 2))
-			.attr("y", height + (margin.bottom/2) + 5)
-			.text("Horizontal Displacement (meters)");
-			
-		// Add the Y Axis
-		svg.append("g")
-			.attr("class", "y axis")
-			.attr("transform", "translate(" + xOffset + ",0)")
-			.call(make_y_axis());
-		
-		// Y axis Label
-		svg.append("text")		// text label for the y axis
-			.attr("class", "axislabel")
-			.attr("transform", "rotate(-90)")
-			.attr("y", xOffset -5 - (margin.left / 2))
-			.attr("x", 0 - (height / 2))
-			.text("Vertical Displacement (meters)");
-		
-		// Add the Grids
-		svg.append("g")
-			.attr("class", "grid")
-			.attr("transform", "translate(" + xOffset + "," + height + ")")
-			.call(make_x_axis()
-				.tickSize(-height, 0, 0)
-				.tickFormat("")
-			);
-
-		svg.append("g")
-			.attr("class", "grid")
-			.attr("transform", "translate(" + xOffset + ",0)")
-			.call(make_y_axis()
-				.tickSize(-graphDim.gWidth, 0, 0)
-				.tickFormat("")
-			);		
-		
-		// Loop through each date / key
-		dataNest.forEach(function(d,i) { 
-
-			svg.selectAll(".dot" + graphNum + "")
-					.data(jsondata)
-				.enter().append("circle")
-					.attr("class", "dot" + graphNum + "")
-					//.attr("transform", "translate(" + xOffset + ",0)")
-					.attr("r", 5)
-					.attr("cx", function(d) { return x(d.xval) + xOffset; })
-					.attr("cy", function(d) { return y(d.yval); })
 					.on('mouseover', tip.show)
-					.on('mouseout', tip.hide);
-		
-			svg.append("path")
-				.attr("class", "line")
-				.attr("transform", "translate(" + xOffset + ",0)")
-				.style("stroke", function() { // Add the colours dynamically
-					return d.color = color(d.key); })
-				.attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
-				.attr("d", yvalline(d.values));
-				
+					.on('mouseout', tip.hide);		
+
 			// Add the Legend
 			if(isLegends){
-				svg.append("text")
-					.attr("x", graphDim.gWidth + margin.right)  // space legend
-					.attr("y", i*(labelHeight + 5))
-					.attr("transform", "translate(" + xOffset + ",0)")
-					.attr("class", "legend")    // style the legend
-					.style("fill", function() { // Add the colours dynamically
-						return d.color = color(d.key); })
-					.on("click", function(){
-						// Determine if current line is visible 
-						var active   = d.active ? false : true,
-						newOpacity = active ? 0 : 1; 
-						// Hide or show the elements based on the ID
-						d3.select("#tag"+d.key.replace(/\s+/g, ''))
-							.transition().duration(100) 
-							.style("opacity", newOpacity); 
-						// Upxval whether or not the elements are active
-						d.active = active;
-						})  
-					.text(d.key); 
-			}
+				for (i = 0; i <= 3; i++) { 
+					var desc;
+					
+					if (i <= 1) {
+						desc = i + " axis alert";
+					}
+					else {
+						desc = i + " axes alerts";
+					}
+		
+					svg.append("rect")
+						.attr("class", "cell")
+						.attr("x", graphDim.gWidth + margin.right)
+						.attr("y", i*(labelHeight + 5) - cellh * 0.8)
+						.attr("transform", "translate(" + xOffset + ",0)")
+						.attr('width', cellw)
+						.attr('height', cellh)
+						.style("fill", function() { // Add the colours dynamically
+							if(i > 0) {
+								var r = 85 * i;
+								var b = 255 - i * 80;							
+								return color = d3.rgb(r, 174, b);
+							}
+							else {
+								return color = d3.rgb(3, 137, 156);
+							}
+						});
+		
+					svg.append("text")
+						.attr("class", "legend")    // style the legend
+						.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
+						.attr("y", i*(labelHeight + 5))
+						.attr("transform", "translate(" + xOffset + ",0)")
+						.style("fill", function() { // Add the colours dynamically
+							if(i > 0) {
+								var r = 85 * i;
+								var b = 255 - i * 80;							
+								return color = d3.rgb(r, 174, b);
+							}
+							else {
+								return color = d3.rgb(3, 137, 156);
+							}
+						})
+						.text(desc); 
+				}
+				
+				//Status Triangles
+				var jctr = 5;
+				for (i = jctr; i <= jctr + 2; i++) { 
+					var desc, color;
+					
+					if (i == jctr) {
+						desc = "Use with Caution";	//Yellow
+						color = "#FFF500";
+					}
+					else if (i == jctr + 1) {
+						desc = "Not OK";	//Red
+						color = "#EA0037";
+					}
+					else if (i == jctr + 2) {
+						desc = "Special Case";	//Blue
+						color = "#0A64A4";
+					}
+					
+					svg.append("polygon")
+						.attr("class", "triangle")
+						.style("stroke", "none")  // colour the line
+						.style("fill", color)
+						.attr("transform", "translate(" + xOffset + ",0)")
+						.attr("points", function() {
+							var xStart = graphDim.gWidth + margin.right;
+							var yStart = i*(labelHeight + 5) - cellh * 0.8;
+							var xWidth = xStart + cellw * 0.6;
+							var yHeight = yStart + cellh * 0.6;
+							var points = xStart + "," + yStart + "," +
+										xWidth + "," + yStart + "," +
+										xStart + "," + yHeight + "";
+							return points;
+						})
+						
+					svg.append("text")
+						.attr("class", "legend")    // style the legend
+						.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
+						.attr("y", i*(labelHeight + 5))
+						.attr("transform", "translate(" + xOffset + ",0)")
+						.style("fill", color)
+						.text(desc); 					
+				}
+			}				
 		});
-	});
+	
+	},delay1); 
+	
+	var delay2 = 2000;//3 seconds
+    setTimeout(function(){
+		//Draw the node status symbol
+		getNodeStatus(xOffset);	
+	},delay2); 	
 }
 		
 function showData() {
 	generateAlertPlot("getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
-	/*
-	// Clear the canvas area first
-	clearData();
-
-	// Generate the XY Graph
-	urlXY = "getPosPlot.php?site=" + frm.sites.value + "&interval=" + frm.interval.value;
-	titleXY = frm.sites.value + " XY Column Position";
-	generatePlotData(urlXY, titleXY, 0, true, 1);
-	
-	// Generate the XZ Graph
-	urlXZ = "getPosPlot.php?xz&site=" + frm.sites.value + "&interval=" + frm.interval.value;
-	titleXZ = frm.sites.value + " XZ Column Position";
-	generatePlotData(urlXZ, titleXZ, width * 0.6, false, 2);
-	*/
 }
 
 window.onload = showData;	
