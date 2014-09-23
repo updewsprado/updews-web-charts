@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="jquery-1.10.2.js"></script>
+<link href="jquery-ui-1.10.4.custom.css" rel="stylesheet"> 
+	<script src="jquery-ui-1.10.4.custom.js"></script>
+	<script src="jquery.ui.core.js"></script>
+	<script src="jquery.ui.widget.js"></script>
+	<script src="jquery.ui.datepicker.js"></script>
+	
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+<script>
+
+//date functions
+var end_date = new Date();
+    var from_date = new Date(end_date.getMonth()-1 + '-' + end_date.getDate() + '-' + end_date.getFullYear());
+	$(function() {
+    	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+        $( "#datepicker" ).datepicker("setDate", from_date);        
+	});
+
+    $(function() {
+    	$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
+        $( "#datepicker2" ).datepicker("setDate", end_date);
+	});
+//end date functions
+//function to show graphs	
+$(document).ready(function(){
+$('#graphing').click(function(){
+
+//node health chart
+
+var url_nodehealth = "getSenslopeData.php?health&site=" + $("#sites").val() + "&db=" + $("#dbase").val();
+
+$.getJSON(url_nodehealth, function(data){
+var json1 = data;
+var pjson1 = new Array();
+var pjson2 = new Array();
+var pjson3 = new Array();
+	$.map(json1, function(obj, i){
+	pjson1.push([obj.node, obj.all]);
+	pjson2.push([obj.node, obj.month]);
+	pjson3.push([obj.node, obj.week]);
+	});
+var nodechart = {
+	chart:{
+	renderTo: 'healthnodes',
+	type: 'column'
+	},
+	title: {
+	text: 'Node Health:' + $("#sites").val()
+	},
+	yAxis: {
+	gridLineWidth: 1,
+	type: 'linear',
+	title: {
+		text: 'Communication Health Ratio'
+		},
+	tickInterval: 0.1
+	},
+	xAxis: {
+	type: "category",
+	title: {
+		text: 'Node Number'
+	},
+	tickInterval:1
+	},
+	series: [
+	{name: 'Past 7 Days',
+		data: pjson3
+	},
+	{name: 'Past 30 Days',
+	data: pjson2
+	},
+	{name: 'Overall',
+	data: pjson1
+	}
+	]
+	};
+	var chart1 = new Highcharts.Chart(nodechart);
+});	
+
+//end node health chart
+
+//site health chart
+var datefrom = $("#datepicker").val()
+var url_sitehealth = "getSenslopeData.php?sitehealth&q=" + datefrom + "&site=" + $("#sites").val() + "&db=" + $("#dbase").val();
+$.getJSON(url_sitehealth, function(data){
+var json2 = data;
+var pjson4 = new Array();
+$.map(json2, function(obj, i){
+	pjson4.push([Date.parse(obj.timestamp), obj.count]);
+	});
+var sitechart = {
+	chart:{
+	renderTo: 'healthsite',
+	type: 'area'
+	},
+	title: {
+	text: 'Site Health:' + $("#sites").val()
+	},
+	yAxis: {
+	gridLineWidth: 1,
+	type: 'linear',
+	title: {
+		text: 'No. of Node Data Sent'
+		},
+	tickInterval: 10
+	},
+	xAxis: {
+	type: 'datetime',
+	title: {
+		text: 'Timestamp'
+	},
+	tickInterval: 7 * 24 * 3600 * 100
+	},
+	legend: {
+	enabled: false
+	},
+	series: [
+	{
+	name: "Data Sent",
+	data: []
+	}
+	]
+};
+var chart2 = new Highcharts.Chart(sitechart);
+});
+
+//end site health chart
+
+});//end button click
+});//end document
+//end function to show graphs
+
+</script>
+
+<body>
+<form name="charts">
+Database: <select id="dbase" name="dbase">
+<option value="senslopedb">Raw</option>
+<option value="senslopedb_purged">Purged</option>
+</select><Br/>
+	Site: <select id="sites" name="sites">
+	<option value="blcb">BLCB</option>
+	<option value="blct">BLCT</option>
+	<option value="bolb">BOLB</option>
+	<option value="gamb">GAMB</option>
+	<option value="gamt">GAMT</option>
+	<option value="humb">HUMB</option>
+	<option value="humt">HUMT</option>
+	<option value="labb">LABB</option>
+	<option value="labt">LABT</option>
+	<option value="lipb">LIPB</option>
+	<option value="lipt">LIPT</option>
+	<option value="mamb">MAMB</option>
+	<option value="mamt">MAMT</option>
+	<option value="oslb">OSLB</option>
+	<option value="oslt">OSLT</option>
+	<option value="plab">PLAB</option>
+	<option value="plat">PLAT</option>
+	<option value="pugb">PUGB</option>
+	<option value="pugt">PUGT</option>
+	<option value="sinb">SINB</option>
+	<option value="sint">SINT</option>
+	<option value="sinu">SINU</option>
+	</select>&nbsp;
+	
+	Node: <input type="number" min="1" max="40" name="node" value="1" size="1">&nbsp;
+	Start Date: <input type="text" id="datepicker" name="dateinput" size="20"/>&nbsp;
+	End Date: <input type="text" id="datepicker2" name="dateinput2" size="20"/>&nbsp;
+	<input type="button" value="go" id="graphing">&nbsp;
+</form>
+
+
+<hr>
+<h3>Node Health Graph</h3>
+<div id="healthnodes" style="width:100%; height:320px;"></div><hr>
+<h3>Site Health Graph</h3>
+<div id="healthsite" style="width:100%; height:320px;"></div><hr>
+<h3>Node Data Graph</h3>
+<div id="nodedata" style="width:100%; height:320px;"></div><hr>
+<h3>Rain Plot Graph</h3>
+<div id="rainplot" style="width:100%; height:320px;"></div><hr>
+</body>
+</html>
