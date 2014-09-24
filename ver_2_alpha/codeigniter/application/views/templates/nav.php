@@ -128,6 +128,7 @@
                             </li>
                         </ul>
                     </li>
+<!--                    
                     <li <?php echo $home; ?> >
                         <a href="<?php echo base_url(); ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>                                 
@@ -160,6 +161,7 @@
                     <li <?php echo $blank; ?> >
                         <a href="<?php echo base_url(); ?>blank"><i class="fa fa-fw fa-file"></i> Blank Page</a>
                     </li>
+-->                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

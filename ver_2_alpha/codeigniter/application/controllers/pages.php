@@ -14,7 +14,8 @@ class Pages extends CI_Controller {
 		$data['charts'] = $data['tables'] = $data['forms'] = $data['bselements'] = '';
 		$data['bsgrid'] = $data['blank'] = $data['home'] = $data['monitoring'] = '';
 		$data['dropdown_chart'] = $data['site'] = $data['node'] = '';
-		$data['jsfile'] = $data['gmap'] = '';
+		$data['jsfile'] = $data['gmap'] = $data['commhealth'] = $data['analysisdyna'] = '';
+		$data['sentnodetotal'] = $data['rainfall'] = '';
 
 		switch ($page) {
 			case 'home':
@@ -35,6 +36,10 @@ class Pages extends CI_Controller {
 				$data['dropdown_chart'] = 'class="active"';
 				$data['jsfile'] = '<script src="js/dewslandslide/dewsposition.js"></script>';
 				$data['gmap'] = '<script src="js/dewslandslide/dewsmaps.js"></script>';
+				$data['commhealth'] = '<script src="js/dewslandslide/dewscommhealth.js"></script>';
+				$data['analysisdyna'] = '<script src="js/dewslandslide/dewsanalysisdyna.js"></script>';
+				$data['sentnodetotal'] = '<script src="js/dewslandslide/dewssentnodetotal.js"></script>';
+				$data['rainfall'] = '<script src="js/dewslandslide/dewsrainfall.js"></script>';
 				break;
 				
 			case 'node':
