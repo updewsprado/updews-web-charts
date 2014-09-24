@@ -99,7 +99,7 @@ var tip = d3.tip()
 	if((parseFloat(d.xalert) > 0) || (parseFloat(d.yalert) > 0) || (parseFloat(d.zalert) > 0)) {
 		alert = "<strong>Alerts:</strong> <span style='color:red'>" + Number((d.xalert).toFixed(3)) 
 				+ ", " + Number((d.yalert).toFixed(3)) 
-				+ ", " + Number((d.zalert).toFixed(3)) +"</span><Br/>"
+				+ ", " + Number((d.zalert).toFixed(3)) +"</span><Br/>";
 	}
 	else {
 		alert = "";
@@ -130,7 +130,7 @@ var tip = d3.tip()
 		+ "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
 		+ "<strong>Node ID:</strong> <span style='color:red'>" + d.node + "</span><Br/>"
 		+ alert + status + comment;
-  })
+  });
 
 //initialize dimensions
 function init_dims() {
@@ -173,28 +173,28 @@ function make_x_axis() {
     return d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .ticks(40)
+        .ticks(40);
 }
 
 function make_x_axis2(tick) {        
     return d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .ticks(tick)
+        .ticks(tick);
 }
 
 function make_y_axis() {        
     return d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(5)
+        .ticks(5);
 }
 
 function make_yOrd_axis() {        
     return d3.svg.axis()
         .scale(yOrd)
         .orient("left")
-        .ticks(1)
+        .ticks(1);
 }		  
 			
 function clearData() {
@@ -468,7 +468,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 										xWidth + "," + yStart + "," +
 										xStart + "," + yHeight + "";
 							return points;
-						})
+						});
 						
 					svg.append("text")
 						.attr("class", "legend")    // style the legend

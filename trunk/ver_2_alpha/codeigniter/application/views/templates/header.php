@@ -26,12 +26,30 @@
     <!-- Custom DEWS Landslide CSS -->
     <link href="css/dewslandslide/dewsalert.css" rel="stylesheet" type="text/css">
     <link href="css/dewslandslide/dewsposition.css" rel="stylesheet" type="text/css">
+    <link href="css/dewslandslide/dewscommhealth.css" rel="stylesheet" type="text/css">
+    <link href="css/dewslandslide/dewsanalysisdyna.css" rel="stylesheet" type="text/css">
+    <link href="css/dewslandslide/dewssentnodetotal.css" rel="stylesheet" type="text/css">
+    <link href="css/dewslandslide/dewsrainfall.css" rel="stylesheet" type="text/css">
+
+	<!-- Serif Font -->
+	<link href='http://fonts.googleapis.com/css?family=Lato|Droid+Serif|Open+Sans' rel='stylesheet' type='text/css'>
+
+	<!-- jQuery Skins -->
+	<link href="css/dewslandslide/south-street/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
+    
+    <!-- jQuery Development Bundle -->
+    <script src="js/development-bundle/ui/jquery.ui.core.js"></script>
+	<script src="js/development-bundle/ui/jquery.ui.widget.js"></script>
+	<script src="js/development-bundle/ui/jquery.ui.datepicker.js"></script>
 
 	<!-- Spinner -->
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+
+	<!-- load DyGraphs -->
+	<script type="text/javascript" src="http://dygraphs.com/dygraph-combined.js"></script>
 
 	<!-- load the d3.js library -->    
 	<script src="http://d3js.org/d3.v3.min.js"></script>
@@ -47,6 +65,10 @@
     -->	
     <?php echo $jsfile; ?>
     <?php echo $gmap; ?>
+    <?php echo $commhealth; ?>
+    <?php echo $analysisdyna; ?>
+    <?php echo $sentnodetotal; ?>
+    <?php echo $rainfall; ?>
     
 	<!-- Load the Map -->
 	<script>

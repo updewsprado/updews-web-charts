@@ -7,7 +7,17 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Site Overview <small>Site Overview</small>
+                        	<FORM NAME="formPosition">
+								<select name="sitegeneral" id="sitegeneral" onchange="showSitePlots(this.form)"></select>
+								<!-- <input type="button" value="go" onclick="showSitePlots(this.form)"> -->
+								Site Overview 
+								<small>
+									Database: <select name="dbase">
+									<option value="senslopedb">Raw</option>
+									<option value="senslopedb_purged">Purged</option>
+									</select>
+								</small>
+							</FORM>                        	                         
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
@@ -38,11 +48,8 @@
                             </div>
                             <div class="panel-body">
                                 <div id="position-canvas">
-                                	<FORM NAME="test">
+                                	<FORM NAME="formPosition">
 									<p>
-										Site: <select name="sites" id="selectSite">
-										</select>
-										<input type="button" value="go" onclick="showData(this.form)"><br />
 										Day Intervals: <select name="interval">
 										<option value="1">1</option>
 										<option value="2">2</option>
@@ -61,10 +68,159 @@
                 <!-- /.row -->
 
                 <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Communication Health</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="healthbars-canvas" >
+									<div id="div_health"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
+                     <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="mini-alert-canvas" >MINI ALERT MAP</div>
+                            </div>
+                        </div>
+                    </div>                                       
                 </div>
                 <!-- /.row -->
 
+				<div class="row">
+                     <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> XZ Linear Displacement (Zeroed and Offsetted)</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="analysis-dyna-canvas" >
+									<div id="xz-lin-zero-analysis-dyna-canvas"></div>                              	
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                    
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> XY Linear Displacement (Zeroed and Offsetted)</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="analysis-dyna-canvas" >
+									<div id="xy-lin-zero-analysis-dyna-canvas"></div>                               	
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                  
+                </div>	
+                <!-- /.row -->		
+                
+				<div class="row">
+                     <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> XZ Linear Displacement</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="analysis-dyna-canvas" >
+									<div id="xz-lin-analysis-dyna-canvas"></div>                               	
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                    
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> XY Linear Displacement</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="analysis-dyna-canvas" >
+									<div id="xy-lin-analysis-dyna-canvas"></div>                              	
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                  
+                </div>	
+                <!-- /.row -->	
+                
+				<div class="row">
+                     <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> XZ Linear Velocity</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="analysis-dyna-canvas" >
+									<div id="xz-vel-analysis-dyna-canvas"></div>                               	
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                    
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> XY Linear Velocity</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="analysis-dyna-canvas" >
+									<div id="xy-vel-analysis-dyna-canvas"></div>                             	
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                  
+                </div>	
+                <!-- /.row -->	                                
+
+                <!-- Heading for Date Dependent Charts -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ol class="breadcrumb">
+                            <li class="active">
+                            	<FORM id="formDate">
+                                <i class="fa fa-dashboard"></i> Date Dependent Charts                                
+                                , Date: <input type="text" id="datepicker" name="dateinput" size="10"/>
+                                </FORM>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+				<div class="row">
+                     <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Sent Node Data</h3>
+                            </div>
+                            <div class="panel-body">
+								<div id="sent-node-canvas"></div>                               	
+                            </div>
+                        </div>
+                    </div>     
+                    
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Rainfall Data</h3>
+                            </div>
+                            <div class="panel-body">
+								<div id="rainfall-canvas"></div>   
+								<div id="txtHint"><b>...</b></div>                          	
+                            </div>
+                        </div>
+                    </div>                                  
+                </div>	
+                <!-- /.row -->	    
+                		
             </div>
             <!-- /.container-fluid -->
 
@@ -72,7 +228,56 @@
         <!-- /#page-wrapper -->
         
 <script>
+var options = ["select", "blcb", "blct", "bolb", "gamb", "gamt",
+				"humb", "humt", "labb", "labt", "lipb",
+				"lipt", "mamb", "mamt", "oslb", "oslt",
+				"plab", "plat", "pugb", "pugt", "sinb",
+				"sinu"];
+
+function popDropDownGeneral() {
+	var select = document.getElementById('sitegeneral');
+	var i;
+	for (i = 0; i < options.length; i++) {
+		var opt = options[i];
+		var el = document.createElement("option");
+		el.textContent = opt.toUpperCase();
+		
+		if(opt == "select") {
+			el.value = "none";
+		}
+		else {
+			el.value = opt;
+		}
+		
+		select.appendChild(el);
+	}
+}
+
 window.onload = function() {
-	initPosPlot();
+	positionPlot.init_dims();
+	//initAnalysisDyna();
+	popDropDownGeneral();
 }	
+
+function showSitePlots (frm) {
+	if(frm.sitegeneral.value == "none") {
+		//do nothing
+	}
+	else {
+		showPositionPlotGeneral(frm);
+		showAnalysisDynaGeneral(frm);
+		showSentNodeTotalGeneral(frm);
+		
+	    setTimeout(function(){
+			//Add 1 sec delay
+			showCommHealthPlotGeneral(frm);
+		}, 4000); 
+		
+		setTimeout(function(){
+			//Add 1 sec delay
+			showRainGeneral(frm);
+		}, 20000); 
+	}
+}
+
 </script>
