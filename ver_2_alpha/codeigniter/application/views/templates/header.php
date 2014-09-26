@@ -30,6 +30,8 @@
     <link href="css/dewslandslide/dewsanalysisdyna.css" rel="stylesheet" type="text/css">
     <link href="css/dewslandslide/dewssentnodetotal.css" rel="stylesheet" type="text/css">
     <link href="css/dewslandslide/dewsrainfall.css" rel="stylesheet" type="text/css">
+    <link href="css/dewslandslide/dewslsbchange.css" rel="stylesheet" type="text/css">
+    <link href="css/dewslandslide/dewsaccel.css" rel="stylesheet" type="text/css">
 
 	<!-- Serif Font -->
 	<link href='http://fonts.googleapis.com/css?family=Lato|Droid+Serif|Open+Sans' rel='stylesheet' type='text/css'>
@@ -69,6 +71,8 @@
     <?php echo $analysisdyna; ?>
     <?php echo $sentnodetotal; ?>
     <?php echo $rainfall; ?>
+    <?php echo $lsbchange; ?>
+    <?php echo $accel; ?>
     
 	<!-- Load the Map -->
 	<script>

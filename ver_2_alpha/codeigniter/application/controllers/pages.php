@@ -2,7 +2,7 @@
 
 class Pages extends CI_Controller {
 
-	public function view(  $page = 'monitoring' )
+	public function view( $page = 'monitoring' )
 	{
 		$this->load->helper('url');
 	
@@ -15,7 +15,8 @@ class Pages extends CI_Controller {
 		$data['bsgrid'] = $data['blank'] = $data['home'] = $data['monitoring'] = '';
 		$data['dropdown_chart'] = $data['site'] = $data['node'] = '';
 		$data['jsfile'] = $data['gmap'] = $data['commhealth'] = $data['analysisdyna'] = '';
-		$data['sentnodetotal'] = $data['rainfall'] = '';
+		$data['sentnodetotal'] = $data['rainfall'] = $data['lsbchange'] = '';
+		$data['accel'] = '';
 
 		switch ($page) {
 			case 'home':
@@ -44,6 +45,11 @@ class Pages extends CI_Controller {
 				
 			case 'node':
 				$data['dropdown_chart'] = 'class="active"';
+				$data['jsfile'] = '<script src="js/dewslandslide/dewsposition.js"></script>';
+				$data['gmap'] = '<script src="js/dewslandslide/dewsmaps.js"></script>';
+				$data['rainfall'] = '<script src="js/dewslandslide/dewsrainfall.js"></script>';
+				$data['lsbchange'] = '<script src="js/dewslandslide/dewslsbchange.js"></script>';
+				$data['accel'] = '<script src="js/dewslandslide/dewsaccel.js"></script>';
 				break;
 			
 			case 'charts':
