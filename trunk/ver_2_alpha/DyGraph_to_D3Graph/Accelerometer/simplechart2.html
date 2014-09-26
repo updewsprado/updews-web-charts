@@ -499,17 +499,20 @@ d3.selectAll("svg").remove();
             rsiteid_prev = rsiteid;
             
 			
-            var target2 = document.getElementById('raindiv');
+            var target2 = document.getElementById('raindiv1');
             var spinner2 = new Spinner(opts).spin();
             target2.appendChild(spinner2.el);
         
-          
-            var url = "getRainfall.php?rsite=" + rsiteid + "&fdate=" + frm.dateinput.value + "&tdate=" + frm.dateinput2.value;
-            d3.json(url, function (error, data){
-			var x5 = d3.time.scale()
+          var x5 = d3.time.scale()
 		.range([0, width]);
 
 	var y5 = d3.scale.linear()
+		.range([height, 0]);
+		
+		var x6 = d3.time.scale()
+		.range([0, width]);
+
+	var y6 = d3.scale.linear()
 		.range([height, 0]);
 
 	var xAxis5 = d3.svg.axis()
@@ -519,49 +522,99 @@ d3.selectAll("svg").remove();
 	var yAxis5 = d3.svg.axis()
 		.scale(y5)
 		.orient("left").ticks(2);
+		
+		var xAxis6 = d3.svg.axis()
+		.scale(x5)
+		.orient("bottom");
+
+	var yAxis6 = d3.svg.axis()
+		.scale(y5)
+		.orient("left").ticks(2);
 
 	var area5 = d3.svg.area()
 		.x(function(d) { return x5(d.timestamp); })
-		.y0(height)
-		.y1(function(d) { return y5(d.xvalue); });
+		.y0(function (d) {if(d.cummulative < 0){return 0;} else return height})
+		.y1(function(d) { return y5(d.cummulative); });
 		
-
-	var chart5 = d3.select("#gdiv1").append("svg")
+	var area6 = d3.svg.area()
+		.x(function(d) { return x5(d.timestamp); })
+		.y0(function (d) {if(d.rain < 0){return 0;} else return height})
+		.y1(function(d) { return y5(d.rain); });
+		
+	var chart5 = d3.select("#raindiv1").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+		var chart6 = d3.select("#raindiv2").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+		var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+		
+            var url = "getRainfall.php?rsite=" + rsiteid + "&fdate=" + frm.dateinput.value + "&tdate=" + frm.dateinput2.value;
+            d3.json(url, function (error, data){
 			
 			data.forEach(function(d){
-		d.timestamp = parseDate(d.timestamp);
+		d.timestamp = parseDate(d.index);
+		d.cummulative = +d.cummulative;
+		d.rain = +d.rain;
 		});
-		jj = data;
 		
-		//x-value
+		
+		//cummulative
 		
 		x5.domain(d3.extent(data, function(d) { return d.timestamp; }));
-		y5.domain([d3.min(data, function(d) {return d.xvalue;}), d3.max(data, function(d) { return d.xvalue; })]);
+		y5.domain([d3.min(data, function(d) {return d.cummulative;}), d3.max(data, function(d) { return d.cummulative; })]);
 
 		chart5.append("path")
 		.datum(data)
 		.attr("class", "area")
-		.attr("d", area);
+		.attr("d", area5);
 
 		  chart5.append("g")
 			  .attr("class", "x axis")
 			  .attr("transform", "translate(0," + height + ")")
-			  .call(xAxis);
+			  .call(xAxis5);
 
 		  chart5.append("g")
 			  .attr("class", "y axis")
-			  .call(yAxis)
+			  .call(yAxis5)
 			.append("text")
 			  .attr("transform", "rotate(-90)")
-			  .attr("y", 1)
+			  .attr("y", -75)
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")
 			  .text("Rain Intensity (mm)");
 			  
+			  
+			  //rain
+			  
+			  x6.domain(d3.extent(data, function(d) { return d.timestamp; }));
+		y6.domain([d3.min(data, function(d) {return d.rain;}), d3.max(data, function(d) { return d.rain; })]);
+
+		chart6.append("path")
+		.datum(data)
+		.attr("class", "area2")
+		.attr("d", area6);
+
+		  chart6.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis6);
+
+		  chart6.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis5)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -75)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Rain Intensity (mm)");
 			});
             
             
@@ -638,7 +691,8 @@ d3.selectAll("svg").remove();
 <div id="gdiv2" style="width:100%; height:120px;"></div><hr>
 <div id="gdiv3" style="width:100%; height:120px;"></div><hr>
 <div id="gdiv4" style="width:100%; height:120px;"></div><hr>
-<div id="raindiv" style="width:100%; height:120px;"></div><hr>
+<div id="raindiv1" style="width:100%; height:120px;"></div><hr>
+<div id="raindiv2" style="width:100%; height:120px;"></div><hr>
 </FORM>
 
 <div id="demodiv"></div>
