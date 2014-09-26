@@ -188,7 +188,8 @@
                             <li class="active">
                             	<FORM id="formDate">
                                 <i class="fa fa-dashboard"></i> Date Dependent Charts                                
-                                , Date: <input type="text" id="datepicker" name="dateinput" size="10"/>
+                                , Start: <input type="text" id="datepicker" name="dateinput" size="10"/>
+                                 End: <input type="text" id="datepicker2" name="dateinput2" size="10"/>
                                 </FORM>
                             </li>
                         </ol>

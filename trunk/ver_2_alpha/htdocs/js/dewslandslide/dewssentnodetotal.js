@@ -6,6 +6,11 @@ $(function() {
 	$( "#datepicker" ).datepicker("setDate", start_date); 
 });
 
+$(function() {
+	$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
+    $( "#datepicker2" ).datepicker("setDate", end_date);
+});
+
 function barChartPlotter(e) {
   var ctx = e.drawingContext;
   var points = e.points;
