@@ -128,6 +128,46 @@
                             </li>
                         </ul>
                     </li>
+                    
+                    <li></li>
+                    
+                    <FORM id="formGeneral">
+                    <li>
+	                    <div class="form-group">
+	                        <label>Site:</label>
+	                        <select class="form-control" name="sitegeneral" id="sitegeneral" onchange="<?php echo $showplots; ?>">
+	                        </select>
+	                    </div>
+                    </li>
+                    
+                    <li>
+	                    <div id="nodeGeneral" class="form-group">
+	                        <label>Node:</label>
+	                        <input class="form-control" onchange="showAccelRelatedPlots(this.form)" type="number" min="1" max="41" name="node" value="1" maxlength="2" size="2">
+	                    </div>
+                    </li>
+                    
+                    <li>
+                        <div class="form-group">
+                            <label>Database:</label>
+	                        <select class="form-control" name="dbase" id="dbase">
+		                        <option value="senslopedb">Raw</option>
+								<option value="senslopedb_purged">Purged</option>
+	                        </select>
+                        </div>						
+                    </li>
+                    </FORM>  
+                    
+                    <FORM id="formDate">
+                    <li>	
+                    	<div class="form-group">
+                            <label>Date:</label><br />                              
+		                    Start: <input type="text" id="datepicker" name="dateinput" onchange="<?php echo $showdateplots; ?>" size="10"/><br />  
+		                     End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php echo $showdateplots; ?>" size="10"/>
+	                     </div>	
+                    </li> 
+                    </FORM>
+                    
 <!--                    
                     <li <?php echo $home; ?> >
                         <a href="<?php echo base_url(); ?>dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
@@ -161,7 +201,7 @@
                     <li <?php echo $blank; ?> >
                         <a href="<?php echo base_url(); ?>blank"><i class="fa fa-fw fa-file"></i> Blank Page</a>
                     </li>
--->                    
+-->                  
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

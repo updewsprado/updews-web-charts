@@ -16,7 +16,7 @@ class Pages extends CI_Controller {
 		$data['dropdown_chart'] = $data['site'] = $data['node'] = '';
 		$data['jsfile'] = $data['gmap'] = $data['commhealth'] = $data['analysisdyna'] = '';
 		$data['sentnodetotal'] = $data['rainfall'] = $data['lsbchange'] = '';
-		$data['accel'] = '';
+		$data['accel'] = $data['showplots'] = $data['showdateplots'] = '';
 
 		switch ($page) {
 			case 'home':
@@ -34,6 +34,9 @@ class Pages extends CI_Controller {
 				break;
 				
 			case 'site':
+				$data['showplots'] = 'showSitePlots(this.form)';
+				$data['showdateplots'] = "showDateSitePlots(document.getElementById('formGeneral'))";
+				
 				$data['dropdown_chart'] = 'class="active"';
 				$data['jsfile'] = '<script src="js/dewslandslide/dewsposition.js"></script>';
 				$data['gmap'] = '<script src="js/dewslandslide/dewsmaps.js"></script>';
@@ -44,6 +47,9 @@ class Pages extends CI_Controller {
 				break;
 				
 			case 'node':
+				$data['showplots'] = 'showNodePlots(this.form)';
+				$data['showdateplots'] = "showDateNodePlots(document.getElementById('formGeneral'))";
+			
 				$data['dropdown_chart'] = 'class="active"';
 				$data['jsfile'] = '<script src="js/dewslandslide/dewsposition.js"></script>';
 				$data['gmap'] = '<script src="js/dewslandslide/dewsmaps.js"></script>';
