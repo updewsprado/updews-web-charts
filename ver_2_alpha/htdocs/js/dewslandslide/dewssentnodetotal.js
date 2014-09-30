@@ -1,5 +1,6 @@
 var end_date = new Date();
-var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
+//var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
+var start_date = new Date(end_date.getFullYear(), end_date.getMonth(), end_date.getDate()-10);
 
 $(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
@@ -10,6 +11,50 @@ $(function() {
 	$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
     $( "#datepicker2" ).datepicker("setDate", end_date);
 });
+
+function JSON2CSV(objArray) {
+	var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+
+	var str = '';
+	var line = '';
+
+	if ($("#labels").is(':checked')) {
+		var head = array[0];
+		if ($("#quote").is(':checked')) {
+			for (var index in array[0]) {
+				var value = index + "";
+				line += '"' + value.replace(/"/g, '""') + '",';
+			}
+		} else {
+			for (var index in array[0]) {
+				line += index + ',';
+			}
+		}
+
+		line = line.slice(0, -1);
+		str += line + '\r\n';
+	}
+
+	for (var i = 0; i < array.length; i++) {
+		var line = '';
+
+		if ($("#quote").is(':checked')) {
+			for (var index in array[i]) {
+				var value = array[i][index] + "";
+				line += '"' + value.replace(/"/g, '""') + '",';
+			}
+		} else {
+			for (var index in array[i]) {
+				line += array[i][index] + ',';
+			}
+		}
+
+		line = line.slice(0, -1);
+		str += line + '\r\n';
+	}
+	return str;
+	
+}
 
 function barChartPlotter(e) {
   var ctx = e.drawingContext;
@@ -116,7 +161,8 @@ function sentNodeGeneral(frm, e) {
 		};
 	};
 	//var url ="temp/getSenslopeData.php?sitehealth&q=" + frm.dateinput.value + "&site=" + frm.sites.value + "&db=" + frm.dbase.value;
-	var url ="temp/getSenslopeData.php?sitehealth&q=" + blah + "&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
+	//var url ="temp/getSenslopeData.php?sitehealth&q=" + blah + "&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
+	var url ="ajax/getSenslopeData.php?sitehealth&q=" + blah + "&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
 	//var url ="temp/getSenslopeData.php?sitehealth&q=" + "2014-09-01" + "&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
 	xmlhttp.open("GET",url,true);
 	xmlhttp.send();	

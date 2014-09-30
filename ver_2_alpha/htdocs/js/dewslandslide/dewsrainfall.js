@@ -1,5 +1,6 @@
 var dateInput = 0;
 
+/*
 var end_date = new Date();
 var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
 
@@ -7,6 +8,7 @@ $(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
 	$( "#datepicker" ).datepicker("setDate", start_date); 
 });
+*/
 
 // Create the XHR object.
 function createCORSRequest(method, url) {

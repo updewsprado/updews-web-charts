@@ -2,6 +2,9 @@
  * @author PradoArturo
  */
 
+var prevIntvl = -1;
+var prevSite = -1;
+
 var positionPlot = new function() {
     this.cWidth = 0;
     this.cHeight = 0;
@@ -107,12 +110,14 @@ var positionPlot = new function() {
 		this.clearData();
 	
 		// Generate the XY Graph
-		urlXY = "temp/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
+		//urlXY = "temp/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
+		urlXY = "d3graph/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
 		titleXY = frm.sites1.value + " XY Column Position";
 		this.generatePlotData(urlXY, titleXY, 0, true, 1);
 		
 		// Generate the XZ Graph
-		urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
+		//urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
+		urlXZ = "d3graph/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
 		titleXZ = frm.sites1.value + " XZ Column Position";
 		this.generatePlotData(urlXZ, titleXZ, this.width * 0.6, false, 2);
 	};
@@ -270,27 +275,33 @@ function showPositionPlot(frm) {
 	positionPlot.clearData();
 
 	// Generate the XY Graph
-	urlXY = "temp/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
+	//urlXY = "temp/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
+	urlXY = "d3graph/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
 	titleXY = frm.sites1.value + " XY Column Position";
 	generatePlotData(urlXY, titleXY, 0, true, 1);
 	
 	// Generate the XZ Graph
-	urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
+	//urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
+	urlXZ = "d3graph/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
 	titleXZ = frm.sites1.value + " XZ Column Position";
 	generatePlotData(urlXZ, titleXZ, positionPlot.width * 0.6, false, 2);
 };
 
 function showPositionPlotGeneral(frm) {
+	var dayIntvl = document.getElementById("formPosition").interval.value;
+
 	// Clear the canvas area first
 	positionPlot.clearData();
 
 	// Generate the XY Graph
-	urlXY = "temp/getPosPlot.php?site=" + frm.sitegeneral.value + "&interval=6";
+	//urlXY = "temp/getPosPlot.php?site=" + frm.sitegeneral.value + "&interval=6";
+	urlXY = "d3graph/getPosPlot.php?site=" + frm.sitegeneral.value + "&interval=" + dayIntvl;
 	titleXY = frm.sitegeneral.value + " XY Column Position";
 	generatePlotData(urlXY, titleXY, 0, true, 1);
 	
 	// Generate the XZ Graph
-	urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sitegeneral.value + "&interval=6";
+	//urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sitegeneral.value + "&interval=6";
+	urlXZ = "d3graph/getPosPlot.php?xz&site=" + frm.sitegeneral.value + "&interval=" + dayIntvl;
 	titleXZ = frm.sitegeneral.value + " XZ Column Position";
 	generatePlotData(urlXZ, titleXZ, positionPlot.width * 0.6, false, 2);
 };

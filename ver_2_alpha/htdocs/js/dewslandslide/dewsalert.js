@@ -55,20 +55,9 @@ var margin = 0,
     height = 0;
 
 var graphDim = 0;
-
-/*
-var cWidth = document.getElementById('alert-canvas').offsetWidth;
-var cHeight = document.getElementById('alert-canvas').offsetHeight;
-
-//var margin = {top: 70, right: 20, bottom: 70, left: 90},
-var margin = {top: cHeight * 0.10, right: cWidth * 0.015, bottom: cHeight * 0.10, left: cWidth * 0.065},
-    width = cWidth - margin.left - margin.right,
-    height = cHeight - margin.top - margin.bottom;
-
-var graphDim = {gWidth: width * 0.8, gHeight: height};
-*/
 	
 var labelHeight = 16;
+var labelWidth = 130;
 	
 var graphCount = 0;
 	
@@ -79,15 +68,6 @@ var x, y, yOrd;
 
 var yvalline;
 var svg;
-
-/*
-// Set the ranges
-var x = d3.scale.linear().range([0, graphDim.gWidth]);
-var y = d3.scale.linear().range([graphDim.gHeight, 0]);
-var yOrd = d3.scale.ordinal()
-				//.rangeRoundBands([graphDim.gHeight, margin.top], 0.05);
-				.rangeRoundBands([graphDim.gHeight, 0], .1);
-*/
 
 // Tip that displays node info
 var tip = d3.tip()
@@ -138,11 +118,11 @@ function init_dims() {
 	cHeight = document.getElementById('alert-canvas').offsetHeight;
 	
 	//var margin = {top: 70, right: 20, bottom: 70, left: 90},
-	margin = {top: cHeight * 0.10, right: cWidth * 0.015, bottom: cHeight * 0.10, left: cWidth * 0.065};
+	margin = {top: cHeight * 0, right: cWidth * 0.005, bottom: cHeight * 0.10, left: cWidth * 0.065};
 	width = cWidth - margin.left - margin.right;
 	height = cHeight - margin.top - margin.bottom;
 	
-	graphDim = {gWidth: width * 0.8, gHeight: height};	
+	graphDim = {gWidth: width * 0.95, gHeight: height};	
 	
 	// Set the ranges
 	x = d3.scale.linear().range([0, graphDim.gWidth]);
@@ -211,7 +191,8 @@ function clearData() {
 var siteMaxNodes = [];
 var maxNode;
 function getSiteMaxNodes(xOffset) {
-	url = "../temp/getSiteMaxNodes.php";
+	//url = "../temp/getSiteMaxNodes.php";
+	url = "../d3graph/getSiteMaxNodes.php";
 	d3.json(url, function(error, data) {
 		siteMaxNodes = data;
 		
@@ -245,13 +226,10 @@ function getSiteMaxNodes(xOffset) {
 
 var nodeStatuses = [];
 function getNodeStatus(xOffset) {
-	url = "../temp/getNodeStatus.php";
+	//url = "../temp/getNodeStatus.php";
+	url = "../d3graph/getNodeStatus.php";
 	d3.json(url, function(error, data) {
 		nodeStatuses = data;
-
-		// Scale the range of the data
-		//x.domain([1, d3.max(data, function(d) { return parseFloat(d.nodes) + 1; })]);
-		//yOrd.domain(data.map(function(d) { return d.site; }));
 		
 		var cellw = (graphDim.gWidth / maxNode) * 0.9;
 		var cellh = yOrd.rangeBand();
@@ -309,25 +287,29 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 			alertdata = data;
 			
 			var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
+			
+			/*
 			// Add the X Axis
 			svg.append("g")
 				.attr("class", "x axis")
 				.attr("transform", "translate(" + horOff + "," + height + ")")
 				.call(make_x_axis2(maxNode));
 				
+			
 			// Graph Label
 			svg.append("text")      // text label for the x axis
 				.attr("class", "axislabel")
 				.attr("x", xOffset + (graphDim.gWidth / 2))
 				.attr("y", 0 -(margin.top/2))
-				.text(title);			
-	
+				.text(title);	
+					
 			// X axis Label
 			svg.append("text")      // text label for the x axis
 				.attr("class", "axislabel")
 				.attr("x", xOffset + (graphDim.gWidth / 2))
 				.attr("y", height + (margin.bottom/2) + 5)
 				.text("Nodes");
+			*/	
 				
 			// Add the Y Axis
 			svg.append("g")
@@ -335,13 +317,15 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				.attr("transform", "translate(" + xOffset + ",0)")
 				.call(make_yOrd_axis());
 	
+			/*
 			// Y axis Label
 			svg.append("text")		// text label for the y axis
 				.attr("class", "axislabel")
 				.attr("transform", "rotate(-90)")
 				.attr("y", xOffset -5 - (margin.left / 2))
 				.attr("x", 0 - (height / 2))
-				.text("Column/Site");			
+				.text("Column/Site");		
+			*/	
 				
 			var cellw = (graphDim.gWidth / maxNode) * 0.9;
 			var cellh = yOrd.rangeBand(); //9;
@@ -402,8 +386,8 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		
 					svg.append("rect")
 						.attr("class", "cell")
-						.attr("x", graphDim.gWidth + margin.right)
-						.attr("y", i*(labelHeight + 5) - cellh * 0.8)
+						.attr("x", i*(labelWidth))
+						.attr("y", graphDim.gHeight + cellh * 0.25)
 						.attr("transform", "translate(" + xOffset + ",0)")
 						.attr('width', cellw)
 						.attr('height', cellh)
@@ -420,8 +404,8 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 		
 					svg.append("text")
 						.attr("class", "legend")    // style the legend
-						.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
-						.attr("y", i*(labelHeight + 5))
+						.attr("x", i*(labelWidth) + cellw * 1.5)
+						.attr("y", graphDim.gHeight + cellh * 1.25)
 						.attr("transform", "translate(" + xOffset + ",0)")
 						.style("fill", function() { // Add the colours dynamically
 							if(i > 0) {
@@ -437,7 +421,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				}
 				
 				//Status Triangles
-				var jctr = 5;
+				var jctr = 0;
 				for (i = jctr; i <= jctr + 2; i++) { 
 					var desc, color;
 					
@@ -460,8 +444,8 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 						.style("fill", color)
 						.attr("transform", "translate(" + xOffset + ",0)")
 						.attr("points", function() {
-							var xStart = graphDim.gWidth + margin.right;
-							var yStart = i*(labelHeight + 5) - cellh * 0.8;
+							var xStart = i*(labelWidth)*1.5;
+							var yStart = graphDim.gHeight + cellh * 1.5;
 							var xWidth = xStart + cellw * 0.6;
 							var yHeight = yStart + cellh * 0.6;
 							var points = xStart + "," + yStart + "," +
@@ -472,8 +456,8 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 						
 					svg.append("text")
 						.attr("class", "legend")    // style the legend
-						.attr("x", graphDim.gWidth + margin.right + cellw * 1.5)  // space legend
-						.attr("y", i*(labelHeight + 5))
+						.attr("x", i*(labelWidth)*1.5 + cellw * 1.5)  // space legend
+						.attr("y", graphDim.gHeight + cellh * 2.5)
 						.attr("transform", "translate(" + xOffset + ",0)")
 						.style("fill", color)
 						.text(desc); 					
@@ -491,7 +475,8 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 }
 		
 function showData() {
-	generateAlertPlot("../temp/getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
+	//generateAlertPlot("../temp/getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
+	generateAlertPlot("../d3graph/getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
 }
 
 function initAlertPlot() {

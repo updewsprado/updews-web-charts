@@ -1,5 +1,6 @@
 var end_date = new Date();
-var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
+//var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
+var start_date = new Date(end_date.getFullYear(), end_date.getMonth(), end_date.getDate()-10);
 
 $(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
