@@ -6,19 +6,7 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                        	<FORM NAME="formPosition">
-								<select name="sitegeneral" id="sitegeneral" onchange="showSitePlots(this.form)"></select>
-								<!-- <input type="button" value="go" onclick="showSitePlots(this.form)"> -->
-								Site Overview 
-								<small>
-									Database: <select name="dbase">
-									<option value="senslopedb">Raw</option>
-									<option value="senslopedb_purged">Purged</option>
-									</select>
-								</small>
-							</FORM>                        	                         
-                        </h1>
+                        <h1 class="page-header">Site Overview</h1>
                         <ol class="breadcrumb">
                             <li class="active">
                                 <i class="fa fa-dashboard"></i> Monitoring
@@ -48,15 +36,15 @@
                             </div>
                             <div class="panel-body">
                                 <div id="position-canvas">
-                                	<FORM NAME="formPosition">
+                                	<FORM id="formPosition">
 									<p>
-										Day Intervals: <select name="interval">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
+										Day Intervals: <select name="interval" onchange="showPositionPlotGeneral(document.getElementById('formGeneral'))">
 										<option value="6">6</option>
+										<option value="5">5</option>
+										<option value="4">4</option>
+										<option value="3">3</option>
+										<option value="2">2</option>
+										<option value="1">1</option>
 										</select>
 									</p>
 									</FORM>
@@ -186,11 +174,7 @@
                     <div class="col-lg-12">
                         <ol class="breadcrumb">
                             <li class="active">
-                            	<FORM id="formDate">
                                 <i class="fa fa-dashboard"></i> Date Dependent Charts                                
-                                , Start: <input type="text" id="datepicker" name="dateinput" size="10"/>
-                                 End: <input type="text" id="datepicker2" name="dateinput2" size="10"/>
-                                </FORM>
                             </li>
                         </ol>
                     </div>
@@ -255,6 +239,7 @@ function popDropDownGeneral() {
 }
 
 window.onload = function() {
+	$('#nodeGeneral').hide();
 	positionPlot.init_dims();
 	//initAnalysisDyna();
 	popDropDownGeneral();
@@ -276,8 +261,21 @@ function showSitePlots (frm) {
 		
 		setTimeout(function(){
 			//Add 1 sec delay
-			showRainGeneral(frm);
+			//showRainGeneral(frm);
 		}, 20000); 
+	}
+}
+
+function showDateSitePlots (frm) {
+	if(frm.sitegeneral.value == "none") {
+		//do nothing
+	}
+	else {
+		showSentNodeTotalGeneral(frm);
+		setTimeout(function(){
+				//Add 1 sec delay
+				//showRainGeneral(frm);
+			}, 10000); 
 	}
 }
 

@@ -11,8 +11,7 @@
 	-->
 	</STYLE>
 	<meta charset="utf-8">
-	<!-- <title>View Senslope Data</title> -->
-	<title><?php echo $testname; ?></title>
+	<title>View Senslope Data</title>
 	<link href="css/dewslandslide/south-street/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 	<script src="js/development-bundle/jquery-1.10.2.js"></script>
 	<script src="js/jquery-ui-1.10.4.custom.js"></script>
@@ -44,8 +43,6 @@
 		}
     </style>
 	<script>
-	var accelData = <?php echo $testaccel; ?>;
-	
     var end_date = new Date();
     var from_date = new Date(end_date.getMonth()-1 + '-' + end_date.getDate() + '-' + end_date.getFullYear());
 	$(function() {
