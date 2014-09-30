@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+	<title>Plot Monitoring CSV Files</title>
+	<script type="text/javascript" src="http://dygraphs.com/dygraph-combined.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Lato|Droid+Serif|Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+<script src="http://d3js.org/d3.v3.js"></script>
+	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+	
+	<style>
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
+}
+</style>	
+<body>
+    
+<form>
+<p>
+	Site: <select name="sites">
+	<option value="blcb">BLCB</option>
+	<option value="blct">BLCT</option>
+	<option value="bolb">BOLB</option>
+	<option value="gamb">GAMB</option>
+	<option value="gamt">GAMT</option>
+	<option value="humb">HUMB</option>
+	<option value="humt">HUMT</option>
+	<option value="labb">LABB</option>
+	<option value="labt">LABT</option>
+	<option value="lipb">LIPB</option>
+	<option value="lipt">LIPT</option>
+	<option value="mamb">MAMB</option>
+	<option value="mamt">MAMT</option>
+	<option value="oslb">OSLB</option>
+	<option value="oslt">OSLT</option>
+	<option value="plab">PLAB</option>
+	<option value="plat">PLAT</option>
+	<option value="pugb">PUGB</option>
+	<option value="pugt">PUGT</option>
+	<option value="sinb">SINB</option>
+	<option value="sint">SINT</option>
+	<option value="sinu">SINU</option>
+	</select>
+	<input type="button" value="Go" onclick="showData(this.form)" />
+</form>
+<hr>
+<div id="selected"><h2>Selected Site: None</h2></div>
+<hr>
+<h2>XZ Linear Displacement (Zeroed and Offseted)</h2>
+<div id="graph1" style="width:100%; height:450px;"></div><hr>
+<h2>XZ Linear Displacement</h2>
+<div id="graph2" style="width:100%; height:450px;"></div><hr>
+<h2>XZ Linear Velocity</h2>
+<div id="graph3" style="width:100%; height:450px;"></div><hr>
+<h2>XY Linear Displacement (Zeroed and Offseted)</h2>
+<div id="graph4" style="width:100%; height:450px;"></div><hr>
+<h2>XY Linear Displacement</h2>
+<div id="graph5" style="width:100%; height:450px;"></div><hr>
+<h2>XY Linear Velocity</h2>
+<div id="graph6" style="width:100%; height:450px;"></div><hr>
+<script type='text/javascript'>
+    
+	var opts = {
+		lines: 11, // The number of lines to draw
+		length: 6, // The length of each line
+		width: 3, // The line thickness
+		radius: 8, // The radius of the inner circle
+		corners: 1, // Corner roundness (0..1)
+		rotate: 0, // The rotation offset
+		direction: 1, // 1: clockwise, -1: counterclockwise
+		color: '#000', // #rgb or #rrggbb or array of colors
+		speed: 1.1, // Rounds per second
+		trail: 58, // Afterglow percentage
+		shadow: false, // Whether to render a shadow
+		hwaccel: false, // Whether to use hardware acceleration
+		className: 'spinner', // The CSS class to assign to the spinner
+		zIndex: 2e9, // The z-index (defaults to 2000000000)
+		top: '50%', // Top position relative to parent
+		left: '50%' // Left position relative to parent
+	};
+	
+	
+    var dir = "http://www.dewslandslide.com/ajax/csvmonitoring/";
+    
+    var div_array = [];
+    
+    function showData(frm){
+        d3.selectAll("svg").remove();
+        
+		
+		var site = frm.sites.value;
+        var target = document.getElementById('graph1');
+        
+        var spinner = new Spinner(opts).spin();
+        target.appendChild(spinner.el);
+		
+        var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+		
+		var margin = {top: 20, right: 80, bottom: 30, left: 50},
+			width = 950 - margin.left - margin.right,
+			height = 450 - margin.top - margin.bottom;
+		
+		var siteselect = document.getElementById('selected');
+		siteselect.innerHTML = "<h2>Selected Site: " + site + "</h2>";
+		
+		//XZ Linear Displacement OFF
+		
+		d3.csv(dir + site + " xz_0off.csv", function(data){
+		
+		var x1 = d3.time.scale()
+			.range([0, width]);
+
+		var y1 = d3.scale.linear()
+			.range([height, 0]);
+			
+		var color1 = d3.scale.category20b();
+		
+		var xAxis1 = d3.svg.axis()
+			.scale(x1)
+			.orient("bottom").ticks(4);
+
+		var yAxis1 = d3.svg.axis()
+			.scale(y1)
+			.orient("left");
+
+		var line1 = d3.svg.line()
+			.interpolate("linear")
+			.x(function(d) { return x1(d.date); })
+			.y(function(d) { return y1(d.xzoff); });
+
+		var svg = d3.select("#graph1").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		color1.domain(d3.keys(data[0]).filter(function(key) { return key !== "ts"; }));
+
+		data.forEach(function(d) {
+			d.date = parseDate(d.ts);
+			});
+			
+		var nodes1 = color1.domain().map(function(name) {
+				return {
+				    values: data.map(function(d) {
+					return {date: d.date, xzoff: +d[name]};
+				  })
+				};
+			  });
+			  
+		  x1.domain(d3.extent(data, function(d) { return d.date; }));
+
+		  y1.domain([
+			d3.min(nodes1, function(c) { return d3.min(c.values, function(v) { return v.xzoff; }); }),
+			d3.max(nodes1, function(c) { return d3.max(c.values, function(v) { return v.xzoff; }); })
+		  ]);
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis1);
+
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis1)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -50)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Displacement (m)");
+
+		  var node1 = svg.selectAll(".node1")
+			  .data(nodes1)
+			.enter().append("g")
+			  .attr("class", "node1");
+
+		  node1.append("path")
+			  .attr("class", "line1")
+			  .attr("d", function(d) { return line1(d.values); })
+			  .style("stroke", function(d) { return color1(d.name); });
+
+		  node1.append("text")
+			  .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+			  .attr("transform", function(d) { return "translate(" + x1(d.value.date) + "," + y1(d.value.xzoff) + ")"; })
+			  .attr("x", 3)
+			  .attr("dy", ".35em")
+			  .text(function(d) { return d.name; });
+		});
+		
+		
+		//XZ Linear Displacement
+		
+		
+		d3.csv(dir + site + " xz.csv", function(data){
+		
+		var x1 = d3.time.scale()
+			.range([0, width]);
+
+		var y1 = d3.scale.linear()
+			.range([height, 0]);
+			
+		var color1 = d3.scale.category20b();
+		
+		var xAxis1 = d3.svg.axis()
+			.scale(x1)
+			.orient("bottom").ticks(4);
+
+		var yAxis1 = d3.svg.axis()
+			.scale(y1)
+			.orient("left");
+
+		var line1 = d3.svg.line()
+			.interpolate("linear")
+			.x(function(d) { return x1(d.date); })
+			.y(function(d) { return y1(d.xzoff); });
+
+		var svg = d3.select("#graph2").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		color1.domain(d3.keys(data[0]).filter(function(key) { return key !== "ts"; }));
+
+		data.forEach(function(d) {
+			d.date = parseDate(d.ts);
+			});
+			
+		var nodes1 = color1.domain().map(function(name) {
+				return {
+				    values: data.map(function(d) {
+					return {date: d.date, xzoff: +d[name]};
+				  })
+				};
+			  });
+			  
+		  x1.domain(d3.extent(data, function(d) { return d.date; }));
+
+		  y1.domain([
+			d3.min(nodes1, function(c) { return d3.min(c.values, function(v) { return v.xzoff; }); }),
+			d3.max(nodes1, function(c) { return d3.max(c.values, function(v) { return v.xzoff; }); })
+		  ]);
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis1);
+
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis1)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -50)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Displacement (m)");
+
+		  var node1 = svg.selectAll(".node1")
+			  .data(nodes1)
+			.enter().append("g")
+			  .attr("class", "node1");
+
+		  node1.append("path")
+			  .attr("class", "line1")
+			  .attr("d", function(d) { return line1(d.values); })
+			  .style("stroke", function(d) { return color1(d.name); });
+
+		  node1.append("text")
+			  .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+			  .attr("transform", function(d) { return "translate(" + x1(d.value.date) + "," + y1(d.value.xzoff) + ")"; })
+			  .attr("x", 3)
+			  .attr("dy", ".35em")
+			  .text(function(d) { return d.name; });
+		});
+		
+		
+		//XZ Linear Velocity
+	
+		d3.csv(dir + site + " xz_vel.csv", function(data){
+		
+		var x1 = d3.time.scale()
+			.range([0, width]);
+
+		var y1 = d3.scale.linear()
+			.range([height, 0]);
+			
+		var color1 = d3.scale.category20b();
+		
+		var xAxis1 = d3.svg.axis()
+			.scale(x1)
+			.orient("bottom").ticks(4);
+
+		var yAxis1 = d3.svg.axis()
+			.scale(y1)
+			.orient("left");
+
+		var line1 = d3.svg.line()
+			.interpolate("linear")
+			.x(function(d) { return x1(d.date); })
+			.y(function(d) { return y1(d.xzoff); });
+
+		var svg = d3.select("#graph3").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		color1.domain(d3.keys(data[0]).filter(function(key) { return key !== "ts"; }));
+
+		data.forEach(function(d) {
+			d.date = parseDate(d.ts);
+			});
+			
+		var nodes1 = color1.domain().map(function(name) {
+				return {
+				  values: data.map(function(d) {
+					return {date: d.date, xzoff: +d[name]};
+				  })
+				};
+			  });
+			  
+		  x1.domain(d3.extent(data, function(d) { return d.date; }));
+
+		  y1.domain([
+			d3.min(nodes1, function(c) { return d3.min(c.values, function(v) { return v.xzoff; }); }),
+			d3.max(nodes1, function(c) { return d3.max(c.values, function(v) { return v.xzoff; }); })
+		  ]);
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis1);
+
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis1)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -50)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Velocity (m/day)");
+
+		  var node1 = svg.selectAll(".node1")
+			  .data(nodes1)
+			.enter().append("g")
+			  .attr("class", "node1");
+
+		  node1.append("path")
+			  .attr("class", "line1")
+			  .attr("d", function(d) { return line1(d.values); })
+			  .style("stroke", function(d) { return color1(d.name); });
+
+		  node1.append("text")
+			  .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+			  .attr("transform", function(d) { return "translate(" + x1(d.value.date) + "," + y1(d.value.xzoff) + ")"; })
+			  .attr("x", 3)
+			  .attr("dy", ".35em")
+			  .text(function(d) { return d.name; });
+		});
+		
+		
+		
+		//XY Linear Displacement Off
+		
+		d3.csv(dir + site + " xy_0off.csv", function(data){
+		
+		var x1 = d3.time.scale()
+			.range([0, width]);
+
+		var y1 = d3.scale.linear()
+			.range([height, 0]);
+			
+		var color1 = d3.scale.category20b();
+		
+		var xAxis1 = d3.svg.axis()
+			.scale(x1)
+			.orient("bottom").ticks(4);
+
+		var yAxis1 = d3.svg.axis()
+			.scale(y1)
+			.orient("left");
+
+		var line1 = d3.svg.line()
+			.interpolate("linear")
+			.x(function(d) { return x1(d.date); })
+			.y(function(d) { return y1(d.xzoff); });
+
+		var svg = d3.select("#graph4").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		color1.domain(d3.keys(data[0]).filter(function(key) { return key !== "ts"; }));
+
+		data.forEach(function(d) {
+			d.date = parseDate(d.ts);
+			});
+			
+		var nodes1 = color1.domain().map(function(name) {
+				return {
+				    values: data.map(function(d) {
+					return {date: d.date, xzoff: +d[name]};
+				  })
+				};
+			  });
+			  
+		  x1.domain(d3.extent(data, function(d) { return d.date; }));
+
+		  y1.domain([
+			d3.min(nodes1, function(c) { return d3.min(c.values, function(v) { return v.xzoff; }); }),
+			d3.max(nodes1, function(c) { return d3.max(c.values, function(v) { return v.xzoff; }); })
+		  ]);
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis1);
+
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis1)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -50)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Displacement (m)");
+
+		  var node1 = svg.selectAll(".node1")
+			  .data(nodes1)
+			.enter().append("g")
+			  .attr("class", "node1");
+
+		  node1.append("path")
+			  .attr("class", "line1")
+			  .attr("d", function(d) { return line1(d.values); })
+			  .style("stroke", function(d) { return color1(d.name); });
+
+		  node1.append("text")
+			  .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+			  .attr("transform", function(d) { return "translate(" + x1(d.value.date) + "," + y1(d.value.xzoff) + ")"; })
+			  .attr("x", 3)
+			  .attr("dy", ".35em")
+			  .text(function(d) { return d.name; });
+		});
+		
+		
+		
+		//XY Linear Displacement
+		
+		d3.csv(dir + site + " xy.csv", function(data){
+		
+		var x1 = d3.time.scale()
+			.range([0, width]);
+
+		var y1 = d3.scale.linear()
+			.range([height, 0]);
+			
+		var color1 = d3.scale.category20b();
+		
+		var xAxis1 = d3.svg.axis()
+			.scale(x1)
+			.orient("bottom").ticks(4);
+
+		var yAxis1 = d3.svg.axis()
+			.scale(y1)
+			.orient("left");
+
+		var line1 = d3.svg.line()
+			.interpolate("linear")
+			.x(function(d) { return x1(d.date); })
+			.y(function(d) { return y1(d.xzoff); });
+
+		var svg = d3.select("#graph5").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		color1.domain(d3.keys(data[0]).filter(function(key) { return key !== "ts"; }));
+
+		data.forEach(function(d) {
+			d.date = parseDate(d.ts);
+			});
+			
+		var nodes1 = color1.domain().map(function(name) {
+				return {
+				  values: data.map(function(d) {
+					return {date: d.date, xzoff: +d[name]};
+				  })
+				};
+			  });
+			  
+		  x1.domain(d3.extent(data, function(d) { return d.date; }));
+
+		  y1.domain([
+			d3.min(nodes1, function(c) { return d3.min(c.values, function(v) { return v.xzoff; }); }),
+			d3.max(nodes1, function(c) { return d3.max(c.values, function(v) { return v.xzoff; }); })
+		  ]);
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis1);
+
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis1)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -50)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Displacement (m)");
+
+		  var node1 = svg.selectAll(".node1")
+			  .data(nodes1)
+			.enter().append("g")
+			  .attr("class", "node1");
+
+		  node1.append("path")
+			  .attr("class", "line1")
+			  .attr("d", function(d) { return line1(d.values); })
+			  .style("stroke", function(d) { return color1(d.name); });
+
+		  node1.append("text")
+			  .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+			  .attr("transform", function(d) { return "translate(" + x1(d.value.date) + "," + y1(d.value.xzoff) + ")"; })
+			  .attr("x", 3)
+			  .attr("dy", ".35em")
+			  .text(function(d) { return d.name; });
+		});
+		
+	
+		
+		//XY Linear Velocity
+		
+		d3.csv(dir + site + " xy_vel.csv", function(data){
+		
+		var x1 = d3.time.scale()
+			.range([0, width]);
+
+		var y1 = d3.scale.linear()
+			.range([height, 0]);
+			
+		var color1 = d3.scale.category20b();
+		
+		var xAxis1 = d3.svg.axis()
+			.scale(x1)
+			.orient("bottom").ticks(4);
+
+		var yAxis1 = d3.svg.axis()
+			.scale(y1)
+			.orient("left");
+
+		var line1 = d3.svg.line()
+			.interpolate("linear")
+			.x(function(d) { return x1(d.date); })
+			.y(function(d) { return y1(d.xzoff); });
+
+		var svg = d3.select("#graph6").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		color1.domain(d3.keys(data[0]).filter(function(key) { return key !== "ts"; }));
+
+		data.forEach(function(d) {
+			d.date = parseDate(d.ts);
+			});
+			
+		var nodes1 = color1.domain().map(function(name) {
+				return {
+				    values: data.map(function(d) {
+					return {date: d.date, xzoff: +d[name]};
+				  })
+				};
+			  });
+			  
+		  x1.domain(d3.extent(data, function(d) { return d.date; }));
+
+		  y1.domain([
+			d3.min(nodes1, function(c) { return d3.min(c.values, function(v) { return v.xzoff; }); }),
+			d3.max(nodes1, function(c) { return d3.max(c.values, function(v) { return v.xzoff; }); })
+		  ]);
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis1);
+
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis1)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -50)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Velocity (m/day)");
+
+		  var node1 = svg.selectAll(".node1")
+			  .data(nodes1)
+			.enter().append("g")
+			  .attr("class", "node1");
+
+		  node1.append("path")
+			  .attr("class", "line1")
+			  .attr("d", function(d) { return line1(d.values); })
+			  .style("stroke", function(d) { return color1(d.name); });
+
+		  node1.append("text")
+			  .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+			  .attr("transform", function(d) { return "translate(" + x1(d.value.date) + "," + y1(d.value.xzoff) + ")"; })
+			  .attr("x", 3)
+			  .attr("dy", ".35em")
+			  .text(function(d) { return d.name; });
+		});
+		
+		
+		
+        spinner.stop();
+    }
+	
+	</script>
+</body>
+</html>

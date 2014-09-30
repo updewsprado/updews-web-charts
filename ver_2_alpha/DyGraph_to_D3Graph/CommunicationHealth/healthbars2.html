@@ -99,6 +99,7 @@ var options = ["blcb", "blct", "bolb", "gamb", "gamt",
 	
 function showGraph(frm)
 {
+d3.select("svg").remove();	
 var target = document.getElementById('barchart');
 	  var spinner = new Spinner().spin();
 	  target.appendChild(spinner.el);
@@ -117,22 +118,22 @@ w = window,
     height = y - margin.top - margin.bottom;
 
 	
-function updateWindow(){
-    x = w.innerWidth || e.clientWidth || g.clientWidth;
-    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-	d3.select("svg").remove();	
-    
-}
-window.onresize = updateWindow;  
+
 
 
 d3.json(url, function (data){
-var jsondata = data;
-var tip = d3.tip()
+	
+	data.forEach(function(d) {
+			d.all = +d.all;
+			d.week = +d.week;
+			d.month = +d.month;
+			});
+			
+	var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
-  .html(function() {
-    return "<strong>Overall</strong> <span style='color:red'>" + jsondata.all + "</span><br/><strong>Past 7 Days:</strong><span style='color:red'>" + jsondata.week + "</span><br/><strong>Past 30 Days:</strong><span style='color:red'>" + jsondata.month;
+  .html(function(d) {
+    return "<strong>Overall</strong> <span style='color:red'>" + d.all + "</span><br/><strong>Past 7 Days:</strong><span style='color:red'>" + d.week + "</span><br/><strong>Past 30 Days:</strong><span style='color:red'>" + d.month;
   });
   
   var svg = d3.select("#barchart").append("svg")
