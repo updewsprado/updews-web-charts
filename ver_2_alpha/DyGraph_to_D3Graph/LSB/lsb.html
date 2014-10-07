@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+	<script src="http://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+	<title>LSB Change Plot</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato|Droid+Serif|Open+Sans' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+		.myDygraph .dygraph-legend > span.highlight { border: 1px solid grey; }
+        
+    </style>
+    <style type="text/css">
+	
+	.grid .tick {
+			stroke: lightgrey;
+			opacity: 0.7;
+		}
+	.grid path {
+			  stroke-width: 0;
+		}
+		
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: #000;
+		  shape-rendering: crispEdges;
+		}
+
+		.x.axis path {
+		  display: none;
+		}
+
+		.line {
+		  fill: none;
+		  stroke: steelblue;
+		  stroke-width: 1.5px;
+		}
+		
+    </style>
+	
+</head>
+<body>
+    <script type='text/javascript'>
+
+    function showData(frm) {
+
+		d3.selectAll("svg").remove();
+		
+		var margin = {top: 20, right: 20, bottom: 30, left: 50},
+			width = 750 - margin.left - margin.right,
+			height = 500 - margin.top - margin.bottom;
+		
+		var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+		
+		var x1 = d3.time.scale()
+			.range([0, width]);
+
+		var y1 = d3.scale.linear()
+			.range([height, 0]);
+		
+		var x2 = d3.time.scale()
+			.range([0, width]);
+
+		var y2 = d3.scale.linear()
+			.range([height, 0]);
+			
+		var x3 = d3.time.scale()
+			.range([0, width]);
+
+		var y3 = d3.scale.linear()
+			.range([height, 0]);
+			
+		var xAxis1 = d3.svg.axis()
+			.scale(x1)
+			.orient("bottom").ticks(4)
+			.tickSize(-height, 0, 0);
+
+		var yAxis1 = d3.svg.axis()
+			.scale(y1)
+			.orient("left").ticks(8)
+			.tickSize(-width, 0, 0);
+			
+		var xAxis2 = d3.svg.axis()
+			.scale(x2)
+			.orient("bottom").ticks(4)
+			.tickSize(-height, 0, 0);
+
+		var yAxis2 = d3.svg.axis()
+			.scale(y2)
+			.orient("left").ticks(8)
+			.tickSize(-width, 0, 0);
+			
+		var xAxis3 = d3.svg.axis()
+			.scale(x3)
+			.orient("bottom").ticks(4)
+			.tickSize(-height, 0, 0);
+
+		var yAxis3 = d3.svg.axis()
+			.scale(y3)
+			.orient("left").ticks(8)
+			.tickSize(-width, 0, 0);
+			
+		var line1 = d3.svg.line()
+			.x(function(d) { return x1(d.date); })
+			.y(function(d) { return y1(d.x); });
+		
+		var line2 = d3.svg.line()
+			.x(function(d) { return x2(d.date); })
+			.y(function(d) { return y2(d.y); });
+			
+		var line3 = d3.svg.line()
+			.x(function(d) { return x3(d.date); })
+			.y(function(d) { return y3(d.z); });
+
+		var svg1 = d3.select("#graphdiv1").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+		var svg2 = d3.select("#graphdiv2").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+		var svg3 = d3.select("#graphdiv3").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+        var url = "getLsbChangeFromPurged.php?site=" + frm.sites.value + "&node=" + frm.node.value;
+        
+		d3.json(url, function(data) {
+		 
+		 if (data == "" || data == null){
+                    alert("No data retrieved. Please check input values.");
+                    return;
+                }
+		 else {
+
+		 data.forEach(function(d) {
+			d.date = parseDate(d.ts);
+			d.x = +d.x;
+			d.y = +d.y;
+			d.z = +d.z;
+		  });
+			}		 
+		 var siteselect = document.getElementById('selected');
+		 siteselect.innerHTML = "<h2>LSB Change Plot for: " + frm.sites.value + " " + frm.node.value + "</h2>";
+		
+		 
+		
+		 x1.domain(d3.extent(data, function(d) { return d.date; }));
+		  y1.domain(d3.extent(data, function(d) { return d.x; }));
+		  
+		   x2.domain(d3.extent(data, function(d) { return d.date; }));
+		  y2.domain(d3.extent(data, function(d) { return d.y; }));
+		  
+		   x3.domain(d3.extent(data, function(d) { return d.date; }));
+		  y3.domain(d3.extent(data, function(d) { return d.z; }));
+
+		  svg1.append("g")
+			  .attr("class", "grid")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis1);
+				 
+		  svg1.append("g")
+			  .attr("class", "grid")
+			  .call(yAxis1)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -45)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("LSB Velocity (LSB/6hours)");
+
+		  svg1.append("path")
+			  .datum(data)
+			  .attr("class", "line")
+			  .attr("d", line1);
+			  
+		/*  svg1.append("line")
+			  .attr("x1", x1(0))
+			  .attr("x2", x1(750))
+			  .attr("y1", y1(80))
+			  .attr("y2", y1(80))
+			  .style("stroke-dasharray", ("3, 3"))
+			  .style("fill", "green")
+			  .style("stroke", "green")
+			  .style("stroke-width", 2)
+			  .style("opacity", .2); */
+			 
+		  svg2.append("g")
+			  .attr("class", "grid")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis2);
+
+		  svg2.append("g")
+			  .attr("class", "grid")
+			  .call(yAxis2)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -45)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("LSB Velocity (LSB/6hours)");
+
+		  svg2.append("path")
+			  .datum(data)
+			  .attr("class", "line")
+			  .attr("d", line2);
+			  
+			  svg3.append("g")
+			  .attr("class", "grid")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis3);
+
+		  svg3.append("g")
+			  .attr("class", "grid")
+			  .call(yAxis3)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -45)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("LSB Velocity (LSB/6hours)");
+
+		  svg3.append("path")
+			  .datum(data)
+			  .attr("class", "line")
+			  .attr("d", line3);
+		}
+		);
+	}
+    
+	</script>
+</body>
+<form>
+<p>
+	Site: <select name="sites">
+	<option value="blcb">BLCB</option>
+	<option value="blct">BLCT</option>
+	<option value="bolb">BOLB</option>
+	<option value="gamb">GAMB</option>
+	<option value="gamt">GAMT</option>
+	<option value="humb">HUMB</option>
+	<option value="humt">HUMT</option>
+	<option value="labb">LABB</option>
+	<option value="labt">LABT</option>
+	<option value="lipb">LIPB</option>
+	<option value="lipt">LIPT</option>
+	<option value="mamb">MAMB</option>
+	<option value="mamt">MAMT</option>
+	<option value="oslb">OSLB</option>
+	<option value="oslt">OSLT</option>
+	<option value="plab">PLAB</option>
+	<option value="plat">PLAT</option>
+	<option value="pugb">PUGB</option>
+	<option value="pugt">PUGT</option>
+	<option value="sinb">SINB</option>
+	<option value="sint">SINT</option>
+	<option value="sinu">SINU</option>
+	</select>
+	Node: <input type="number" min="1" max="40" name="node" value="1" size="0.5">
+	<input type="button" value="Go" onclick="showData(this.form)" /><Br/>
+</p>
+</form>
+<hr>
+<div id="selected"><h2>LSB Change Plot for: </h2></div><hr>
+<h2>X Value</h2>
+<div id="graphdiv1" style="height:500px;width:750px;"></div><hr>
+<h2>Y Value</h2>
+<div id="graphdiv2" style="height:500px;width:750px;"></div><hr>
+<h2>Z Value</h2>
+<div id="graphdiv3" style="height:500px;width:750px;"></div><hr>
+
+
+</html>
