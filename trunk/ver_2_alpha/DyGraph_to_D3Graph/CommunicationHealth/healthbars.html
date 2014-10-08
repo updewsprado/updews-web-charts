@@ -7,7 +7,7 @@
 	<script src="jquery.ui.core.js"></script>
 	<script src="jquery.ui.widget.js"></script>
 	<script src="jquery.ui.datepicker.js"></script>
-	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+	
 <style> 
 
 
@@ -73,7 +73,7 @@ text {
   
 <!-- load the d3.js library -->    
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="d3.v3.min.js"></script>
 <script src="d3tip.js"></script>
 
 <script>
@@ -96,37 +96,27 @@ var options = ["blcb", "blct", "bolb", "gamb", "gamt",
 	}
 
 	window.onload = popDropDown;	
+	var graphed = 0;
+	
+if(graphed == 1)
+{
+window.onresize = showGraph(this.form);
+}
 	
 function showGraph(frm)
 {
 var target = document.getElementById('barchart');
-	  var spinner = new Spinner().spin();
-	  target.appendChild(spinner.el);
 	var n = 3;
     
+graphed = 1;
 
 var url = "getSenslopeData.php?health&site=" + frm.sites.value + "&db=" + frm.dbase.value;
 var margin = {top: 20, right: 50, bottom: 100, left: 75},
-w = window,
-    d = document,
-    e = d.documentElement,
-    g = d.getElementsByTagName('body')[0],
-    y = w.innerHeight|| e.clientHeight|| g.clientHeight
-    x = w.innerWidth || e.clientWidth || g.clientWidth,
-    width = x - margin.left - margin.right,
-    height = y - margin.top - margin.bottom;
-
-	
-function updateWindow(){
-    x = w.innerWidth || e.clientWidth || g.clientWidth;
-    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-	d3.select("svg").remove();	
-    
-}
-window.onresize = updateWindow;  
-
+    width = parseInt(d3.select('#barchart').style('width'), 10) - margin.left - margin.right,
+    height = parseInt(d3.select('#barchart').style('height'), 10) - margin.top - margin.bottom;
 
 d3.json(url, function (data){
+d3.select("svg").remove();	
 var jsondata = data;
 var tip = d3.tip()
   .attr('class', 'd3-tip')
@@ -301,7 +291,7 @@ svg.call(tip);
 });
 	
 	
-spinner.stop();
+
 
 }
 </script>

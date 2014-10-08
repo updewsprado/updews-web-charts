@@ -60,17 +60,17 @@
 <div id="selected"><h2>Selected Site: None</h2></div>
 <hr>
 <h2>XZ Linear Displacement (Zeroed and Offseted)</h2>
-<div id="graph1" style="width:100%; height:450px;"></div><hr>
+<div id="graph1" style="width:600px; height:450px; max-width:100%; max-height:100%;"></div><hr>
 <h2>XZ Linear Displacement</h2>
-<div id="graph2" style="width:100%; height:450px;"></div><hr>
+<div id="graph2" style="width:600px; height:450px; max-width:100%; max-height:100%;"></div><hr>
 <h2>XZ Linear Velocity</h2>
-<div id="graph3" style="width:100%; height:450px;"></div><hr>
+<div id="graph3" style="width:600px; height:450px; max-width:100%; max-height:100%;"></div><hr>
 <h2>XY Linear Displacement (Zeroed and Offseted)</h2>
-<div id="graph4" style="width:100%; height:450px;"></div><hr>
+<div id="graph4" style="width:600px; height:450px; max-width:100%; max-height:100%;"></div><hr>
 <h2>XY Linear Displacement</h2>
-<div id="graph5" style="width:100%; height:450px;"></div><hr>
+<div id="graph5" style="width:600px; height:450px; max-width:100%; max-height:100%;"></div><hr>
 <h2>XY Linear Velocity</h2>
-<div id="graph6" style="width:100%; height:450px;"></div><hr>
+<div id="graph6" style="width:600px; height:450px; max-width:100%; max-height:100%;"></div><hr>
 <script type='text/javascript'>
     
 	var opts = {
@@ -91,7 +91,12 @@
 		top: '50%', // Top position relative to parent
 		left: '50%' // Left position relative to parent
 	};
-	
+var graphed = 0;
+
+if(graphed == 1)
+{
+window.onresize = showData(this.form);
+}
 	
     var dir = "http://www.dewslandslide.com/ajax/csvmonitoring/";
     
@@ -100,6 +105,7 @@
     function showData(frm){
         d3.selectAll("svg").remove();
         
+		graphed = 1;
 		
 		var site = frm.sites.value;
         var target = document.getElementById('graph1');
@@ -110,8 +116,8 @@
         var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 		
 		var margin = {top: 20, right: 80, bottom: 30, left: 50},
-			width = 950 - margin.left - margin.right,
-			height = 450 - margin.top - margin.bottom;
+			width = parseInt(d3.select('#graph1').style('width'), 10) - margin.left - margin.right,
+			height = parseInt(d3.select('#graph1').style('height'), 10) - margin.top - margin.bottom;
 		
 		var siteselect = document.getElementById('selected');
 		siteselect.innerHTML = "<h2>Selected Site: " + site + "</h2>";
