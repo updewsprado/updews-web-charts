@@ -43,13 +43,28 @@
 <body>
     <script type='text/javascript'>
 
-    function showData(frm) {
+	
+	var graphed = 0;
 
-		d3.selectAll("svg").remove();
-		
-		var margin = {top: 20, right: 20, bottom: 30, left: 50},
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
 			width = 750 - margin.left - margin.right,
 			height = 500 - margin.top - margin.bottom;
+			
+if(graphed == 1)
+{
+window.onresize = showData(this.form);
+}
+
+    function showData(frm) {
+
+	graphed = 1;
+			
+		width = parseInt(d3.select('#graphdiv1').style('width'), 10);
+		width = width - margin.left - margin.right;
+		height = parseInt(d3.select('#graphdiv1').style('height'), 10);
+		height = height - margin.top - margin.bottom;
+
+		d3.selectAll("svg").remove();
 		
 		var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 		
@@ -103,15 +118,18 @@
 			
 		var line1 = d3.svg.line()
 			.x(function(d) { return x1(d.date); })
-			.y(function(d) { return y1(d.x); });
+			.y(function(d) { return y1(d.x); })
+			.interpolate("linear");
 		
 		var line2 = d3.svg.line()
 			.x(function(d) { return x2(d.date); })
-			.y(function(d) { return y2(d.y); });
+			.y(function(d) { return y2(d.y); })
+			.interpolate("linear");
 			
 		var line3 = d3.svg.line()
 			.x(function(d) { return x3(d.date); })
-			.y(function(d) { return y3(d.z); });
+			.y(function(d) { return y3(d.z); })
+			.interpolate("linear");
 
 		var svg1 = d3.select("#graphdiv1").append("svg")
 			.attr("width", width + margin.left + margin.right)
@@ -182,16 +200,9 @@
 			  .attr("class", "line")
 			  .attr("d", line1);
 			  
-		/*  svg1.append("line")
-			  .attr("x1", x1(0))
-			  .attr("x2", x1(750))
-			  .attr("y1", y1(80))
-			  .attr("y2", y1(80))
-			  .style("stroke-dasharray", ("3, 3"))
-			  .style("fill", "green")
-			  .style("stroke", "green")
-			  .style("stroke-width", 2)
-			  .style("opacity", .2); */
+	      svg1.selectAll("path")
+		      .datum(data)
+			  .style("stroke", function(d){if (d.x < -1 || d.x > 1) return "red"; else return "green";});
 			 
 		  svg2.append("g")
 			  .attr("class", "grid")
@@ -271,11 +282,11 @@
 <hr>
 <div id="selected"><h2>LSB Change Plot for: </h2></div><hr>
 <h2>X Value</h2>
-<div id="graphdiv1" style="height:500px;width:750px;"></div><hr>
+<div id="graphdiv1" style="height:500px;width:750px;max-height:100%;max-width:100%;"></div><hr>
 <h2>Y Value</h2>
-<div id="graphdiv2" style="height:500px;width:750px;"></div><hr>
+<div id="graphdiv2" style="height:500px;width:750px;max-height:100%;max-width:100%;"></div><hr>
 <h2>Z Value</h2>
-<div id="graphdiv3" style="height:500px;width:750px;"></div><hr>
+<div id="graphdiv3" style="height:500px;width:750px;max-height:100%;max-width:100%;"></div><hr>
 
 
 </html>
