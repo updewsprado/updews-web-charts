@@ -413,6 +413,12 @@ window.onresize = showData(this.form);
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+			d3.selectAll("svg")
+			.attr("viewBox", "0 0 600 450")
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");	
+
 		color1.domain(d3.keys(data[0]).filter(function(key) { return key !== "ts"; }));
 
 		data.forEach(function(d) {
