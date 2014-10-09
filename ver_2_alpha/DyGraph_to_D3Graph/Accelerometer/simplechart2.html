@@ -216,12 +216,13 @@ fill: green;
 	
 	if(graphed == 1)
 	{
-	window.onresize = showData(this.form);
+	window.onresize = showData2;
 	}
+	
     function showData(frm) {
 	
-var rsiteid = '';
-d3.selectAll("svg").remove();	
+		var rsiteid = '';
+		d3.selectAll("svg").remove();	
 		switch(frm.sites.value){
 			case "blcb": rsiteid = "204"; break;
 			case "blct": rsiteid = "204"; break;
@@ -382,6 +383,12 @@ d3.selectAll("svg").remove();
 		
 		var url = "getSenslopeData.php?accel2&from=" + frm.dateinput.value + "&to=" + frm.dateinput2.value + "&nid=" + frm.node.value + "&site=" + frm.sites.value + "&db=" + frm.dbase.value;
 	
+	d3.selectAll("svg")
+		.attr("viewBox", "0 0 1400 120")
+		.attr("width", "100%")
+		.attr("height", "100%")
+		.attr("preserveAspectRatio", "xMinYMin meet");
+		
 		//json
 			
 		d3.json(url, function(error, data){
@@ -510,6 +517,9 @@ d3.selectAll("svg").remove();
 		
 		//rain plot
 		
+		
+		if(rsiteid_prev != rsiteid && frm.rain.value == "y")
+		{
             rsiteid_prev = rsiteid;
             
 			
@@ -633,16 +643,7 @@ d3.selectAll("svg").remove();
 			  .text("15 min(mm)");
 			  spinner2.stop();
 			});
-            
-            
-        
-		
-		//slider
-		var contextHeight = 50;
-		var contextWidth = width * .5;
-		var contextXScale = d3.time.scale()
-							.range([0, contextWidth]
-							.domain(.xScale.domain());
+      }
 	}	
 
 	function showAndClearField(frm){
@@ -706,17 +707,17 @@ d3.selectAll("svg").remove();
     <input type="button" name="download" value="Download CSV" onclick="downloadData(this.form)">&nbsp;
     Plot rain?
     <input type="radio" name="rain" value="y">Yes&nbsp
-    <input type="radio" name="rain" value="n">No<br>
+    <input type="radio" name="rain" value="n" checked>No<br>
     
 
 </div>
 <hr>
-<div id="gdiv1" style="width:600px; height:120px; max-width:100%; max-height:100%;"></div><hr>
-<div id="gdiv2" style="width:600px; height:120px; max-width:100%; max-height:100%;"></div><hr>
-<div id="gdiv3" style="width:600px; height:120px; max-width:100%; max-height:100%;"></div><hr>
-<div id="gdiv4" style="width:600px; height:120px; max-width:100%; max-height:100%;"></div><hr>
-<div id="raindiv1" style="width:600px; height:120px; max-width:100%; max-height:100%;"></div><hr>
-<div id="raindiv2" style="width:600px; height:120px; max-width:100%; max-height:100%;"></div><hr>
+<div id="gdiv1" style="width:100%; height:120px; max-width:100%; max-height:100%;"></div><hr>
+<div id="gdiv2" style="width:100%; height:120px; max-width:100%; max-height:100%;"></div><hr>
+<div id="gdiv3" style="width:100%; height:120px; max-width:100%; max-height:100%;"></div><hr>
+<div id="gdiv4" style="width:100%; height:120px; max-width:100%; max-height:100%;"></div><hr>
+<div id="raindiv1" style="width:100%; height:120px; max-width:100%; max-height:100%;"></div><hr>
+<div id="raindiv2" style="width:100%; height:120px; max-width:100%; max-height:100%;"></div><hr>
 <h2>Slider</h2>
 <div id="slider" style="width:600px; height:120px; max-width:100%; max-height:100%;"></div><hr>
 </FORM>

@@ -151,6 +151,12 @@ window.onresize = showData(this.form);
 			
         var url = "getLsbChangeFromPurged.php?site=" + frm.sites.value + "&node=" + frm.node.value;
         
+		d3.selectAll("svg")
+			.attr("viewBox", "0 0 750 500")
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");	
+			
 		d3.json(url, function(data) {
 		 
 		 if (data == "" || data == null){

@@ -51,7 +51,11 @@ var graphed = 0;
 
 if(graphed == 1)
 {
-d3.select(window).on('resize',showData(this.form));
+d3.select(window).on('resize', resize);
+}
+
+function resize(){
+
 }
 
 function showData(frm) {
@@ -113,7 +117,13 @@ var focus = svg.append("g")
 var context = svg.append("g")
     .attr("class", "context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
-var test;
+
+d3.select("svg")
+.attr("viewBox", "0 0 960 500")
+.attr("width", "100%")
+.attr("height", "100%")
+.attr("preserveAspectRatio", "xMinYMin meet");	
+	
 	var url = "getSenslopeData.php?sitehealth&q=" + frm.dateinput.value + "&site=" + frm.sites.value + "&db=" + frm.dbase.value;
 d3.json(url, function(error, data) {
 
@@ -124,7 +134,7 @@ data.forEach(function(d) {
 }
 );
   x.domain(d3.extent(data.map(function(d) { return d.date; })));
-  y.domain([0, d3.max(data.map(function(d) { return d.price; }))]);
+  y.domain([d3.min(data.map(function(d) { return d.price; })), d3.max(data.map(function(d) { return d.price; }))]);
   x2.domain(x.domain());
   y2.domain(y.domain());
 
