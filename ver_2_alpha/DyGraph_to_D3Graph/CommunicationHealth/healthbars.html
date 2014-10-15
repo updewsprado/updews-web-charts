@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+<!--
 <script src="jquery-1.10.2.js"></script>
 <link href="jquery-ui-1.10.4.custom.css" rel="stylesheet"> 
-	<script src="jquery-ui-1.10.4.custom.js"></script>
-	<script src="jquery.ui.core.js"></script>
-	<script src="jquery.ui.widget.js"></script>
-	<script src="jquery.ui.datepicker.js"></script>
-	
+<script src="jquery-ui-1.10.4.custom.js"></script>
+<script src="jquery.ui.core.js"></script>
+<script src="jquery.ui.widget.js"></script>
+<script src="jquery.ui.datepicker.js"></script>	
+-->
 <style> 
 
 
@@ -75,8 +76,14 @@ text {
   
 <!-- load the d3.js library -->    
 
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+<!--
 <script src="d3.v3.min.js"></script>
 <script src="d3tip.js"></script>
+-->
 
 <script>
 var options = ["blcb", "blct", "bolb", "gamb", "gamt",
@@ -85,219 +92,226 @@ var options = ["blcb", "blct", "bolb", "gamb", "gamt",
 					"plab", "plat", "pugb", "pugt", "sinb",
 					"sinu"];
 
-	function popDropDown() {
-		var select = document.getElementById('selectSite');
-		var i;
-		for (i = 0; i < options.length; i++) {
-			var opt = options[i];
-			var el = document.createElement("option");
-			el.textContent = opt;
-			el.value = opt;
-			select.appendChild(el);
-		}
+function popDropDown() {
+	var select = document.getElementById('selectSite');
+	var i;
+	for (i = 0; i < options.length; i++) {
+		var opt = options[i];
+		var el = document.createElement("option");
+		el.textContent = opt;
+		el.value = opt;
+		select.appendChild(el);
 	}
+}
 
-	window.onload = popDropDown;	
-	var graphed = 0;
+window.onload = popDropDown;	
+var graphed = 0;
 	
 if(graphed == 1)
 {
-window.onresize = showGraph(this.form);
+	window.onresize = showGraph(this.form);
 }
+	
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    //return "<strong>Month:</strong> <span style='color:red'>" + d.month + "</span>";
+	return "<strong>Overall</strong> <span style='color:red'>" + d.all + 
+		"</span><br/><strong>Past 7 Days:</strong><span style='color:red'>" + d.week + 
+		"</span><br/><strong>Past 30 Days:</strong><span style='color:red'>" + d.month;
+  })
+  
+var testjson = 0;
 	
 function showGraph(frm)
 {
 
-var siteselect = document.getElementById('selected');
-		 siteselect.innerHTML = "<h2>Node Health: " + frm.sites.value + "</h2>";
-		 
-var target = document.getElementById('barchart');
-	var n = 3;
-    
-graphed = 1;
+	var siteselect = document.getElementById('selected');
+			 siteselect.innerHTML = "<h2>Node Health: " + frm.sites.value + "</h2>";
+			 
+	var target = document.getElementById('barchart');
+		var n = 3;
+		
+	graphed = 1;
 
-var url = "getSenslopeData.php?health&site=" + frm.sites.value + "&db=" + frm.dbase.value;
-var margin = {top: 20, right: 50, bottom: 100, left: 75},
-    width = parseInt(d3.select('#barchart').style('width'), 10) - margin.left - margin.right,
-    height = parseInt(d3.select('#barchart').style('height'), 10) - margin.top - margin.bottom;
+	var url = "getSenslopeData.php?health&site=" + frm.sites.value + "&db=" + frm.dbase.value;
+	var margin = {top: 20, right: 50, bottom: 100, left: 75},
+		width = parseInt(d3.select('#barchart').style('width'), 10) - margin.left - margin.right,
+		height = parseInt(d3.select('#barchart').style('height'), 10) - margin.top - margin.bottom;
+		
+	d3.json(url, function (data){
+		d3.select("svg").remove();	
+		var jsondata = data;
+		
+		testjson = data;
 
-d3.json(url, function (data){
-d3.select("svg").remove();	
-var jsondata = data;
+/*
 var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function() {
     return "<strong>Overall</strong> <span style='color:red'>" + jsondata.all + "</span><br/><strong>Past 7 Days:</strong><span style='color:red'>" + jsondata.week + "</span><br/><strong>Past 30 Days:</strong><span style='color:red'>" + jsondata.month;
   });
+*/
   
-  var svg = d3.select("#barchart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-svg.call(tip);
+		var svg = d3.select("#barchart").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+		svg.call(tip);
 
-    var headers = ["week", "month", "all"];
-	var headers2 = ["Past 7 days", "Past 30 days", "Overall"];
-    
-    var layers = d3.layout.stack()(headers.map(function(days) {
-        return data.map(function(d) {
-          return {x: d.node, y: +d[days]};
-        });
-    }));
-    var yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); });
-    var yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y + d.y0; }); });
+		var headers = ["week", "month", "all"];
+		var headers2 = ["Past 7 days", "Past 30 days", "Overall"];
+		
+		var layers = d3.layout.stack()(headers.map(function(days) {
+			return data.map(function(d) {
+			  return {x: d.node, y: +d[days], week: d.week, month: d.month, all: d.all};
+			});
+		}));
+	
+		var yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); });
+		var yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y + d.y0; }); });
 
-    var xScale = d3.scale.ordinal()
-        .domain(layers[0].map(function(d) { return d.x; }))
-        .rangeRoundBands([25, width], .08);
+		var xScale = d3.scale.ordinal()
+			.domain(layers[0].map(function(d) { return d.x; }))
+			.rangeRoundBands([25, width], .08);
 
-    var y = d3.scale.linear()
-        .domain([0, yGroupMax])
-        .range([height, 0]);
+		var y = d3.scale.linear()
+			.domain([0, yGroupMax])
+			.range([height, 0]);
 
-    var color = d3.scale.ordinal()
-        .range(["red", "blue", "green"]);
+		var color = d3.scale.ordinal()
+			.range(["red", "blue", "green"]);
       
-    var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .tickSize(0)
-        .tickPadding(6)
-        .orient("bottom");
+		var xAxis = d3.svg.axis()
+			.scale(xScale)
+			.tickSize(0)
+			.tickPadding(6)
+			.orient("bottom");
 
-    var yAxis = d3.svg.axis()
-        .scale(y)
-		.orient("left");
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left");
 
-    var layer = svg.selectAll(".layer")
-        .data(layers)
-        .enter().append("g")
-        .attr("class", "layer")
-        .style("fill", function(d, i) { return color(i); });
+		var layer = svg.selectAll(".layer")
+			.data(layers)
+			.enter().append("g")
+			.attr("class", "layer")
+			.style("fill", function(d, i) { return color(i); });
 
-    var rect = layer.selectAll("rect")
-        .data(function(d) { return d; })
-        .enter().append("rect")
-        .attr("x", function(d) { return xScale(d.x); })
-        .attr("y", height)
-        .attr("width", xScale.rangeBand())
-        .attr("height", 0)
-		.on('mouseover', tip.show)
-		.on('mouseout', tip.hide);
-		
+		var rect = layer.selectAll("rect")
+			.data(function(d) { return d; })
+			//.data(data)
+		  .enter().append("rect")
+			.attr("x", function(d) { return xScale(d.x); })
+			.attr("y", height)
+			.attr("width", xScale.rangeBand())
+			.attr("height", 0)
+			.on('mouseover', tip.show)
+			.on('mouseout', tip.hide);
+			
 		d3.select("svg")
-		.attr("viewBox", "0 0 600 600")
-		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");	
+			.attr("viewBox", "0 0 600 600")
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");	
 
-    rect.transition()
-        .delay(function(d, i) { return i * 10; })
-        .attr("y", function(d) { return y(d.y0 + d.y); })
-        .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
+		rect.transition()
+			.delay(function(d, i) { return i * 10; })
+			.attr("y", function(d) { return y(d.y0 + d.y); })
+			.attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
 
-    //********** AXES ************
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-        .selectAll("text").style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", function(d) {
-                  return "rotate(-45)" 
-                });
+		//********** AXES ************
+		svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis)
+			.selectAll("text").style("text-anchor", "end")
+				.attr("dx", "-.8em")
+				.attr("dy", ".15em")
+				.attr("transform", function(d) {
+					  return "rotate(-45)" 
+					});
     
-    svg.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(20,0)")
-        .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr({"x": -150, "y": -70})
-        .attr("dy", ".75em")
-        .style("text-anchor", "end")
-        .text("Communication Health Ratio");
+		svg.append("g")
+			.attr("class", "y axis")
+			.attr("transform", "translate(20,0)")
+			.call(yAxis)
+		  .append("text")
+			.attr("transform", "rotate(-90)")
+			.attr({"x": -150, "y": -70})
+			.attr("dy", ".75em")
+			.style("text-anchor", "end")
+			.text("Communication Health Ratio");
 
-    var legend = svg.selectAll(".legend")
-        .data(color.domain().slice().reverse())
-            .enter().append("g")
-            .attr("class", "legend")
-            .attr("transform", function(d, i) { return "translate(-20," + i * 20 + ")"; });
-       
-        legend.append("rect")
-            .attr("x", width + 60)
-            .attr("width", 20)
-            .attr("height", 20)
-            .style("fill", color);
-    
-        legend.selectAll("text .legend").data([headers2.slice().reverse()])
-            .enter().append("text")
-              .attr("x", width + 50)
-              .attr("y", 9)
-              .attr("dy", ".35em")
-              .style("text-anchor", "end")
-              .text(function(d,i,j) { return d[j];  });
-
-
-
-    d3.selectAll("input").on("change", change);
-
-    var timeout = setTimeout(function() {
-      d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
-    }, 2000);
-
-    function change() {
-      clearTimeout(timeout);
-      if (this.value === "grouped") transitionGrouped();
-      else transitionStacked();
-    }
-
-    function transitionGrouped() {
-      y.domain([0, yGroupMax]);
-
-      rect.transition()
-          .duration(500)
-          .delay(function(d, i) { return i * 10; })
-          .attr("x", function(d, i, j) { return xScale(d.x) + xScale.rangeBand() / n * j; })
-          .attr("width", xScale.rangeBand() / n)
-        .transition()
-          .attr("y", function(d) { return y(d.y); })
-          .attr("height", function(d) { return height - y(d.y); });
-
-     
-        
-    };
-
-    function transitionStacked() {
-      y.domain([0, yStackMax]);
-
-      rect.transition()
-          .duration(500)
-          .delay(function(d, i) { return i * 10; })
-          .attr("y", function(d) { return y(d.y0 + d.y); })
-          .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
-        .transition()
-          .attr("x", function(d) { return xScale(d.x); })
-          .attr("width", xScale.rangeBand());
-
-  
-       
-    };
-
+		var legend = svg.selectAll(".legend")
+			.data(color.domain().slice().reverse())
+				.enter().append("g")
+				.attr("class", "legend")
+				.attr("transform", function(d, i) { return "translate(-20," + i * 20 + ")"; });
+		   
+			legend.append("rect")
+				.attr("x", width + 60)
+				.attr("width", 20)
+				.attr("height", 20)
+				.style("fill", color);
 		
+			legend.selectAll("text .legend").data([headers2.slice().reverse()])
+				.enter().append("text")
+				  .attr("x", width + 50)
+				  .attr("y", 9)
+				  .attr("dy", ".35em")
+				  .style("text-anchor", "end")
+				  .text(function(d,i,j) { return d[j];  });
+
+			d3.selectAll("input").on("change", change);
+
+		var timeout = setTimeout(function() {
+			d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
+		}, 2000);
+
+		function change() {
+			clearTimeout(timeout);
+			if (this.value === "grouped") 
+				transitionGrouped();
+			else
+				transitionStacked();
+		}
+
+		function transitionGrouped() {
+			y.domain([0, yGroupMax]);
+
+			rect.transition()
+				.duration(500)
+				.delay(function(d, i) { return i * 10; })
+				.attr("x", function(d, i, j) { return xScale(d.x) + xScale.rangeBand() / n * j; })
+				.attr("width", xScale.rangeBand() / n)
+			  .transition()
+				.attr("y", function(d) { return y(d.y); })
+				.attr("height", function(d) { return height - y(d.y); });
+		};
+
+		function transitionStacked() {
+			y.domain([0, yStackMax]);
+
+			rect.transition()
+				.duration(500)
+				.delay(function(d, i) { return i * 10; })
+				.attr("y", function(d) { return y(d.y0 + d.y); })
+				.attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+			  .transition()
+				.attr("x", function(d) { return xScale(d.x); })
+				.attr("width", xScale.rangeBand());    
+		};
+
 		svg.append("text")      // text label for the x axis
-        .attr("transform", "translate(" + (width / 2) + " ," + (height + 30) + ")")
-        .style("text-anchor", "middle")
-        .text("Node Number");
-		
-		
-});
-	
-	
-
-
+			.attr("transform", "translate(" + (width / 2) + " ," + (height + 30) + ")")
+			.style("text-anchor", "middle")
+			.text("Node Number");
+	});
 }
 </script>
 </body>
