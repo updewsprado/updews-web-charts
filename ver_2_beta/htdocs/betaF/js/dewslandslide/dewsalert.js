@@ -2,6 +2,10 @@
  * @author PradoArturo
  */
 
+var nodeAlertJSON = 0;
+var nodeStatusJSON = 0;
+var maxNodesJSON = 0;
+
 function JSON2CSV(objArray) {
 	var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
 
@@ -192,8 +196,11 @@ var siteMaxNodes = [];
 var maxNode;
 function getSiteMaxNodes(xOffset) {
 	//url = "../temp/getSiteMaxNodes.php";
-	url = "../d3graph/getSiteMaxNodes.php";
-	d3.json(url, function(error, data) {
+	//url = "../d3graph/getSiteMaxNodes.php";
+	
+	//d3.json(url, function(error, data) {
+		var data = maxNodesJSON.slice();
+		
 		siteMaxNodes = data;
 		
 		maxNode = d3.max(siteMaxNodes, function(d) { return parseFloat(d.nodes); });
@@ -221,14 +228,17 @@ function getSiteMaxNodes(xOffset) {
 					.attr('height', cellh);
 			}
 		}
-	});
+	//});
 }
 
 var nodeStatuses = [];
 function getNodeStatus(xOffset) {
 	//url = "../temp/getNodeStatus.php";
-	url = "../d3graph/getNodeStatus.php";
-	d3.json(url, function(error, data) {
+	//url = "../d3graph/getNodeStatus.php";
+	
+	//d3.json(url, function(error, data) {
+		var data = nodeStatusJSON.slice();
+		
 		nodeStatuses = data;
 		
 		var cellw = (graphDim.gWidth / maxNode) * 0.9;
@@ -262,7 +272,7 @@ function getNodeStatus(xOffset) {
 				})  // x,y points 
 				.on('mouseover', tip.show)
 				.on('mouseout', tip.hide);	
-	});
+	//});
 }
 
 var alertdata = [];
@@ -272,9 +282,11 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	getSiteMaxNodes(xOffset);
 	
 	var delay1 = 1000;//1 second
-    setTimeout(function(){
+    //setTimeout(function(){
 
-		d3.json(url, function(error, data) {
+		//d3.json(url, function(error, data) {
+			var data = url.slice();
+			
 			jsondata = data;
 	
 			data.forEach(function(d) {
@@ -493,20 +505,18 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 						.text(desc); 					
 				}
 			}				
-		});
+		//});
 	
-    },delay1); 
+    //},delay1); 
 	
-	var delay2 = 2000;//3 seconds
-    setTimeout(function(){
-		//Draw the node status symbol
-		getNodeStatus(xOffset);	
-	},delay2); 
+	//Draw the node status symbol
+	getNodeStatus(xOffset);	
 }
 		
 function showData() {
 	//generateAlertPlot("../temp/getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
-	generateAlertPlot("../d3graph/getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
+	//generateAlertPlot("../d3graph/getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
+	generateAlertPlot(nodeAlertJSON, "Accelerometer Movement Alert Map", 0, true, 1);
 }
 
 function initAlertPlot() {

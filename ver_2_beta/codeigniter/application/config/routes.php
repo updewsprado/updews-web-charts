@@ -42,6 +42,10 @@ $route['test'] = "test";
 $route['test/(:any)'] = "test/$1";
 $route['dice'] = "dice/view";
 $route['dice/(:any)'] = "dice/view/$1";
+$route['gold'] = "gold/view";
+$route['gold/site/(:any)/(:num)'] = "gold/view/node/$1/$2";
+$route['gold/site/(:any)'] = "gold/view/site/$1";
+$route['gold/(:any)'] = "gold/view/$1";
 $route['beta'] = "beta/view";
 $route['beta/site/(:any)/(:num)'] = "beta/view/node/$1/$2";
 $route['beta/site/(:any)'] = "beta/view/site/$1";
@@ -49,7 +53,8 @@ $route['beta/(:any)'] = "beta/view/$1";
 $route['alpha'] = "alpha/view";
 $route['alpha/(:any)'] = "alpha/view/$1";
 $route['(:any)'] = "alpha/view/$1";
-$route['default_controller'] = "alpha/view";
+//$route['default_controller'] = "alpha/view";
+$route['default_controller'] = "beta/view";
 $route['404_override'] = '';
 
 

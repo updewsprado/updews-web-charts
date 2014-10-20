@@ -20,6 +20,7 @@ class Alpha extends CI_Controller {
 		$data['jsfile'] = $data['gmap'] = $data['commhealth'] = $data['analysisdyna'] = '';
 		$data['sentnodetotal'] = $data['rainfall'] = $data['lsbchange'] = '';
 		$data['accel'] = $data['showplots'] = $data['showdateplots'] = '';
+		$data['sitesCoord'] = 0;
 		
 		$data['ismap'] = false;
 

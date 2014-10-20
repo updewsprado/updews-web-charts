@@ -275,7 +275,7 @@ function showDateSitePlots (frm) {
 		setTimeout(function(){
 				//Add 1 sec delay
 				//showRainGeneral(frm);
-			}, 10000); 
+		}, 10000); 
 	}
 }
 

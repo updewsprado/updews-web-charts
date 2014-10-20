@@ -1,5 +1,49 @@
 var column_plot_range;
-var roll_period = 48;
+var roll_period_lsb = 48;
+
+function JSON2CSV(objArray) {
+	var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+
+	var str = '';
+	var line = '';
+
+	if ($("#labels").is(':checked')) {
+		var head = array[0];
+		if ($("#quote").is(':checked')) {
+			for (var index in array[0]) {
+				var value = index + "";
+				line += '"' + value.replace(/"/g, '""') + '",';
+			}
+		} else {
+			for (var index in array[0]) {
+				line += index + ',';
+			}
+		}
+
+		line = line.slice(0, -1);
+		str += line + '\r\n';
+	}
+
+	for (var i = 0; i < array.length; i++) {
+		var line = '';
+
+		if ($("#quote").is(':checked')) {
+			for (var index in array[i]) {
+				var value = array[i][index] + "";
+				line += '"' + value.replace(/"/g, '""') + '",';
+			}
+		} else {
+			for (var index in array[i]) {
+				line += array[i][index] + ',';
+			}
+		}
+
+		line = line.slice(0, -1);
+		str += line + '\r\n';
+	}
+	return str;
+	
+}
 
 function showLSBChange(frm) {
 	showLSBChangeGeneral(frm, 'lsb-change-canvas');
@@ -57,12 +101,12 @@ function showLSBChangeGeneral(frm, e) {
                         
                         drawCallback: function(me, initial) {
 							column_plot_range = me.xAxisRange();
-                            roll_period = me.rollPeriod();	
+                            roll_period_lsb = me.rollPeriod();	
 						},
 
                         showRoller: true,
                         dateWindow: column_plot_range,
-                        rollPeriod: roll_period,
+                        rollPeriod: roll_period_lsb,
                         colors: ['#284785', '#EE1111', '#006600'],
                         
                         underlayCallback: function(canvas, area, g2) {
