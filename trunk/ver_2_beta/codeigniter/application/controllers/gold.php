@@ -1,18 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Beta extends CI_Controller {
+class Gold extends CI_Controller {
 
 	public function view( $page = 'monitoring', $site = null, $node = 1 )
 	{
 		$this->load->helper('url');
 	
-		if(!file_exists('../codeigniter/application/views/beta/' . $page . '.php')) {
+		if(!file_exists('../codeigniter/application/views/gold/' . $page . '.php')) {
 			show_404();
 		}
 	
 		$data['title'] = $page;
-		$data['version'] = "beta";
-		$data['folder'] = "betaF";
+		$data['version'] = "gold";
+		$data['folder'] = "goldF";
 		
 		$data['charts'] = $data['tables'] = $data['forms'] = $data['bselements'] = '';
 		$data['bsgrid'] = $data['blank'] = $data['home'] = $data['monitoring'] = '';
@@ -123,11 +123,11 @@ class Beta extends CI_Controller {
 	
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/nav');
-		$this->load->view('beta/' . $page, $data);
+		$this->load->view('gold/' . $page, $data);
 		$this->load->view('templates/footer');
 	}
 
 }
 
-/* End of file beta.php */
-/* Location: ./application/controllers/beta.php */
+/* End of file gold.php */
+/* Location: ./application/controllers/gold.php */

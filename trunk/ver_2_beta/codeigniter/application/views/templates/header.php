@@ -65,7 +65,7 @@
     <!-- Custom DEWS Landslide JS 
     <script src="js/dewslandslide/dewsalert.js"></script>
     -->	
-    <?php echo $jsfile; ?>
+    <?php echo $alert; ?>
     <?php echo $gmap; ?>
     <?php echo $commhealth; ?>
     <?php echo $analysisdyna; ?>
@@ -77,13 +77,18 @@
     <!-- Custom DEWS Map JS -->
     <?php echo $gmap; ?>
     
-	<!-- Load the Map -->
 	<script>
+	// Load the Map
 	var mapValue = "<?php echo $ismap; ?>";
 	
 	if(mapValue != "") {
-		google.maps.event.addDomListener(window, 'load', initialize_map);
+		gmapJSON = <?php echo $sitesCoord; ?>;
+		google.maps.event.addDomListener(window, 'load', initialize_map2);
+		
+		//google.maps.event.addDomListener(window, 'load', initialize_map);
 	}
+	
+	
 	</script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
