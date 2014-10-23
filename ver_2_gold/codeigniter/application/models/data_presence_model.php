@@ -25,6 +25,25 @@ class Data_presence_Model extends CI_Model
 		$this->load->database();
 	}
 
+	// Function to convert CSV into associative array
+	public function csvToArray($file, $delimiter)
+	{
+		$arr = array();
+		 
+		if (($handle = fopen($file, 'r')) !== FALSE) {
+			$i = 0; 
+			while (($lineArray = fgetcsv($handle, 4000, $delimiter, '"')) !== FALSE) {
+				for ($j = 0; $j < count($lineArray); $j++) {
+					$arr[$i][$j] = $lineArray[$j]; 
+				} 
+				$i++; 
+			} 
+			fclose($handle); 
+		}
+		
+		return $arr; 
+	}
+
 	public function getSingleDataPresence($site, $interval = 1)
 	{
 		$sql_maxnode = $this->db->query("SELECT * FROM site_column_props WHERE s_id IN 
@@ -75,7 +94,7 @@ class Data_presence_Model extends CI_Model
 			//$dbtstamp = $dbtstamp . $site . ',' . $row['timeslice'] . ',' . $row['mycount'] . "\n";
 			$tstamp = $row['timeslice'];
 			$count = $row['mycount'];
-			echo "'$site','$tstamp','$count'\n";
+			echo "$site,$tstamp,$count\n";
 		}
 		
 		//echo $dbtstamp;
@@ -141,6 +160,50 @@ class Data_presence_Model extends CI_Model
 		}
 		
 		//echo json_encode( $dbreturn );
+	}
+
+	//Access the Data Presence of All Sites from a CSV file
+	//	and return as a JSON
+	public function getDataPresCSVtoJSON()
+	{
+		// Arrays we'll use later
+		$keys = array();
+		$arrayPresence = array();
+		$arrayPlot = array();
+		
+		$file = 'datapresence.csv';
+		
+		if(strcmp(base_url(),"http://localhost/") == 0) {
+			$path = base_url() . 'temp/csvmonitoring/';
+		}
+		else {
+			$path = base_url() . 'ajax/csvmonitoring/';
+		}
+		
+		// Set your CSV feed
+		$feed = $path . $file;
+		
+		// Do it
+		$dataPresence = $this->csvToArray($feed, ',');
+		 
+		// Set number of elements (minus 1 because we shift off the first row)
+		$count = count($dataPresence);
+		
+		//Use first row for names
+		$labels = ["site","timestamp","count"];
+		 
+		foreach ($labels as $label) {
+			$keys[] = $label;
+		}
+		
+		// Bring it all together
+		for ($j = 0; $j < $count; $j++) {
+			$dX = array_combine($keys, $dataPresence[$j]);
+			$arrayPresence[$j] = $dX;
+		}
+		
+		// Print as JSON data
+		echo json_encode($arrayPresence);
 	}
 
 	//Move this to the Site Health Model!!!
