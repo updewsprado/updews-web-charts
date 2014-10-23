@@ -91,6 +91,14 @@ class Test extends CI_Controller {
 		
 		$data['sitesCoord'] = $this->Data_presence_Model->getAllDataPresenceCSV($interval);
 	}	
+	
+	public function prescsv2json( $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['sitesCoord'] = $this->Data_presence_Model->getDataPresCSVtoJSON();
+	}		
 }
 
 /* End of file pages.php */
