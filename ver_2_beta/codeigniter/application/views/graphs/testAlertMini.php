@@ -22,13 +22,13 @@ path {
 }
 
 .legend {
-    font-size: 16px;
+    font-size: 10px;
     font-weight: bold;
     text-anchor: left;
 }
 
 .axislabel {
-    font-size: 16px;
+    font-size: 10px;
     font-weight: bold;
     text-anchor: middle;
 }
@@ -81,7 +81,7 @@ path {
 .d3-tip {
   line-height: 1;
   font-weight: bold;
-  padding: 12px;
+  padding: 8px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   border-radius: 2px;
@@ -91,7 +91,7 @@ path {
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
-  font-size: 10px;
+  font-size: 8px;
   width: 100%;
   line-height: 1;
   color: rgba(0, 0, 0, 0.8);
@@ -117,7 +117,7 @@ path {
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 <!-- Custom DEWS Landslide CSS -->
-<link href="/css/dewslandslide/dewsalert.css" rel="stylesheet" type="text/css">
+<link href="/goldF/css/dewslandslide/dewsalert.css" rel="stylesheet" type="text/css">
 <!-- Custom DEWS Landslide JS 
 <script src="../js/dewslandslide/dewslandslide.js"></script>
 -->	
@@ -138,7 +138,7 @@ path {
 // Set the dimensions of the canvas / graph
 var cWidth = document.getElementById('mini-alert-canvas').offsetWidth;
 //var cHeight = document.getElementById('mini-alert-canvas').offsetHeight;
-var cHeight = cWidth * 0.04;
+var cHeight = cWidth * 0.02;
 document.getElementById('mini-alert-canvas').setAttribute("style","height:" + cHeight);
 
 var margin = 0,
@@ -146,22 +146,15 @@ var margin = 0,
     height = 0;
 
 var graphDim = 0;
-
-/*
-var cWidth = document.getElementById('mini-alert-canvas').offsetWidth;
-var cHeight = document.getElementById('mini-alert-canvas').offsetHeight;
-
-//var margin = {top: 70, right: 20, bottom: 70, left: 90},
-var margin = {top: cHeight * 0.10, right: cWidth * 0.015, bottom: cHeight * 0.10, left: cWidth * 0.065},
-    width = cWidth - margin.left - margin.right,
-    height = cHeight - margin.top - margin.bottom;
-
-var graphDim = {gWidth: width * 0.8, gHeight: height};
-*/
 	
-var labelHeight = 16;
+var labelHeight = 10;
 	
 var graphCount = 0;
+	
+//JSON Variable
+var nodeAlertJSON = 0;	
+var maxNodesJSON = 0;
+var nodeStatusJSON = 0;
 	
 // Parse the xval / time
 var parseDate = d3.time.format("%b %Y").parse;
@@ -227,18 +220,16 @@ var tip = d3.tip()
 function init_dims() {
 	cWidth = document.getElementById('mini-alert-canvas').offsetWidth;
 	//cHeight = document.getElementById('mini-alert-canvas').offsetHeight;
-	cHeight = cWidth * 0.04;
+	cHeight = cWidth * 0.03;
 	
 	document.getElementById('mini-alert-canvas').setAttribute("style","height:" + cHeight);
 	
-	
-	
-	//var margin = {top: 70, right: 20, bottom: 70, left: 90},
-	margin = {top: cHeight * 0.10, right: cWidth * 0.015, bottom: cHeight * 0.10, left: cWidth * 0.065};
+	//margin = {top: cHeight * 0.10, right: cWidth * 0.015, bottom: cHeight * 0.10, left: cWidth * 0.065};
+	margin = {top: 0, right: 0, bottom: 0, left: cWidth * 0.04};
 	width = cWidth - margin.left - margin.right;
 	height = cHeight - margin.top - margin.bottom;
 	
-	graphDim = {gWidth: width * 0.8, gHeight: height};	
+	graphDim = {gWidth: width, gHeight: height};	
 	
 	// Set the ranges
 	x = d3.scale.linear().range([0, graphDim.gWidth]);
@@ -306,7 +297,6 @@ function clearData() {
 
 var siteMaxNodes = [];
 var maxNode;
-var maxNodesJSON = 0;
 
 function getSiteMaxNodes(xOffset) {
 	//url = "../temp/getSiteMaxNodes.php";
@@ -317,10 +307,10 @@ function getSiteMaxNodes(xOffset) {
 	
 	siteMaxNodes = data;
 	
-	maxNode = d3.max(data, function(d) { return parseFloat(d.nodes); });
+	maxNode = d3.max(data, function(d) { return parseFloat(d.maxall); });
 	
 	// Scale the range of the data
-	x.domain([1, d3.max(data, function(d) { return parseFloat(d.nodes) + 1; })]);
+	x.domain([1, d3.max(data, function(d) { return maxNode + 1; })]);
 	yOrd.domain(data.map(function(d) { return d.site; }));
 	
 	var cellw = (graphDim.gWidth / maxNode) * 0.9;
@@ -346,7 +336,6 @@ function getSiteMaxNodes(xOffset) {
 }
 
 var nodeStatuses = [];
-var nodeStatusJSON = 0;
 
 function getNodeStatus(xOffset) {
 	//url = "../temp/getNodeStatus.php";
@@ -419,45 +408,12 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 			});
 			
 			var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
-			
-			/*
-			// Add the X Axis
-			svg.append("g")
-				.attr("class", "x axis")
-				.attr("transform", "translate(" + horOff + "," + height + ")")
-				.call(make_x_axis2(maxNode));
-				
-			
-			// Graph Label
-			svg.append("text")      // text label for the x axis
-				.attr("class", "axislabel")
-				.attr("x", xOffset + (graphDim.gWidth / 2))
-				.attr("y", 0 -(margin.top/2))
-				.text(title);	
-					
-			// X axis Label
-			svg.append("text")      // text label for the x axis
-				.attr("class", "axislabel")
-				.attr("x", xOffset + (graphDim.gWidth / 2))
-				.attr("y", height + (margin.bottom/2) + 5)
-				.text("Nodes");
-			*/	
 				
 			// Add the Y Axis
 			svg.append("g")
 				.attr("class", "y axis")
 				.attr("transform", "translate(" + xOffset + ",0)")
-				.call(make_yOrd_axis());
-	
-			/*
-			// Y axis Label
-			svg.append("text")		// text label for the y axis
-				.attr("class", "axislabel")
-				.attr("transform", "rotate(-90)")
-				.attr("y", xOffset -5 - (margin.left / 2))
-				.attr("x", 0 - (height / 2))
-				.text("Column/Site");
-			*/			
+				.call(make_yOrd_axis());		
 				
 			var cellw = (graphDim.gWidth / maxNode) * 0.9;
 			var cellh = yOrd.rangeBand(); //9;
@@ -606,12 +562,10 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	},delay2); 
 }
 
-var nodeAlertJSON = 0;
 function showData() {
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
 	
 	generateAlertPlot(nodeAlertJSON, "Accelerometer Movement Alert Map", 0, false, 1);
-	
 }
 
 window.onload = function() {

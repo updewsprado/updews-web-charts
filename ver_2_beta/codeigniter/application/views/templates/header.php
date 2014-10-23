@@ -66,6 +66,7 @@
     <script src="js/dewslandslide/dewsalert.js"></script>
     -->	
     <?php echo $alert; ?>
+    <?php echo $position; ?>
     <?php echo $gmap; ?>
     <?php echo $commhealth; ?>
     <?php echo $analysisdyna; ?>

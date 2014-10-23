@@ -18,31 +18,17 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Try clicking the Red Balloons from the "Sites Map" chart and be redirected to the page of that specific site
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Now using "models" for faster database accessing
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> All nodes from Alert Map are now clickable!
+                        </div>
+                    </div>                    
                 </div>
                 <!-- /.row -->   
-                
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Try clicking the Site Names from the "Alert Map" chart and be redirected to the page of that specific site
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->  
-                
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Try clicking the Nodes with Alert Status from the "Alert Map" chart and be redirected to the page of that specific node
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row --> 
 
                 <div class="row">
                     <div class="col-lg-12">

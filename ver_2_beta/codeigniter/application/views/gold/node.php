@@ -7,6 +7,29 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header" id="header-site">Node Overview</h1>
+                    </div>
+                </div>
+                <!-- /.row -->
+                
+                <!-- New Features!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Mini Alert Map for a more convenient way of mapping alerts on the node level analysis page
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> All nodes from Alert Map are now clickable!
+                        </div>
+                    </div>                        
+                </div>
+                <!-- /.row -->                                             
+                
+                <div class="row">
+                    <div class="col-lg-12">
                         <ol class="breadcrumb">
                             <li class="active">
                                 <i class="fa fa-dashboard"></i> Monitoring
@@ -14,11 +37,24 @@
                         </ol>
                     </div>
                 </div>
-
-                <!-- /.row -->
+                <!-- /.row -->  
 
                 <div class="row">
-                    <div class="col-lg-6">
+                     <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="mini-alert-canvas" ></div>
+                            </div>
+                        </div>
+                    </div>                                       
+                </div>
+                <!-- /.row -->   
+
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> LSB Change Plot</h3>
@@ -27,18 +63,7 @@
                                 <div id="lsb-change-canvas" ></div>
                             </div>
                         </div>
-                    </div>
-                    
-                     <div class="col-lg-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="mini-alert-canvas" >MINI ALERT MAP</div>
-                            </div>
-                        </div>
-                    </div>                                       
+                    </div>                                   
                 </div>
                 <!-- /.row -->                             
 
@@ -161,11 +186,16 @@ function initNode() {
 }
 
 window.onload = function() {
+	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
+	nodeStatusJSON = <?php echo $nodeStatus; ?>;
+	maxNodesJSON = <?php echo $siteMaxNodes; ?>;		
+	
 	//positionPlot.init_dims();
 	popDropDownGeneral();
 	
 	setTimeout(function(){
 		initNode();
+		initAlertPlot();
 	}, 1500); 
 }	
 

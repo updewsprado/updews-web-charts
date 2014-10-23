@@ -43,6 +43,54 @@ class Test extends CI_Controller {
 		
 		$this->load->view('graphs/testMap', $data);
 	}
+
+	public function datapres( $site = 'blcb', $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['sitesCoord'] = $this->Data_presence_Model->getSingleDataPresence($site, $interval);
+		
+		//$this->load->view('graphs/testMap', $data);
+	}
+	
+	public function dataprescsv( $site = 'blcb', $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['sitesCoord'] = $this->Data_presence_Model->getSingleDataPresenceCSV($site, $interval);
+		
+		//$this->load->view('graphs/testMap', $data);
+	}
+	
+	public function allpres( $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['sitesCoord'] = $this->Data_presence_Model->getAllDataPresence($interval);
+		
+		//$this->load->view('graphs/testMap', $data);
+	}
+	
+	public function allpres2( $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['sitesCoord'] = $this->Data_presence_Model->getAllDataPresence2($interval);
+		
+		//$this->load->view('graphs/testMap', $data);
+	}
+	
+	public function allprescsv( $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['sitesCoord'] = $this->Data_presence_Model->getAllDataPresenceCSV($interval);
+	}	
 }
 
 /* End of file pages.php */
