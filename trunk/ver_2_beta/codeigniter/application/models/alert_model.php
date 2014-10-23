@@ -58,8 +58,13 @@ class Alert_Model extends CI_Model
 		$arrayPlot = array();
 		
 		$file = 'lsbalerts2.csv';
-		$path = base_url() . 'temp/csvmonitoring/';
-		//$path = base_url() . 'ajax/csvmonitoring/';
+		
+		if(strcmp(base_url(),"http://localhost/") == 0) {
+			$path = base_url() . 'temp/csvmonitoring/';
+		}
+		else {
+			$path = base_url() . 'ajax/csvmonitoring/';
+		}
 		
 		// Set your CSV feed
 		$feed = $path . $file;
@@ -138,9 +143,12 @@ class Alert_Model extends CI_Model
 		
 		
 		$sql_maxnode = $this->db->query("SELECT num_nodes FROM site_column_props WHERE s_id IN (SELECT s_id FROM site_column WHERE name = '" . $site . "')");
-		
 		$node = $sql_maxnode->row();
 		$siteArray[$ctr]['nodes'] = $node->num_nodes;
+		
+		$sql_maxall = $this->db->query("SELECT MAX(num_nodes) AS maxnode FROM site_column_props");
+		$nodemax = $sql_maxall->row();
+		$siteArray[$ctr]['maxall'] = $nodemax->maxnode;		
 		
 		return json_encode($siteArray);
 	}	

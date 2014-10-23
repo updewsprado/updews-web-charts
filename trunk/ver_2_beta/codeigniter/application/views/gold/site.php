@@ -16,11 +16,17 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Try clicking the Node Circles from the "Position Plot" chart and be redirected to the page of that specific node
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Mini Alert Map for a more convenient way of mapping alerts on the site level analysis page
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> All nodes from Alert Map are now clickable!
+                        </div>
+                    </div>                        
                 </div>
-                <!-- /.row -->                 
+                <!-- /.row -->                                             
                 
                 <div class="row">
                     <div class="col-lg-12">
@@ -30,6 +36,20 @@
                             </li>
                         </ol>
                     </div>
+                </div>
+                <!-- /.row -->  
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="mini-alert-canvas" ></div>
+                            </div>
+                        </div>
+                    </div>                                       
                 </div>
                 <!-- /.row -->  
 
@@ -83,18 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                     <div class="col-lg-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="mini-alert-canvas" >MINI ALERT MAP</div>
-                            </div>
-                        </div>
-                    </div>                                       
+                    </div>                                    
                 </div>
                 <!-- /.row -->
 
@@ -269,6 +278,10 @@ function initSite() {
 }
 
 window.onload = function() {
+	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
+	nodeStatusJSON = <?php echo $nodeStatus; ?>;
+	maxNodesJSON = <?php echo $siteMaxNodes; ?>;	
+	
 	$('#nodeGeneral').hide();
 	positionPlot.init_dims();
 	//initAnalysisDyna();
@@ -276,6 +289,7 @@ window.onload = function() {
 	
 	setTimeout(function(){
 		initSite();
+		initAlertPlot();
 	}, 1500); 
 }	
 
@@ -286,7 +300,7 @@ function redirectSitePlots (frm) {
 	else {
 		curSite = frm.sitegeneral.value;
 		
-		var urlExt = "beta/site/" + curSite;
+		var urlExt = "gold/site/" + curSite;
 		var urlBase = "<?php echo base_url(); ?>";
 		
 		window.location.href = urlBase + urlExt;
