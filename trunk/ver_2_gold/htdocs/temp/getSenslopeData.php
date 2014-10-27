@@ -62,7 +62,7 @@
 		//echo "coord exists<Br/>";
 		getCoord($mysql_host, $mysql_database, $mysql_user, $mysql_password);
 	}
-	/*
+	
 	if(isset($_GET['alert'])) {
 		//echo "accel exists <Br/>";	
 		$q = $_GET['q'];
@@ -72,7 +72,6 @@
 		//getAlert($q, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 		getAlert($site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 	}	
-	*/
 ?>	
 
 
