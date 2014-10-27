@@ -172,7 +172,7 @@
 					<li>
 						<div class="form-group">
 							<label>Slider:</label><br />
-							<div id="slider" style="max-width:100%; max-height:100%; width:223px; height:100px; background-color:white;"></div>
+							<div id="slider" style="width:223px; height:75px; background-color:white;"></div>
 						</div>
 					</li>
 					</FORM>
