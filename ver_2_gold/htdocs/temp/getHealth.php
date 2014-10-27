@@ -11,14 +11,14 @@
 		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		}
 		
-		$sql_maxnode = "SELECT * FROM site_column_props WHERE s_id IN (SELECT s_id FROM site_column WHERE name = '" . $site . "') ;";
+		$sql_maxnode = "SELECT * FROM site_column_props WHERE s_id IN (SELECT s_id FROM site_column WHERE name = '" . $site . "');";
 		$result = mysqli_query($con, $sql_maxnode);
 		$maxnode;
 		
 		$row = mysqli_fetch_array($result);
 		$maxnode = $row['num_nodes'];
 		
-		$sql_nodes = "SELECT DISTINCT id FROM $site WHERE id <= $maxnode ORDER BY id ASC";
+		$sql_nodes = "SELECT DISTINCT id FROM $site WHERE id <= $maxnode AND id != '0' ORDER BY id ASC";
 		$result = mysqli_query($con, $sql_nodes);
 		$result_nodes;
 		
