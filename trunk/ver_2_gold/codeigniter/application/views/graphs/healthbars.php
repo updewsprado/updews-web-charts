@@ -236,21 +236,21 @@
 				.domain(layers[0].map(function(d) { return d.x; }))
 				.rangeRoundBands([25, width], .08);
 
-			var y = d3.scale.linear()
+			var yScale = d3.scale.linear()
 				.domain([0, yGroupMax])
 				.range([height, 0]);
 				
 			var color = d3.scale.ordinal()
 				.range(["red", "blue", "green"]);
 		  
-			var xAxis = d3.svg.axis()
+			var xAxis1 = d3.svg.axis()
 				.scale(xScale)
 				.tickSize(0)
 				.tickPadding(6)
 				.orient("bottom");
 
-			var yAxis = d3.svg.axis()
-				.scale(y)
+			var yAxis1 = d3.svg.axis()
+				.scale(yScale)
 				.orient("left");
 
 			var layer = svg.selectAll(".layer")
@@ -259,13 +259,13 @@
 				.attr("class", "layer")
 				.style("fill", function(d, i) { return color(i); });
 
-			var rect = layer.selectAll("rect")
+			var rect1 = layer.selectAll("rect")
 				.data(function(d) { return d; })
 				.enter().append("rect")
 				.attr("x", function(d, i, j) { return xScale(d.x) + xScale.rangeBand() / n * j; })
 				.attr("width", xScale.rangeBand() / n)
-				.attr("y", function(d) { return y(d.y); })
-				.attr("height", function(d) { return height - y(d.y); })
+				.attr("y", function(d) { return yScale(d.y); })
+				.attr("height", function(d) { return height - yScale(d.y); })
 				.attr("id", function(d){if (d.y == d.all) return "overall";
 					else if (d.y == d.week) return "week";
 					else if (d.y == d.month) return "month"; })
@@ -286,7 +286,7 @@
 					.attr("class", "x axis")
 					.attr("transform", "translate(0," + height + ")")
 					.style("font-size", "14px")
-					.call(xAxis)
+					.call(xAxis1)
 					.selectAll("text").style("text-anchor", "end")
 					.attr("dx", "-.8em")
 					.attr("dy", ".15em")
@@ -297,7 +297,7 @@
 					.attr("class", "y axis")
 					.attr("transform", "translate(20,0)")
 					.style("font-size", "14px")
-					.call(yAxis)
+					.call(yAxis1)
 					.append("text")
 					.attr("transform", "rotate(-90)")
 					.attr({"x": -150, "y": -70})

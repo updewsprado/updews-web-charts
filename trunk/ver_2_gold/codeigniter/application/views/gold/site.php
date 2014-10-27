@@ -104,7 +104,7 @@
 											<strong>Past 7 Days</strong><input type='button' onclick="barTransition('red')" style='background-color:red; padding-right:5px;' />
 											<strong>Past 30 Days</strong><input type='button' onclick="barTransition('blue')" style='background-color:blue; padding-right:5px;' />
 											<strong>Overall</strong><input type='button' onclick="barTransition('green')" style='background-color:green; padding-right:5px;' /></div><hr>
-												<div id="barchart" style="max-width:100%; max-height:100%; width:447px; height:400px;">
+												<div id="barchart" style="width:447px; height:400px;">
 											</div>
                                 </div>
                             </div>
@@ -220,7 +220,7 @@
                             <div class="panel-body">
 								<div id="sent-node-canvas">
 									<div id="current"><b>Data Sent: </b></div>
-									<div id="div_health" style="max-width:100%; max-height:100%; width:447px; height:430px;">
+									<div id="div_health" style="max-height:100%; max-width:100%; width:447px; height:430px;">
 								</div>                               	
                             </div>
                         </div>
