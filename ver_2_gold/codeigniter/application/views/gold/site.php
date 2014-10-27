@@ -99,7 +99,13 @@
                             </div>
                             <div class="panel-body">
                                 <div id="healthbars-canvas" >
-									<div id="div_health"></div>
+									<b>Legends:</b> <input type='button' id='show' onclick='showLegends(this.form)' value='Show Legends' />
+										<div id="legends" style="visibility:hidden;">
+											<strong>Past 7 Days</strong><input type='button' onclick="barTransition('red')" style='background-color:red; padding-right:5px;' />
+											<strong>Past 30 Days</strong><input type='button' onclick="barTransition('blue')" style='background-color:blue; padding-right:5px;' />
+											<strong>Overall</strong><input type='button' onclick="barTransition('green')" style='background-color:green; padding-right:5px;' /></div><hr>
+												<div id="barchart" style="max-width:100%; max-height:100%; width:447px; height:400px;">
+											</div>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +218,10 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Sent Node Data</h3>
                             </div>
                             <div class="panel-body">
-								<div id="sent-node-canvas"></div>                               	
+								<div id="sent-node-canvas">
+									<div id="current"><b>Data Sent: </b></div>
+									<div id="div_health" style="max-width:100%; max-height:100%; width:447px; height:430px;">
+								</div>                               	
                             </div>
                         </div>
                     </div>     
