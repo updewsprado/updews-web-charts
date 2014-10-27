@@ -207,7 +207,7 @@ function redirectNodePlots (frm) {
 		curSite = frm.sitegeneral.value;
 		curNode = document.getElementById("node").value;
 		
-		var urlExt = "beta/node/" + curSite + "/" + curNode;
+		var urlExt = "gold/node/" + curSite + "/" + curNode;
 		var urlBase = "<?php echo base_url(); ?>";
 		
 		window.location.href = urlBase + urlExt;

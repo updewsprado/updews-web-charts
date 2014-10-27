@@ -130,6 +130,7 @@ path {
 
 <script>
 var presenceJSON = 0;
+var allSitesJSON = 0;
 
 // Set the dimensions of the canvas / graph
 var cWidth = document.getElementById('presence-map-canvas').offsetWidth;
@@ -338,7 +339,8 @@ function getDataPresence(xOffset) {
 	
 	// Scale the range of the data
 	x.domain(d3.extent(siteMaxNodes, function(d) { return parseDate(d.timestamp); }));
-	yOrd.domain(siteMaxNodes.map(function(d) { return d.site; }));
+	//yOrd.domain(siteMaxNodes.map(function(d) { return d.site; }));
+	yOrd.domain(allSitesJSON.map(function(d) { return d.site; }));
 	
 	var cellw = (graphDim.gWidth / maxNode) * 0.9;
 	var cellh = yOrd.rangeBand(); //9;
@@ -356,11 +358,11 @@ function getDataPresence(xOffset) {
 		.attr('width', cellw)
 		.attr('height', cellh)
 		.on('mouseover', tip.show)
-		.on('mouseout', tip.hide);
-		.style("cursor", "pointer")
+		.on('mouseout', tip.hide)
+		//.style("cursor", "pointer")
 		.on("click", function(d){
 	        //document.location.href = urlBase + urlNodeExt + d.site + '/' + d.node;
-	        document.location.href = "www.google.com";
+	        //document.location.href = "www.google.com";
 	    });	
 }
 
@@ -423,60 +425,44 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	
 	getDataPresence(xOffset);
 	
-	return;
-	
-	getSiteMaxNodes(xOffset);
-	
 	var delay1 = 1000;//1 second
-    //setTimeout(function(){
 
-		//d3.json(url, function(error, data) {
-			//var data = url.slice();
-			var data = url;
+	var data = url;
+	
+	jsondata = data;
+
+	data.forEach(function(d) {
+		d.node = parseInt(d.node);
+		d.xalert = parseFloat(d.xalert);
+		d.yalert = parseFloat(d.yalert);
+		d.zalert = parseFloat(d.zalert);
+	});
+	
+	var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
+	
+	// Graph Label
+	svg.append("text")      // text label for the x axis
+		.attr("class", "axislabel")
+		.attr("x", xOffset + (graphDim.gWidth / 2))
+		.attr("y", 0 -(margin.top/2))
+		.text(title);			
+		
+	// Add the Y Axis
+	svg.append("g")
+		.attr("class", "y axis")
+		.attr("transform", "translate(" + xOffset + ",0)")
+		.call(make_yOrd_axis());
+
+	// Y axis Label
+	svg.append("text")		// text label for the y axis
+		.attr("class", "axislabel")
+		.attr("transform", "rotate(-90)")
+		.attr("y", xOffset -5 - (margin.left / 2))
+		.attr("x", 0 - (height / 2))
+		.text("Column/Site");			
 			
-			jsondata = data;
-	
-			data.forEach(function(d) {
-				d.node = parseInt(d.node);
-				d.xalert = parseFloat(d.xalert);
-				d.yalert = parseFloat(d.yalert);
-				d.zalert = parseFloat(d.zalert);
-			});
-			
-			var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
-			// Add the X Axis
-			svg.append("g")
-				.attr("class", "x axis")
-				.attr("transform", "translate(" + horOff + "," + height + ")")
-				.call(make_x_axis2(maxNode));
-				
-			// Graph Label
-			svg.append("text")      // text label for the x axis
-				.attr("class", "axislabel")
-				.attr("x", xOffset + (graphDim.gWidth / 2))
-				.attr("y", 0 -(margin.top/2))
-				.text(title);			
-	
-			// X axis Label
-			svg.append("text")      // text label for the x axis
-				.attr("class", "axislabel")
-				.attr("x", xOffset + (graphDim.gWidth / 2))
-				.attr("y", height + (margin.bottom/2) + 5)
-				.text("Nodes");
-				
-			// Add the Y Axis
-			svg.append("g")
-				.attr("class", "y axis")
-				.attr("transform", "translate(" + xOffset + ",0)")
-				.call(make_yOrd_axis());
-	
-			// Y axis Label
-			svg.append("text")		// text label for the y axis
-				.attr("class", "axislabel")
-				.attr("transform", "rotate(-90)")
-				.attr("y", xOffset -5 - (margin.left / 2))
-				.attr("x", 0 - (height / 2))
-				.text("Column/Site");			
+	// Return for the whole graphing	
+	return;				
 				
 			var cellw = (graphDim.gWidth / maxNode) * 0.9;
 			var cellh = yOrd.rangeBand(); //9;
@@ -629,6 +615,7 @@ var nodeAlertJSON = 0;
 function showData() {
 	//nodeAlertJSON = 
 	presenceJSON = <?php echo $dataPresence; ?>;
+	allSitesJSON = <?php echo $allSites; ?>;
 	
 	generateAlertPlot(presenceJSON, "Data Presence Map", 0, true, 1);
 }
