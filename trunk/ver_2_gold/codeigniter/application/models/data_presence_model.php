@@ -53,13 +53,23 @@ class Data_presence_Model extends CI_Model
 		$ctr = 0;
 		$accum = $interval * 1800;
 		
+		//Set time to limit DB query
+		date_default_timezone_set("Asia/Manila");
+		$date_cur = "'" . date('Y-m-d H:i:s') . "'";
+		
+		$date_string = "-2 days";
+		$date_from =  "'" . date('Y-m-d H:i:s',strtotime($date_string)) . "'";
+		
+		//echo "Current Date: $date_cur, Range: $date_from";
+		
 		$maxnode = $sql_maxnode->row()->num_nodes;
 							
 		$sql = $this->db->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
-							AS timeslice , COUNT(*) AS mycount FROM $site WHERE id <= $maxnode 
+							AS timeslice , COUNT(*) AS mycount 
+							FROM (SELECT * FROM $site WHERE timestamp > $date_from) AS site
 							GROUP BY timeslice DESC LIMIT 48");							
 		
-		$dbtstamp;
+		$dbtstamp = array();
 		$ctr_ts = 0;		
 		foreach ($sql->result_array() as $row)
 		{
@@ -84,7 +94,8 @@ class Data_presence_Model extends CI_Model
 		$maxnode = $sql_maxnode->row()->num_nodes;
 							
 		$sql = $this->db->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
-							AS timeslice , COUNT(*) AS mycount FROM $site WHERE id <= $maxnode 
+							AS timeslice , COUNT(*) AS mycount 
+							FROM $site WHERE id <= $maxnode 
 							GROUP BY timeslice DESC LIMIT 48");							
 		
 		$dbtstamp = '';
@@ -105,6 +116,13 @@ class Data_presence_Model extends CI_Model
 		$dbreturn = array();
 		$ctr = 0;
 		$accum = $interval * 1800;
+
+		//Set time to limit DB query
+		date_default_timezone_set("Asia/Manila");
+		$date_cur = "'" . date('Y-m-d H:i:s') . "'";
+		
+		$date_string = "-2 days";
+		$date_from =  "'" . date('Y-m-d H:i:s',strtotime($date_string)) . "'";
 		
 		$sitesAll = $this->db->query("SELECT name FROM site_column");	
 		
@@ -112,9 +130,10 @@ class Data_presence_Model extends CI_Model
 		{
 			$site = $row['name'];
 
-			$sql = $this->db->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
-								AS timeslice , COUNT(*) AS mycount FROM $site 
-								GROUP BY timeslice DESC LIMIT 48");							
+		$sql = $this->db->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
+							AS timeslice , COUNT(*) AS mycount 
+							FROM (SELECT * FROM $site WHERE timestamp > $date_from) AS site
+							GROUP BY timeslice DESC LIMIT 48");							
 
 			foreach ($sql->result_array() as $row)
 			{
@@ -125,7 +144,8 @@ class Data_presence_Model extends CI_Model
 			}
 		}
 		
-		echo json_encode( $dbreturn );
+		//echo json_encode( $dbreturn );
+		return json_encode( $dbreturn );
 	}
 	
 	public function getAllDataPresence2($interval = 1)
@@ -203,7 +223,7 @@ class Data_presence_Model extends CI_Model
 		}
 		
 		// Print as JSON data
-		echo json_encode($arrayPresence);
+		return json_encode($arrayPresence);
 	}
 
 	//Move this to the Site Health Model!!!
