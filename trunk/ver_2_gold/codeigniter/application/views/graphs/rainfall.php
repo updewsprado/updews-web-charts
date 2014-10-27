@@ -1,16 +1,42 @@
-
 <!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>View NOAH Rainfall Data</title>
-	<link rel="stylesheet" href="js/development-bundle/themes/base/jquery.ui.all.css">
-	<script src="js/development-bundle/jquery-1.10.2.js"></script>
-	<script src="js/development-bundle/ui/jquery.ui.core.js"></script>
-	<script src="js/development-bundle/ui/jquery.ui.widget.js"></script>
-	<script src="js/development-bundle/ui/jquery.ui.datepicker.js"></script>
+	<link href="jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	<link rel="stylesheet" href="jquery.ui.all.css">
+	<script src="jquery-1.10.2.js"></script>
+	<script src="jquery.ui.core.js"></script>
+	<script src="jquery.ui.widget.js"></script>
+	<script src="jquery.ui.datepicker.js"></script>
+	<script src="http://d3js.org/d3.v3.js"></script>
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
-	<script type="text/javascript" src="http://dygraphs.com/dygraph-combined.js"></script>
+	<style>
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	.area {
+		fill: #D4D26A;
+		clip-path: url(#clip);
+	}
+		
+	.area2 {
+		fill: #90BF60;
+		clip-path: url(#clip);
+	}
+	
+	.brush .extent {
+		  stroke: #fff;
+		  fill-opacity: .125;
+		  shape-rendering: crispEdges;
+	}
+	
+	
+	</style>
 	<script>
 	$(function() {
 		$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
@@ -47,8 +73,7 @@
 		// All HTML5 Rocks properties support CORS.
 		//var url = 'http://updates.html5rocks.com';
 		//var url = 'http://noah.dost.gov.ph/';
-		//var url = 'http://senslopetest.comlu.com/';
-		var url = 'http://dewslandslide.com/';
+		var url = 'http://senslopetest.comlu.com/';
 
 		var xhr = createCORSRequest('GET', url);
 		if (!xhr) {
@@ -99,98 +124,317 @@
     } else { // code for IE6, IE5
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-	
+			
 	function showDataCors(frm) {
 	
+	var current;
+		
+		current = document.getElementById("current1");
+		current.innerHTML = "<b>Timestamp: </b>";
+		current = document.getElementById("current2");
+		current.innerHTML = "<b>Timestamp: </b>";
+		
+	var margin = {top: 20, right: 20, bottom: 30, left: 90},
+			margin2 = {top: 430, right: 10, bottom: 20, left: 40},
+			width = parseInt(d3.select('#raindiv1').style('width'), 10)- margin.left - margin.right,
+			height = parseInt(d3.select('#raindiv1').style('height'), 10) - margin.top - margin.bottom,
+			height2 = parseInt(d3.select('#slider').style('height'), 10) - margin.top - margin.bottom;
+			
+	d3.selectAll("svg").remove();	
 		if (frm.dateinput.value == "") {
 			document.getElementById("txtHint").innerHTML="";
 			return;
 		} 
-		//else
-		//	alert("The field contains the date: " + frm.dateinput.value + " and site: " + frm.sites.value);
 
-        /*
-		var url = "http://weather.asti.dost.gov.ph/home/index.php/api/data/" + frm.sites.value + "/from/" + frm.dateinput.value + "/to/" + frm.dateinput2.value;
-		var xmlhttp = createCORSRequest('GET', url);
-		if (!xmlhttp) {
-			alert('CORS not supported');
-			return;
-		}
-		*/
-		var target = document.getElementById('raindiv');
-		var spinner = new Spinner().spin();
-		target.appendChild(spinner.el);
+	var target = document.getElementById('raindiv1');
+	var spinner = new Spinner().spin();
+	target.appendChild(spinner.el);
 
 		// Response handlers.
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				//document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-				
-                //var rdatajson = JSON.parse(xmlhttp.responseText);
-				var rdatacsv = JSON2CSV(xmlhttp.responseText);	
-				//document.getElementById("txtHint").innerHTML = rdatacsv;
-				//document.getElementById("txtHint").innerHTML = rdatacsv;
-                spinner.stop();
-                
-                var threshold = 0.0;
-                switch(frm.sites.value){
-                    case "blcb": threshold = 130.00; break;
-                    case "blct": threshold = 130.00; break;
-                    case "bolb": threshold = 128.53; break;
-                    case "gamt": threshold = 183.85; break;
-                    case "gamb": threshold = 183.85; break;
-                    case "humb": threshold = 79.33; break;
-                    case "humt": threshold = 79.33; break;
-                    case "labb": threshold = 195.21; break;
-                    case "labt": threshold = 195.21; break;
-                    case "lipb": threshold = 129.65; break;
-                    case "lipt": threshold = 129.65; break;
-                    case "mamb": threshold = 208.54; break;
-                    case "mamt": threshold = 208.54; break;
-                    case "oslb": threshold = 179.41; break;
-                    case "oslt": threshold = 179.41; break;
-                    case "plat": threshold = 78.32; break;
-                    case "plab": threshold = 78.32; break;
-                    case "pugb": threshold = 191.95; break;
-                    case "pugt": threshold = 191.95; break;
-                    case "sinb": threshold = 235.03; break;
-                    case "sint": threshold = 235.03; break;
-                    case "sinu": threshold = 235.03; break;
-                }
-                
-				g2 = new Dygraph(
-					document.getElementById("raindiv"),
-					rdatacsv,
-					{
-						ylabel: "Rain Intensity (mm)",
-                        labels: ["Timestamp","24h Rain","15m Rain"],
-                        ylabel: "Rain Intensity",
-                        fillGraph: true,
-                        
-                        underlayCallback: function(canvas, area, g2) {
-                            
-                            var c1 = g2.toDomCoords(g2.getValue(0,0), threshold);
-                            canvas.fillStyle = '#FF0000';
-                            canvas.fillRect(area.x, c1[1], area.w, 1);
-                                                        
-                        },
-                        
-						//visibility: [true, false]
-					}// options
-				);
-				//var json = JSON.parse(xmlhttp.responseText);
-				//document.getElementById("txtHint").innerHTML = json.data[0].dateTimeRead;
-                
-			}
-		};
         
-        //var url = "getRainfall.php?rsite=" + frm.sites.value + "&fdate=" + frm.datepicker.value + "&tdate=" + frm.datepicker2.value;
-        var url = "ajax/getRainfall.php?rsite=" + frm.sites.value + "&fdate=" + frm.datepicker.value + "&tdate=" + frm.datepicker2.value;
-        //var url = "http://dewslandslide.com/ajax/dlRain_json.php?site=" + frm.sites.value;
-        document.getElementById("txtHint").innerHTML = url;
-		//xmlhttp.open("GET","http://weather.asti.dost.gov.ph/home/index.php/api/data/" + frm.sites.value + "/from/" + frm.dateinput.value + "/to/" + frm.dateinput2.value,true);
-		xmlhttp.open("GET",url,true);
-		xmlhttp.send();
+    var url = "getRainfall.php?rsite=" + frm.sites.value + "&fdate=" + frm.datepicker.value + "&tdate=" + frm.datepicker2.value;
+    
+	var x5 = d3.time.scale()
+		.range([0, width]);
+
+	var y5 = d3.scale.linear()
+		.range([height, 0]);
+		
+	var x6 = d3.time.scale()
+		.range([0, width]);
+
+	var y6 = d3.scale.linear()
+		.range([height, 0]);
+
+	var xAxis5 = d3.svg.axis()
+		.scale(x5)
+		.orient("bottom");
+
+	var yAxis5 = d3.svg.axis()
+		.scale(y5)
+		.orient("left").ticks(4);
+		
+	var xAxis6 = d3.svg.axis()
+		.scale(x6)
+		.orient("bottom");
+
+	var yAxis6 = d3.svg.axis()
+		.scale(y6)
+		.orient("left").ticks(4);
+
+	var area5 = d3.svg.area()
+		.interpolate("basis")
+		.x(function(d) { return x5(d.timestamp); })
+		.y0(function (d) {if(d.cummulative < 0){return 0;} else return height})
+		.y1(function(d) { return y5(d.cummulative); });
+		
+	var area6 = d3.svg.area()
+		.interpolate("basis")
+		.x(function(d) { return x6(d.timestamp); })
+		.y0(function (d) {if(d.rain < 0){return 0;} else return height})
+		.y1(function(d) { return y6(d.rain); });
+		
+	var chart5 = d3.select("#raindiv1").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+	var chart6 = d3.select("#raindiv2").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+	chart5.append("defs").append("clipPath")
+		.attr("id", "clip")
+		.append("rect")
+		.attr("width", width)
+		.attr("height", height);
+		
+	chart6.append("defs").append("clipPath")
+		.attr("id", "clip")
+		.append("rect")
+		.attr("width", width)
+		.attr("height", height);	
+		
+	//slider
+	
+	var x7 = d3.time.scale().range([0, width]);
+	
+	var xAxis7 = d3.svg.axis()
+		.scale(x7)
+		.orient("bottom");
+		
+	var y7 = d3.scale.linear()
+		.range([height2, 0]);
+
+	var area7 = d3.svg.area()
+		.interpolate("basis")
+		.x(function(d) { return x7(d.timestamp); })
+		.y0(height2)
+		.y1(0);
+		
+	var brush = d3.svg.brush()
+		.x(x7)
+		.on("brush", onBrush);
+		
+	var slider = d3.select("#slider").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height2 + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+	var tool = chart5.append("g")                                
+		.style("display", null);   
+		
+	var tool2 = chart6.append("g")                                
+		.style("display", null);  
+	
+	d3.selectAll("svg")
+		.attr("viewBox", "0 0 1024 120")
+		.attr("width", "100%")
+		.attr("height", "100%")
+		.attr("preserveAspectRatio", "xMinYMin meet");	
+		
+	var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+	var formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
+	var bisectDate = d3.bisector(function(d) { return d.timestamp; }).left;
+	
+	d3.json(url, function (error, data){
+			
+		data.forEach(function(d){
+		d.timestamp = parseDate(d.index);
+		d.cummulative = +d.cummulative;
+		d.rain = +d.rain;
+			});
+		
+		//cummulative
+		
+		x5.domain(d3.extent(data, function(d) { return d.timestamp; }));
+		y5.domain([d3.min(data, function(d) {return d.cummulative;}), d3.max(data, function(d) { return d.cummulative; })]);
+		
+		chart5.append("path")
+		.datum(data)
+		.attr("class", "area")
+		.attr("d", area5);
+
+		chart5.append("rect")
+			.attr("width", width)
+			.attr("height", height)
+			.style("fill", "none")
+			.style("pointer-events", "all")
+			.on("mouseover", function() { tool.style("display", null); })
+			.on("mouseout", function() { tool.style("display", "none"); 
+										 current = document.getElementById("current1");
+										 current.innerHTML = "<b>Timestamp: </b>";})
+			.on("mousemove", mousemove);
+		
+		chart5.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .style("font-size", "11px")
+			  .call(xAxis5);
+
+		chart5.append("g")
+			  .attr("class", "y axis")
+			  .style("font-size", "13px")
+			  .call(yAxis5)
+			  .append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -75)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text(" 24 Hours (mm)");
+	
+			  //rain
+			  
+		x6.domain(d3.extent(data, function(d) { return d.timestamp; }));
+		y6.domain([d3.min(data, function(d) {return d.rain;}), d3.max(data, function(d) { return d.rain; })]);
+
+		chart6.append("path")
+			.datum(data)
+			.attr("class", "area2")
+			.attr("d", area6);
+			
+		chart6.append("rect")
+			.attr("width", width)
+			.attr("height", height)
+			.style("fill", "none")
+			.style("pointer-events", "all")
+			.on("mouseover", function() { tool2.style("display", null); })
+			.on("mouseout", function() { tool2.style("display", "none"); 
+										 current = document.getElementById("current2");
+										 current.innerHTML = "<b>Timestamp: </b>";})
+			.on("mousemove", mousemove2);
+			
+		chart6.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.style("font-size", "11px")
+			.call(xAxis6);  
+
+		chart6.append("g")
+			.attr("class", "y axis")
+			.style("font-size", "13px")
+			.call(yAxis6)
+			.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", -75)
+			.attr("dy", ".71em")
+			.style("text-anchor", "end")
+			.text("15 min(mm)");  
+		
+		//slider
+		
+		x7.domain(x5.domain());
+		y7.domain(y5.domain());
+		
+		slider.append("path")
+			.datum(data)
+			.attr("fill", "#E94200")
+			.attr("d", area7);
+			
+		slider.append("g")
+			.attr("class", "x axis top")
+			.attr("transform", "translate(0," + height2 + ")")
+			.style("font-size", "11px")
+			.call(xAxis7);
+			
+		slider.append("g")
+			.attr("class", "x brush")
+			.call(brush)
+			.selectAll("rect")
+			.attr("y", 0)
+			.attr("height", height2);
+			
+		tool.append("circle")                                 
+			.attr("class", "y")                              
+			.style("fill", "FCFF33")                          
+			.style("stroke", "FCFF33")                         
+			.attr("r", 2);  
+			
+		tool2.append("circle")                                 
+			.attr("class", "y")                              
+			.style("fill", "FCFF33")                          
+			.style("stroke", "FCFF33")                         
+			.attr("r", 2);  	  
+			  
+<!-- Tooltips Function -->
+
+		function mousemove() {                                 
+        var x0 = x5.invert(d3.mouse(this)[0]);              
+            i = bisectDate(data, x0, 1),                   
+            d0 = data[i - 1],                              
+            d1 = data[i],                                  
+            d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;     
+
+			tool.select("circle.y")  
+				.style("fill", "#4E0012")
+				.style("stroke", "#4E0012")
+				.attr("transform",                           
+					  "translate(" + (x5(d.timestamp))  + "," +         
+									 y5((d.cummulative)) + ")");      
+									 
+			current = document.getElementById("current1");
+			current.innerHTML = "<b>Timestamp: </b>" + formatDate(d.timestamp) + "<b>24h Rain: </b>" + d.cummulative;
+			}
+	
+		function mousemove2() {                                 
+        var x0 = x6.invert(d3.mouse(this)[0]);              
+            i = bisectDate(data, x0, 1),                   
+            d0 = data[i - 1],                              
+            d1 = data[i],                                  
+            d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;     
+
+			tool2.select("circle.y")           
+				.style("fill", "#4E0012")
+				.style("stroke", "#4E0012")		
+				.attr("transform",                           
+					  "translate(" + (x6(d.timestamp))  + "," +         
+									 y6((d.rain)) + ")");      
+								 
+			current = document.getElementById("current2");
+			current.innerHTML = "<b>Timestamp: </b>" + formatDate(d.timestamp) + "<b>15m Rain: </b>" + d.rain;
+			}
+		
+		spinner.stop();
+		
+		});
+			
+		function onBrush(){
+    /* 
+    this will return a date range to pass into the chart object 
+    */
+ 
+    x5.domain(brush.empty() ? x7.domain() : brush.extent());
+	x6.domain(brush.empty() ? x7.domain() : brush.extent());
+		chart5.select(".area").attr("d", area5);
+		chart5.select(".x.axis").call(xAxis5);
+		chart6.select(".area2").attr("d", area6);
+		chart6.select(".x.axis").call(xAxis6);
+		}
+
 	}
 	
 	function downloadDataCors(frm) {
@@ -312,34 +556,6 @@
 		xmlhttp.send();
 	}
 
-	function showData(frm) {
-	
-		if (frm.dateinput.value == "") {
-			document.getElementById("txtHint").innerHTML="";
-			return;
-		} 
-		else
-			alert("The field contains the date: " + frm.dateinput.value + " and site: " + frm.sites.value);
-
-		if (window.XMLHttpRequest) {
-			// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp = new XMLHttpRequest();
-		} else { // code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-	  
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-			}
-		}
-        
-        //var url = "getRainfall.php?rsite=" + frm.sites.value + "&fdate=" + frm.datepicker.value + "&tdate=" + frm.datepicker2.value;
-		xmlhttp.open("GET","http://weather.asti.dost.gov.ph/home/index.php/api/data/" + frm.sites.value + "/from/" + frm.dateinput.value + "/to/" + frm.dateinput2.value,true);
-		//xmlhttp.open("GET",url,true);
-		xmlhttp.send();
-	}
-	
 	function showAndClearField(frm){
 		if (frm.dateinput.value == "")
 			alert("Hey! You didn't enter anything!")
@@ -385,9 +601,9 @@
 		<option value="789">PLAT</option>
 		<option value="65">PUGB</option>
 		<option value="65">PUGT</option>
-		<option value="454">SINB</option>
-		<option value="454">SINT</option>
-		<option value="454">SINU</option>
+		<option value="benguetbuguias_r2">SINB</option>
+		<option value="benguetbuguias_r2">SINT</option>
+		<option value="benguetbuguias_r2">SINU</option>
 		</select>
 		<Br/>
 		From: <input type="text" id="datepicker" name="dateinput" size="30"/><Br/>
@@ -396,14 +612,15 @@
 		<input type="button" value="Download CSV" onclick="downloadDataCors(this.form)">
 	</p>
 </FORM>
-
-<div id="raindiv" style="width:100%; height:200px;">+++</div>
-
-<div class="demo-description">
-	<p>Pick a date for viewing rainfall data</p>
-</div>
-
-<div id="txtHint"><b>...</b></div>
+<hr>
+<div id="current1"><b>Timestamp: </b></div>
+<div id="raindiv1" style="width:1024px; height:120px; max-width:100%; max-height:100%;"></div><hr>
+<div id="current2"><b>Timestamp: </b></div>
+<div id="raindiv2" style="width:1024px; height:120px; max-width:100%; max-height:100%;"></div><hr>
+<b>Slider</b>
+<div id="slider" style="width:1024px; height:120px; max-width:100%; max-height:100%;"></div><hr>
+	
+<div id="txtHint"><b></b></div>
 
 </body>
 </html>

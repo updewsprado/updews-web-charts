@@ -17,7 +17,22 @@ class Test extends CI_Controller {
 		$this->load->view('graphs/testAlert', $data);
 		//$this->load->view('graphs/alertPlot', $data);
 	}
-
+	
+	public function healthbars()
+	{
+		$this->load->view('graphs/healthbars');
+	}
+	
+	public function sitehealth()
+	{
+		$this->load->view('graphs/sitehealth');
+	}
+	
+	public function rainfall()
+	{
+		$this->load->view('graphs/rainfall');
+	}
+	
 	public function mini( $site = 'blcb' )
 	{
 		$this->load->helper('url');

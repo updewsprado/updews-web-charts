@@ -163,10 +163,19 @@
                     	<div class="form-group">
                             <label>Date:</label><br />                              
 		                    Start: <input type="text" id="datepicker" name="dateinput" onchange="<?php echo $showdateplots; ?>" size="10"/><br />  
-		                     End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php echo $showdateplots; ?>" size="10"/>
+		                    End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php echo $showdateplots; ?>" size="10"/>
 	                     </div>	
                     </li> 
                     </FORM>
+					
+					<FORM id="formDateSelect">
+					<li>
+						<div class="form-group">
+							<label>Slider:</label><br />
+							<div id="slider" style="max-width:100%; max-height:100%; width:223px; height:100px; background-color:white;"></div>
+						</div>
+					</li>
+					</FORM>
                     
 <!--                    
                     <li <?php echo $home; ?> >
