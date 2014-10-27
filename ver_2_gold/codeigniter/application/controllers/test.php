@@ -49,9 +49,7 @@ class Test extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
-		$data['sitesCoord'] = $this->Data_presence_Model->getSingleDataPresence($site, $interval);
-		
-		//$this->load->view('graphs/testMap', $data);
+		$data['dataPresence'] = $this->Data_presence_Model->getSingleDataPresence($site, $interval);
 	}
 	
 	public function dataprescsv( $site = 'blcb', $interval = 1 )
@@ -59,9 +57,7 @@ class Test extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
-		$data['sitesCoord'] = $this->Data_presence_Model->getSingleDataPresenceCSV($site, $interval);
-		
-		//$this->load->view('graphs/testMap', $data);
+		$data['dataPresence'] = $this->Data_presence_Model->getSingleDataPresenceCSV($site, $interval);
 	}
 	
 	public function allpres( $interval = 1 )
@@ -69,9 +65,8 @@ class Test extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
-		$data['sitesCoord'] = $this->Data_presence_Model->getAllDataPresence($interval);
-		
-		//$this->load->view('graphs/testMap', $data);
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($interval);
+		echo $data['dataPresence'];
 	}
 	
 	public function allpres2( $interval = 1 )
@@ -79,9 +74,7 @@ class Test extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
-		$data['sitesCoord'] = $this->Data_presence_Model->getAllDataPresence2($interval);
-		
-		//$this->load->view('graphs/testMap', $data);
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence2($interval);
 	}
 	
 	public function allprescsv( $interval = 1 )
@@ -89,7 +82,7 @@ class Test extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
-		$data['sitesCoord'] = $this->Data_presence_Model->getAllDataPresenceCSV($interval);
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresenceCSV($interval);
 	}	
 	
 	public function prescsv2json( $interval = 1 )
@@ -97,7 +90,19 @@ class Test extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
-		$data['sitesCoord'] = $this->Data_presence_Model->getDataPresCSVtoJSON();
+		$data['dataPresence'] = $this->Data_presence_Model->getDataPresCSVtoJSON();
+		
+		$this->load->view('graphs/testDataPres', $data);
+	}	
+
+	public function presmap( $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence();
+		
+		$this->load->view('graphs/testDataPres', $data);
 	}		
 }
 
