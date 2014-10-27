@@ -115,7 +115,8 @@ class Test extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
-		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence();
+		$data['allSites'] = $this->Data_presence_Model->getAllSiteNames();
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($interval);
 		
 		$this->load->view('graphs/testDataPres', $data);
 	}		

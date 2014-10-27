@@ -52,20 +52,21 @@ class Data_presence_Model extends CI_Model
 		$dbreturn = array();
 		$ctr = 0;
 		$accum = $interval * 1800;
+		$days = $interval;
 		
 		//Set time to limit DB query
 		date_default_timezone_set("Asia/Manila");
 		$date_cur = "'" . date('Y-m-d H:i:s') . "'";
 		
-		$date_string = "-2 days";
+		$date_string = "-$days days";
 		$date_from =  "'" . date('Y-m-d H:i:s',strtotime($date_string)) . "'";
 		
 		//echo "Current Date: $date_cur, Range: $date_from";
 		
 		$maxnode = $sql_maxnode->row()->num_nodes;
-							
+
 		$sql = $this->db->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
-							AS timeslice , COUNT(*) AS mycount 
+							AS timeslice 
 							FROM (SELECT * FROM $site WHERE timestamp > $date_from) AS site
 							GROUP BY timeslice DESC LIMIT 48");							
 		
@@ -75,7 +76,6 @@ class Data_presence_Model extends CI_Model
 		{
 			$dbtstamp[$ctr_ts]['site'] = $site;
 			$dbtstamp[$ctr_ts]['timestamp'] = $row['timeslice'];
-			$dbtstamp[$ctr_ts]['count'] = $row['mycount'];
 			$ctr_ts = $ctr_ts + 1;
 		}
 		
@@ -116,12 +116,13 @@ class Data_presence_Model extends CI_Model
 		$dbreturn = array();
 		$ctr = 0;
 		$accum = $interval * 1800;
+		$days = $interval;
 
 		//Set time to limit DB query
 		date_default_timezone_set("Asia/Manila");
 		$date_cur = "'" . date('Y-m-d H:i:s') . "'";
 		
-		$date_string = "-2 days";
+		$date_string = "-$days days";
 		$date_from =  "'" . date('Y-m-d H:i:s',strtotime($date_string)) . "'";
 		
 		$sitesAll = $this->db->query("SELECT name FROM site_column");	
@@ -130,8 +131,8 @@ class Data_presence_Model extends CI_Model
 		{
 			$site = $row['name'];
 
-		$sql = $this->db->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
-							AS timeslice , COUNT(*) AS mycount 
+			$sql = $this->db->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
+							AS timeslice
 							FROM (SELECT * FROM $site WHERE timestamp > $date_from) AS site
 							GROUP BY timeslice DESC LIMIT 48");							
 
@@ -139,7 +140,6 @@ class Data_presence_Model extends CI_Model
 			{
 				$dbreturn[$ctr]['site'] = $site;
 				$dbreturn[$ctr]['timestamp'] = $row['timeslice'];
-				$dbreturn[$ctr]['count'] = $row['mycount'];
 				$ctr = $ctr + 1;
 			}
 		}
@@ -225,6 +225,23 @@ class Data_presence_Model extends CI_Model
 		// Print as JSON data
 		return json_encode($arrayPresence);
 	}
+
+	public function getAllSiteNames()
+	{
+		
+		$siteArray = array();
+		$ctr = 0;
+		
+		$sql_maxnode = $this->db->query("SELECT name FROM site_column");
+		
+		foreach ($sql_maxnode->result_array() as $row)
+		{
+			$siteArray[$ctr]['site'] = $row['name'];
+			$ctr = $ctr + 1;
+		}
+		
+		return json_encode($siteArray);
+	}	
 
 	//Move this to the Site Health Model!!!
 	public function getSiteHealth($site, $tStart = '2014-10-01')
