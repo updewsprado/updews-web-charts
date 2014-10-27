@@ -18,6 +18,15 @@ class Test extends CI_Controller {
 		//$this->load->view('graphs/alertPlot', $data);
 	}
 	
+	public function position( $site = 'blcb', $interval = 1, $xz = 0 )
+	{
+		$this->load->model('Position_model');
+		
+		$this->Position_model->getPosition($site, $interval, $xz);
+		
+		//$this->load->view('graphs/positionPlot');
+	}	
+	
 	public function healthbars()
 	{
 		$this->load->view('graphs/healthbars');
