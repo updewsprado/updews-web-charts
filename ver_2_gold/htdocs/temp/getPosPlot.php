@@ -8,7 +8,7 @@ header('Content-type: application/json');
 if(isset($_GET['site'])) {
 	$feed = $_GET['site'];
 	//$path = '../ajax/csvmonitoring/';
-	$path = 'csvmonitoring/';
+	$path = 'http://localhost/temp/csvmonitoring/';
 }
 else {
 	$feed = 'blcb';
