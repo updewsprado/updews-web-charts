@@ -43,7 +43,7 @@
 	current = document.getElementById("current");
 	current.innerHTML = "<b>Data Sent: </b>";
 				
-		d3.selectAll("#svg2").remove();	
+		d3.selectAll("#svg-sitehealth").remove();	
 		
 	var focusGraph;
 	var target = document.getElementById('div_health');
@@ -81,7 +81,7 @@
 		.on("brush", brushed);
 		
 	var svg = d3.select("#div_health").append("svg")
-		.attr("id", "svg2")
+		.attr("id", "svg-sitehealth")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom);
 	
@@ -104,7 +104,7 @@
 	var barsGroup = focus.append("g")
 		.attr('clip-path', 'url(#clip)');
 
-	d3.selectAll("#svg2")
+	d3.selectAll("#svg-sitehealth")
 		.attr("viewBox", "0 0 447 430")
 		.attr("width", "100%")
 		.attr("height", "100%")
