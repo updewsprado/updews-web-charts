@@ -30,7 +30,6 @@ class Test extends CI_Controller {
 	public function commhealth( $site = 'blcb' )
 	{
 		$this->load->model('Comm_health_model');
-		
 		$this->Comm_health_model->getHealthOptimized($site);
 		
 		//$this->load->view('graphs/positionPlot');
@@ -40,6 +39,14 @@ class Test extends CI_Controller {
 	{
 		$this->load->view('graphs/healthbars');
 	}
+	
+	public function senttotal( $site = 'blcb', $tStart = '2014-01-01' )
+	{
+		$this->load->model('Sent_node_total_Model');
+		$this->Sent_node_total_Model->getSiteHealth($site, $tStart);
+		
+		//$this->load->view('graphs/positionPlot');
+	}			
 	
 	public function sitehealth()
 	{
