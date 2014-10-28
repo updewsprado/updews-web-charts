@@ -40,10 +40,10 @@ class Test extends CI_Controller {
 		$this->load->view('graphs/healthbars');
 	}
 	
-	public function senttotal( $site = 'blcb', $tStart = '2014-01-01' )
+	public function senttotal( $site = 'blcb', $tStart = '2014-01-01', $tEnd = null )
 	{
 		$this->load->model('Sent_node_total_Model');
-		$this->Sent_node_total_Model->getSiteHealth($site, $tStart);
+		$this->Sent_node_total_Model->getSiteHealth($site, $tStart, $tEnd);
 		
 		//$this->load->view('graphs/positionPlot');
 	}			
