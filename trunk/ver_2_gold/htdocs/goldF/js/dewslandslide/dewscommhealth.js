@@ -110,7 +110,8 @@ function healthNode(frm, e) {
 	}
  };
   //var url = "temp/getSenslopeData.php?health&site=" + frm.sites.value + "&db=" + frm.dbase.value;
-  var url = "temp/getSenslopeData.php?health&site=" + frm.sites.value + "&db=" + frm.dbase.value;
+  //var url = "temp/getSenslopeData.php?health&site=" + frm.sites.value + "&db=" + frm.dbase.value;
+  var url = "/test/commhealth/" + frm.sites.value + "/" + frm.dbase.value;
   xmlhttp.open("GET",url,true);
   xmlhttp.send();	
 }
@@ -178,7 +179,8 @@ function healthNodeGeneral(frm, e) {
 		g.setSelection(false, 'past 7 days');
 	}
  };
-  var url = "/temp/getSenslopeData.php?health&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
+  //var url = "/temp/getSenslopeData.php?health&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
+  var url = "/test/commhealth/" + frm.sitegeneral.value + "/" + frm.dbase.value;
   xmlhttp.open("GET",url,true);
   xmlhttp.send();	
 }

@@ -31,7 +31,7 @@ class Test extends CI_Controller {
 	{
 		$this->load->model('Comm_health_model');
 		
-		$this->Comm_health_model->getHealth($site);
+		$this->Comm_health_model->getHealthOptimized($site);
 		
 		//$this->load->view('graphs/positionPlot');
 	}		
