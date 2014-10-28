@@ -106,7 +106,7 @@
 		var spinner = new Spinner(opts).spin();
         target.appendChild(spinner.el);
 		
-			d3.select("svg").remove();	
+			d3.select("#svg-commhealth").remove();	
 				 
 		var n = 3;
 			
@@ -119,6 +119,7 @@
 		d3.json(url, function (data){
 
 			var svg = d3.select("#barchart").append("svg")
+				.attr("id", "svg-commhealth")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
@@ -181,7 +182,7 @@
 		
 <!-- For Resizing -->
 		
-			d3.select("svg")
+			d3.select("#barchart")
 				.attr("viewBox", "0 0 447 400")
 				.attr("width", "100%")
 				.attr("height", "100%")
