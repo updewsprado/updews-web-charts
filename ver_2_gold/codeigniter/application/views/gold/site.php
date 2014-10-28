@@ -286,9 +286,12 @@ function initSite() {
 }
 
 window.onload = function() {
+	
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
 	nodeStatusJSON = <?php echo $nodeStatus; ?>;
-	maxNodesJSON = <?php echo $siteMaxNodes; ?>;	
+	maxNodesJSON = <?php echo $siteMaxNodes; ?>;
+	nodeHealthJSON = <?php echo $healthNodes; ?>;
+	
 	
 	$('#nodeGeneral').hide();
 	positionPlot.init_dims();

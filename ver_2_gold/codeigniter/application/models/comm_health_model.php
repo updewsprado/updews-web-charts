@@ -31,7 +31,7 @@ class Comm_health_Model extends CI_Model
 		return $this->_name;
 	}
 
-	public function getHealth($site = 'blcb')
+	public function getHealth($site)
 	{
 		$sql_maxnode = $this->db->query("
 						SELECT num_nodes 
@@ -126,7 +126,7 @@ class Comm_health_Model extends CI_Model
 		return;	
 	}
 
-	public function getHealthOptimized($site = 'blcb')
+	public function getHealthOptimized($site)
 	{
 		$sql_maxnode = $this->db->query("
 						SELECT num_nodes 
@@ -225,8 +225,8 @@ class Comm_health_Model extends CI_Model
 			}		
 		}
 					
-		echo json_encode( $result_nodes );				
-		return;	
+		return json_encode( $result_nodes );				
+		
 	}
 }
 

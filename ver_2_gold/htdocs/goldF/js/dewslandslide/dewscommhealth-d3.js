@@ -1,5 +1,6 @@
 	
-	var opacity1 = 0,
+	var nodeHealthJSON = 0,
+		opacity1 = 0,
 		opacity2 = 0,
 		opacity3 = 0,
 		opacity1_s,
@@ -36,17 +37,6 @@
 	}
 	}
 	
-	function popDropDown() {
-		var select = document.getElementById('selectSite');
-		var i;
-		for (i = 0; i < options.length; i++) {
-			var opt = options[i];
-			var el = document.createElement("option");
-			el.textContent = opt;
-			el.value = opt;
-			select.appendChild(el);
-		}
-	}
 
 	var opts = {
 		lines: 11, // The number of lines to draw
@@ -66,8 +56,6 @@
 		top: '50%', // Top position relative to parent
 		left: '50%' // Left position relative to parent
 	};
-	
-	window.onload = popDropDown;	
 
 	var tip = d3.tip()
 	  .attr('class', 'd3-tip')
@@ -91,7 +79,6 @@
 
 	function showCommHealthPlotGeneral(frm)
 	{
-		
 		opacity1 = 0,
 		opacity2 = 0,
 		opacity3 = 0;
@@ -110,13 +97,11 @@
 				 
 		var n = 3;
 			
-		var url = "/temp/getSenslopeData.php?health&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
+		var data = nodeHealthJSON;
 		
 		var margin = {top: 20, right: 50, bottom: 100, left: 75},
 			width = 500 - margin.left - margin.right,
 			height = 460 - margin.top - margin.bottom;
-			
-		d3.json(url, function (data){
 
 			var svg = d3.select("#barchart").append("svg")
 				.attr("id", "svg-commhealth")
@@ -223,7 +208,7 @@
 					  	spinner.stop();
 		
 						legendactive = 1;
-		});
+	
 	
 
 	

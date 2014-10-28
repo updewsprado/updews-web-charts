@@ -58,7 +58,8 @@ class Gold extends CI_Controller {
 				//Load Required Models
 				$this->load->model('Gmap_model');
 				$this->load->model('Alert_model');
-			
+				$this->load->model('Comm_health_Model');
+				
 				$data['site'] = $site;
 				
 				//Data for Alert Map
@@ -75,6 +76,14 @@ class Gold extends CI_Controller {
 				
 				//Data for Google Map Site Coordinates
 				$data['sitesCoord'] = $this->Gmap_model->getSitesCoord();
+				
+				//Data for Communication Health 
+				if ($site){
+					$data['healthNodes'] = $this->Comm_health_Model->getHealthOptimized($site);
+				}
+				else {
+					$data['healthNodes'] = 0;
+				}
 				
 				//$data['showplots'] = 'showSitePlots(this.form)';
 				$data['showplots'] = 'redirectSitePlots(this.form)';
