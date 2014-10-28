@@ -167,15 +167,6 @@
 	                     </div>	
                     </li> 
                     </FORM>
-					
-					<FORM id="formDateSelect">
-					<li>
-						<div class="form-group">
-							<label>Slider:</label><br />
-							<div id="slider" style="width:223px; height:75px; background-color:white;"></div>
-						</div>
-					</li>
-					</FORM>
                     
 <!--                    
                     <li <?php echo $home; ?> >

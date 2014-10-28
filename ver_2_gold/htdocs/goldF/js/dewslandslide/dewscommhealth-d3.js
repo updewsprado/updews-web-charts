@@ -113,8 +113,8 @@
 		var url = "/temp/getSenslopeData.php?health&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
 		
 		var margin = {top: 20, right: 50, bottom: 100, left: 75},
-			width = parseInt(d3.select('#barchart').style('width'), 10) - margin.left - margin.right,
-			height = parseInt(d3.select('#barchart').style('height'), 10) - margin.top - margin.bottom;
+			width = 500 - margin.left - margin.right,
+			height = 460 - margin.top - margin.bottom;
 			
 		d3.json(url, function (data){
 
@@ -183,7 +183,7 @@
 <!-- For Resizing -->
 		
 			d3.select("#barchart")
-				.attr("viewBox", "0 0 447 400")
+				.attr("viewBox", "0 0 447 430")
 				.attr("width", "100%")
 				.attr("height", "100%")
 				.attr("preserveAspectRatio", "xMinYMin meet");	
