@@ -19,7 +19,7 @@ class Sent_node_total_Model extends CI_Model
 	}
 
 	//Move this to the Site Health Model!!!
-	public function getSiteHealth($site = 'blcb', $tStart = '2014-01-01')
+	public function getSiteHealth($site = 'blcb', $tStart = '2014-01-01', $tEnd = null)
 	{
 		$sql_maxnode = $this->db->query("SELECT * FROM site_column_props WHERE s_id IN 
 									(SELECT s_id FROM site_column WHERE name = '" . $site . "')");
@@ -29,15 +29,43 @@ class Sent_node_total_Model extends CI_Model
 		
 		$maxnode = $sql_maxnode->row()->num_nodes;
 		
-		$sql = $this->db->query("
-					SELECT 
-						FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/1800)*1800 ) AS timeslice, 
-						COUNT(*) AS mycount 
-					FROM 
-						(SELECT * FROM $site WHERE timestamp > '".$tStart."' AND id <= $maxnode) AS site
-					GROUP BY timeslice
-				");
-		
+		if ($tEnd) {
+			$sql = $this->db->query("
+						SELECT 
+							FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/1800)*1800 ) AS timeslice, 
+							COUNT(*) AS mycount 
+						FROM 
+							(SELECT * 
+							FROM 
+								$site 
+							WHERE 
+								id <= $maxnode
+							AND
+								timestamp
+							BETWEEN 
+								'".$tStart."' AND '".$tEnd."' 
+							) AS site
+						GROUP BY timeslice
+					");
+		} 
+		else {
+			$sql = $this->db->query("
+						SELECT 
+							FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/1800)*1800 ) AS timeslice, 
+							COUNT(*) AS mycount 
+						FROM 
+							(SELECT * 
+							FROM 
+								$site 
+							WHERE 
+								timestamp > '".$tStart."' 
+							AND 
+								id <= $maxnode
+							) AS site
+						GROUP BY timeslice
+					");				
+		}
+			
 		$dbtstamp = array();
 		$ctr_ts = 0;		
 		foreach ($sql->result_array() as $row)
