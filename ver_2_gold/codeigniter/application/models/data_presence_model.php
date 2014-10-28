@@ -269,26 +269,28 @@ class Data_presence_Model extends CI_Model
 		
 		echo json_encode( $dbtstamp );
 	}
-	
-	public function getSitesCoord()
-	{
-		$query = $this->db->query("SELECT * FROM site_column");
-		
-		$dbreturn = array();
-		$ctr = 0;
-		
-		foreach ($query->result_array() as $row)
-		{		    
-			$dbreturn[$ctr]['name'] = $row['name'];
-			$dbreturn[$ctr]['lat'] = $row['lat'];
-			$dbreturn[$ctr]['long'] = $row['long'];
-			$dbreturn[$ctr]['place_installed'] = $row['place_installed'];
-			
-			$ctr = $ctr + 1;
-		}
-		
-		//return json_encode($dbreturn);
-		echo json_encode($dbreturn);
-	}
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
