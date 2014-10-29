@@ -224,8 +224,8 @@ class Comm_health_Model extends CI_Model
 				}
 			}		
 		}
-					
-		return json_encode( $result_nodes );				
+		
+			echo json_encode ( $result_nodes );			
 		
 	}
 }

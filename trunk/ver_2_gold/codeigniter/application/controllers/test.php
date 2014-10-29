@@ -27,7 +27,7 @@ class Test extends CI_Controller {
 		//$this->load->view('graphs/positionPlot');
 	}	
 	
-	public function commhealth( $site = 'blcb' )
+	public function commhealth( $site = 'blcb')
 	{
 		$this->load->model('Comm_health_model');
 		$this->Comm_health_model->getHealthOptimized($site);

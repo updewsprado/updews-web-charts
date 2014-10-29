@@ -95,15 +95,15 @@
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Communication Health</h3><b>Legends:</b> <input type='button' id='show' onclick='showLegends(this.form)' value='Show Legends' />
-										<div id="legends" style="visibility:hidden;">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Communication Health <input type='button' id='show' onclick='showLegends(this.form)' value='Show Legends' /></h3>
+										<div id="legends" style="display:block; opacity:0; visibility:hidden;">
 											<strong>Past 7 Days</strong><input type='button' onclick="barTransition('red')" style='background-color:red; padding-right:5px;' />
 											<strong>Past 30 Days</strong><input type='button' onclick="barTransition('blue')" style='background-color:blue; padding-right:5px;' />
 											<strong>Overall</strong><input type='button' onclick="barTransition('green')" style='background-color:green; padding-right:5px;' /></div>
                             </div>
                             <div class="panel-body">
                                 <div id="healthbars-canvas" >
-												<svg id="barchart" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRation="xMinYMin meet">
+												<svg id="barchart" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
 											</svg>
                                 </div>
                             </div>
@@ -219,12 +219,13 @@
                             <div class="panel-body">
 								<div id="sent-node-canvas">
 									<div id="current"><b>Data Sent: </b></div>
-									<div id="div_health" style="max-height:100%; max-width:100%; width:447px; height:430px;">
-								</div>                               	
-                            </div>
-                        </div>
-                    </div>     
-                    
+									<svg id="div_health" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
+								</svg>                               	
+								</div>
+							</div>
+						</div>     
+                    </div>
+					
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -290,8 +291,6 @@ window.onload = function() {
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
 	nodeStatusJSON = <?php echo $nodeStatus; ?>;
 	maxNodesJSON = <?php echo $siteMaxNodes; ?>;
-	nodeHealthJSON = <?php echo $healthNodes; ?>;
-	
 	
 	$('#nodeGeneral').hide();
 	positionPlot.init_dims();
