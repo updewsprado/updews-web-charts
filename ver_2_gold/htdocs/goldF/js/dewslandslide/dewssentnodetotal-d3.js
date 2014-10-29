@@ -112,9 +112,8 @@
 	
 	var tool = svg.append("g")                                
 		.style("display", "none");   
-		
-	var url = "/temp/getSenslopeData.php?sitehealth&q=" + blah + "&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
-		d3.json(url, function(error, data) {
+	
+	var data = sentNodeJSON;
 
 		data.forEach(function(d) {
 		  d.date = parseDate(d.timestamp);
@@ -209,11 +208,7 @@
 			current = document.getElementById("current");
 			current.innerHTML = "<b>Data Sent: </b>";
 	}
-	
-	});
 
-    
-	
 	function brushed() {
 	  x.domain(brush.empty() ? x2.domain() : brush.extent());
 	  focusGraph.attr("x", function(d, i) { return x(d.date); });

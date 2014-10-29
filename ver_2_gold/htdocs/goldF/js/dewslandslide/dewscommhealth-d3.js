@@ -1,6 +1,5 @@
-	
-	var nodeHealthJSON = 0,
-		opacity1 = 0,
+
+	var opacity1 = 0,
 		opacity2 = 0,
 		opacity3 = 0,
 		opacity1_s,
@@ -8,12 +7,6 @@
 		opacity3_s,
 		legendactive = 0,
 		active = 0;
-				
-	var options = ["blcb", "blct", "bolb", "gamb", "gamt",
-						"humb", "humt", "labb", "labt", "lipb",
-						"lipt", "mamb", "mamt", "oslb", "oslt",
-						"plab", "plat", "pugb", "pugt", "sinb",
-						"sinu"];
 
 	function showLegends(frm) {
 		
@@ -24,11 +17,15 @@
 		if (active == 0){
 		target3.value = "Hide Legends";
 		target4.style.visibility = "visible";
+		target4.style.opacity = "1";
+		target4.style.transition = "opacity 1s ease-out";
 		active = 1;
 			}
 		else {
 		target3.value = "Show Legends";
 		target4.style.visibility = "hidden";
+		target4.style.opacity = "0";
+		target4.style.transition = "opacity 2s ease-in";
 		active = 0;
 			}
 		}
@@ -37,7 +34,6 @@
 	}
 	}
 	
-
 	var opts = {
 		lines: 11, // The number of lines to draw
 		length: 6, // The length of each line
@@ -56,7 +52,7 @@
 		top: '50%', // Top position relative to parent
 		left: '50%' // Left position relative to parent
 	};
-
+	
 	var tip = d3.tip()
 	  .attr('class', 'd3-tip')
 	  .offset([-10, 0])
@@ -79,6 +75,7 @@
 
 	function showCommHealthPlotGeneral(frm)
 	{
+		
 		opacity1 = 0,
 		opacity2 = 0,
 		opacity3 = 0;
@@ -97,12 +94,16 @@
 				 
 		var n = 3;
 			
-		var data = nodeHealthJSON;
+		var url = "/test/commhealth/" + frm.sitegeneral.value + "/" + frm.dbase.value;
 		
 		var margin = {top: 20, right: 50, bottom: 100, left: 75},
 			width = 500 - margin.left - margin.right,
 			height = 460 - margin.top - margin.bottom;
-
+			
+		d3.json(url, function (error, data){
+		
+		testdata = data;
+		
 			var svg = d3.select("#barchart").append("svg")
 				.attr("id", "svg-commhealth")
 				.attr("width", width + margin.left + margin.right)
@@ -208,7 +209,7 @@
 					  	spinner.stop();
 		
 						legendactive = 1;
-	
+		});
 	
 
 	

@@ -59,6 +59,7 @@ class Gold extends CI_Controller {
 				$this->load->model('Gmap_model');
 				$this->load->model('Alert_model');
 				$this->load->model('Comm_health_Model');
+				$this->load->model('Sent_node_total_Model');
 				
 				$data['site'] = $site;
 				
@@ -77,14 +78,6 @@ class Gold extends CI_Controller {
 				//Data for Google Map Site Coordinates
 				$data['sitesCoord'] = $this->Gmap_model->getSitesCoord();
 				
-				//Data for Communication Health 
-				if ($site){
-					$data['healthNodes'] = $this->Comm_health_Model->getHealthOptimized($site);
-				}
-				else {
-					$data['healthNodes'] = 0;
-				}
-				
 				//$data['showplots'] = 'showSitePlots(this.form)';
 				$data['showplots'] = 'redirectSitePlots(this.form)';
 				$data['showdateplots'] = "showDateSitePlots(document.getElementById('formGeneral'))";
@@ -95,7 +88,7 @@ class Gold extends CI_Controller {
 				$data['gmap'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsmaps.js"></script>';
 				$data['commhealth'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewscommhealth-d3.js"></script>';
 				$data['analysisdyna'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsanalysisdyna.js"></script>';
-				$data['sentnodetotal'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewssentnodetotal-d3.js"></script>';
+				$data['sentnodetotal'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewssentnodetotal.js"></script>';
 				$data['rainfall'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsrainfall.js"></script>';
 				
 				$data['ismap'] = true;

@@ -19,7 +19,7 @@ class Sent_node_total_Model extends CI_Model
 	}
 
 	//Move this to the Site Health Model!!!
-	public function getSiteHealth($site = 'blcb', $tStart = '2014-01-01', $tEnd = null)
+	public function getSiteHealth($site, $tStart, $tEnd)
 	{
 		$sql_maxnode = $this->db->query("SELECT * FROM site_column_props WHERE s_id IN 
 									(SELECT s_id FROM site_column WHERE name = '" . $site . "')");
@@ -75,7 +75,7 @@ class Sent_node_total_Model extends CI_Model
 			$ctr_ts = $ctr_ts + 1;
 		}
 		
-		echo json_encode( $dbtstamp );
+		return json_encode( $dbtstamp );
 	}
 }
 
