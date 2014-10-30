@@ -162,10 +162,9 @@ function sentNodeGeneral(frm, e) {
 	};
 	//var url ="temp/getSenslopeData.php?sitehealth&q=" + frm.dateinput.value + "&site=" + frm.sites.value + "&db=" + frm.dbase.value;
 	//var url ="temp/getSenslopeData.php?sitehealth&q=" + blah + "&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
-	var url ="/ajax/getSenslopeData.php?sitehealth&q=" + blah + "&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
-	var url ="/test/senttotal/" + frm.sitegeneral.value + "/" + blah  + "/" + frm.dbase.value;
-	xmlhttp.open("GET",url,true);
-	xmlhttp.send();	
+	//var url ="/ajax/getSenslopeData.php?sitehealth&q=" + blah + "&site=" + frm.sitegeneral.value + "&db=" + frm.dbase.value;
+	var url ="/test/senttotal/" + frm.sitegeneral.value + "/" + blah;	xmlhttp.open("GET",url,true);
+	xmlhttp.send();
 }
 
 function showSentNodeTotalGeneral(frm) {
