@@ -165,7 +165,13 @@
 		                    Start: <input type="text" id="datepicker" name="dateinput" onchange="<?php echo $showdateplots; ?>" size="10"/><br />  
 		                    End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php echo $showdateplots; ?>" size="10"/>
 	                     </div>	
-                    </li> 
+                    </li>
+					<li>
+						<div class="form-group">
+							<label>Slider:</label><br />
+							<div id="div_slider" style="width:220px; height:75px; background-color:white;">
+							</div>
+					</li>
                     </FORM>
                     
 <!--                    
