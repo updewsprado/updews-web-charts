@@ -220,7 +220,7 @@
 								<div id="sent-node-canvas">
 									<div id="current"><b>Data Sent: </b></div>
 									<svg id="div_health" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
-								</svg>                               	
+									</svg>                               	
 								</div>
 							</div>
 						</div>     
@@ -245,7 +245,7 @@
 
         </div>
         <!-- /#page-wrapper -->
-        
+      
 <script>
 var curSite = "<?php echo $site; ?>";
 

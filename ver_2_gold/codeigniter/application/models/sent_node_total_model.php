@@ -75,7 +75,7 @@ class Sent_node_total_Model extends CI_Model
 			$ctr_ts = $ctr_ts + 1;
 		}
 		
-		return json_encode( $dbtstamp );
+		echo json_encode( $dbtstamp );
 	}
 }
 

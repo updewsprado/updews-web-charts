@@ -102,8 +102,6 @@
 			
 		d3.json(url, function (error, data){
 		
-		testdata = data;
-		
 			var svg = d3.select("#barchart").append("svg")
 				.attr("id", "svg-commhealth")
 				.attr("width", width + margin.left + margin.right)
