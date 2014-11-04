@@ -216,7 +216,7 @@ class Alert_Model extends CI_Model
 		return json_encode($statusAll);
 	}
 		
-	public function getAccel($q, $site, $nid)
+	public function getAccel($site = 'blcb', $nid = 1, $q = null)
 	{
 		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp > '".$q."' ORDER BY timestamp ASC");
 		
@@ -240,7 +240,7 @@ class Alert_Model extends CI_Model
 		return json_encode( $dbreturn );
 	}
 	
-	public function getAccel2($from, $to, $site, $nid)
+	public function getAccel2($site = 'blcb', $nid = 1, $from = null, $to = null)
 	{
 		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp between $from and $to ORDER BY timestamp ASC");
 		

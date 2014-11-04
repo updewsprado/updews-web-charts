@@ -18,6 +18,20 @@ class Test extends CI_Controller {
 		//$this->load->view('graphs/alertPlot', $data);
 	}
 	
+	public function accel( $site = 'blcb', $nid = 1, $from = '2010-01-01', $to = null )
+	{
+		$this->load->model('Accel_model');
+		
+		if($to) {
+			$data['accelJSON'] = $this->Accel_model->getAccel2($site, $nid, $from, $to);
+		}
+		else {
+			$data['accelJSON'] = $this->Accel_model->getAccel($site, $nid, $from);
+		}
+		
+		echo $data['accelJSON'];
+	}
+	
 	public function position( $site = 'blcb', $interval = 1, $xz = 0 )
 	{
 		$this->load->model('Position_model');
