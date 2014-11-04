@@ -161,60 +161,59 @@ var alertdata = [];
 function generatePresencePlot(url, title, xOffset, isLegends, graphNum) {
 	// Get the data
 	var jsondata = [];
-	
-	getDataPresence(xOffset);
-	
-	var delay1 = 1000;//1 second
 
-	var data = url;
-	
-	jsondata = data;
-
-	data.forEach(function(d) {
-		d.node = parseInt(d.node);
-		d.xalert = parseFloat(d.xalert);
-		d.yalert = parseFloat(d.yalert);
-		d.zalert = parseFloat(d.zalert);
-	});
-	
-	var horOff = xOffset + ((presencePlot.graphDim.gWidth / maxNode) * 0.9)/2;
-	
-	// Graph Label
-	presencePlot.svg.append("text")      // text label for the x axis
-		.attr("class", "axislabel")
-		.attr("x", xOffset + (presencePlot.graphDim.gWidth / 2))
-		.attr("y", 0 -(presencePlot.margin.top/2))
-		.text(title);			
+	//var data = url;
+	d3.json(url, function(error, data) {
+		presenceJSON = data;
+		jsondata = data;
 		
-	// Add the Y Axis
-	presencePlot.svg.append("g")
-		.attr("class", "y axis")
-		.attr("transform", "translate(" + xOffset + ",0)")
-		.call(presencePlot.make_yOrd_axis());
-
-	// Y axis Label
-	presencePlot.svg.append("text")		// text label for the y axis
-		.attr("class", "axislabel")
-		.attr("transform", "rotate(-90)")
-		.attr("y", xOffset -5 - (presencePlot.margin.left / 2))
-		.attr("x", 0 - (presencePlot.height / 2))
-		.text("Column/Site");			
+		getDataPresence(xOffset);
+		
+		var horOff = xOffset + ((presencePlot.graphDim.gWidth / maxNode) * 0.9)/2;
+		
+		/*
+		// Graph Label
+		presencePlot.svg.append("text")      // text label for the x axis
+			.attr("class", "axislabel")
+			.attr("x", xOffset + (presencePlot.graphDim.gWidth / 2))
+			.attr("y", 0 - (presencePlot.margin.top/2))
+			.text(title);	
+		*/		
 			
-	// Return for the whole graphing	
-	return;				
+		// Add the Y Axis
+		presencePlot.svg.append("g")
+			.attr("class", "y axis")
+			.attr("transform", "translate(" + xOffset + ",0)")
+			.call(presencePlot.make_yOrd_axis());
+	
+		// Y axis Label
+		presencePlot.svg.append("text")		// text label for the y axis
+			.attr("class", "axislabel")
+			.attr("transform", "rotate(-90)")
+			.attr("y", xOffset -5 - (presencePlot.margin.left / 2))
+			.attr("x", 0 - (presencePlot.height / 2))
+			.text("Column/Site");			
+			
+	});			
 }
 
 var nodeAlertJSON = 0;
 function showDataPres() {
 	//presenceJSON = <?php echo $dataPresence; ?>;
 	//allSitesJSON = <?php echo $allSites; ?>;
+	allSitesJSON = maxNodesJSON;
+	var url = "/test/allpres/72";
 	
-	generatePresencePlot(presenceJSON, "Data Presence Map", 0, true, 1);
+	generatePresencePlot(url, "Data Presence Map", 0, true, 1);
+}
+
+function dataPresencePlot() {
+	presencePlot.init_dims();
+	showDataPres();	
 }
 
 window.onload = function() {
-	presencePlot.init_dims();
-	showDataPres();
+	//dataPresencePlot();
 };
 
 

@@ -18,7 +18,7 @@ class Gold extends CI_Controller {
 		$data['bsgrid'] = $data['blank'] = $data['home'] = $data['monitoring'] = '';
 		$data['dropdown_chart'] = $data['site'] = $data['node'] = '';
 		$data['alert'] = $data['gmap'] = $data['commhealth'] = $data['analysisdyna'] = '';
-		$data['position'] = '';
+		$data['position'] = $data['presence'] = '';
 		$data['slider'] = $data['sentnodetotal'] = $data['rainfall'] = $data['lsbchange'] = '';
 		$data['accel'] = $data['showplots'] = $data['showdateplots'] = '';
 		$data['sitesCoord'] = 0;
@@ -46,6 +46,7 @@ class Gold extends CI_Controller {
 				$data['monitoring'] = 'class="active"';
 				$data['alert'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsalert.js"></script>';
 				$data['gmap'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsmaps.js"></script>';
+				$data['presence'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewspresence.js"></script>';
 				
 				$data['ismap'] = true;
 				break;
