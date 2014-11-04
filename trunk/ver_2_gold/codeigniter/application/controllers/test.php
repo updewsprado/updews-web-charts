@@ -144,7 +144,18 @@ class Test extends CI_Controller {
 		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($interval);
 		
 		$this->load->view('graphs/testDataPres', $data);
-	}		
+	}
+	
+	public function presmap2( $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['allSites'] = $this->Data_presence_Model->getAllSiteNames();
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($interval);
+		
+		$this->load->view('graphs/dataPres', $data);
+	}
 }
 
 /* End of file pages.php */
