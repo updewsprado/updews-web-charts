@@ -31,6 +31,11 @@ svg {
 	  shape-rendering: crispEdges;
 }
 
+.area {
+  fill: steelblue;
+  clip-path: url(#clip);
+}
+
 .brush .extent {
 	  stroke: #fff;
 	  fill-opacity: .125;
