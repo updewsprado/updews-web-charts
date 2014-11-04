@@ -218,26 +218,45 @@
                             </div>
                             <div class="panel-body">
 								<div id="sent-node-canvas">
-									<div id="current"><b>Data Sent: </b></div>
+									<div id="sentnode_timestamp"><b>Data Sent: </b></div>
 									<svg id="div_health" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
 									</svg>                               	
 								</div>
 							</div>
 						</div>     
                     </div>
-					
+				</div>
+				<!-- /.row -->
+				<div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Rainfall Data</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Rainfall Data (24 Hour Cummulative)</h3>
                             </div>
                             <div class="panel-body">
-								<div id="rainfall-canvas"></div>   
-								<div id="txtHint"><b>...</b></div>                          	
+								<div id="rainfall-canvas">
+									<div id="rainfall_24hr_timestamp"><b>Timestamp: </b></div>
+									<svg id="rainfall_24hr" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
+									</svg>
+								</div>                            	
                             </div>
                         </div>
-                    </div>                                  
-                </div>	
+					</div>
+					<div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Rainfall Data (15 Min Cummulative)</h3>
+                            </div>
+                            <div class="panel-body">
+								<div id="rainfall-canvas">
+									<div id="rainfall_15min_timestamp"><b>Timestamp: </b></div>
+									<svg id="rainfall_15min" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
+									</svg>
+								</div>                            	
+                            </div>
+                        </div>
+                    </div>
+                </div>                                  	
                 <!-- /.row -->	    
                 		
             </div>
@@ -330,16 +349,20 @@ function showSitePlots (frm) {
 		showPositionPlotGeneral(frm);
 		showAnalysisDynaGeneral(frm);
 		showSentNodeTotalGeneral(frm);
-		
+		showBrush(frm);
+			
 	    setTimeout(function(){
 			//Add 1 sec delay
 			showCommHealthPlotGeneral(frm);
+		
 		}, 4000); 
 		
 		setTimeout(function(){
 			//Add 1 sec delay
-			//showRainGeneral(frm);
+			showRainGeneral(frm);
+			
 		}, 20000); 
+		
 	}
 }
 
@@ -351,7 +374,8 @@ function showDateSitePlots (frm) {
 		showSentNodeTotalGeneral(frm);
 		setTimeout(function(){
 				//Add 1 sec delay
-				//showRainGeneral(frm);
+				showRainGeneral(frm);
+				
 		}, 10000); 
 	}
 }
