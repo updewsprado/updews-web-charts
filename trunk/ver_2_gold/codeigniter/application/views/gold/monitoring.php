@@ -95,8 +95,7 @@ window.onload = function() {
 	$('#formGeneral').hide();
 	$('#formDate').hide();
 	
-	//setTimeout(function(){
-		initAlertPlot();
-	//}, 2000); 
+	initAlertPlot();
+	dataPresencePlot();
 }	
 </script>
