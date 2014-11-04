@@ -54,7 +54,7 @@ $route['alpha'] = "alpha/view";
 $route['alpha/(:any)'] = "alpha/view/$1";
 $route['(:any)'] = "alpha/view/$1";
 //$route['default_controller'] = "alpha/view";
-$route['default_controller'] = "beta/view";
+$route['default_controller'] = "gold/view";
 $route['404_override'] = '';
 
 
