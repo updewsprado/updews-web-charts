@@ -22,11 +22,11 @@ class Test extends CI_Controller {
 	{
 		$this->load->model('Accel_model');
 		
-		if($to) {
-			$data['accelJSON'] = $this->Accel_model->getAccel2($site, $nid, $from, $to);
+		if($to == null) {
+			$data['accelJSON'] = $this->Accel_model->getAccel($site, $nid, $from);
 		}
 		else {
-			$data['accelJSON'] = $this->Accel_model->getAccel($site, $nid, $from);
+			$data['accelJSON'] = $this->Accel_model->getAccel2($site, $nid, $from, $to);
 		}
 		
 		echo $data['accelJSON'];

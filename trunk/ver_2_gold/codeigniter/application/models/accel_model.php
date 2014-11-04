@@ -47,7 +47,7 @@ class Accel_Model extends CI_Model
 	
 	public function getAccel2($site = 'blcb', $nid = 1, $from = null, $to = null)
 	{
-		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp between $from and $to ORDER BY timestamp ASC");
+		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
 		
 		$dbreturn;
 		$ctr = 0;
