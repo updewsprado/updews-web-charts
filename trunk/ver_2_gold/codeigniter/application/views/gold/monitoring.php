@@ -18,6 +18,12 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Data Presence Map for monitoring data sending from sites!
+                        </div>
+                    </div>                   	
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Now using "models" for faster database accessing
                         </div>
                     </div>
@@ -26,7 +32,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> All nodes from Alert Map are now clickable!
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <!-- /.row -->   
 
@@ -70,7 +76,7 @@
                     <div class="col-lg-12">
                     	<div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Data Presence Map</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Data Presence Map (24 Hours)</h3>
                             </div>
                             <div class="panel-body">
                                 <div id="presence-map-canvas"></div>

@@ -31,7 +31,7 @@ var presencePlot = new function() {
 		this.cWidth = document.getElementById('presence-map-canvas').offsetWidth;
 		this.cHeight = document.getElementById('presence-map-canvas').offsetHeight;
 		
-		this.margin = {top: 0, right: 0, bottom: 0, left: this.cWidth * 0.065};
+		this.margin = {top: 0, right: 0, bottom: 0, left: this.cWidth * 0.05};
 		this.width = this.cWidth - this.margin.left - this.margin.right;
 		this.height = this.cHeight - this.margin.top - this.margin.bottom;
 		
@@ -186,6 +186,7 @@ function generatePresencePlot(url, title, xOffset, isLegends, graphNum) {
 			.attr("transform", "translate(" + xOffset + ",0)")
 			.call(presencePlot.make_yOrd_axis());
 	
+		/*
 		// Y axis Label
 		presencePlot.svg.append("text")		// text label for the y axis
 			.attr("class", "axislabel")
@@ -193,7 +194,7 @@ function generatePresencePlot(url, title, xOffset, isLegends, graphNum) {
 			.attr("y", xOffset -5 - (presencePlot.margin.left / 2))
 			.attr("x", 0 - (presencePlot.height / 2))
 			.text("Column/Site");			
-			
+		*/	
 	});			
 }
 
@@ -202,7 +203,7 @@ function showDataPres() {
 	//presenceJSON = <?php echo $dataPresence; ?>;
 	//allSitesJSON = <?php echo $allSites; ?>;
 	allSitesJSON = maxNodesJSON;
-	var url = "/test/allpres/72";
+	var url = "/test/allpres";
 	
 	generatePresencePlot(url, "Data Presence Map", 0, true, 1);
 }
