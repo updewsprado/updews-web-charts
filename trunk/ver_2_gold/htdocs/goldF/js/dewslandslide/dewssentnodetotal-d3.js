@@ -40,7 +40,7 @@
 		blah = document.getElementById("formDate").dateinput.value;
 		blah2 = document.getElementById("formDate").dateinput2.value;
 		
-		sentnode_current = document.getElementById("current");
+		sentnode_current = document.getElementById("sentnode_timestamp");
 		sentnode_current.innerHTML = "<b>Data Sent: </b>";
 				
 		d3.selectAll("#svg-sitehealth").remove();	
@@ -166,13 +166,13 @@
 							  "translate(" + (x(d.date) + 45)  + "," +         
 											 y((d.nodes) - 0.5) + ")");      
 										 
-					sentnode_current = document.getElementById("current");
+					sentnode_current = document.getElementById("sentnode_timestamp");
 					sentnode_current.innerHTML = "<b>Data Sent: </b>" + d.nodes + "<b> Timestamp: </b>" + sentnode_formatDate(d.date);
 			}
 
 			function sentnode_mouseout() {
 					sentnode_tool.style("display", "none");
-					sentnode_current = document.getElementById("current");
+					sentnode_current = document.getElementById("sentnode_timestamp");
 					sentnode_current.innerHTML = "<b>Data Sent: </b>";
 			}
 	
