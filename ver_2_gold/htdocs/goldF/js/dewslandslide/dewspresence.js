@@ -31,11 +31,11 @@ var presencePlot = new function() {
 		this.cWidth = document.getElementById('presence-map-canvas').offsetWidth;
 		this.cHeight = document.getElementById('presence-map-canvas').offsetHeight;
 		
-		this.margin = {top: this.cHeight * 0.10, right: this.cWidth * 0.015, bottom: this.cHeight * 0.10, left: this.cWidth * 0.065};
+		this.margin = {top: 0, right: 0, bottom: 0, left: this.cWidth * 0.065};
 		this.width = this.cWidth - this.margin.left - this.margin.right;
 		this.height = this.cHeight - this.margin.top - this.margin.bottom;
 		
-		this.graphDim = {gWidth: this.width * 0.8, gHeight: this.height};	
+		this.graphDim = {gWidth: this.width, gHeight: this.height};	
 		
 		// Set the ranges
 		this.x = d3.scale.linear().range([0, this.graphDim.gWidth]);
