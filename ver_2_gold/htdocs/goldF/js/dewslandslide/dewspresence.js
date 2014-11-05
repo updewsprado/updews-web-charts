@@ -90,9 +90,8 @@ var presencePlot = new function() {
 	  .html(function(d) {
 		var alert,status,id_ts,comment;
 		
-	    return id_ts 
-			+ "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
-			+ "<strong>Timestamp:</strong> <span style='color:red'>" + d.timestamp + "</span><Br/>";
+	    return "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
+			 + "<strong>Timestamp:</strong> <span style='color:red'>" + d.timestamp + "</span><Br/>";
 	  });
 	  
 	this.clearData = function () {
