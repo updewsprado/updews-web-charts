@@ -76,7 +76,9 @@
     <?php echo $rainfall; ?>
     <?php echo $lsbchange; ?>
     <?php echo $accel; ?>
+	<?php echo $slider; ?>
     <?php echo $presence; ?>
+
     
     <!-- Custom DEWS Map JS -->
     <?php echo $gmap; ?>
