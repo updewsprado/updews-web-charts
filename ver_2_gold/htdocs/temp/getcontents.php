@@ -99,12 +99,12 @@
 			if (!mysqli_query($con,$query)) {
 				die('Error: ' . mysqli_error($con));
 			}
-			echo "#$i th record added";	
+			echo "#$i th record added <Br/>";
 	
-			$i++;			
+			$i++;
 		}
 		else {
-			echo "timestamp: " . $value->dateTimeRead . " is less than Latest";	
+			echo "timestamp: " . $value->dateTimeRead . " is less than Latest <Br/>";
 		}
 	}
 ?>
