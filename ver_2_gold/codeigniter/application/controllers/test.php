@@ -32,6 +32,20 @@ class Test extends CI_Controller {
 		echo $data['accelJSON'];
 	}
 	
+	public function rain( $site = 'blcb', $from = '2014-01-01', $to = null )
+	{
+		$this->load->model('Rain_model');
+		
+		if($to == null) {
+			$data['rainJSON'] = $this->Rain_model->getRain($site, $from);
+		}
+		else {
+			$data['rainJSON'] = $this->Rain_model->getRain2($site, $from, $to);
+		}
+		
+		echo $data['rainJSON'];
+	}	
+	
 	public function position( $site = 'blcb', $interval = 1, $xz = 0 )
 	{
 		$this->load->model('Position_model');
