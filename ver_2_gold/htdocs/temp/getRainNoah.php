@@ -18,7 +18,7 @@
 	else {
 		$date_cur = "'" . date('Y-m-d H:i:s') . "'";
 		
-		$date_string = "-" . "14" . " days";
+		$date_string = "-" . "2" . " days";
 		$date_range =  "'" . date('Y-m-d H:i:s',strtotime($date_string)) . "'";	
 	}
 	
