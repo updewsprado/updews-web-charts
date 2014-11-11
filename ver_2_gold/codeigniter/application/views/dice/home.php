@@ -55,7 +55,7 @@
 							Eum impetus offendit disputationi eu, at vim aliquip lucilius praesent. 
 							Alia laudem antiopam te ius, sed ad munere integre, ubique facete sapientem nam ut. 
 							</p>	
-							<p><a class="btn btn-primary btn-lg" role="button">Download the App!</a></p>
+							<p><a class="btn btn-primary btn-lg" role="button" href="/diceroll/download/DiceRoller-1-2.apk">Download the App!</a></p>
 						</div>
 					</div>
 				</div>
