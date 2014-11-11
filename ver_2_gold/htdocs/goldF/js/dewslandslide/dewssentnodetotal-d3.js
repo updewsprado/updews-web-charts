@@ -87,7 +87,7 @@
 			.attr("viewBox", "0 0 447 430")
 			.attr("width", "100%")
 			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");	
+			.attr("preserveAspectRatio", "xMinYMin meet");
 			
 		d3.selectAll("#div_health")
 			.attr("viewBox", "0 0 447 430")

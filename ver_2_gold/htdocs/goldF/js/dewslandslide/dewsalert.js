@@ -142,14 +142,33 @@ function init_dims() {
 	    
 	// Adds the svg canvas
 	svg = d3.select("#alert-canvas")
+        .attr("id", "svg-alert")
 	    .append("svg")
 	        .attr("width", width + margin.left + margin.right)
 	        .attr("height", height + margin.top + margin.bottom)
 	    .append("g")
 	        .attr("transform", 
 	              "translate(" + margin.left + "," + margin.top + ")");
+    
+    svg2 = d3.select("#alert-canvas-legend")
+        .attr("id", "svg-alert-legend")
+        .append("svg")
+            .attr("width", "1073px")
+            .attr("height", "38px");
 	
 	svg.call(tip);	
+    
+    d3.selectAll("#svg-sitehealth")
+			.attr("viewBox", "0 0 1073 430")
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");
+            
+    d3.selectAll("#alert_canvas")
+			.attr("viewBox", "0 0 1073 430")
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");	
 }
 
 // Define the axes

@@ -58,7 +58,7 @@
 
 			slider_context.append("path")
 				.datum(data)
-				.attr("fill", "#E94200")
+				.attr("fill", "steelblue")
 				.attr("d", slider_area);
 			
 			slider_context.append("g")
