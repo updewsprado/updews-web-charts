@@ -3,12 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<title>View NOAH Rainfall Data</title>
-	<link href="jquery-ui-1.10.4.custom.css" rel="stylesheet">
-	<link rel="stylesheet" href="jquery.ui.all.css">
-	<script src="jquery-1.10.2.js"></script>
-	<script src="jquery.ui.core.js"></script>
-	<script src="jquery.ui.widget.js"></script>
-	<script src="jquery.ui.datepicker.js"></script>
+	<link href="/css/dewslandslide/south-street/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	<link rel="stylesheet" href="/js/development-bundle/themes/south-street/jquery.ui.all.css">
+	<script src="/js/development-bundle/jquery-1.10.2.js"></script>
+	<script src="/js/development-bundle/ui/jquery.ui.core.js"></script>
+	<script src="/js/development-bundle/ui/jquery.ui.widget.js"></script>
+	<script src="/js/development-bundle/ui/jquery.ui.datepicker.js"></script>
 	<script src="http://d3js.org/d3.v3.js"></script>
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 	<style>
@@ -152,20 +152,20 @@
 
 		// Response handlers.
         
-    var url = "getRainfall.php?rsite=" + frm.sites.value + "&fdate=" + frm.datepicker.value + "&tdate=" + frm.datepicker2.value;
-    
+    var url = "/test/rain/" + frm.sites.value + "/" + frm.datepicker.value + "/" + frm.datepicker2.value;
+    /*
 	var x5 = d3.time.scale()
 		.range([0, width]);
 
 	var y5 = d3.scale.linear()
-		.range([height, 0]);
+		.range([height, 0]);*/
 		
 	var x6 = d3.time.scale()
 		.range([0, width]);
 
 	var y6 = d3.scale.linear()
 		.range([height, 0]);
-
+/*
 	var xAxis5 = d3.svg.axis()
 		.scale(x5)
 		.orient("bottom");
@@ -173,7 +173,7 @@
 	var yAxis5 = d3.svg.axis()
 		.scale(y5)
 		.orient("left").ticks(4);
-		
+		*/
 	var xAxis6 = d3.svg.axis()
 		.scale(x6)
 		.orient("bottom");
@@ -181,37 +181,37 @@
 	var yAxis6 = d3.svg.axis()
 		.scale(y6)
 		.orient("left").ticks(4);
-
+/*
 	var area5 = d3.svg.area()
 		.interpolate("basis")
 		.x(function(d) { return x5(d.timestamp); })
 		.y0(function (d) {if(d.cummulative < 0){return 0;} else return height})
 		.y1(function(d) { return y5(d.cummulative); });
-		
+		*/
 	var area6 = d3.svg.area()
 		.interpolate("basis")
 		.x(function(d) { return x6(d.timestamp); })
 		.y0(function (d) {if(d.rain < 0){return 0;} else return height})
 		.y1(function(d) { return y6(d.rain); });
-		
+		/*
 	var chart5 = d3.select("#raindiv1").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-		
+		*/
 	var chart6 = d3.select("#raindiv2").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-	
+	/*
 	chart5.append("defs").append("clipPath")
 		.attr("id", "clip")
 		.append("rect")
 		.attr("width", width)
 		.attr("height", height);
-		
+		*/
 	chart6.append("defs").append("clipPath")
 		.attr("id", "clip")
 		.append("rect")
@@ -244,10 +244,10 @@
 		.attr("height", height2 + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-	
+	/*
 	var tool = chart5.append("g")                                
 		.style("display", null);   
-		
+		*/
 	var tool2 = chart6.append("g")                                
 		.style("display", null);  
 	
@@ -264,13 +264,12 @@
 	d3.json(url, function (error, data){
 			
 		data.forEach(function(d){
-		d.timestamp = parseDate(d.index);
-		d.cummulative = +d.cummulative;
-		d.rain = +d.rain;
+		d.timestamp = parseDate(d.timestamp);
+		d.rain = +d.rval;
 			});
 		
 		//cummulative
-		
+		/*
 		x5.domain(d3.extent(data, function(d) { return d.timestamp; }));
 		y5.domain([d3.min(data, function(d) {return d.cummulative;}), d3.max(data, function(d) { return d.cummulative; })]);
 		
@@ -308,7 +307,7 @@
 			  .text(" 24 Hours (mm)");
 	
 			  //rain
-			  
+			  */
 		x6.domain(d3.extent(data, function(d) { return d.timestamp; }));
 		y6.domain([d3.min(data, function(d) {return d.rain;}), d3.max(data, function(d) { return d.rain; })]);
 
@@ -347,8 +346,8 @@
 		
 		//slider
 		
-		x7.domain(x5.domain());
-		y7.domain(y5.domain());
+		x7.domain(x6.domain());
+		y7.domain(y6.domain());
 		
 		slider.append("path")
 			.datum(data)
@@ -367,13 +366,13 @@
 			.selectAll("rect")
 			.attr("y", 0)
 			.attr("height", height2);
-			
+			/*
 		tool.append("circle")                                 
 			.attr("class", "y")                              
 			.style("fill", "FCFF33")                          
 			.style("stroke", "FCFF33")                         
 			.attr("r", 2);  
-			
+			*/
 		tool2.append("circle")                                 
 			.attr("class", "y")                              
 			.style("fill", "FCFF33")                          
@@ -381,7 +380,7 @@
 			.attr("r", 2);  	  
 			  
 <!-- Tooltips Function -->
-
+/*
 		function mousemove() {                                 
         var x0 = x5.invert(d3.mouse(this)[0]);              
             i = bisectDate(data, x0, 1),                   
@@ -398,7 +397,7 @@
 									 
 			current = document.getElementById("current1");
 			current.innerHTML = "<b>Timestamp: </b>" + formatDate(d.timestamp) + "<b>24h Rain: </b>" + d.cummulative;
-			}
+			}*/
 	
 		function mousemove2() {                                 
         var x0 = x6.invert(d3.mouse(this)[0]);              
@@ -427,10 +426,10 @@
     this will return a date range to pass into the chart object 
     */
  
-    x5.domain(brush.empty() ? x7.domain() : brush.extent());
+   /* x5.domain(brush.empty() ? x7.domain() : brush.extent());*/
 	x6.domain(brush.empty() ? x7.domain() : brush.extent());
-		chart5.select(".area").attr("d", area5);
-		chart5.select(".x.axis").call(xAxis5);
+		/*chart5.select(".area").attr("d", area5);
+		chart5.select(".x.axis").call(xAxis5);*/
 		chart6.select(".area2").attr("d", area6);
 		chart6.select(".x.axis").call(xAxis6);
 		}

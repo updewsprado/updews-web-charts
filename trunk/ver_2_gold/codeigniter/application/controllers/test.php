@@ -46,6 +46,10 @@ class Test extends CI_Controller {
 		echo $data['rainJSON'];
 	}	
 	
+    public function rain2( $site = 'blcb', $from = '2014-01-01', $to = null )
+    {
+        $this->load->view('graphs/rainfall');
+    }
 	public function position( $site = 'blcb', $interval = 1, $xz = 0 )
 	{
 		$this->load->model('Position_model');

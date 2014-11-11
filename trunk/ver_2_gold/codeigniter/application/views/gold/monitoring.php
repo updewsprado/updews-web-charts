@@ -65,7 +65,8 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="alert-canvas"></div>
+                                <svg id="alert-canvas" width="1073px" height="430px" viewbox="0 0 1073 430" preserveAspectRatio="xMinYMin meet">
+                                </svg>
                             </div>
                         </div>
                     </div>

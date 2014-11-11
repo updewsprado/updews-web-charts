@@ -350,18 +350,9 @@ function showSitePlots (frm) {
 		showAnalysisDynaGeneral(frm);
 		showSentNodeTotalGeneral(frm);
 		showBrush(frm);
-			
-	    setTimeout(function(){
-			//Add 1 sec delay
-			showCommHealthPlotGeneral(frm);
-		
-		}, 4000); 
-		
-		setTimeout(function(){
-			//Add 1 sec delay
-			showRainGeneral(frm);
-			
-		}, 20000); 
+        showRainGeneral(frm);
+		showCommHealthPlotGeneral(frm);
+
 		
 	}
 }
@@ -372,11 +363,7 @@ function showDateSitePlots (frm) {
 	}
 	else {
 		showSentNodeTotalGeneral(frm);
-		setTimeout(function(){
-				//Add 1 sec delay
-				showRainGeneral(frm);
-				
-		}, 10000); 
+		showRainGeneral(frm);
 	}
 }
 

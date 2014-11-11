@@ -19,3 +19,26 @@
 	min-width: 50%;
 	min-height: 70%;		
 }
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	.area {
+		fill: #D4D26A;
+		clip-path: url(#clip);
+	}
+		
+	.area2 {
+		fill: #90BF60;
+		clip-path: url(#clip);
+	}
+	
+	.brush .extent {
+		  stroke: #fff;
+		  fill-opacity: .125;
+		  shape-rendering: crispEdges;
+	}
