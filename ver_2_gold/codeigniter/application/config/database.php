@@ -48,9 +48,9 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
 //$db['default']['username'] = 'root';
 //$db['default']['password'] = 'sept17';
+$db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'updews';
 $db['default']['password'] = 'october50sites';
 $db['default']['database'] = 'senslopedb';
@@ -65,6 +65,26 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
+
+/*
+ * Senslope Purged Database
+ */
+
+$db['purged']['hostname'] = 'localhost';
+$db['purged']['username'] = 'updews';
+$db['purged']['password'] = 'october50sites';
+$db['purged']['database'] = 'senslopedb_purged';
+$db['purged']['dbdriver'] = 'mysql';
+$db['purged']['dbprefix'] = '';
+$db['purged']['pconnect'] = TRUE;
+$db['purged']['db_debug'] = TRUE;
+$db['purged']['cache_on'] = FALSE;
+$db['purged']['cachedir'] = '';
+$db['purged']['char_set'] = 'utf8';
+$db['purged']['dbcollat'] = 'utf8_general_ci';
+$db['purged']['swap_pre'] = '';
+$db['purged']['autoinit'] = TRUE;
+$db['purged']['stricton'] = FALSE;
 
 
 /* End of file database.php */

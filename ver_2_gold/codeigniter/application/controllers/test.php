@@ -31,6 +31,20 @@ class Test extends CI_Controller {
 		
 		echo $data['accelJSON'];
 	}
+
+	public function accel2( $site = 'blcb', $nid = 1, $from = '2010-01-01', $to = null )
+	{
+		$this->load->model('Accel_model');
+		
+		if($to == null) {
+			$data['accelJSON'] = $this->Accel_model->getAccelPurged($site, $nid, $from);
+		}
+		else {
+			$data['accelJSON'] = $this->Accel_model->getAccelPurged2($site, $nid, $from, $to);
+		}
+		
+		echo $data['accelJSON'];
+	}
 	
 	public function rain( $site = 'blcb', $from = '2014-01-01', $to = null )
 	{
