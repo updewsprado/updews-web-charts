@@ -86,14 +86,12 @@
 		d3.selectAll("#svg-sitehealth")
 			.attr("viewBox", "0 0 447 430")
 			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");
+			.attr("height", "100%");
 			
 		d3.selectAll("#div_health")
 			.attr("viewBox", "0 0 447 430")
 			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");	
+			.attr("height", "100%");
 	
 	var sentnode_tool = sentnode_svg.append("g")                                
 			.style("display", "none");   

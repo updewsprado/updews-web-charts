@@ -51,6 +51,7 @@ var presencePlot = new function() {
 		    
 		// Adds the svg canvas
 		this.svg = d3.select("#presence-map-canvas")
+            .attr('id', 'svg-presence')
 		    .append("svg")
 		        .attr("width", this.width + this.margin.left + this.margin.right)
 		        .attr("height", this.height + this.margin.top + this.margin.bottom)
@@ -61,6 +62,16 @@ var presencePlot = new function() {
 		this.svg.call(this.tip);	
 	};
 	
+    d3.selectAll("#svg-presence")
+			.attr("viewBox", "0 0 1073 430")
+			.attr("width", "100%")
+			.attr("height", "100%");
+            
+    d3.selectAll("#alert_canvas")
+			.attr("viewBox", "0 0 1073 430")
+			.attr("width", "100%")
+			.attr("height", "100%");
+            
 	// Define the axes
 	this.make_x_axis = function () {          
 	    return d3.svg.axis()

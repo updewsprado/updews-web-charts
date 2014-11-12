@@ -54,8 +54,10 @@
 	};
 	
 	var tip = d3.tip()
+      .attr('id', 'commtip')
 	  .attr('class', 'd3-tip')
 	  .offset([-10, 0])
+      .direction('n')
 	  .html(function(d) {
 	  
 	  var tooltip = "<strong>Node Number:</strong><span style='color:red'>" + d.node + "</span><br/>";
@@ -169,9 +171,8 @@
 			d3.select("#barchart")
 				.attr("viewBox", "0 0 447 430")
 				.attr("width", "100%")
-				.attr("height", "100%")
-				.attr("preserveAspectRatio", "xMinYMin meet");	
-
+				.attr("height", "100%");
+            
 <!-- Axes -->
 			
 				svg.append("g")

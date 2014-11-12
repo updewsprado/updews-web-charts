@@ -158,17 +158,15 @@ function init_dims() {
 	
 	svg.call(tip);	
     
-    d3.selectAll("#svg-sitehealth")
-			.attr("viewBox", "0 0 1073 430")
+    d3.selectAll("#svg-alert")
+			.attr("viewBox", "0 0 1454 430")
 			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");
+			.attr("height", "100%");
             
-    d3.selectAll("#alert_canvas")
-			.attr("viewBox", "0 0 1073 430")
+    d3.selectAll("#presence-map-canvas")
+			.attr("viewBox", "0 0 1454 430")
 			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");	
+			.attr("height", "100%");
 }
 
 // Define the axes

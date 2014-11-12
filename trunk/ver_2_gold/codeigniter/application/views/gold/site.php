@@ -103,7 +103,7 @@
                             </div>
                             <div class="panel-body">
                                 <div id="healthbars-canvas" >
-												<svg id="barchart" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
+												<svg id="barchart" width="447px" height="430px" viewbox="0 0 447 430">
 											</svg>
                                 </div>
                             </div>
