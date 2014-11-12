@@ -18,13 +18,16 @@ class Accel_Model extends CI_Model
 	private $_id;
 	private $_username;
 	private $_password;
+	
+	private $purgedDB;
 
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->database();
-	}
 		
+	}
+	
 	public function getAccel($site = 'blcb', $nid = 1, $q = null)
 	{
 		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp > '".$q."' ORDER BY timestamp ASC");
@@ -64,5 +67,49 @@ class Accel_Model extends CI_Model
 		
 		return json_encode( $dbreturn );
 	}
+	
+	public function getAccelPurged($site = 'blcb', $nid = 1, $q = null)
+	{
+		$this->purgedDB = $this->load->database('purged', TRUE);
+		
+		$query = $this->purgedDB->query("SELECT * FROM $site WHERE id = $nid and timestamp > '".$q."' ORDER BY timestamp ASC");
+		
+		$dbreturn;
+		$ctr = 0;
+		foreach ($query->result_array() as $row)
+		{		    
+		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['xvalue'] = $row['xvalue'];
+			$dbreturn[$ctr]['yvalue'] = $row['yvalue'];
+			$dbreturn[$ctr]['zvalue'] = $row['zvalue'];
+			$dbreturn[$ctr]['mvalue'] = $row['mvalue'];
+
+			$ctr = $ctr + 1;
+		}
+		
+		return json_encode( $dbreturn );
+	}		
+
+	public function getAccelPurged2($site = 'blcb', $nid = 1, $from = null, $to = null)
+	{
+		$this->purgedDB = $this->load->database('purged', TRUE);
+		
+		$query = $this->purgedDB->query("SELECT * FROM $site WHERE id = $nid and timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
+		
+		$dbreturn;
+		$ctr = 0;
+		foreach ($query->result_array() as $row)
+		{		    
+		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['xvalue'] = $row['xvalue'];
+			$dbreturn[$ctr]['yvalue'] = $row['yvalue'];
+			$dbreturn[$ctr]['zvalue'] = $row['zvalue'];
+			$dbreturn[$ctr]['mvalue'] = $row['mvalue'];
+
+			$ctr = $ctr + 1;
+		}
+		
+		return json_encode( $dbreturn );
+	}	
 
 }
