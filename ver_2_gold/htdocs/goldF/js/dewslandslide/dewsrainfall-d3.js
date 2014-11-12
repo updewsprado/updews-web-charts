@@ -178,23 +178,20 @@
 	var rainfall_tool2 = rainfall_svg2.append("g")                               
 		.style("display", null);  
 	
-	d3.selectAll("rainfall-svg")
+	d3.selectAll("#rainfall-svg")
 		.attr("viewBox", "0 0 447 430")
 		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");	
+		.attr("height", "100%");
 		
-	d3.selectAll("rainfall_24hr")
+	d3.selectAll("#rainfall_24hr")
 		.attr("viewBox", "0 0 447 430")
 		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");	
+		.attr("height", "100%");
 		
-	d3.selectAll("rainfall_15min")
+	d3.selectAll("#rainfall_15min")
 		.attr("viewBox", "0 0 447 430")
 		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");	
+		.attr("height", "100%");
 		
 	var rainfall_parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 	var rainfall_formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
