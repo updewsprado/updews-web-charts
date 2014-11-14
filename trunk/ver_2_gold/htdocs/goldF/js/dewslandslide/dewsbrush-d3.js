@@ -77,6 +77,7 @@
 		});
 		
 	function onBrush(){
+	/*
         sentnode_x.domain(brush.empty() ? slider_x.domain() : brush.extent());  
 		rainfall_x1.domain(brush.empty() ? slider_x.domain() : brush.extent());
 		rainfall_x2.domain(brush.empty() ? slider_x.domain() : brush.extent());
@@ -86,7 +87,7 @@
 		rainfall_svg1.select(".area").attr("d", rainfall_area1);
 		rainfall_svg1.select(".x.axis").call(rainfall_xAxis1);
 		rainfall_svg2.select(".area2").attr("d", rainfall_area2);
-		rainfall_svg2.select(".x.axis").call(rainfall_xAxis2);      
+		rainfall_svg2.select(".x.axis").call(rainfall_xAxis2);      */
     }
 	
 	}

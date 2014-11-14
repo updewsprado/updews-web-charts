@@ -46,7 +46,8 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="mini-alert-canvas" ></div>
+                                <svg id="mini-alert-canvas" width="1455px" height="115px" viewBox="0 0 1455 115" preserveAspectRatio = "xMinYMin meet">
+                                </svg>
                             </div>
                         </div>
                     </div>                                       
@@ -71,7 +72,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Position Plot</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="position-canvas">
+                                
                                 	<FORM id="formPosition">
 									<p>
 										Day Intervals: <select name="interval" onchange="showPositionPlotGeneral(document.getElementById('formGeneral'))">
@@ -83,8 +84,10 @@
 										<option value="1">1</option>
 										</select>
 									</p>
+                                    
 									</FORM>
-                                </div>
+                                <svg id="position-canvas" width="990px" height="490px" viewBox="0 0 990 490" preserveAspectRatio = "xMinYMin meet">
+                                </svg>
                             </div>
                         </div>
                     </div>
@@ -103,7 +106,7 @@
                             </div>
                             <div class="panel-body">
                                 <div id="healthbars-canvas" >
-												<svg id="barchart" width="447px" height="430px" viewbox="0 0 447 430">
+												<svg id="barchart" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
 											</svg>
                                 </div>
                             </div>
@@ -219,7 +222,7 @@
                             <div class="panel-body">
 								<div id="sent-node-canvas">
 									<div id="sentnode_timestamp"><b>Data Sent: </b></div>
-									<svg id="div_health" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
+									<svg id="div_health" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
 									</svg>                               	
 								</div>
 							</div>
@@ -236,7 +239,7 @@
                             <div class="panel-body">
 								<div id="rainfall-canvas">
 									<div id="rainfall_24hr_timestamp"><b>Timestamp: </b></div>
-									<svg id="rainfall_24hr" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
+									<svg id="rainfall_24hr" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
 									</svg>
 								</div>                            	
                             </div>
@@ -250,7 +253,7 @@
                             <div class="panel-body">
 								<div id="rainfall-canvas">
 									<div id="rainfall_15min_timestamp"><b>Timestamp: </b></div>
-									<svg id="rainfall_15min" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio="xMinYMin meet">
+									<svg id="rainfall_15min" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
 									</svg>
 								</div>                            	
                             </div>

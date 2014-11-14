@@ -63,14 +63,16 @@ var presencePlot = new function() {
 	};
 	
     d3.selectAll("#svg-presence")
-			.attr("viewBox", "0 0 1073 430")
+			.attr("viewBox", "0 0 1454 430")
 			.attr("width", "100%")
-			.attr("height", "100%");
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");
             
-    d3.selectAll("#alert_canvas")
-			.attr("viewBox", "0 0 1073 430")
+    d3.selectAll("#presence-map-canvas")
+			.attr("viewBox", "0 0 1454 430")
 			.attr("width", "100%")
-			.attr("height", "100%");
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");
             
 	// Define the axes
 	this.make_x_axis = function () {          
@@ -213,7 +215,7 @@ function showDataPres() {
 	//presenceJSON = <?php echo $dataPresence; ?>;
 	//allSitesJSON = <?php echo $allSites; ?>;
 	allSitesJSON = maxNodesJSON;
-	var url = "/test/allpres";
+	var url = "/test/allpres/24";
 	
 	generatePresencePlot(url, "Data Presence Map", 0, true, 1);
 }

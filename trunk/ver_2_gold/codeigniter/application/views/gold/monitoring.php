@@ -63,9 +63,11 @@
                     	<div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map</h3>
+								<div id="alert-canvas-legend">
+								</div>
                             </div>
                             <div class="panel-body">
-                                <svg id="alert-canvas" width="1073px" height="430px" viewbox="0 0 1073 430">
+                                <svg id="alert-canvas" width="1073px" height="490px" viewbox="0 0 1073 490" preserveAspectRatio = "xMinYMin meet">
                                 </svg>
                             </div>
                         </div>
@@ -80,7 +82,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Data Presence Map (24 Hours)</h3>
                             </div>
                             <div class="panel-body">
-                                <svg id="presence-map-canvas" width="1454px" height="430px" viewbox="0 0 1454 430">
+                                <svg id="presence-map-canvas" viewbox="0 0 1454 430" preserveAspectRatio = "xMinYMin meet">
                                 </svg>
                             </div>
                         </div>
