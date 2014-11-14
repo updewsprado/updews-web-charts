@@ -1,4 +1,4 @@
-	var sentnode_current, blah = 0, blah2 = 0;
+	var sentnode_current, sentnode_fromDate = 0, sentnode_toDate = 0;
 	
 	var sentnode_margin = {top: 10, right: 10, bottom: 20, left: 40};
 
@@ -16,7 +16,7 @@
 		$( "#datepicker2" ).datepicker("setDate", end_date);
 	});
 
-	var opts = {
+	var sentnode_opts = {
 		lines: 11, // The number of lines to draw
 		length: 6, // The length of each line
 		width: 3, // The line thickness
@@ -37,33 +37,34 @@
 		
 	function showSentNodeTotalGeneral(frm) {
 
-		blah = document.getElementById("formDate").dateinput.value;
-		blah2 = document.getElementById("formDate").dateinput2.value;
+		sentnode_fromDate = document.getElementById("formDate").dateinput.value;
+		sentnode_toDate = document.getElementById("formDate").dateinput2.value;
 		
 		sentnode_current = document.getElementById("sentnode_timestamp");
 		sentnode_current.innerHTML = "<b>Data Sent: </b>";
 				
 		d3.selectAll("#svg-sitehealth").remove();	
 		
-	var focusGraph;
+	var sentnode_focusGraph;
 	var sentnode_target = document.getElementById('div_health');
-	var sentnode_spinner = new Spinner(opts).spin();
+	var sentnode_spinner = new Spinner(sentnode_opts).spin();
         sentnode_target.appendChild(sentnode_spinner.el);
 			 
-		sentnode_width = parseInt(d3.select('#div_health').style('width'), 10);
-		sentnode_width = sentnode_width - sentnode_margin.left - sentnode_margin.right;
-		sentnode_height = parseInt(d3.select('#div_health').style('height'), 10);
-		sentnode_height = sentnode_height - sentnode_margin.top - sentnode_margin.bottom;
+			 
+	var sentnode_cWidth = document.getElementById('div_health').offsetWidth;
+		sentnode_cHeight = document.getElementById('div_health').offsetHeight;
+		sentnode_width = sentnode_cWidth - sentnode_margin.left - sentnode_margin.right;
+		sentnode_height = sentnode_cHeight - sentnode_margin.top - sentnode_margin.bottom;
 
 	var sentnode_parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 	var sentnode_formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
 	var sentnode_bisectDate = d3.bisector(function(d) { return d.date; }).left;
 	
-	var x = d3.time.scale().range([0, sentnode_width]),
-		y = d3.scale.linear().range([sentnode_height, 0]);
+	var sentnode_x = d3.time.scale().range([0, sentnode_width]),
+		sentnode_y = d3.scale.linear().range([sentnode_height, 0]);
 	
-	var sentnode_xAxis = d3.svg.axis().scale(x).orient("bottom"),
-		sentnode_yAxis = d3.svg.axis().scale(y).orient("left");
+	var sentnode_xAxis = d3.svg.axis().scale(sentnode_x).orient("bottom").ticks(4),
+		sentnode_yAxis = d3.svg.axis().scale(sentnode_y).orient("left").ticks(4);
 		
 	var sentnode_svg = d3.select("#div_health").append("svg")
 			.attr("id", "svg-sitehealth")
@@ -80,23 +81,25 @@
 			.attr("class", "focus")
 			.attr("transform", "translate(" + sentnode_margin.left + "," + sentnode_margin.top + ")");
 		
-	var barsGroup = sentnode_focus.append("g")
+	var sentnode_barsGroup = sentnode_focus.append("g")
 			.attr('clip-path', 'url(#clip)');
 
 		d3.selectAll("#svg-sitehealth")
 			.attr("viewBox", "0 0 447 430")
 			.attr("width", "100%")
-			.attr("height", "100%");
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");
 			
 		d3.selectAll("#div_health")
 			.attr("viewBox", "0 0 447 430")
 			.attr("width", "100%")
-			.attr("height", "100%");
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");
 	
 	var sentnode_tool = sentnode_svg.append("g")                                
 			.style("display", "none");   
 		
-	var sentnode_url = "/test/senttotal/" + frm.sitegeneral.value + "/" + blah + "/" + blah2 + "/" + frm.dbase.value;
+	var sentnode_url = "/test/senttotal/" + frm.sitegeneral.value + "/" + sentnode_fromDate + "/" + sentnode_toDate + "/" + frm.dbase.value;
 	
 		d3.json(sentnode_url, function(error, data) {
 
@@ -105,8 +108,8 @@
 				d.nodes = +d.count;
 			});
 		
-			x.domain(d3.extent(data.map(function(d) { return d.date; })));
-			y.domain([0, d3.max(data.map(function(d) { return d.nodes; }))]);
+			sentnode_x.domain(d3.extent(data.map(function(d) { return d.date; })));
+			sentnode_y.domain([0, d3.max(data.map(function(d) { return d.nodes; }))]);
 
 			sentnode_tool.append("circle")                                 
 				.attr("class", "y")                              
@@ -125,14 +128,14 @@
 				.style("font-size", "14px")
 				.call(sentnode_yAxis);
 		
-			focusGraph = barsGroup.selectAll("rect")
+			sentnode_focusGraph = sentnode_barsGroup.selectAll("rect")
 				.data(data)
 				.enter().append("rect")
 				.attr("fill", "steelblue")
-				.attr("x", function(d, i) { return x(d.date); })
-				.attr("y", function(d) { return y(d.nodes); })
+				.attr("x", function(d, i) { return sentnode_x(d.date); })
+				.attr("y", function(d) { return sentnode_y(d.nodes); })
 				.attr("width", 10)
-				.attr("height", function(d) { return y(0) - y(d.nodes); });
+				.attr("height", function(d) { return sentnode_y(0) - sentnode_y(d.nodes); });
 
 			sentnode_focus.append("text")
 				.attr("transform", "rotate(-90)")
@@ -153,7 +156,7 @@
 				.on("mousemove", sentnode_mousemove); 
 			
 			function sentnode_mousemove() {                                 
-				var x0 = x.invert(d3.mouse(this)[0]);              
+				var x0 = sentnode_x.invert(d3.mouse(this)[0]);              
 					i = sentnode_bisectDate(data, x0, 1),                   
 					d0 = data[i - 1],                              
 					d1 = data[i],                                  
@@ -161,8 +164,8 @@
 
 					sentnode_tool.select("circle.y")                         
 						.attr("transform",                           
-							  "translate(" + (x(d.date) + 45)  + "," +         
-											 y((d.nodes) - 0.5) + ")");      
+							  "translate(" + (sentnode_x(d.date) + 45)  + "," +         
+											 sentnode_y((d.nodes) - 0.5) + ")");      
 										 
 					sentnode_current = document.getElementById("sentnode_timestamp");
 					sentnode_current.innerHTML = "<b>Data Sent: </b>" + d.nodes + "<b> Timestamp: </b>" + sentnode_formatDate(d.date);

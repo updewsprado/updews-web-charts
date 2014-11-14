@@ -155,18 +155,21 @@ function init_dims() {
         .append("svg")
             .attr("width", "1073px")
             .attr("height", "38px");
+			
 	
 	svg.call(tip);	
     
     d3.selectAll("#svg-alert")
-			.attr("viewBox", "0 0 1454 430")
+			.attr("viewBox", "0 0 1073 490")
 			.attr("width", "100%")
-			.attr("height", "100%");
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");
             
-    d3.selectAll("#presence-map-canvas")
-			.attr("viewBox", "0 0 1454 430")
+    d3.selectAll("#alert-canvas")
+			.attr("viewBox", "0 0 1073 490")
 			.attr("width", "100%")
-			.attr("height", "100%");
+			.attr("height", "100%")
+			.attr("preserveAspectRatio", "xMinYMin meet");
 }
 
 // Define the axes
@@ -419,7 +422,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 						desc = i + " axes alerts";
 					}
 		
-					svg.append("rect")
+					svg2.append("rect")
 						.attr("class", "cell")
 						.attr("x", i*(labelWidth))
 						.attr("y", graphDim.gHeight + cellh * 0.25)
@@ -437,7 +440,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 							}
 						});
 		
-					svg.append("text")
+					svg2.append("text")
 						.attr("class", "legend")    // style the legend
 						.attr("x", i*(labelWidth) + cellw * 1.5)
 						.attr("y", graphDim.gHeight + cellh * 1.25)
@@ -473,7 +476,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 						color = "#0A64A4";
 					}
 					
-					svg.append("polygon")
+					svg2.append("polygon")
 						.attr("class", "triangle")
 						.style("stroke", "none")  // colour the line
 						.style("fill", color)
@@ -489,7 +492,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 							return points;
 						});
 						
-					svg.append("text")
+					svg2.append("text")
 						.attr("class", "legend")    // style the legend
 						.attr("x", i*(labelWidth)*1.5 + cellw * 1.5)  // space legend
 						.attr("y", graphDim.gHeight + cellh * 2.5)

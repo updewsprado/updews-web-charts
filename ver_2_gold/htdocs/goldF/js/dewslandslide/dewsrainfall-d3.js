@@ -120,7 +120,8 @@
 /*
 	var rainfall_xAxis1 = d3.svg.axis()
 		.scale(rainfall_x1)
-		.orient("bottom");
+		.orient("bottom")
+		.ticks(4);
 
 	var rainfall_yAxis1 = d3.svg.axis()
 		.scale(rainfall_y1)
@@ -128,7 +129,7 @@
 		
 	var rainfall_xAxis2 = d3.svg.axis()
 		.scale(rainfall_x2)
-		.orient("bottom").ticks(6);
+		.orient("bottom").ticks(4);
 
 	var rainfall_yAxis2 = d3.svg.axis()
 		.scale(rainfall_y2)

@@ -119,11 +119,9 @@ var tip = d3.tip()
 
 //initialize dimensions
 function init_dims() {
-	cWidth = document.getElementById('mini-alert-canvas').offsetWidth;
+	cWidth = document.getElementById('mini-alert-canvas').offsetWidth * 2;
 	//cHeight = document.getElementById('mini-alert-canvas').offsetHeight;
 	cHeight = cWidth * 0.03;
-	
-	document.getElementById('mini-alert-canvas').setAttribute("style","height:" + cHeight);
 	
 	//margin = {top: cHeight * 0.10, right: cWidth * 0.015, bottom: cHeight * 0.10, left: cWidth * 0.065};
 	margin = {top: 0, right: 0, bottom: 0, left: 0};
@@ -146,6 +144,7 @@ function init_dims() {
 	    
 	// Adds the svg canvas
 	svg = d3.select("#mini-alert-canvas")
+        .attr("id", "svg-alertmini")
 	    .append("svg")
 	        .attr("width", width + margin.left + margin.right)
 	        .attr("height", height + margin.top + margin.bottom)
@@ -155,7 +154,19 @@ function init_dims() {
 	
 	svg.call(tip);	
 }
-
+            
+    d3.selectAll("#mini-alert-canvas")
+			.attr("viewBox", "0 0 1455 115")
+			.attr("width", "100%")
+			.attr("height", "100%")
+            .attr("preserveAspectRatio", "xMinYMin meet");
+			
+	d3.selectAll("#svg-alertmini")
+			.attr("viewBox", "0 0 1455 115")
+			.attr("width", "100%")
+			.attr("height", "100%")
+            .attr("preserveAspectRatio", "xMinYMin meet");
+            
 // Define the axes
 function make_x_axis() {        
     return d3.svg.axis()

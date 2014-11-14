@@ -51,6 +51,7 @@ var positionPlot = new function() {
 		    
 		// Adds the svg canvas
 		this.svg = d3.select("#position-canvas")
+			.attr("id", "svg-position")
 		    .append("svg")
 		        .attr("width", this.width + this.margin.left + this.margin.right)
 		        .attr("height", this.height + this.margin.top + this.margin.bottom)
@@ -58,7 +59,20 @@ var positionPlot = new function() {
 		        .attr("transform", 
 		              "translate(" + this.margin.left + "," + this.margin.top + ")");
 		
-		this.svg.call(this.tip);		
+		this.svg.call(this.tip);
+
+		d3.selectAll("#position-canvas")
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("viewBox", "0 0 990 490")
+			.attr("preserveAspectRatio", "xMinYMin meet");
+			
+		d3.selectAll("#svg-position")
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("viewBox", "0 0 990 490")
+			.attr("preserveAspectRatio", "xMinYMin meet");
+			
     };
     
     // Define the axes
@@ -100,52 +114,6 @@ var positionPlot = new function() {
 	
 	// Get the data
 	this.jsondata = [];
-	this.generatePlotData = function (url, title, xOffset, isLegends, graphNum) {		
-		d3.json(url, function(error, data) {
-			this.jsondata = data;
-		});
-	};	
-
-	this.showData = function (frm) {
-		// Clear the canvas area first
-		this.clearData();
-	
-		// Generate the XY Graph
-		//urlXY = "temp/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
-		//urlXY = "/d3graph/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
-		urlXY = "/test/position/" + frm.sites1.value + "/" + frm.interval.value;
-		titleXY = frm.sites1.value + " XY Column Position";
-		this.generatePlotData(urlXY, titleXY, 0, true, 1);
-		
-		// Generate the XZ Graph
-		//urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
-		//urlXZ = "/d3graph/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
-		urlXZ = "/test/position/" + frm.sites1.value + "/" + frm.interval.value + "/1";
-		titleXZ = frm.sites1.value + " XZ Column Position";
-		this.generatePlotData(urlXZ, titleXZ, this.width * 0.6, false, 2);
-	};
-	
-	this.options = ["blcb", "blct", "bolb", "gamb", "gamt",
-					"humb", "humt", "labb", "labt", "lipb",
-					"lipt", "mamb", "mamt", "oslb", "oslt",
-					"plab", "plat", "pugb", "pugt", "sinb",
-					"sinu"];
-	
-	this.popDropDown = function () {
-		var select = document.getElementById('selectPositionSite');
-		var i;
-		for (i = 0; i < this.options.length; i++) {
-			var opt = this.options[i];
-			var el = document.createElement("option");
-			el.textContent = opt;
-			el.value = opt;
-			select.appendChild(el);
-		}
-	};
-	
-	this.showAlert = function () {
-		alert("Hello! I am an alert box!!");
-	};
 	
 };
 
