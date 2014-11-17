@@ -46,8 +46,10 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
                             </div>
                             <div class="panel-body">
-                                <svg id="mini-alert-canvas" width="1455px" height="115px" viewBox="0 0 1455 115" preserveAspectRatio = "xMinYMin meet">
-                                </svg>
+								<div id="mini-alert-canvas">
+									<svg id="minialertcanvas" width="1024px" height="30px" viewBox="0 0 1024 30" preserveAspectRatio = "xMinYMin meet">
+									</svg>
+								</div>
                             </div>
                         </div>
                     </div>                                       
@@ -69,10 +71,11 @@
                     <div class="col-lg-8">
                     	<div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Position Plot</h3>
-                            </div>
-                            <div class="panel-body">
-                                
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Position Plot <input type="button" id="posLegend" onclick="posLegends(this.form)" value="Show Legends" /></h3>
+									<div id="position-legends" style="width:120px; height:80px; visibility:hidden; display:none;">
+										
+									</div>  
+								<div class="panel-body">									
                                 	<FORM id="formPosition">
 									<p>
 										Day Intervals: <select name="interval" onchange="showPositionPlotGeneral(document.getElementById('formGeneral'))">
@@ -86,12 +89,15 @@
 									</p>
                                     
 									</FORM>
-                                <svg id="position-canvas" width="990px" height="490px" viewBox="0 0 990 490" preserveAspectRatio = "xMinYMin meet">
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+									<div id="position-canvas">
+										<svg id="positioncanvas" width="990px" height="490px" viewBox="0 0 990 490" preserveAspectRatio = "xMinYMin meet">
+										</svg>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
                 <!-- /.row -->
 
                 <div class="row">
@@ -99,11 +105,12 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Communication Health <input type='button' id='show' onclick='showLegends(this.form)' value='Show Legends' /></h3>
-										<div id="legends" style="display:block; opacity:0; visibility:hidden;">
+									<div id="legends" style="visibility:hidden; display:none;">
 											<strong>Past 7 Days</strong><input type='button' onclick="barTransition('red')" style='background-color:red; padding-right:5px;' />
 											<strong>Past 30 Days</strong><input type='button' onclick="barTransition('blue')" style='background-color:blue; padding-right:5px;' />
-											<strong>Overall</strong><input type='button' onclick="barTransition('green')" style='background-color:green; padding-right:5px;' /></div>
-                            </div>
+											<strong>Overall</strong><input type='button' onclick="barTransition('green')" style='background-color:green; padding-right:5px;' />
+									</div>
+							</div>
                             <div class="panel-body">
                                 <div id="healthbars-canvas" >
 												<svg id="barchart" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
