@@ -6,7 +6,9 @@
 		comm_opacity2_s,
 		comm_opacity3_s,
 		comm_legendactive = 0,
-		comm_active = 0;
+		comm_active = 0,
+		comm_left = 0,
+		comm_top = 0;
 
 	function showLegends(frm) {
 		
@@ -17,15 +19,21 @@
 		if (comm_active == 0){
 		comm_target3.value = "Hide Legends";
 		comm_target4.style.visibility = "visible";
-		comm_target4.style.opacity = "1";
-		comm_target4.style.transition = "opacity 1s ease-out";
+		comm_target4.style.display = "block";
+		comm_target4.style.position = "absolute";
+		comm_target4.style.width = "235px";
+		comm_target4.style.zIndex = 1;
+		comm_target4.style.backgroundColor = "white";
+		comm_target4.style.borderStyle = "solid";
+		comm_target4.style.borderWidth = "thin";
+		comm_target4.style.left = (comm_target3.offsetLeft - comm_target3.scrollLeft + comm_target3.clientLeft + 115) + 'px';
+		comm_target4.style.top = (comm_target3.offsetTop - comm_target3.scrollTop + comm_target3.clientTop - 25) + 'px';
 		comm_active = 1;
 			}
 		else {
 		comm_target3.value = "Show Legends";
 		comm_target4.style.visibility = "hidden";
-		comm_target4.style.opacity = "0";
-		comm_target4.style.transition = "opacity 2s ease-in";
+		comm_target4.style.display = "none";
 		comm_active = 0;
 			}
 		}

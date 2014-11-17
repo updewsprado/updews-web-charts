@@ -5,6 +5,9 @@
 var prevIntvl = -1;
 var prevSite = -1;
 var curSite = -1;
+var pos_legend_active = 0;
+var pos_color = [];
+var pos_key = [];
 
 var positionPlot = new function() {
     this.cWidth = 0;
@@ -30,8 +33,8 @@ var positionPlot = new function() {
 	
 	this.init_dims = function() {
 		// Set the dimensions of the canvas / graph
-		this.cWidth = document.getElementById('position-canvas').offsetWidth;
-		this.cHeight = document.getElementById('position-canvas').offsetHeight;
+		this.cWidth = document.getElementById('positioncanvas').offsetWidth;
+		this.cHeight = document.getElementById('positioncanvas').offsetHeight;
 		
 		this.margin = {top: 70, right: 20, bottom: 70, left: 50},
 		this.width = this.cWidth - this.margin.left - this.margin.right,
@@ -50,7 +53,7 @@ var positionPlot = new function() {
 		    .y(function(d) { return this.y(d.yval); });
 		    
 		// Adds the svg canvas
-		this.svg = d3.select("#position-canvas")
+		this.svg = d3.select("#positioncanvas")
 			.attr("id", "svg-position")
 		    .append("svg")
 		        .attr("width", this.width + this.margin.left + this.margin.right)
@@ -58,10 +61,10 @@ var positionPlot = new function() {
 		    .append("g")
 		        .attr("transform", 
 		              "translate(" + this.margin.left + "," + this.margin.top + ")");
-		
+					  
 		this.svg.call(this.tip);
 
-		d3.selectAll("#position-canvas")
+		d3.selectAll("#positioncanvas")
 			.attr("width", "100%")
 			.attr("height", "100%")
 			.attr("viewBox", "0 0 990 490")
@@ -198,8 +201,9 @@ function generatePlotData (url, title, xOffset, isLegends, graphNum) {
 		var urlNodeExt = "gold/node/";	
 		
 		// Loop through each date / key
+		var x = 0;
 		dataNest.forEach(function(d,i) { 
-
+			
 			positionPlot.svg.selectAll(".dot" + graphNum + "")
 					.data(data)
 				.enter().append("circle")
@@ -223,12 +227,15 @@ function generatePlotData (url, title, xOffset, isLegends, graphNum) {
 				.attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
 				.attr("d", positionPlot.yvalline(d.values));
 				
+				
 			// Add the Legend
-			if(isLegends){
-				positionPlot.svg.append("text")
-					.attr("x", positionPlot.graphDim.gWidth + positionPlot.margin.right)  // space legend
-					.attr("y", i*(positionPlot.labelHeight + 5))
-					.attr("transform", "translate(" + xOffset + ",0)")
+			/*if(isLegends){
+				d.color = color(d.key);
+				d.key = d.key;
+				positionPlot.svg2.append("text")
+					.attr("x", 0)  // space legend
+					.attr("y", 0)
+					.attr("transform", "translate(0,0)")
 					.attr("class", "legend")    // style the legend
 					.style("fill", function() { // Add the colours dynamically
 						return d.color = color(d.key); })
@@ -244,7 +251,11 @@ function generatePlotData (url, title, xOffset, isLegends, graphNum) {
 						d.active = active;
 						})  
 					.text(d.key); 
-			}
+			}*/
+			
+			pos_color[x] = color(d.key);
+			pos_key[x] = d.key;
+			x++;
 		});
 	});
 };	
@@ -270,7 +281,17 @@ function showPositionPlot(frm) {
 	generatePlotData(urlXZ, titleXZ, positionPlot.width * 0.6, false, 2);
 };
 
+
 function showPositionPlotGeneral(frm) {
+
+	pos_target = document.getElementById('posLegend');
+	pos_target2 = document.getElementById('position-legends');
+	
+		pos_legend_active = 0;
+		pos_target.value = "Show Legends";
+		pos_target2.style.display = "none";
+		pos_target2.style.visibility = "hidden";
+		
 	var dayIntvl = document.getElementById("formPosition").interval.value;
 	curSite = frm.sitegeneral.value;
 
@@ -290,9 +311,42 @@ function showPositionPlotGeneral(frm) {
 	urlXZ = "/test/position/" + frm.sitegeneral.value + "/" + dayIntvl + "/1";
 	titleXZ = frm.sitegeneral.value + " XZ Column Position";
 	generatePlotData(urlXZ, titleXZ, positionPlot.width * 0.6, false, 2);
+	
 };
 
+function posLegends(frm) {
 
+	pos_target = document.getElementById('posLegend');
+	pos_target2 = document.getElementById('position-legends');
+	pos_legends = "";
+	
+	if(pos_legend_active == 0)
+	{
+		pos_legend_active = 1;
+		pos_target.value = "Hide Legends";
+		pos_target2.style.display = "block";
+		pos_target2.style.visibility = "visible";
+		pos_target2.style.position = "absolute";
+		pos_target2.style.zIndex = 1;
+		pos_target2.style.backgroundColor = "white";
+		pos_target2.style.borderStyle = "solid";
+		pos_target2.style.borderWidth = "thin";
+		pos_target2.style.left = (pos_target.offsetLeft - pos_target.scrollLeft + pos_target.clientLeft + 120) + 'px';
+		pos_target2.style.top = (pos_target.offsetTop - pos_target.scrollTop + pos_target.clientTop - 80) + 'px';
+		for(z = 0; z < 5; z++)
+		{
+		pos_legends += "<strong><span style='color:" + pos_color[z] + ";'>" + pos_key[z] + "</span></strong><br/>";
+		}
+		pos_target2.innerHTML = pos_legends;
+	}
+	else
+	{
+		pos_legend_active = 0;
+		pos_target.value = "Show Legends";
+		pos_target2.style.display = "none";
+		pos_target2.style.visibility = "hidden";
+	}
+};
 
 
 
