@@ -105,19 +105,19 @@
 	date2 = document.getElementById("formDate").dateinput2.value;
 	
     var rainfall_url = "/test/rain/" + frm.sitegeneral.value + "/" + date1 + "/" + date2;
-    /*
+    
 	var rainfall_x1 = d3.time.scale()
 		.range([0, rainfall_width]);
 
 	var rainfall_y1 = d3.scale.linear()
-		.range([rainfall_height, 0]);*/
+		.range([rainfall_height, 0]);
 		
 	var rainfall_x2 = d3.time.scale()
 		.range([0, rainfall_width]);
 
 	var rainfall_y2 = d3.scale.linear()
 		.range([rainfall_height, 0]);
-/*
+
 	var rainfall_xAxis1 = d3.svg.axis()
 		.scale(rainfall_x1)
 		.orient("bottom")
@@ -125,7 +125,7 @@
 
 	var rainfall_yAxis1 = d3.svg.axis()
 		.scale(rainfall_y1)
-		.orient("left").ticks(4);*/
+		.orient("left").ticks(4);
 		
 	var rainfall_xAxis2 = d3.svg.axis()
 		.scale(rainfall_x2)
@@ -134,25 +134,25 @@
 	var rainfall_yAxis2 = d3.svg.axis()
 		.scale(rainfall_y2)
 		.orient("left").ticks(4);
-/*
+
 	var rainfall_area1 = d3.svg.area()
 		.interpolate("basis")
 		.x(function(d) { return rainfall_x1(d.timestamp); })
 		.y0(function (d) {if(d.cummulative < 0){return 0;} else return rainfall_height})
-		.y1(function(d) { return rainfall_y1(d.cummulative); });*/
+		.y1(function(d) { return rainfall_y1(d.cummulative); });
 		
 	var rainfall_area2 = d3.svg.area()
 		.interpolate("basis")
 		.x(function(d) { return rainfall_x2(d.timestamp); })
 		.y0(function (d) {if(d.rain < 0){return 0;} else return rainfall_height})
 		.y1(function(d) { return rainfall_y2(d.rain); });
-		/*
+		
 	var rainfall_svg1 = d3.select("#rainfall_24hr").append("svg")
 		.attr("id", "rainfall-svg")
 		.attr("width", rainfall_width + rainfall_margin.left + rainfall_margin.right)
 		.attr("height", rainfall_height + rainfall_margin.top + rainfall_margin.bottom)
 		.append("g")
-		.attr("transform", "translate(" + rainfall_margin.left + "," + rainfall_margin.top + ")");*/
+		.attr("transform", "translate(" + rainfall_margin.left + "," + rainfall_margin.top + ")");
 		
 	var rainfall_svg2 = d3.select("#rainfall_15min").append("svg")
 		.attr("id", "rainfall-svg")
@@ -160,22 +160,22 @@
 		.attr("height", rainfall_height + rainfall_margin.top + rainfall_margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + rainfall_margin.left + "," + rainfall_margin.top + ")");
-	/*
+	
 	rainfall_svg1.append("defs").append("clipPath")
 		.attr("id", "clip")
 		.append("rect")
 		.attr("width", rainfall_width)
-		.attr("height", rainfall_height);*/
+		.attr("height", rainfall_height);
 		
 	rainfall_svg2.append("defs").append("clipPath")
 		.attr("id", "clip")
 		.append("rect")
 		.attr("width", rainfall_width)
 		.attr("height", rainfall_height);	
-	/*
+	
 	var rainfall_tool1 = rainfall_svg1.append("g")                                
 		.style("display", null);   
-		*/
+		
 	var rainfall_tool2 = rainfall_svg2.append("g")                               
 		.style("display", null);  
 	
@@ -203,9 +203,10 @@
            
 		data.forEach(function(d){
 			d.timestamp = rainfall_parseDate(d.timestamp);
+			d.cummulative = +d.cumm;
 			d.rain = +d.rval;
 		});
-		/*
+		
 <!-- 24 Hour Rain -->
 		
 		rainfall_x1.domain(d3.extent(data, function(d) { return d.timestamp; }));
@@ -223,7 +224,7 @@
 			.style("pointer-events", "all")
 			.on("mouseover", function() { rainfall_tool1.style("display", null); })
 			.on("mouseout", function() { rainfall_tool1.style("display", "none"); 
-										 rainfall_current = document.getElementById("rainfall_24hr");
+										 rainfall_current = document.getElementById("rainfall_24hr_timestamp");
 										 rainfall_current.innerHTML = "<b>Timestamp: </b>";})
 			.on("mousemove", rainfall_mousemove1);
 		
@@ -243,7 +244,7 @@
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")
 			  .text(" 24 Hours (mm)");
-	*/
+	
 <!-- 15 Minute Rain -->
 			  
 		rainfall_x2.domain(d3.extent(data, function(d) { return d.timestamp; }));
@@ -283,12 +284,12 @@
 			.text("15 min(mm)");  
 			
 <!-- Tooltips Circle -->
-/*
+
 		rainfall_tool1.append("circle")                                 
 			.attr("class", "y")                              
 			.style("fill", "FCFF33")                          
 			.style("stroke", "FCFF33")                         
-			.attr("r", 2);  */
+			.attr("r", 2);  
 			
 		rainfall_tool2.append("circle")                                 
 			.attr("class", "y")                              
@@ -297,13 +298,13 @@
 			.attr("r", 2);  	  
 			  
 <!-- Tooltips Function -->
-/*
+
 		function rainfall_mousemove1() {                                 
-        var rainfall_x0 = rainfall_x1.invert(d3.mouse(this)[0]);              
-            rainfall_i = rainfall_bisectDate(data, rainfall_x0, 1),                   
-            rainfall_d0 = data[rainfall_i - 1],                              
-            rainfall_d1 = data[rainfall_i],                                  
-            rainfall_d = rainfall_x0 - rainfall_d0.timestamp > rainfall_d1.timestamp - rainfall_x0 ? rainfall_d1 : rainfall_d0;     
+        var x0 = rainfall_x1.invert(d3.mouse(this)[0]);              
+            i = rainfall_bisectDate(data, x0, 1),                   
+            d0 = data[i - 1],                              
+            d1 = data[i],                                  
+            d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;     
 
 			rainfall_tool1.select("circle.y")  
 				.style("fill", "#4E0012")
@@ -314,7 +315,7 @@
 									 
 			rainfall_current = document.getElementById("rainfall_24hr_timestamp");
 			rainfall_current.innerHTML = "<b>Timestamp: </b>" + rainfall_formatDate(d.timestamp) + "<b>24h Rain: </b>" + d.cummulative;
-			}*/
+			}
 	
 		function rainfall_mousemove2() {                                 
         var x0 = rainfall_x2.invert(d3.mouse(this)[0]);              

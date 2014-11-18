@@ -263,31 +263,31 @@ function showAccel(frm) {
 		.style("display", null);   
 		
 	d3.selectAll("#svg-accel2")
-		.attr("viewBox", "0 0 800 120")
+		.attr("viewBox", "0 0 975 120")
 		.attr("width", "100%")
 		.attr("height", "100%")
 		.attr("preserveAspectRatio", "xMinYMin meet");
 	
 	d3.selectAll("#accel-1")
-		.attr("viewBox", "0 0 800 120")
+		.attr("viewBox", "0 0 975 120")
 		.attr("width", "100%")
 		.attr("height", "100%")
 		.attr("preserveAspectRatio", "xMinYMin meet");
 		
 	d3.selectAll("#accel-2")
-		.attr("viewBox", "0 0 800 120")
+		.attr("viewBox", "0 0 975 120")
 		.attr("width", "100%")
 		.attr("height", "100%")
 		.attr("preserveAspectRatio", "xMinYMin meet");
 		
 	d3.selectAll("#accel-3")
-		.attr("viewBox", "0 0 800 120")
+		.attr("viewBox", "0 0 975 120")
 		.attr("width", "100%")
 		.attr("height", "100%")
 		.attr("preserveAspectRatio", "xMinYMin meet");
 		
 	d3.selectAll("#accel-4")
-		.attr("viewBox", "0 0 800 120")
+		.attr("viewBox", "0 0 975 120")
 		.attr("width", "100%")
 		.attr("height", "100%")
 		.attr("preserveAspectRatio", "xMinYMin meet");
@@ -342,10 +342,11 @@ function showAccel(frm) {
 
 		accel_svg1.append("g")
 			  .attr("class", "y axis")
-			  .style("font-size", "13px")
+			  .style("font-size", "15px")
 			  .call(accel_yAxis1)
 			  .append("text")
 			  .attr("transform", "rotate(-90)")
+			  .attr("x", accel_height/2 -60)
 			  .attr("y", -75)
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")
@@ -380,10 +381,11 @@ function showAccel(frm) {
 
 		accel_svg2.append("g")
 			.attr("class", "y axis")
-			.style("font-size", "13px")
+			.style("font-size", "15px")
 			.call(accel_yAxis2)
 			.append("text")
 			.attr("transform", "rotate(-90)")
+			.attr("x", accel_height/2 -60)
 			.attr("y", -75)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
@@ -418,10 +420,11 @@ function showAccel(frm) {
 
 		accel_svg3.append("g")
 			  .attr("class", "y axis")
-			  .style("font-size", "13px")
+			  .style("font-size", "15px")
 			  .call(accel_yAxis3)
 			  .append("text")
 			  .attr("transform", "rotate(-90)")
+			  .attr("x", accel_height/2 -60)
 			  .attr("y", -75)
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")
@@ -456,10 +459,11 @@ function showAccel(frm) {
 
 		accel_svg4.append("g")
 			  .attr("class", "y axis")
-			  .style("font-size", "13px")
+			  .style("font-size", "15px")
 			  .call(accel_yAxis4)
 			  .append("text")
 			  .attr("transform", "rotate(-90)")
+			  .attr("x", accel_height/2 -60)
 			  .attr("y", -75)
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")

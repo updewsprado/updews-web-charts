@@ -119,7 +119,7 @@ var tip = d3.tip()
 
 //initialize dimensions
 function init_dims() {
-	cWidth = document.getElementById('minialertcanvas').offsetWidth ;
+	cWidth = document.getElementById('minialertcanvas').offsetWidth;
 	//cHeight = document.getElementById('minialertcanvas').offsetHeight;
 	cHeight = cWidth * 0.03;
 	

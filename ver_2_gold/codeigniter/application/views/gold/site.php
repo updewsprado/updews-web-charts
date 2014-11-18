@@ -72,7 +72,7 @@
                     	<div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Position Plot <input type="button" id="posLegend" onclick="posLegends(this.form)" value="Show Legends" /></h3>
-									<div id="position-legends" style="width:120px; height:80px; visibility:hidden; display:none;">
+									<div id="position-legends" style="width:130px; height:85px; visibility:hidden; display:none;">
 										
 									</div>  
 								<div class="panel-body">									

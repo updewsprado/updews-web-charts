@@ -331,6 +331,9 @@ function posLegends(frm) {
 		pos_target2.style.backgroundColor = "white";
 		pos_target2.style.borderStyle = "solid";
 		pos_target2.style.borderWidth = "thin";
+		pos_target2.style.paddingLeft = "5px";
+		pos_target2.style.paddingTop = "5px";
+		pos_target2.style.paddingRight = "5px";
 		pos_target2.style.left = (pos_target.offsetLeft - pos_target.scrollLeft + pos_target.clientLeft + 120) + 'px';
 		pos_target2.style.top = (pos_target.offsetTop - pos_target.scrollTop + pos_target.clientTop - 80) + 'px';
 		for(z = 0; z < 5; z++)
