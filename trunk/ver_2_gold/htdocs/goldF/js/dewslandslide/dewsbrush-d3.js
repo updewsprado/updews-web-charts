@@ -77,17 +77,17 @@
 		});
 		
 	function onBrush(){
-	/*
+	
         sentnode_x.domain(brush.empty() ? slider_x.domain() : brush.extent());  
 		rainfall_x1.domain(brush.empty() ? slider_x.domain() : brush.extent());
 		rainfall_x2.domain(brush.empty() ? slider_x.domain() : brush.extent());
 		focusGraph.attr("x", function(d, i) { return sentnode_x(d.date); });
 		focusGraph.attr("width", 10);
-		sentnode_focus.select(".x.axis").call(xAxis);
+		sentnode_focus.select(".x.axis").call(sentnode_xAxis);
 		rainfall_svg1.select(".area").attr("d", rainfall_area1);
 		rainfall_svg1.select(".x.axis").call(rainfall_xAxis1);
 		rainfall_svg2.select(".area2").attr("d", rainfall_area2);
-		rainfall_svg2.select(".x.axis").call(rainfall_xAxis2);      */
+		rainfall_svg2.select(".x.axis").call(rainfall_xAxis2);      
     }
 	
 	}

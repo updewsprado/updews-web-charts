@@ -46,7 +46,10 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="mini-alert-canvas" ></div>
+                                <div id="mini-alert-canvas" >
+									<svg id="minialertcanvas" width="1024px" height="30px" viewBox="0 0 1024 30" preserveAspectRatio = "xMinYMin meet">
+									</svg>
+								</div>
                             </div>
                         </div>
                     </div>                                       
@@ -85,7 +88,7 @@
                             <div class="panel-body">
 								<div id="accel-1-canvas">
 									<div id="accel-1-timestamp"><b>Timestamp: </b></div>
-									<svg id="accel-1" width="800px" height="120px" viewbox="0 0 800 120" preserveAspectRatio="xMinYMin meet">
+									<svg id="accel-1" width="975px" height="120px" viewbox="0 0 975 120" preserveAspectRatio="xMinYMin meet">
 									</svg>
 								</div>                               	
                             </div>
@@ -103,7 +106,7 @@
                             <div class="panel-body">
 								<div id="accel-2-canvas">
 									<div id="accel-2-timestamp"><b>Timestamp: </b></div>
-									<svg id="accel-2" width="800px" height="120px" viewbox="0 0 800 120" preserveAspectRatio="xMinYMin meet">
+									<svg id="accel-2" width="975px" height="120px" viewbox="0 0 975 120" preserveAspectRatio="xMinYMin meet">
 									</svg>
 								</div>                               	
                             </div>
@@ -121,7 +124,7 @@
                             <div class="panel-body">
 								<div id="accel-3-canvas">
 									<div id="accel-3-timestamp"><b>Timestamp: </b></div>
-									<svg id="accel-3" width="800px" height="120px" viewbox="0 0 800 120" preserveAspectRatio="xMinYMin meet">
+									<svg id="accel-3" width="975px" height="120px" viewbox="0 0 975 120" preserveAspectRatio="xMinYMin meet">
 									</svg>
 								</div>                               	
                             </div>
@@ -139,7 +142,7 @@
                             <div class="panel-body">
 								<div id="accel-4-canvas">
 									<div id="accel-4-timestamp"><b>Timestamp: </b></div>
-									<svg id="accel-4" width="800px" height="120px" viewbox="0 0 800 120" preserveAspectRatio="xMinYMin meet">
+									<svg id="accel-4" width="975px" height="120px" viewbox="0 0 975 120" preserveAspectRatio="xMinYMin meet">
 									</svg>
 								</div>                               	
                             </div>

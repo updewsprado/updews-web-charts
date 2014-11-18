@@ -64,7 +64,7 @@ class Rain_Model extends CI_Model
 		
 		$query = $this->db->query("
 					SELECT 
-						site,timestamp,rval 
+						site,timestamp,cumm, rval 
 					FROM 
 						rain_noah 
 					WHERE 
@@ -79,6 +79,7 @@ class Rain_Model extends CI_Model
 		{
 			$dbreturn[$ctr]['site'] = $row['site'];	    
 		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['cumm'] = $row['cumm'];
 			$dbreturn[$ctr]['rval'] = $row['rval'];
 
 			$ctr = $ctr + 1;
@@ -126,7 +127,7 @@ class Rain_Model extends CI_Model
 		
 		$query = $this->db->query("
 					SELECT
-						site,timestamp,rval 
+						site,timestamp,cumm, rval 
 					FROM
 						rain_noah 
 					WHERE 
@@ -141,6 +142,7 @@ class Rain_Model extends CI_Model
 		{		    
 			$dbreturn[$ctr]['site'] = $row['site'];	    
 		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['cumm'] = $row['cumm'];
 			$dbreturn[$ctr]['rval'] = $row['rval'];
 
 			$ctr = $ctr + 1;
