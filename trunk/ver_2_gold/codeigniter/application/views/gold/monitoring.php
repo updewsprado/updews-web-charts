@@ -62,13 +62,15 @@
                     <div class="col-lg-8">
                     	<div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map</h3>
-								<div id="alert-canvas-legend">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map <input type="button" id="alertLegend" onclick="alertLegends(this.form)" value="Show Legends" /></h3>
+								<div id="alert-canvas-legend"  style="width:230px; height:85px; visibility:hidden; display:none;">
 								</div>
                             </div>
                             <div class="panel-body">
-                                <svg id="alert-canvas" width="1073px" height="490px" viewbox="0 0 1073 490" preserveAspectRatio = "xMinYMin meet">
-                                </svg>
+								<div id="alert-canvas">
+									<svg id="alertcanvas" viewbox="0 0 617 400" preserveAspectRatio = "xMinYMin meet">
+									</svg>
+								</div>	
                             </div>
                         </div>
                     </div>
@@ -82,8 +84,10 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Data Presence Map (24 Hours)</h3>
                             </div>
                             <div class="panel-body">
-                                <svg id="presence-map-canvas" viewbox="0 0 1454 430" preserveAspectRatio = "xMinYMin meet">
-                                </svg>
+								<div id="presence-map-canvas">
+									<svg id="presencemapcanvas" viewbox="0 0 987 430" preserveAspectRatio = "xMinYMin meet">
+									</svg>
+								</div>
                             </div>
                         </div>
                     </div>                    

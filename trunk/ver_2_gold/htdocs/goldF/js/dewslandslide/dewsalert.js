@@ -118,8 +118,8 @@ var tip = d3.tip()
 
 //initialize dimensions
 function init_dims() {
-	cWidth = document.getElementById('alert-canvas').offsetWidth;
-	cHeight = document.getElementById('alert-canvas').offsetHeight;
+	cWidth = document.getElementById('alertcanvas').offsetWidth;
+	cHeight = document.getElementById('alertcanvas').offsetHeight;
 	
 	//var margin = {top: 70, right: 20, bottom: 70, left: 90},
 	margin = {top: cHeight * 0, right: cWidth * 0.005, bottom: cHeight * 0.10, left: cWidth * 0.065};
@@ -141,7 +141,7 @@ function init_dims() {
 	    .y(function(d) { return y(d.yval); });
 	    
 	// Adds the svg canvas
-	svg = d3.select("#alert-canvas")
+	svg = d3.select("#alertcanvas")
         .attr("id", "svg-alert")
 	    .append("svg")
 	        .attr("width", width + margin.left + margin.right)
@@ -150,7 +150,7 @@ function init_dims() {
 	        .attr("transform", 
 	              "translate(" + margin.left + "," + margin.top + ")");
     
-    svg2 = d3.select("#alert-canvas-legend")
+    svg2 = d3.select("#alertcanvaslegend")
         .attr("id", "svg-alert-legend")
         .append("svg")
             .attr("width", "1073px")
@@ -160,13 +160,13 @@ function init_dims() {
 	svg.call(tip);	
     
     d3.selectAll("#svg-alert")
-			.attr("viewBox", "0 0 1073 490")
+			.attr("viewBox", "0 0 617 400")
 			.attr("width", "100%")
 			.attr("height", "100%")
 			.attr("preserveAspectRatio", "xMinYMin meet");
             
-    d3.selectAll("#alert-canvas")
-			.attr("viewBox", "0 0 1073 490")
+    d3.selectAll("#alertcanvas")
+			.attr("viewBox", "0 0 617 400")
 			.attr("width", "100%")
 			.attr("height", "100%")
 			.attr("preserveAspectRatio", "xMinYMin meet");

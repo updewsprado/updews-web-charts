@@ -67,13 +67,13 @@ var positionPlot = new function() {
 		d3.selectAll("#positioncanvas")
 			.attr("width", "100%")
 			.attr("height", "100%")
-			.attr("viewBox", "0 0 990 490")
+			.attr("viewBox", "0 0 587 400")
 			.attr("preserveAspectRatio", "xMinYMin meet");
 			
 		d3.selectAll("#svg-position")
 			.attr("width", "100%")
 			.attr("height", "100%")
-			.attr("viewBox", "0 0 990 490")
+			.attr("viewBox", "0 0 587 400")
 			.attr("preserveAspectRatio", "xMinYMin meet");
 			
     };

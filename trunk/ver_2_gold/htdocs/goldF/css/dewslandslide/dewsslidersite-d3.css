@@ -26,3 +26,10 @@ g.slider_context rect.background{
 	fill: rgb(200,200,255);
 	visibility: visible !important;
 }
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}

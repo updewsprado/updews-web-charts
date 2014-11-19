@@ -471,7 +471,7 @@ function showAccel(frm) {
 	 
 <!-- Slider -->
 		
-		accel_x5.domain(accel_x1.domain());
+		accel_x5.domain(accel_x1.domain());u
 		accel_y5.domain(accel_y1.domain());
 		
 		accel_slider.append("path")
