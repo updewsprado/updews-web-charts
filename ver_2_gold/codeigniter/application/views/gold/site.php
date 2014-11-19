@@ -47,7 +47,7 @@
                             </div>
                             <div class="panel-body">
 								<div id="mini-alert-canvas">
-									<svg id="minialertcanvas" width="1024px" height="30px" viewBox="0 0 1024 30" preserveAspectRatio = "xMinYMin meet">
+									<svg id="minialertcanvas" viewBox="0 0 1024 30" preserveAspectRatio = "xMinYMin meet">
 									</svg>
 								</div>
                             </div>
@@ -75,22 +75,21 @@
 									<div id="position-legends" style="width:130px; height:85px; visibility:hidden; display:none;">
 										
 									</div>  
-								<div class="panel-body">									
-                                	<FORM id="formPosition">
-									<p>
-										Day Intervals: <select name="interval" onchange="showPositionPlotGeneral(document.getElementById('formGeneral'))">
-										<option value="6">6</option>
-										<option value="5">5</option>
-										<option value="4">4</option>
-										<option value="3">3</option>
-										<option value="2">2</option>
-										<option value="1">1</option>
-										</select>
-									</p>
-                                    
-									</FORM>
+								<div class="panel-body">		
 									<div id="position-canvas">
-										<svg id="positioncanvas" width="990px" height="490px" viewBox="0 0 990 490" preserveAspectRatio = "xMinYMin meet">
+										<FORM id="formPosition">
+										<p>
+											Day Intervals: <select name="interval" onchange="showPositionPlotGeneral(document.getElementById('formGeneral'))">
+											<option value="6">6</option>
+											<option value="5">5</option>
+											<option value="4">4</option>
+											<option value="3">3</option>
+											<option value="2">2</option>
+											<option value="1">1</option>
+											</select>
+										</p>
+										</FORM>
+										<svg id="positioncanvas" viewBox="0 0 587 400" preserveAspectRatio = "xMinYMin meet">
 										</svg>
 									</div>
 								</div>

@@ -156,13 +156,13 @@ function init_dims() {
 }
             
     d3.selectAll("#minialertcanvas")
-			.attr("viewBox", "0 0 1455 115")
+			.attr("viewBox", "0 0 1024 30")
 			.attr("width", "100%")
 			.attr("height", "100%")
             .attr("preserveAspectRatio", "xMinYMin meet");
 			
 	d3.selectAll("#svg-alertmini")
-			.attr("viewBox", "0 0 1455 115")
+			.attr("viewBox", "0 0 1024 30")
 			.attr("width", "100%")
 			.attr("height", "100%")
             .attr("preserveAspectRatio", "xMinYMin meet");

@@ -28,8 +28,8 @@ var presencePlot = new function() {
 	
 	//initialize dimensions
 	this.init_dims = function() {
-		this.cWidth = document.getElementById('presence-map-canvas').offsetWidth;
-		this.cHeight = document.getElementById('presence-map-canvas').offsetHeight;
+		this.cWidth = document.getElementById('presencemapcanvas').offsetWidth;
+		this.cHeight = document.getElementById('presencemapcanvas').offsetHeight;
 		
 		this.margin = {top: 0, right: 0, bottom: 0, left: this.cWidth * 0.05};
 		this.width = this.cWidth - this.margin.left - this.margin.right;
@@ -50,7 +50,7 @@ var presencePlot = new function() {
 		    .y(function(d) { return this.y(d.yval); });
 		    
 		// Adds the svg canvas
-		this.svg = d3.select("#presence-map-canvas")
+		this.svg = d3.select("#presencemapcanvas")
             .attr('id', 'svg-presence')
 		    .append("svg")
 		        .attr("width", this.width + this.margin.left + this.margin.right)
@@ -63,13 +63,13 @@ var presencePlot = new function() {
 	};
 	
     d3.selectAll("#svg-presence")
-			.attr("viewBox", "0 0 1454 430")
+			.attr("viewBox", "0 0 987 430")
 			.attr("width", "100%")
 			.attr("height", "100%")
 			.attr("preserveAspectRatio", "xMinYMin meet");
             
-    d3.selectAll("#presence-map-canvas")
-			.attr("viewBox", "0 0 1454 430")
+    d3.selectAll("#presencemapcanvas")
+			.attr("viewBox", "0 0 987 430")
 			.attr("width", "100%")
 			.attr("height", "100%")
 			.attr("preserveAspectRatio", "xMinYMin meet");
