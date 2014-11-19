@@ -21,7 +21,7 @@
 		comm_target4.style.visibility = "visible";
 		comm_target4.style.display = "block";
 		comm_target4.style.position = "absolute";
-		comm_target4.style.width = "235px";
+		comm_target4.style.width = comm_target4.clientWidth;
 		comm_target4.style.zIndex = 1;
 		comm_target4.style.backgroundColor = "white";
 		comm_target4.style.borderStyle = "solid";
@@ -182,7 +182,7 @@
 <!-- For Resizing -->
 		
 			d3.select("#barchart")
-				.attr("viewBox", "0 0 447 430")
+				.attr("viewBox", "0 0 448 433")
 				.attr("width", "100%")
 				.attr("height", "100%");
             

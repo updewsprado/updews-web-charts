@@ -5,6 +5,7 @@
 var nodeAlertJSON = 0;
 var nodeStatusJSON = 0;
 var maxNodesJSON = 0;
+var alert_legend_active = 0;
 
 function JSON2CSV(objArray) {
 	var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
@@ -149,14 +150,7 @@ function init_dims() {
 	    .append("g")
 	        .attr("transform", 
 	              "translate(" + margin.left + "," + margin.top + ")");
-    
-    svg2 = d3.select("#alertcanvaslegend")
-        .attr("id", "svg-alert-legend")
-        .append("svg")
-            .attr("width", "1073px")
-            .attr("height", "38px");
-			
-	
+				  
 	svg.call(tip);	
     
     d3.selectAll("#svg-alert")
@@ -207,7 +201,7 @@ function clearData() {
 	svg.selectAll(".dot1").remove();
 	svg.selectAll(".dot2").remove();
 	svg.selectAll(".line").remove();
-	svg.selectAll(".legend").remove();
+/*	svg2.selectAll(".legend").remove(); */
 	svg.selectAll(".tick").remove();
 	svg.selectAll(".axislabel").remove();
 }
@@ -411,7 +405,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 				    });	
 	
 			// Add the Legend
-			if(isLegends){
+/*			if(isLegends){
 				for (i = 0; i <= 3; i++) { 
 					var desc;
 					
@@ -500,7 +494,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 						.style("fill", color)
 						.text(desc); 					
 				}
-			}				
+			}		*/		
 	
 	//Draw the node status symbol
 	getNodeStatus(xOffset);	
@@ -516,6 +510,37 @@ function initAlertPlot() {
 	init_dims();
 	showData();
 }
+
+function alertLegends(frm) {
+
+	alert_target = document.getElementById('alertLegend');
+	alert_target2 = document.getElementById('alertcanvaslegend');
+	
+	if(alert_legend_active == 0)
+	{
+		alert_legend_active = 1;
+		alert_target.value = "Hide Legends";
+		alert_target2.style.display = "block";
+		alert_target2.style.visibility = "visible";
+		alert_target2.style.position = "absolute";
+		alert_target2.style.zIndex = 1;
+		alert_target2.style.backgroundColor = "black";
+		alert_target2.style.borderStyle = "solid";
+		alert_target2.style.borderWidth = "thin";
+		alert_target2.style.paddingLeft = "5px";
+		alert_target2.style.paddingTop = "10px";
+		alert_target2.style.paddingRight = "5px";
+		alert_target2.style.left = (alert_target.offsetLeft - alert_target.scrollLeft + alert_target.clientLeft) + 'px';
+		alert_target2.style.top = (alert_target.offsetTop - alert_target.scrollTop + alert_target.clientTop - 110) + 'px';
+	}
+	else
+	{
+		alert_legend_active = 0;
+		alert_target.value = "Show Legends";
+		alert_target2.style.display = "none";
+		alert_target2.style.visibility = "hidden";
+	}
+};
 
 //window.onload = initPosPlot();
 

@@ -59,12 +59,14 @@ function showAccel(frm) {
 		accel_target = document.getElementById('accel-4');
 		accel_target.appendChild(accel_spinner4.el);
 			
-	var accel_margin = {top: 20, right: 20, bottom: 30, left: 90},
+	var accel_width = parseInt(d3.select('#accel-1').style('width'), 10),
+		accel_height = parseInt(d3.select('#accel-1').style('height'), 10),
+		accel_margin = {top: (0.2 * accel_height), right: (0.01 * accel_width), bottom: (0.2 * accel_height), left: (0.08 * accel_width)},
+		accel_width =  accel_width - accel_margin.left - accel_margin.right,
+		accel_height = accel_height - accel_margin.top - accel_margin.bottom,
 		accel_margin2 = {top: 10, right: 10, bottom: 20, left: 40},
-		accel_width = parseInt(d3.select('#accel-1').style('width'), 10) - accel_margin.left - accel_margin.right,
 		accel_width2 = parseInt(d3.select('#div_slider').style('width'), 10),
 		accel_width2 = accel_width2 - accel_margin2.left - accel_margin2.right,
-		accel_height = parseInt(d3.select('#accel-1').style('height'), 10) - accel_margin.top - accel_margin.bottom,
 		accel_height2 = parseInt(d3.select('#div_slider').style('height'), 10),
 		accel_height2 = accel_height2 - accel_margin2.top - accel_margin2.bottom;
 
@@ -471,7 +473,7 @@ function showAccel(frm) {
 	 
 <!-- Slider -->
 		
-		accel_x5.domain(accel_x1.domain());u
+		accel_x5.domain(accel_x1.domain());
 		accel_y5.domain(accel_y1.domain());
 		
 		accel_slider.append("path")
