@@ -40,8 +40,8 @@
 
 $route['test'] = "test";
 $route['test/(:any)'] = "test/$1";
-$route['login'] = "login";
-$route['login/(:any)'] = "login/$1";
+//$route['login'] = "login";
+//$route['login/(:any)'] = "login/$1";
 $route['dice'] = "dice/view";
 $route['dice/(:any)'] = "dice/view/$1";
 $route['gold'] = "gold/view";
@@ -57,8 +57,9 @@ $route['alpha/(:any)'] = "alpha/view/$1";
 $route['mempage'] = "mempage";
 $route['mempage/(:any)'] = "mempage/$1";
 //$route['default_controller'] = "alpha/view";
-//$route['default_controller'] = "gold/view";
-$route['default_controller'] = "login";
+$route['(:any)'] = "$1";
+$route['default_controller'] = "gold/view";
+//$route['default_controller'] = "login";
 $route['404_override'] = '';
 
 

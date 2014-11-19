@@ -1,11 +1,11 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Lin extends CI_Controller {
 
 	public function index() {
-		echo "testing lang";
-		//$data['main_content'] = 'login_form';
-		//$this->load->view('includes/template', $data);
+		//echo "testing lang";
+		$data['main_content'] = 'login_form';
+		$this->load->view('includes/template', $data);
 	}
 
 	public function validate_credentials() {
