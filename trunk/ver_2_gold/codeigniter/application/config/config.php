@@ -18,6 +18,8 @@
 $config['base_url']	= 'http://localhost/';
 //$config['base_url']	= 'http://www.dewslandslide.com/';
 
+$config['server_root'] = $_SERVER['DOCUMENT_ROOT'];
+
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -226,7 +228,9 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+//$config['encryption_key'] = '';
+//+PANB - I randomloy chose this encryption key
+$config['encryption_key'] = 'qwertyuiop1234567890asdfghjkl098';
 
 /*
 |--------------------------------------------------------------------------
