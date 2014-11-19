@@ -22,7 +22,8 @@ class Lin extends CI_Controller {
 			);
 			
 			$this->session->set_userdata($data);
-			redirect('mempage/members_area');
+			//redirect('mempage/members_area');
+			redirect('/gold');
 		}
 		else {
 			$this->index();
