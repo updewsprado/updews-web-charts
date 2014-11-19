@@ -22,7 +22,7 @@ class Mempage extends CI_Controller {
 	public function logout() {
 	    $this->session->sess_destroy();
 	    //redirect('../login');
-	    redirect('../login');
+	    redirect('../lin');
 	}
 	
 	public function is_logged_in() {
