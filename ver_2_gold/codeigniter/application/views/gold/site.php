@@ -72,26 +72,24 @@
                     	<div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Position Plot <input type="button" id="posLegend" onclick="posLegends(this.form)" value="Show Legends" /></h3>
-									<div id="position-legends" style="width:130px; height:85px; visibility:hidden; display:none;">
-										
-									</div>  
-								<div class="panel-body">		
-									<div id="position-canvas">
-										<FORM id="formPosition">
-										<p>
-											Day Intervals: <select name="interval" onchange="showPositionPlotGeneral(document.getElementById('formGeneral'))">
-											<option value="6">6</option>
-											<option value="5">5</option>
-											<option value="4">4</option>
-											<option value="3">3</option>
-											<option value="2">2</option>
-											<option value="1">1</option>
-											</select>
-										</p>
-										</FORM>
-										<svg id="positioncanvas" viewBox="0 0 587 400" preserveAspectRatio = "xMinYMin meet">
-										</svg>
-									</div>
+							</div>
+							<div id="position-legends" style="width:130px; height:85px; visibility:hidden; display:none;"></div>  
+							<div class="panel-body">		
+								<div id="position-canvas">
+									<FORM id="formPosition">
+									<p>
+										Day Intervals: <select name="interval" onchange="showPositionPlotGeneral(document.getElementById('formGeneral'))">
+										<option value="6">6</option>
+										<option value="5">5</option>
+										<option value="4">4</option>
+										<option value="3">3</option>
+										<option value="2">2</option>
+										<option value="1">1</option>
+										</select>
+									</p>
+									</FORM>
+									<svg id="positioncanvas" viewBox="0 0 587 380" preserveAspectRatio = "xMinYMin meet">
+									</svg>
 								</div>
 							</div>
 						</div>
@@ -104,16 +102,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Communication Health <input type='button' id='show' onclick='showLegends(this.form)' value='Show Legends' /></h3>
-									<div id="legends" style="visibility:hidden; display:none;">
-											<strong>Past 7 Days</strong><input type='button' onclick="barTransition('red')" style='background-color:red; padding-right:5px;' />
-											<strong>Past 30 Days</strong><input type='button' onclick="barTransition('blue')" style='background-color:blue; padding-right:5px;' />
+									<div width="250px" id="legends" style="visibility:hidden; display:none;">
+											<strong>Past 7 Days</strong><input type='button' onclick="barTransition('red')" style='background-color:red; padding-right:5px;' /><br/>
+											<strong>Past 30 Days</strong><input type='button' onclick="barTransition('blue')" style='background-color:blue; padding-right:5px;' /><br/>
 											<strong>Overall</strong><input type='button' onclick="barTransition('green')" style='background-color:green; padding-right:5px;' />
 									</div>
 							</div>
                             <div class="panel-body">
                                 <div id="healthbars-canvas" >
-												<svg id="barchart" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
-											</svg>
+										<svg id="barchart" viewbox="0 0 448 433" preserveAspectRatio = "xMinYMin meet">
+										</svg>
                                 </div>
                             </div>
                         </div>
@@ -228,8 +226,8 @@
                             <div class="panel-body">
 								<div id="sent-node-canvas">
 									<div id="sentnode_timestamp"><b>Data Sent: </b></div>
-									<svg id="div_health" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
-									</svg>                               	
+									<svg id="div_health" viewbox="0 0 448 400" preserveAspectRatio = "xMinYMin meet">
+									</svg>                          	     	
 								</div>
 							</div>
 						</div>     
@@ -245,7 +243,7 @@
                             <div class="panel-body">
 								<div id="rainfall-canvas">
 									<div id="rainfall_24hr_timestamp"><b>Timestamp: </b></div>
-									<svg id="rainfall_24hr" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
+									<svg id="rainfall_24hr" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
 									</svg>
 								</div>                            	
                             </div>
@@ -259,7 +257,7 @@
                             <div class="panel-body">
 								<div id="rainfall-canvas">
 									<div id="rainfall_15min_timestamp"><b>Timestamp: </b></div>
-									<svg id="rainfall_15min" width="447px" height="430px" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
+									<svg id="rainfall_15min" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
 									</svg>
 								</div>                            	
                             </div>

@@ -99,7 +99,7 @@ var presencePlot = new function() {
 	// Tip that displays node info
 	this.tip = d3.tip()
 	  .attr('class', 'd3-tip')
-	  .offset([-10, 0])
+	  .offset([15, 0])
 	  .html(function(d) {
 		var alert,status,id_ts,comment;
 		

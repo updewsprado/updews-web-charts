@@ -67,13 +67,13 @@ var positionPlot = new function() {
 		d3.selectAll("#positioncanvas")
 			.attr("width", "100%")
 			.attr("height", "100%")
-			.attr("viewBox", "0 0 587 400")
+			.attr("viewBox", "0 0 587 390")
 			.attr("preserveAspectRatio", "xMinYMin meet");
 			
 		d3.selectAll("#svg-position")
 			.attr("width", "100%")
 			.attr("height", "100%")
-			.attr("viewBox", "0 0 587 400")
+			.attr("viewBox", "0 0 587 390")
 			.attr("preserveAspectRatio", "xMinYMin meet");
 			
     };
@@ -328,7 +328,7 @@ function posLegends(frm) {
 		pos_target2.style.visibility = "visible";
 		pos_target2.style.position = "absolute";
 		pos_target2.style.zIndex = 1;
-		pos_target2.style.backgroundColor = "white";
+		pos_target2.style.backgroundColor = "black";
 		pos_target2.style.borderStyle = "solid";
 		pos_target2.style.borderWidth = "thin";
 		pos_target2.style.paddingLeft = "5px";
