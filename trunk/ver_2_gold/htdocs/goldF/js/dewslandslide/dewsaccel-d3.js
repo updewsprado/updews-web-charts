@@ -59,8 +59,8 @@ function showAccel(frm) {
 		accel_target = document.getElementById('accel-4');
 		accel_target.appendChild(accel_spinner4.el);
 			
-	var accel_width = parseInt(d3.select('#accel-1').style('width'), 10),
-		accel_height = parseInt(d3.select('#accel-1').style('height'), 10),
+	var accel_width = document.getElementById('accel-1').clientWidth,
+		accel_height = document.getElementById('accel-1').clientHeight,
 		accel_margin = {top: (0.2 * accel_height), right: (0.01 * accel_width), bottom: (0.2 * accel_height), left: (0.08 * accel_width)},
 		accel_width =  accel_width - accel_margin.left - accel_margin.right,
 		accel_height = accel_height - accel_margin.top - accel_margin.bottom,
@@ -84,7 +84,8 @@ function showAccel(frm) {
 
 	var accel_xAxis1 = d3.svg.axis()
 		.scale(accel_x1)
-		.orient("bottom");
+		.orient("bottom")
+		.ticks(Math.max(accel_width/50, 2));
 
 	var accel_yAxis1 = d3.svg.axis()
 		.scale(accel_y1)
@@ -120,7 +121,8 @@ function showAccel(frm) {
 	
 	var accel_xAxis2 = d3.svg.axis()
 		.scale(accel_x2)
-		.orient("bottom");
+		.orient("bottom")
+		.ticks(Math.max(accel_width/50, 2));
 
 	var accel_yAxis2 = d3.svg.axis()
 		.scale(accel_y2)
@@ -156,7 +158,8 @@ function showAccel(frm) {
 	
 	var accel_xAxis3 = d3.svg.axis()
 		.scale(accel_x3)
-		.orient("bottom");
+		.orient("bottom")
+		.ticks(Math.max(accel_width/50, 2));
 		
 	var accel_yAxis3 = d3.svg.axis()
 		.scale(accel_y3)
@@ -192,7 +195,8 @@ function showAccel(frm) {
 
 	var accel_xAxis4 = d3.svg.axis()
 		.scale(accel_x4)
-		.orient("bottom");
+		.orient("bottom")
+		.ticks(Math.max(accel_width/50, 2));
 		
 	var accel_yAxis4 = d3.svg.axis()
 		.scale(accel_y4)
@@ -263,36 +267,6 @@ function showAccel(frm) {
 		
 	var accel_tool4 = accel_svg4.append("g")                                
 		.style("display", null);   
-		
-	d3.selectAll("#svg-accel2")
-		.attr("viewBox", "0 0 975 120")
-		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");
-	
-	d3.selectAll("#accel-1")
-		.attr("viewBox", "0 0 975 120")
-		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");
-		
-	d3.selectAll("#accel-2")
-		.attr("viewBox", "0 0 975 120")
-		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");
-		
-	d3.selectAll("#accel-3")
-		.attr("viewBox", "0 0 975 120")
-		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");
-		
-	d3.selectAll("#accel-4")
-		.attr("viewBox", "0 0 975 120")
-		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("preserveAspectRatio", "xMinYMin meet");
 
 <!-- JSON -->
 			
@@ -589,7 +563,7 @@ function showAccel(frm) {
 									 accel_y4((d.mvalue)) + ")");      
 								 
 			accel_current = document.getElementById("accel-4-timestamp");
-			accel_current.innerHTML = "<b>Timestamp: </b>" + accel_formatDate(d.timestamp) + "<b>X-Value: </b>" + d.mvalue;
+			accel_current.innerHTML = "<b>Timestamp: </b>" + accel_formatDate(d.timestamp) + "<b>M-Value: </b>" + d.mvalue;
 		}
 	
 		accel_spinner1.stop();
@@ -612,6 +586,105 @@ function showAccel(frm) {
 		accel_svg3.select(".x.axis").call(accel_xAxis3);
 		accel_svg4.select(".area4").attr("d", accel_area4);
 		accel_svg4.select(".x.axis").call(accel_xAxis4);
+	}
+
+	d3.select(window).on('resize', resize); 
+
+	function resize() {
+		// update width
+		accel_width = document.getElementById('accel-1').clientWidth;
+		accel_width = accel_width - accel_margin.left - accel_margin.right;
+		accel_height = document.getElementById('accel-1').clientHeight;
+		accel_height = accel_height - accel_margin.top - accel_margin.bottom;
+
+		// resize the chart
+		accel_x1.range([0, accel_width]);
+		accel_y1.range([accel_height, 0]);
+		accel_x2.range([0, accel_width]);
+		accel_y2.range([accel_height, 0]);
+		accel_x3.range([0, accel_width]);
+		accel_y3.range([accel_height, 0]);
+		accel_x4.range([0, accel_width]);
+		accel_y4.range([accel_height, 0]);
+		
+		d3.select("#accel-1")
+			.attr('height', accel_height + accel_margin.top + accel_margin.bottom)
+			.attr('width', accel_width + accel_margin.left + accel_margin.right);
+			
+		d3.select("#accel-2")
+			.attr('height', accel_height + accel_margin.top + accel_margin.bottom)
+			.attr('width', accel_width + accel_margin.left + accel_margin.right);
+			
+		d3.select("#accel-3")
+			.attr('height', accel_height + accel_margin.top + accel_margin.bottom)
+			.attr('width', accel_width + accel_margin.left + accel_margin.right);
+			
+		d3.select("#accel-4")
+			.attr('height', accel_height + accel_margin.top + accel_margin.bottom)
+			.attr('width', accel_width + accel_margin.left + accel_margin.right);
+
+		// update axis
+		accel_xAxis1.ticks(Math.max(accel_width/50, 2));
+		accel_xAxis2.ticks(Math.max(accel_width/50, 2));
+		accel_xAxis3.ticks(Math.max(accel_width/50, 2));
+		accel_xAxis4.ticks(Math.max(accel_width/50, 2));
+		
+		accel_svg1.select('.x.axis')
+			.attr("transform", "translate(0," + accel_height + ")")
+			.call(accel_xAxis1.orient('bottom'));
+		accel_svg1.select('.y.axis').call(accel_yAxis1.orient('left'));
+		
+		accel_svg2.select('.x.axis')
+			.attr("transform", "translate(0," + accel_height + ")")
+			.call(accel_xAxis2.orient('bottom'));
+		accel_svg2.select('.y.axis').call(accel_yAxis2.orient('left'));
+		
+		accel_svg3.select('.x.axis')
+			.attr("transform", "translate(0," + accel_height + ")")
+			.call(accel_xAxis1.orient('bottom'));
+		accel_svg3.select('.y.axis').call(accel_yAxis3.orient('left'));
+		
+		accel_svg4.select('.x.axis')
+			.attr("transform", "translate(0," + accel_height + ")")
+			.call(accel_xAxis4.orient('bottom'));
+		accel_svg4.select('.y.axis').call(accel_yAxis4.orient('left'));
+		
+		//update the clip path and area of graph
+		
+		accel_svg1.selectAll("path")
+			.attr("d", accel_area1);
+		accel_svg2.selectAll("path")
+			.attr("d", accel_area2);
+		accel_svg3.selectAll("path")
+			.attr("d", accel_area3);
+		accel_svg4.selectAll("path")
+			.attr("d", accel_area4);
+		
+		accel_svg1.selectAll("defs")
+			.attr("width", accel_width)
+			.attr("height", accel_height);
+		accel_svg2.selectAll("defs")
+			.attr("width", accel_width)
+			.attr("height", accel_height);
+		accel_svg3.selectAll("defs")
+			.attr("width", accel_width)
+			.attr("height", accel_height);
+		accel_svg4.selectAll("defs")
+			.attr("width", accel_width)
+			.attr("height", accel_height);
+			
+		accel_svg1.selectAll("rect")
+			.attr("width", accel_width)
+			.attr("height", accel_height);
+		accel_svg2.selectAll("rect")
+			.attr("width", accel_width)
+			.attr("height", accel_height);
+		accel_svg3.selectAll("rect")
+			.attr("width", accel_width)
+			.attr("height", accel_height);
+		accel_svg4.selectAll("rect")
+			.attr("width", accel_width)
+			.attr("height", accel_height);
 	}
 
 }	

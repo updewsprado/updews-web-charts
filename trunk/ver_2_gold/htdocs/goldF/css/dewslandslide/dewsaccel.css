@@ -6,6 +6,14 @@
 	height: 120px;
 }
 
+#accel-1, #accel-2, #accel-3, #accel-4 {
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 90%;
+	/*height: auto;*/
+	height: 120px;
+}
+
 #myFlashContent {
 	margin-left: auto;
 	margin-right: auto;
