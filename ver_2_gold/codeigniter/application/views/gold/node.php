@@ -46,9 +46,8 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="mini-alert-canvas" >
-									<svg id="minialertcanvas" viewBox="0 0 1024 30" preserveAspectRatio = "xMinYMin meet">
-									</svg>
+                                <div id="mini-alert-canvas">
+									<div id="minialertcanvas"></div>
 								</div>
                             </div>
                         </div>
@@ -88,8 +87,7 @@
                             <div class="panel-body">
 								<div id="accel-1-canvas">
 									<div id="accel-1-timestamp"><b>Timestamp: </b></div>
-									<svg id="accel-1" viewbox="0 0 975 120" preserveAspectRatio="xMinYMin meet">
-									</svg>
+									<div id="accel-1"></div>
 								</div>                               	
                             </div>
                         </div>
@@ -106,8 +104,7 @@
                             <div class="panel-body">
 								<div id="accel-2-canvas">
 									<div id="accel-2-timestamp"><b>Timestamp: </b></div>
-									<svg id="accel-2" viewbox="0 0 975 120" preserveAspectRatio="xMinYMin meet">
-									</svg>
+									<div id="accel-2"></div>
 								</div>                               	
                             </div>
                         </div>
@@ -124,8 +121,7 @@
                             <div class="panel-body">
 								<div id="accel-3-canvas">
 									<div id="accel-3-timestamp"><b>Timestamp: </b></div>
-									<svg id="accel-3" viewbox="0 0 975 120" preserveAspectRatio="xMinYMin meet">
-									</svg>
+									<div id="accel-3"></div>
 								</div>                               	
                             </div>
                         </div>
@@ -142,8 +138,8 @@
                             <div class="panel-body">
 								<div id="accel-4-canvas">
 									<div id="accel-4-timestamp"><b>Timestamp: </b></div>
-									<svg id="accel-4" viewbox="0 0 975 120" preserveAspectRatio="xMinYMin meet">
-									</svg>
+									<div id="accel-4">
+									</div>
 								</div>                               	
                             </div>
                         </div>
