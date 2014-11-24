@@ -62,7 +62,10 @@
                     <div class="col-lg-8">
                     	<div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map <input type="button" id="alertLegend" onclick="alertLegends(this.form)" value="Show Legends" /></h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map 
+                                	<input type="button" id="alertLegend" onclick="alertLegends(this.form)" value="Show Legends" />
+                                	<button type="button" class="btn btn-sm btn-link"><a href="/ajax/csvmonitoring/lsb7days.csv">(Historical Data)</a></button>
+                                </h3>
 								<div id="alertcanvaslegend"  style="width:300px; height:100px; visibility:hidden; display:none;">
 									<svg width="290px" height="95px">
 										<rect x="0" y="0" width="12px" height="14px" fill="#03899C" /> <text x="14" y="12" style="font-size:14px;" fill="#03899C">0 axis alert</text>
