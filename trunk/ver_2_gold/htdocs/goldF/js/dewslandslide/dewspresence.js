@@ -28,8 +28,8 @@ var presencePlot = new function() {
 	
 	//initialize dimensions
 	this.init_dims = function() {
-		this.cWidth = document.getElementById('presencemapcanvas').offsetWidth;
-		this.cHeight = document.getElementById('presencemapcanvas').offsetHeight;
+		this.cWidth = document.getElementById('presence-map-canvas').clientWidth;
+		this.cHeight = document.getElementById('presence-map-canvas').clientHeight;
 		
 		this.margin = {top: 0, right: 0, bottom: 0, left: this.cWidth * 0.05};
 		this.width = this.cWidth - this.margin.left - this.margin.right;
@@ -50,9 +50,9 @@ var presencePlot = new function() {
 		    .y(function(d) { return this.y(d.yval); });
 		    
 		// Adds the svg canvas
-		this.svg = d3.select("#presencemapcanvas")
+		this.svg = d3.select("#presence-map-canvas")
+			.append("svg")
             .attr('id', 'svg-presence')
-		    .append("svg")
 		        .attr("width", this.width + this.margin.left + this.margin.right)
 		        .attr("height", this.height + this.margin.top + this.margin.bottom)
 		    .append("g")
@@ -61,18 +61,6 @@ var presencePlot = new function() {
 		
 		this.svg.call(this.tip);	
 	};
-	
-    d3.selectAll("#svg-presence")
-			.attr("viewBox", "0 0 987 430")
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");
-            
-    d3.selectAll("#presencemapcanvas")
-			.attr("viewBox", "0 0 987 430")
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");
             
 	// Define the axes
 	this.make_x_axis = function () {          
@@ -99,7 +87,7 @@ var presencePlot = new function() {
 	// Tip that displays node info
 	this.tip = d3.tip()
 	  .attr('class', 'd3-tip')
-	  .offset([15, 0])
+	  .offset([-10, 0])
 	  .html(function(d) {
 		var alert,status,id_ts,comment;
 		
@@ -124,6 +112,7 @@ var maxNode;
 var maxNodesJSON = 0;
 
 function getDataPresence(xOffset) {
+
 	var delay = 500;
 	var data = presenceJSON;
 	
@@ -208,8 +197,11 @@ function generatePresencePlot(url, title, xOffset, isLegends, graphNum) {
 			.text("Column/Site");			
 		*/	
 	});			
+	
+	
 }
 
+	
 var nodeAlertJSON = 0;
 function showDataPres() {
 	//presenceJSON = <?php echo $dataPresence; ?>;

@@ -80,8 +80,6 @@
                             </div>
                             <div class="panel-body">
 								<div id="alert-canvas">
-									<svg id="alertcanvas" viewbox="0 0 617 400" preserveAspectRatio = "xMinYMin meet">
-									</svg>
 								</div>	
                             </div>
                         </div>
@@ -97,8 +95,6 @@
                             </div>
                             <div class="panel-body">
 								<div id="presence-map-canvas">
-									<svg id="presencemapcanvas" viewbox="0 0 987 430" preserveAspectRatio = "xMinYMin meet">
-									</svg>
 								</div>
                             </div>
                         </div>
@@ -113,6 +109,7 @@
         <!-- /#page-wrapper -->
         
 <script>
+
 window.onload = function() {
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
 	nodeStatusJSON = <?php echo $nodeStatus; ?>;
@@ -123,5 +120,16 @@ window.onload = function() {
 	
 	initAlertPlot();
 	dataPresencePlot();
+
 }	
+
+d3.select(window).on("resize", resize2)
+
+function resize2() {
+	d3.select("#svg-alert").remove();
+	d3.select("#svg-presence").remove();
+	
+	initAlertPlot();
+	dataPresencePlot();
+}
 </script>
