@@ -6,7 +6,7 @@ var nodeAlertJSON = 0;
 var nodeStatusJSON = 0;
 var maxNodesJSON = 0;
 var alert_legend_active = 0;
-
+	
 function JSON2CSV(objArray) {
 	var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
 
@@ -119,11 +119,11 @@ var tip = d3.tip()
 
 //initialize dimensions
 function init_dims() {
-	cWidth = document.getElementById('alertcanvas').offsetWidth;
-	cHeight = document.getElementById('alertcanvas').offsetHeight;
+	cWidth = document.getElementById('alert-canvas').clientWidth;
+	cHeight = document.getElementById('alert-canvas').clientHeight;
 	
 	//var margin = {top: 70, right: 20, bottom: 70, left: 90},
-	margin = {top: cHeight * 0, right: cWidth * 0.005, bottom: cHeight * 0.10, left: cWidth * 0.065};
+	margin = {top: cHeight * 0.01, right: cWidth * 0, bottom: cHeight * 0.01, left: cWidth * 0.065};
 	width = cWidth - margin.left - margin.right;
 	height = cHeight - margin.top - margin.bottom;
 	
@@ -142,31 +142,20 @@ function init_dims() {
 	    .y(function(d) { return y(d.yval); });
 	    
 	// Adds the svg canvas
-	svg = d3.select("#alertcanvas")
-        .attr("id", "svg-alert")
-	    .append("svg")
+	svg = d3.select("#alert-canvas").append("svg")
+			.attr("id", "svg-alert")
 	        .attr("width", width + margin.left + margin.right)
 	        .attr("height", height + margin.top + margin.bottom)
-	    .append("g")
+			.append("g")
 	        .attr("transform", 
 	              "translate(" + margin.left + "," + margin.top + ")");
 				  
 	svg.call(tip);	
-    
-    d3.selectAll("#svg-alert")
-			.attr("viewBox", "0 0 617 400")
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");
-            
-    d3.selectAll("#alertcanvas")
-			.attr("viewBox", "0 0 617 400")
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");
+ 
 }
 
 // Define the axes
+/*
 function make_x_axis() {        
     return d3.svg.axis()
         .scale(x)
@@ -186,7 +175,7 @@ function make_y_axis() {
         .scale(y)
         .orient("left")
         .ticks(5);
-}
+}*/
 
 function make_yOrd_axis() {        
     return d3.svg.axis()
@@ -254,6 +243,7 @@ function getSiteMaxNodes(xOffset) {
 		.on("click", function(d){
 	        document.location.href = urlBase + urlNodeExt + d.site + '/' + d.node;
 	    });	
+	
 }
 
 var nodeStatuses = [];
@@ -498,8 +488,58 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	
 	//Draw the node status symbol
 	getNodeStatus(xOffset);	
+
 }
+/*
+	d3.select(window).on("resize", resize2);
+
+	function resize2() {
 		
+		cWidth = document.getElementById('alert-canvas').clientWidth;
+		cHeight = document.getElementById('alert-canvas').clientHeight;
+		
+		width = cWidth - margin.left - margin.right;
+		height = cHeight - margin.top - margin.bottom;
+		
+		graphDim = {gWidth: width * 0.95, gHeight: height};	
+		
+		// Set the ranges
+		x = d3.scale.linear().range([0, graphDim.gWidth]);
+		y = d3.scale.linear().range([graphDim.gHeight, 0]);
+		yOrd = d3.scale.ordinal()
+						.rangeRoundBands([graphDim.gHeight, 0], .1);
+						
+		d3.select("#alertcanvas")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom);
+				
+		yvalline.x(function(d) { return x(d.xval); })
+				.y(function(d) { return y(d.yval); });	
+		
+		make_yOrd_axis();
+		
+		maxNode = d3.max(siteMaxNodes, function(d) { return parseFloat(d.nodes); });
+	
+		var cellw = (graphDim.gWidth / maxNode) * 0.9;
+		var cellh = yOrd.rangeBand(); //9;
+		
+		svg.selectAll("rect")
+			.attr('width', cellw)
+			.attr('height', cellh);
+			
+		svg.selectAll("polygon")
+			.attr("points", function(d){
+					var xStart = x(d.node);
+					var yStart = yOrd(d.site);
+					var xWidth = xStart + cellw * 0.6;
+					var yHeight = yStart + cellh * 0.6;
+					var points = xStart + "," + yStart + "," +
+								xWidth + "," + yStart + "," +
+								xStart + "," + yHeight + "";
+					return points;
+				});
+	}*/
+	
 function showData() {
 	//generateAlertPlot("../temp/getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);
 	//generateAlertPlot("../d3graph/getAlert.php", "Accelerometer Movement Alert Map", 0, true, 1);

@@ -1,12 +1,9 @@
-#presence-map-canvas { 
+#presence-map-canvas, #presencemapcanvas { 
+	margin-left: auto;
+	margin-right: auto;
 	width: auto;
 	height: 400px;
 	font: 12px Arial;
-}
-
-#presence-map-canvas svg {
-    display: block;
-    margin: 0 auto;
 }
 
 path { 
