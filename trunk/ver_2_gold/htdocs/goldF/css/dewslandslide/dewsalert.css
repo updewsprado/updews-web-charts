@@ -11,16 +11,8 @@
 
 #mini-alert-canvas { 
 	width: auto;
-	/*height: 20px; */
-	font: 12px Arial;
-}
-
-#minialertcanvas {
-	margin-left: auto;
-	margin-right: auto;
-	min-width: 90%;
-	/*height: auto;*/
 	height: 20px;
+	font: 12px Arial;
 }
 
 path { 

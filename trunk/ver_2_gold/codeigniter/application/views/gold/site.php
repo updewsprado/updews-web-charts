@@ -47,8 +47,6 @@
                             </div>
                             <div class="panel-body">
 								<div id="mini-alert-canvas">
-									<svg id="minialertcanvas" viewBox="0 0 1024 30" preserveAspectRatio = "xMinYMin meet">
-									</svg>
 								</div>
                             </div>
                         </div>
@@ -88,8 +86,8 @@
 										</select>
 									</p>
 									</FORM>
-									<svg id="positioncanvas" viewBox="0 0 587 380" preserveAspectRatio = "xMinYMin meet">
-									</svg>
+									<div id="positioncanvas">
+									</div>
 								</div>
 							</div>
 						</div>
@@ -103,15 +101,15 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Communication Health <input type='button' id='show' onclick='showLegends(this.form)' value='Show Legends' /></h3>
 									<div width="250px" id="legends" style="visibility:hidden; display:none;">
-											<strong>Past 7 Days</strong><input type='button' onclick="barTransition('red')" style='background-color:red; padding-right:5px;' /><br/>
-											<strong>Past 30 Days</strong><input type='button' onclick="barTransition('blue')" style='background-color:blue; padding-right:5px;' /><br/>
-											<strong>Overall</strong><input type='button' onclick="barTransition('green')" style='background-color:green; padding-right:5px;' />
+											<input type='button' onclick="barTransition('red')" style='background-color:red; padding-right:5px;' /><strong><font color="yellow">Past 7 Days</font> </strong><br/>
+											<input type='button' onclick="barTransition('blue')" style='background-color:blue; padding-right:5px;' /><strong><font color="yellow">Past 30 Days</font></strong><br/>
+											<input type='button' onclick="barTransition('green')" style='background-color:green; padding-right:5px;' /><strong><font color="yellow">Overall</font></strong>
 									</div>
 							</div>
                             <div class="panel-body">
-                                <div id="healthbars-canvas" >
-										<svg id="barchart" viewbox="0 0 448 433" preserveAspectRatio = "xMinYMin meet">
-										</svg>
+                                <div id="healthbars-canvas">
+									<div id="barchart">
+									</div>
                                 </div>
                             </div>
                         </div>
@@ -226,8 +224,8 @@
                             <div class="panel-body">
 								<div id="sent-node-canvas">
 									<div id="sentnode_timestamp"><b>Data Sent: </b></div>
-									<svg id="div_health" viewbox="0 0 448 400" preserveAspectRatio = "xMinYMin meet">
-									</svg>                          	     	
+									<div id="div_health">
+									</div>                          	     	
 								</div>
 							</div>
 						</div>     
@@ -243,8 +241,8 @@
                             <div class="panel-body">
 								<div id="rainfall-canvas">
 									<div id="rainfall_24hr_timestamp"><b>Timestamp: </b></div>
-									<svg id="rainfall_24hr" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
-									</svg>
+									<div id="rainfall_24hr">
+									</div>
 								</div>                            	
                             </div>
                         </div>
@@ -257,8 +255,8 @@
                             <div class="panel-body">
 								<div id="rainfall-canvas">
 									<div id="rainfall_15min_timestamp"><b>Timestamp: </b></div>
-									<svg id="rainfall_15min" viewbox="0 0 447 430" preserveAspectRatio = "xMinYMin meet">
-									</svg>
+									<div id="rainfall_15min">
+									</div>
 								</div>                            	
                             </div>
                         </div>
@@ -271,7 +269,7 @@
 
         </div>
         <!-- /#page-wrapper -->
-      
+  
 <script>
 var curSite = "<?php echo $site; ?>";
 
@@ -329,6 +327,12 @@ window.onload = function() {
 	}, 1500); 
 }	
 
+
+window.onresize = function() {
+d3.select("#svg-alertmini").remove();
+initAlertPlot();
+}
+
 function redirectSitePlots (frm) {
 	if(frm.sitegeneral.value == "none") {
 		//do nothing
@@ -356,7 +360,6 @@ function showSitePlots (frm) {
 		showPositionPlotGeneral(frm);
 		showAnalysisDynaGeneral(frm);
 		showSentNodeTotalGeneral(frm);
-		showBrush(frm);
         showRainGeneral(frm);
 		showCommHealthPlotGeneral(frm);
 
@@ -373,5 +376,6 @@ function showDateSitePlots (frm) {
 		showRainGeneral(frm);
 	}
 }
+
 
 </script>
