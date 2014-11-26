@@ -47,7 +47,6 @@
                             </div>
                             <div class="panel-body">
                                 <div id="mini-alert-canvas">
-									<div id="minialertcanvas"></div>
 								</div>
                             </div>
                         </div>
@@ -213,6 +212,11 @@ window.onload = function() {
 		initAlertPlot();
 	}, 1500); 
 }	
+
+window.onresize = function() {
+d3.select("#svg-alertmini").remove();
+initAlertPlot();
+}
 
 function redirectNodePlots (frm) {
 	if(frm.sitegeneral.value == "none") {

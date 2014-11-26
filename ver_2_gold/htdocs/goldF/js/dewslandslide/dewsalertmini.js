@@ -119,7 +119,7 @@ var tip = d3.tip()
 
 //initialize dimensions
 function init_dims() {
-	cWidth = document.getElementById('minialertcanvas').offsetWidth;
+	cWidth = document.getElementById('mini-alert-canvas').clientWidth;
 	//cHeight = document.getElementById('minialertcanvas').offsetHeight;
 	cHeight = cWidth * 0.03;
 	
@@ -143,9 +143,9 @@ function init_dims() {
 	    .y(function(d) { return y(d.yval); });
 	    
 	// Adds the svg canvas
-	svg = d3.select("#minialertcanvas")
-        .attr("id", "svg-alertmini")
-	    .append("svg")
+	svg = d3.select("#mini-alert-canvas")
+		.append("svg")
+        .attr("id", "svg-alertmini") 	
 	        .attr("width", width + margin.left + margin.right)
 	        .attr("height", height + margin.top + margin.bottom)
 	    .append("g")
@@ -154,18 +154,6 @@ function init_dims() {
 	
 	svg.call(tip);	
 }
-            
-    d3.selectAll("#minialertcanvas")
-			.attr("viewBox", "0 0 1024 30")
-			.attr("width", "100%")
-			.attr("height", "100%")
-            .attr("preserveAspectRatio", "xMinYMin meet");
-			
-	d3.selectAll("#svg-alertmini")
-			.attr("viewBox", "0 0 1024 30")
-			.attr("width", "100%")
-			.attr("height", "100%")
-            .attr("preserveAspectRatio", "xMinYMin meet");
             
 // Define the axes
 function make_x_axis() {        
@@ -494,6 +482,7 @@ function generateAlertPlot(url, title, xOffset, isLegends, graphNum) {
 	
 	//Draw the node status symbol
 	getNodeStatus(xOffset);	
+
 }
 		
 function showData() {
