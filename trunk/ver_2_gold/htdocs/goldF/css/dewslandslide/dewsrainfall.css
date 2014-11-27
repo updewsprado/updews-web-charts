@@ -6,6 +6,14 @@
 	height: 400px;
 }
 
+#rainfall_24hr, #rainfall_15min {
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 90%;
+	/*height: auto;*/
+	height: 400px;
+}
+
 #myFlashContent {
 	margin-left: auto;
 	margin-right: auto;

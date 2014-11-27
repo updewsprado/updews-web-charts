@@ -5,6 +5,7 @@
 var prevIntvl = -1;
 var prevSite = -1;
 var curSite = -1;
+var dayIntvl = 1;
 var pos_legend_active = 0;
 var pos_color = [];
 var pos_key = [];
@@ -33,10 +34,10 @@ var positionPlot = new function() {
 	
 	this.init_dims = function() {
 		// Set the dimensions of the canvas / graph
-		this.cWidth = document.getElementById('positioncanvas').offsetWidth;
-		this.cHeight = document.getElementById('positioncanvas').offsetHeight;
+		this.cWidth = document.getElementById('position-canvas').clientWidth;
+		this.cHeight = document.getElementById('position-canvas').clientHeight;
 		
-		this.margin = {top: 70, right: 20, bottom: 70, left: 50},
+		this.margin = {top: this.cHeight * 0.1, right: this.cWidth * 0.05, bottom: this.cHeight * 0.25, left: this.cWidth * 0.1},
 		this.width = this.cWidth - this.margin.left - this.margin.right,
 		this.height = this.cHeight - this.margin.top - this.margin.bottom;
 		
@@ -53,9 +54,9 @@ var positionPlot = new function() {
 		    .y(function(d) { return this.y(d.yval); });
 		    
 		// Adds the svg canvas
-		this.svg = d3.select("#positioncanvas")
+		this.svg = d3.select("#position-canvas")
+			.append("svg")
 			.attr("id", "svg-position")
-		    .append("svg")
 		        .attr("width", this.width + this.margin.left + this.margin.right)
 		        .attr("height", this.height + this.margin.top + this.margin.bottom)
 		    .append("g")
@@ -63,18 +64,6 @@ var positionPlot = new function() {
 		              "translate(" + this.margin.left + "," + this.margin.top + ")");
 					  
 		this.svg.call(this.tip);
-
-		d3.selectAll("#positioncanvas")
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("viewBox", "0 0 587 390")
-			.attr("preserveAspectRatio", "xMinYMin meet");
-			
-		d3.selectAll("#svg-position")
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("viewBox", "0 0 587 390")
-			.attr("preserveAspectRatio", "xMinYMin meet");
 			
     };
     
@@ -226,32 +215,6 @@ function generatePlotData (url, title, xOffset, isLegends, graphNum) {
 					return d.color = color(d.key); })
 				.attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
 				.attr("d", positionPlot.yvalline(d.values));
-				
-				
-			// Add the Legend
-			/*if(isLegends){
-				d.color = color(d.key);
-				d.key = d.key;
-				positionPlot.svg2.append("text")
-					.attr("x", 0)  // space legend
-					.attr("y", 0)
-					.attr("transform", "translate(0,0)")
-					.attr("class", "legend")    // style the legend
-					.style("fill", function() { // Add the colours dynamically
-						return d.color = color(d.key); })
-					.on("click", function(){
-						// Determine if current line is visible 
-						var active   = d.active ? false : true,
-						newOpacity = active ? 0 : 1; 
-						// Hide or show the elements based on the ID
-						d3.select("#tag"+d.key.replace(/\s+/g, ''))
-							.transition().duration(100) 
-							.style("opacity", newOpacity); 
-						// Upxval whether or not the elements are active
-						d.active = active;
-						})  
-					.text(d.key); 
-			}*/
 			
 			pos_color[x] = color(d.key);
 			pos_key[x] = d.key;
@@ -260,56 +223,32 @@ function generatePlotData (url, title, xOffset, isLegends, graphNum) {
 	});
 };	
 
-function showPositionPlot(frm) {
-	curSite = frm.sitegeneral.value;
+function showPositionPlotGeneral() {
 	
-	// Clear the canvas area first
-	positionPlot.clearData();
-
-	// Generate the XY Graph
-	//urlXY = "temp/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
-	//urlXY = "/d3graph/getPosPlot.php?site=" + frm.sites1.value + "&interval=" + frm.interval.value;
-	urlXY = "/test/position/" + frm.sites1.value + "/" + frm.interval.value;
-	titleXY = frm.sites1.value + " XY Column Position";
-	generatePlotData(urlXY, titleXY, 0, true, 1);
-	
-	// Generate the XZ Graph
-	//urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
-	//urlXZ = "/d3graph/getPosPlot.php?xz&site=" + frm.sites1.value + "&interval=" + frm.interval.value;
-	urlXZ = "/test/position/" + frm.sites1.value + "/" + frm.interval.value + "/1";
-	titleXZ = frm.sites1.value + " XZ Column Position";
-	generatePlotData(urlXZ, titleXZ, positionPlot.width * 0.6, false, 2);
-};
-
-
-function showPositionPlotGeneral(frm) {
-
+	d3.select("#svg-position").remove();
 	pos_target = document.getElementById('posLegend');
 	pos_target2 = document.getElementById('position-legends');
+	pos_legend_active = 0;
+	pos_target.value = "Show Legends";
+	pos_target2.style.display = "none";
+	pos_target2.style.visibility = "hidden";
+	dayIntvl = document.getElementById("formPosition").interval.value;
 	
-		pos_legend_active = 0;
-		pos_target.value = "Show Legends";
-		pos_target2.style.display = "none";
-		pos_target2.style.visibility = "hidden";
-		
-	var dayIntvl = document.getElementById("formPosition").interval.value;
-	curSite = frm.sitegeneral.value;
-
 	// Clear the canvas area first
 	positionPlot.clearData();
-
+	positionPlot.init_dims();
 	// Generate the XY Graph
 	//urlXY = "temp/getPosPlot.php?site=" + frm.sitegeneral.value + "&interval=6";
 	//urlXY = "/d3graph/getPosPlot.php?site=" + frm.sitegeneral.value + "&interval=" + dayIntvl;
-	urlXY = "/test/position/" + frm.sitegeneral.value + "/" + dayIntvl;
-	titleXY = frm.sitegeneral.value + " XY Column Position";
+	urlXY = "/test/position/" + curSite + "/" + dayIntvl;
+	titleXY = curSite + " XY Column Position";
 	generatePlotData(urlXY, titleXY, 0, true, 1);
 	
 	// Generate the XZ Graph
 	//urlXZ = "temp/getPosPlot.php?xz&site=" + frm.sitegeneral.value + "&interval=6";
 	//urlXZ = "/d3graph/getPosPlot.php?xz&site=" + frm.sitegeneral.value + "&interval=" + dayIntvl;
-	urlXZ = "/test/position/" + frm.sitegeneral.value + "/" + dayIntvl + "/1";
-	titleXZ = frm.sitegeneral.value + " XZ Column Position";
+	urlXZ = "/test/position/" + curSite + "/" + dayIntvl + "/1";
+	titleXZ = curSite + " XZ Column Position";
 	generatePlotData(urlXZ, titleXZ, positionPlot.width * 0.6, false, 2);
 	
 };

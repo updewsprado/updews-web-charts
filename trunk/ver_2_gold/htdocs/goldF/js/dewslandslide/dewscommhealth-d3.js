@@ -23,7 +23,7 @@
 		comm_target4.style.position = "absolute";
 		comm_target4.style.width = comm_target4.clientWidth;
 		comm_target4.style.zIndex = 1;
-		comm_target4.style.backgroundColor = "white";
+		comm_target4.style.backgroundColor = "black";
 		comm_target4.style.borderStyle = "solid";
 		comm_target4.style.borderWidth = "thin";
 		comm_target4.style.left = (comm_target3.offsetLeft - comm_target3.scrollLeft + comm_target3.clientLeft + 115) + 'px';
@@ -54,7 +54,7 @@
 		speed: 1.1, // Rounds per second
 		trail: 58, // Afterglow percentage
 		shadow: false, // Whether to render a shadow
-		hwaccel: false, // Whether to use hardware acceleration
+		hwcomm: false, // Whether to use hardware commeration
 		className: 'spinner', // The CSS class to assign to the spinner
 		zIndex: 2e9, // The z-index (defaults to 2000000000)
 		top: '50%', // Top position relative to parent
@@ -82,8 +82,8 @@
 	  
 	  return comm_tooltip;
 		});
-
-	function showCommHealthPlotGeneral(frm)
+	
+	function showCommHealthPlotGeneral()
 	{
 		
 		comm_opacity1 = 0,
@@ -96,7 +96,7 @@
 		comm_target5 = document.getElementById('legends');
 		comm_target5.style.visibility = "hidden";
 		
-		var comm_target1 = document.getElementById('barchart');
+		var comm_target1 = document.getElementById('healthbars-canvas');
 		var comm_spinner = new Spinner(comm_opts).spin();
 			comm_target1.appendChild(comm_spinner.el);
 		
@@ -104,18 +104,18 @@
 				 
 		var comm_bars = 3;
 			
-		var comm_url = "/test/commhealth/" + frm.sitegeneral.value + "/" + frm.dbase.value;
+		var comm_url = "/test/commhealth/" + curSite + "/" + dataBase;
 		
-		var comm_cWidth = document.getElementById('barchart').offsetWidth;
-			comm_cHeight = document.getElementById('barchart').offsetHeight;
+			comm_cWidth = document.getElementById('healthbars-canvas').clientWidth
+			comm_cHeight = document.getElementById('healthbars-canvas').clientHeight;
 	
-		var comm_margin = {top: 20, right: 50, bottom: 100, left: 75},
+		var comm_margin = {top: comm_cHeight * 0.01, right: comm_cWidth * 0.01, bottom: comm_cWidth * 0.1, left: comm_cHeight * 0.15},
 			comm_width = comm_cWidth - comm_margin.left - comm_margin.right,
 			comm_height = comm_cHeight - comm_margin.top - comm_margin.bottom;
 			
 		d3.json(comm_url, function (error, data){
 		
-			var comm_svg = d3.select("#barchart").append("svg")
+			var comm_svg = d3.select("#healthbars-canvas").append("svg")
 				.attr("id", "svg-commhealth")
 				.attr("width", comm_width + comm_margin.left + comm_margin.right)
 				.attr("height", comm_height + comm_margin.top + comm_margin.bottom)
@@ -152,13 +152,12 @@
 				.scale(comm_xScale)
 				.tickSize(0)
 				.tickPadding(6)
-				.orient("bottom")
-				.ticks(4);
+				.orient("bottom");
 
 			var comm_yAxis = d3.svg.axis()
 				.scale(comm_y)
 				.orient("left")
-				.ticks(4);
+				.ticks(Math.max(comm_height/100, 2));
 
 			var comm_layer = comm_svg.selectAll(".layer")
 				.data(comm_layers)
@@ -178,13 +177,6 @@
 					else if (d.y == d.month) return "month"; })
 				.on('mouseover', comm_tip.show)
 				.on('mouseout', comm_tip.hide);
-		
-<!-- For Resizing -->
-		
-			d3.select("#barchart")
-				.attr("viewBox", "0 0 448 433")
-				.attr("width", "100%")
-				.attr("height", "100%");
             
 <!-- Axes -->
 			
@@ -215,16 +207,13 @@
 				comm_svg.append("text")      // text label for the x axis
 					.attr("transform", "translate(" + (comm_width / 2) + " ," + (comm_height + 40) + ")")
 					.style("text-anchor", "middle")
-					.style("font-size", "16px")
+					.style("font-size", "13.5px")
 					.text("Node Number");
 				
 					  	comm_spinner.stop();
-		
 						comm_legendactive = 1;
+			
 		});
-	
-
-	
 	}
 
 	function barTransition(color){
