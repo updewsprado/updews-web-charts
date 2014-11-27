@@ -26,7 +26,7 @@ class Test extends CI_Controller {
 		echo $data['weatherJSON'];
 	}
 	
-	public function wsindiv( $site = 'blcw', $option = 'temp', $from = '2010-01-01', $to = null )
+	public function wsindiv( $option = 'temp', $site = 'blcw', $from = '2010-01-01', $to = null )
 	{
 		$this->load->model('Weather_station_Model');
 		//$data['weatherJSON'] = $this->Weather_station_Model->getRawAll($site, $from, $to);
