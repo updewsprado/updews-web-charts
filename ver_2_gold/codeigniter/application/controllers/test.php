@@ -26,6 +26,33 @@ class Test extends CI_Controller {
 		echo $data['weatherJSON'];
 	}
 	
+	public function wsindiv( $site = 'blcw', $option = 'temp', $from = '2010-01-01', $to = null )
+	{
+		$this->load->model('Weather_station_Model');
+		//$data['weatherJSON'] = $this->Weather_station_Model->getRawAll($site, $from, $to);
+		
+		if($option == 'temp') {
+			$data['weatherJSON'] = $this->Weather_station_Model->getTemp($site, $from, $to);
+		}
+		elseif ($option == 'wspd') {
+			$data['weatherJSON'] = $this->Weather_station_Model->getWspd($site, $from, $to);
+		}
+		elseif ($option == 'wdir') {
+			$data['weatherJSON'] = $this->Weather_station_Model->getWdir($site, $from, $to);
+		}
+		elseif ($option == 'rain') {
+			$data['weatherJSON'] = $this->Weather_station_Model->getRain($site, $from, $to);
+		}
+		elseif ($option == 'batt') {
+			$data['weatherJSON'] = $this->Weather_station_Model->getBatt($site, $from, $to);
+		}
+		elseif ($option == 'csq') {
+			$data['weatherJSON'] = $this->Weather_station_Model->getCsq($site, $from, $to);
+		}
+		
+		echo $data['weatherJSON'];
+	}	
+	
 	public function accel( $site = 'blcb', $nid = 1, $from = '2010-01-01', $to = null )
 	{
 		$this->load->model('Accel_model');
