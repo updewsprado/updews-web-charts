@@ -17,6 +17,14 @@ class Test extends CI_Controller {
 		$this->load->view('graphs/testAlert', $data);
 		//$this->load->view('graphs/alertPlot', $data);
 	}
+
+	public function wsall( $site = 'blcw', $from = '2010-01-01', $to = null )
+	{
+		$this->load->model('Weather_station_Model');
+		$data['weatherJSON'] = $this->Weather_station_Model->getRawAll($site, $from, $to);
+		
+		echo $data['weatherJSON'];
+	}
 	
 	public function accel( $site = 'blcb', $nid = 1, $from = '2010-01-01', $to = null )
 	{
