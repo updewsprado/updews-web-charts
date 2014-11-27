@@ -55,89 +55,182 @@ class Weather_station_Model extends CI_Model
 		
 		return json_encode( $dbreturn );
 	}	
-	
-	public function getAccel($site = 'blcb', $nid = 1, $q = null)
-	{
-		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp > '".$q."' ORDER BY timestamp ASC");
-		
-		$dbreturn;
-		$ctr = 0;
-		foreach ($query->result_array() as $row)
-		{		    
-		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
-			$dbreturn[$ctr]['xvalue'] = $row['xvalue'];
-			$dbreturn[$ctr]['yvalue'] = $row['yvalue'];
-			$dbreturn[$ctr]['zvalue'] = $row['zvalue'];
-			$dbreturn[$ctr]['mvalue'] = $row['mvalue'];
 
-			$ctr = $ctr + 1;
+	public function getTemp($site = 'blcw', $from = null, $to = null)
+	{
+		if($to == null) {
+			$query = $this->db->query("SELECT timestamp,name,temp FROM $site WHERE timestamp > '".$from."' ORDER BY timestamp ASC");
+		}
+		else {
+			$query = $this->db->query("SELECT timestamp,name,temp FROM $site WHERE timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
 		}
 		
-		return json_encode( $dbreturn );
-	}
-	
-	public function getAccel2($site = 'blcb', $nid = 1, $from = null, $to = null)
-	{
-		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
-		
 		$dbreturn;
 		$ctr = 0;
 		foreach ($query->result_array() as $row)
 		{		    
 		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
-			$dbreturn[$ctr]['xvalue'] = $row['xvalue'];
-			$dbreturn[$ctr]['yvalue'] = $row['yvalue'];
-			$dbreturn[$ctr]['zvalue'] = $row['zvalue'];
-			$dbreturn[$ctr]['mvalue'] = $row['mvalue'];
-
-			$ctr = $ctr + 1;
-		}
-		
-		return json_encode( $dbreturn );
-	}
-	
-	public function getAccelPurged($site = 'blcb', $nid = 1, $q = null)
-	{
-		$this->purgedDB = $this->load->database('purged', TRUE);
-		
-		$query = $this->purgedDB->query("SELECT * FROM $site WHERE id = $nid and timestamp > '".$q."' ORDER BY timestamp ASC");
-		
-		$dbreturn;
-		$ctr = 0;
-		foreach ($query->result_array() as $row)
-		{		    
-		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
-			$dbreturn[$ctr]['xvalue'] = $row['xvalue'];
-			$dbreturn[$ctr]['yvalue'] = $row['yvalue'];
-			$dbreturn[$ctr]['zvalue'] = $row['zvalue'];
-			$dbreturn[$ctr]['mvalue'] = $row['mvalue'];
-
-			$ctr = $ctr + 1;
-		}
-		
-		return json_encode( $dbreturn );
-	}		
-
-	public function getAccelPurged2($site = 'blcb', $nid = 1, $from = null, $to = null)
-	{
-		$this->purgedDB = $this->load->database('purged', TRUE);
-		
-		$query = $this->purgedDB->query("SELECT * FROM $site WHERE id = $nid and timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
-		
-		$dbreturn;
-		$ctr = 0;
-		foreach ($query->result_array() as $row)
-		{		    
-		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
-			$dbreturn[$ctr]['xvalue'] = $row['xvalue'];
-			$dbreturn[$ctr]['yvalue'] = $row['yvalue'];
-			$dbreturn[$ctr]['zvalue'] = $row['zvalue'];
-			$dbreturn[$ctr]['mvalue'] = $row['mvalue'];
+			$dbreturn[$ctr]['name'] = $row['name'];
+			$dbreturn[$ctr]['temp'] = $row['temp'];			
 
 			$ctr = $ctr + 1;
 		}
 		
 		return json_encode( $dbreturn );
 	}	
+	
+	public function getWspd($site = 'blcw', $from = null, $to = null)
+	{
+		if($to == null) {
+			$query = $this->db->query("SELECT timestamp,name,wspd FROM $site WHERE timestamp > '".$from."' ORDER BY timestamp ASC");
+		}
+		else {
+			$query = $this->db->query("SELECT timestamp,name,wspd FROM $site WHERE timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
+		}
+		
+		$dbreturn;
+		$ctr = 0;
+		foreach ($query->result_array() as $row)
+		{		    
+		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['name'] = $row['name'];
+			$dbreturn[$ctr]['wspd'] = $row['wspd'];			
 
+			$ctr = $ctr + 1;
+		}
+		
+		return json_encode( $dbreturn );
+	}	
+	
+	public function getWdir($site = 'blcw', $from = null, $to = null)
+	{
+		if($to == null) {
+			$query = $this->db->query("SELECT timestamp,name,wdir FROM $site WHERE timestamp > '".$from."' ORDER BY timestamp ASC");
+		}
+		else {
+			$query = $this->db->query("SELECT timestamp,name,wdir FROM $site WHERE timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
+		}
+		
+		$dbreturn;
+		$ctr = 0;
+		foreach ($query->result_array() as $row)
+		{		    
+		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['name'] = $row['name'];
+			$dbreturn[$ctr]['wdir'] = $row['wdir'];			
+
+			$ctr = $ctr + 1;
+		}
+		
+		return json_encode( $dbreturn );
+	}	
+	
+	public function getRain($site = 'blcw', $from = null, $to = null)
+	{
+		if($to == null) {
+			$query = $this->db->query("SELECT timestamp,name,rain FROM $site WHERE timestamp > '".$from."' ORDER BY timestamp ASC");
+		}
+		else {
+			$query = $this->db->query("SELECT timestamp,name,rain FROM $site WHERE timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
+		}
+		
+		$dbreturn;
+		$ctr = 0;
+		foreach ($query->result_array() as $row)
+		{		    
+		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['name'] = $row['name'];
+			$dbreturn[$ctr]['rain'] = $row['rain'];			
+
+			$ctr = $ctr + 1;
+		}
+		
+		return json_encode( $dbreturn );
+	}	
+	
+	public function getBatt($site = 'blcw', $from = null, $to = null)
+	{
+		if($to == null) {
+			$query = $this->db->query("SELECT timestamp,name,batt FROM $site WHERE timestamp > '".$from."' ORDER BY timestamp ASC");
+		}
+		else {
+			$query = $this->db->query("SELECT timestamp,name,batt FROM $site WHERE timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
+		}
+		
+		$dbreturn;
+		$ctr = 0;
+		foreach ($query->result_array() as $row)
+		{		    
+		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['name'] = $row['name'];
+			$dbreturn[$ctr]['batt'] = $row['batt'];			
+
+			$ctr = $ctr + 1;
+		}
+		
+		return json_encode( $dbreturn );
+	}	
+	
+	public function getCsq($site = 'blcw', $from = null, $to = null)
+	{
+		if($to == null) {
+			$query = $this->db->query("SELECT timestamp,name,csq FROM $site WHERE timestamp > '".$from."' ORDER BY timestamp ASC");
+		}
+		else {
+			$query = $this->db->query("SELECT timestamp,name,csq FROM $site WHERE timestamp between '".$from."' AND '".$to."' ORDER BY timestamp ASC");
+		}
+		
+		$dbreturn;
+		$ctr = 0;
+		foreach ($query->result_array() as $row)
+		{		    
+		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
+			$dbreturn[$ctr]['name'] = $row['name'];
+			$dbreturn[$ctr]['csq'] = $row['csq'];			
+
+			$ctr = $ctr + 1;
+		}
+		
+		return json_encode( $dbreturn );
+	}	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
