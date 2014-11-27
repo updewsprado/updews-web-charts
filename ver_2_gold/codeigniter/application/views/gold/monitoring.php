@@ -126,9 +126,14 @@ window.onload = function() {
 d3.select(window).on("resize", resize2)
 
 function resize2() {
-	d3.select("#svg-alert").remove();
-	d3.select("#svg-presence").remove();
-	
+	d3.selectAll("#svg-alert").remove();
+	d3.selectAll("#svg-presence").remove();
+	svg.selectAll(".dot").remove();
+	svg.selectAll(".dot1").remove();
+	svg.selectAll(".dot2").remove();
+	svg.selectAll(".line").remove();
+	svg.selectAll(".tick").remove();
+	svg.selectAll(".axislabel").remove();
 	initAlertPlot();
 	dataPresencePlot();
 }

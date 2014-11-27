@@ -1,20 +1,4 @@
-	var sentnode_current, sentnode_fromDate = 0, sentnode_toDate = 0;
-	
-	var sentnode_margin = {top: 10, right: 10, bottom: 20, left: 40};
-
-	var end_date = new Date();
-	//var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
-	var start_date = new Date(end_date.getFullYear(), end_date.getMonth(), end_date.getDate()-10);
-
-	$(function() {
-		$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
-		$( "#datepicker" ).datepicker("setDate", start_date); 
-	});
-
-	$(function() {
-		$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
-		$( "#datepicker2" ).datepicker("setDate", end_date);
-	});
+	var sentnode_current;
 
 	var sentnode_opts = {
 		lines: 11, // The number of lines to draw
@@ -35,24 +19,21 @@
 		left: '50%' // Left position relative to parent
 	};
 		
-	function showSentNodeTotalGeneral(frm) {
-
-		sentnode_fromDate = document.getElementById("formDate").dateinput.value;
-		sentnode_toDate = document.getElementById("formDate").dateinput2.value;
+	function showSentNodeTotalGeneral() {
 		
 		sentnode_current = document.getElementById("sentnode_timestamp");
 		sentnode_current.innerHTML = "<b>Data Sent: </b>";
 				
-		d3.selectAll("#svg-sitehealth").remove();	
+		d3.selectAll("#svg-sitehealth").remove();
 		
 	var sentnode_focusGraph;
-	var sentnode_target = document.getElementById('div_health');
+	var sentnode_target = document.getElementById('sent-node-canvas');
 	var sentnode_spinner = new Spinner(sentnode_opts).spin();
         sentnode_target.appendChild(sentnode_spinner.el);
 			 
-			 
-	var sentnode_cWidth = document.getElementById('div_health').offsetWidth;
-		sentnode_cHeight = document.getElementById('div_health').offsetHeight;
+	var sentnode_cWidth = document.getElementById('sent-node-canvas').clientWidth;
+		sentnode_cHeight = document.getElementById('sent-node-canvas').clientHeight;
+	var sentnode_margin = {top: sentnode_cHeight * 0.01, right: sentnode_cWidth * 0.01, bottom: sentnode_cHeight * 0.06, left: sentnode_cWidth * 0.09};
 		sentnode_width = sentnode_cWidth - sentnode_margin.left - sentnode_margin.right;
 		sentnode_height = sentnode_cHeight - sentnode_margin.top - sentnode_margin.bottom;
 
@@ -66,7 +47,7 @@
 	var sentnode_xAxis = d3.svg.axis().scale(sentnode_x).orient("bottom").ticks(4),
 		sentnode_yAxis = d3.svg.axis().scale(sentnode_y).orient("left").ticks(4);
 		
-	var sentnode_svg = d3.select("#div_health").append("svg")
+	var sentnode_svg = d3.select("#sent-node-canvas").append("svg")
 			.attr("id", "svg-sitehealth")
 			.attr("width", sentnode_width + sentnode_margin.left + sentnode_margin.right)
 			.attr("height", sentnode_height + sentnode_margin.top + sentnode_margin.bottom);
@@ -83,23 +64,11 @@
 		
 	var sentnode_barsGroup = sentnode_focus.append("g")
 			.attr('clip-path', 'url(#clip)');
-
-		d3.selectAll("#svg-sitehealth")
-			.attr("viewBox", "0 0 448 400")
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");
-			
-		d3.selectAll("#div_health")
-			.attr("viewBox", "0 0 448 400")
-			.attr("width", "100%")
-			.attr("height", "100%")
-			.attr("preserveAspectRatio", "xMinYMin meet");
 	
 	var sentnode_tool = sentnode_svg.append("g")                                
 			.style("display", "none");   
 		
-	var sentnode_url = "/test/senttotal/" + frm.sitegeneral.value + "/" + sentnode_fromDate + "/" + sentnode_toDate + "/" + frm.dbase.value;
+	var sentnode_url = "/test/senttotal/" + curSite + "/" + fromDate + "/" + toDate + "/" + dataBase;
 	
 		d3.json(sentnode_url, function(error, data) {
 
@@ -154,7 +123,7 @@
 				.on("mouseover", function() { sentnode_tool.style("display", null); })
 				.on("mouseout", sentnode_mouseout)
 				.on("mousemove", sentnode_mousemove); 
-			
+			  
 			function sentnode_mousemove() {                                 
 				var x0 = sentnode_x.invert(d3.mouse(this)[0]);              
 					i = sentnode_bisectDate(data, x0, 1),                   
@@ -176,12 +145,13 @@
 					sentnode_current = document.getElementById("sentnode_timestamp");
 					sentnode_current.innerHTML = "<b>Data Sent: </b>";
 			}
-	
+			  
 	});
 
 	sentnode_spinner.stop();
 	
-	}
+}
+	
 	function change(el) {
 			if(g != 0)
 				g.setVisibility(parseInt(el.id), el.checked);

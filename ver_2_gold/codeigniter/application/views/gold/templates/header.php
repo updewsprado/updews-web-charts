@@ -76,7 +76,6 @@
     <?php echo $rainfall; ?>
     <?php echo $lsbchange; ?>
     <?php echo $accel; ?>
-	<?php echo $slider; ?>
     <?php echo $presence; ?>
 
     

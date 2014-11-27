@@ -18,11 +18,14 @@
 	
 	var brush = d3.svg.brush()
 		.x(slider_x)
-		.on("brush", onBrush);
+		.on("brush", function () {
+			onBrushRain;
+			onBrushSent;
+		});
 	
 	var slider_parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 	
-	var slider_x = d3.time.scale().range([0, slider_width + 50]),
+	var slider_x = d3.time.scale().range([0, slider_width]),
 		slider_y = d3.scale.linear().range([slider_height, 0]);
 	
 	var slider_area = d3.svg.area()
@@ -75,22 +78,8 @@
 			  .attr("height", slider_height + 7);
 			  
 		});
-		
-	function onBrush(){
 	
-        sentnode_x.domain(brush.empty() ? slider_x.domain() : brush.extent());  
-		rainfall_x1.domain(brush.empty() ? slider_x.domain() : brush.extent());
-		rainfall_x2.domain(brush.empty() ? slider_x.domain() : brush.extent());
-		focusGraph.attr("x", function(d, i) { return sentnode_x(d.date); });
-		focusGraph.attr("width", 10);
-		sentnode_focus.select(".x.axis").call(sentnode_xAxis);
-		rainfall_svg1.select(".area").attr("d", rainfall_area1);
-		rainfall_svg1.select(".x.axis").call(rainfall_xAxis1);
-		rainfall_svg2.select(".area2").attr("d", rainfall_area2);
-		rainfall_svg2.select(".x.axis").call(rainfall_xAxis2);      
-    }
-	
-	}
+}
 	
 
 	

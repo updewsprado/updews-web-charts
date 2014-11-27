@@ -73,21 +73,19 @@
 							</div>
 							<div id="position-legends" style="width:130px; height:85px; visibility:hidden; display:none;"></div>  
 							<div class="panel-body">		
-								<div id="position-canvas">
+								<div id="position-canvas">	
 									<FORM id="formPosition">
-									<p>
-										Day Intervals: <select name="interval" onchange="showPositionPlotGeneral(document.getElementById('formGeneral'))">
-										<option value="6">6</option>
-										<option value="5">5</option>
-										<option value="4">4</option>
-										<option value="3">3</option>
-										<option value="2">2</option>
-										<option value="1">1</option>
-										</select>
-									</p>
+										<p>
+											Day Intervals: <select name="interval" onchange="showPositionPlotGeneral()">
+											<option value="6">6</option>
+											<option value="5">5</option>
+											<option value="4">4</option>
+											<option value="3">3</option>
+											<option value="2">2</option>
+											<option value="1">1</option>
+											</select>
+										</p>
 									</FORM>
-									<div id="positioncanvas">
-									</div>
 								</div>
 							</div>
 						</div>
@@ -108,8 +106,6 @@
 							</div>
                             <div class="panel-body">
                                 <div id="healthbars-canvas">
-									<div id="barchart">
-									</div>
                                 </div>
                             </div>
                         </div>
@@ -222,10 +218,8 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Sent Node Data</h3>
                             </div>
                             <div class="panel-body">
-								<div id="sent-node-canvas">
-									<div id="sentnode_timestamp"><b>Data Sent: </b></div>
-									<div id="div_health">
-									</div>                          	     	
+								<div id="sentnode_timestamp"><b>Data Sent: </b></div>   
+								<div id="sent-node-canvas">	                     	     	
 								</div>
 							</div>
 						</div>     
@@ -271,14 +265,30 @@
         <!-- /#page-wrapper -->
   
 <script>
+
+var end_date = new Date();
+	//var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
+	var start_date = new Date(end_date.getFullYear(), end_date.getMonth(), end_date.getDate()-10);
+
+	$(function() {
+		$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+		$( "#datepicker" ).datepicker("setDate", start_date); 
+	});
+
+	$(function() {
+		$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
+		$( "#datepicker2" ).datepicker("setDate", end_date);
+	});
+	
 var curSite = "<?php echo $site; ?>";
+var fromDate = "" , toDate = "" , dataBase = "";
 
 var options = ["select", "blcb", "blct", "bolb", "gamb", "gamt",
 				"humb", "humt", "labb", "labt", "lipb",
 				"lipt", "mamb", "mamt", "oslb", "oslt",
 				"plab", "plat", "pugb", "pugt", "sinb",
-				"sinu"];
-
+				"sinu"];		
+				
 function popDropDownGeneral() {
 	var select = document.getElementById('sitegeneral');
 	var i;
@@ -329,8 +339,12 @@ window.onload = function() {
 
 
 window.onresize = function() {
-d3.select("#svg-alertmini").remove();
-initAlertPlot();
+	d3.select("#svg-alertmini").remove();
+	initAlertPlot();
+	showCommHealthPlotGeneral();
+	showPositionPlotGeneral();
+	showSentNodeTotalGeneral();
+	showRainGeneral();
 }
 
 function redirectSitePlots (frm) {
@@ -353,16 +367,18 @@ function showSitePlots (frm) {
 	}
 	else {
 		curSite = frm.sitegeneral.value;
+		fromDate = document.getElementById("formDate").dateinput.value;
+		toDate = document.getElementById("formDate").dateinput2.value;
+		dataBase = frm.dbase.value;
 		
 		var element = document.getElementById("header-site");
 		element.innerHTML = frm.sitegeneral.value.toUpperCase() + " Site Overview";
 		
-		showPositionPlotGeneral(frm);
+		showPositionPlotGeneral();
 		showAnalysisDynaGeneral(frm);
-		showSentNodeTotalGeneral(frm);
-        showRainGeneral(frm);
-		showCommHealthPlotGeneral(frm);
-
+		showSentNodeTotalGeneral();
+        showRainGeneral();
+		showCommHealthPlotGeneral();
 		
 	}
 }
@@ -372,8 +388,10 @@ function showDateSitePlots (frm) {
 		//do nothing
 	}
 	else {
-		showSentNodeTotalGeneral(frm);
-		showRainGeneral(frm);
+		fromDate = document.getElementById("formDate").dateinput.value;
+		toDate = document.getElementById("formDate").dateinput2.value;
+		showSentNodeTotalGeneral();
+		showRainGeneral();
 	}
 }
 

@@ -215,6 +215,13 @@ window.onload = function() {
 
 window.onresize = function() {
 d3.select("#svg-alertmini").remove();
+svg.selectAll(".dot").remove();
+	svg.selectAll(".dot1").remove();
+	svg.selectAll(".dot2").remove();
+	svg.selectAll(".line").remove();
+	svg.selectAll(".legend").remove();
+	svg.selectAll(".tick").remove();
+	svg.selectAll(".axislabel").remove();
 initAlertPlot();
 }
 

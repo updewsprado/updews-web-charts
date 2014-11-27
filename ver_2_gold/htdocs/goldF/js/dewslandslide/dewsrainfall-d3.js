@@ -1,5 +1,3 @@
-	var date1, date2;
-
 // Create the XHR object.
 	function createCORSRequest(method, url) {
 		var xhr = new XMLHttpRequest();
@@ -78,7 +76,9 @@
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
 			
-	function showRainGeneral(frm) {
+	function showRainGeneral() {
+	
+	d3.select("#svg-rainfall").remove();
 	
 	var rainfall_current;
 		
@@ -86,12 +86,15 @@
 		rainfall_current.innerHTML = "<b>Timestamp: </b>";
 		rainfall_current = document.getElementById("rainfall_15min_timestamp");
 		rainfall_current.innerHTML = "<b>Timestamp: </b>";
+	
+	var rainfall_cWidth = document.getElementById('rainfall_24hr').clientWidth;
+		rainfall_cHeight = document.getElementById('rainfall_24hr').clientHeight;
 		
-	var rainfall_margin = {top: 50, right: 20, bottom: 50, left: 90},
-		rainfall_width = parseInt(d3.select('#rainfall_24hr').style('width'), 10)- rainfall_margin.left - rainfall_margin.right,
-		rainfall_height = parseInt(d3.select('#rainfall_24hr').style('height'), 10) - rainfall_margin.top - rainfall_margin.bottom;
+	var rainfall_margin = {top: rainfall_cHeight * 0.03, right: rainfall_cWidth * 0.01, bottom: rainfall_cHeight * 0.05, left: rainfall_cWidth * 0.1},
+		rainfall_width = rainfall_cWidth - rainfall_margin.left - rainfall_margin.right,
+		rainfall_height = rainfall_cHeight - rainfall_margin.top - rainfall_margin.bottom;
 			
-	d3.selectAll("#rainfall-svg").remove();	 
+	d3.selectAll("#svg-rainfall").remove();	 
 
 	var rainfall_target = document.getElementById('rainfall_24hr');
 	var rainfall_spinner1 = new Spinner(opts).spin();
@@ -99,12 +102,8 @@
         rainfall_target = document.getElementById('rainfall_15min');
         rainfall_spinner2 = new Spinner(opts).spin();
         rainfall_target.appendChild(rainfall_spinner2.el);
-
-		// Response handlers.
-    date1 = document.getElementById("formDate").dateinput.value;
-	date2 = document.getElementById("formDate").dateinput2.value;
 	
-    var rainfall_url = "/test/rain/" + frm.sitegeneral.value + "/" + date1 + "/" + date2;
+    var rainfall_url = "/test/rain/" + curSite + "/" + fromDate + "/" + toDate;
     
 	var rainfall_x1 = d3.time.scale()
 		.range([0, rainfall_width]);
@@ -148,14 +147,14 @@
 		.y1(function(d) { return rainfall_y2(d.rain); });
 		
 	var rainfall_svg1 = d3.select("#rainfall_24hr").append("svg")
-		.attr("id", "rainfall-svg")
+		.attr("id", "svg-rainfall")
 		.attr("width", rainfall_width + rainfall_margin.left + rainfall_margin.right)
 		.attr("height", rainfall_height + rainfall_margin.top + rainfall_margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + rainfall_margin.left + "," + rainfall_margin.top + ")");
 		
 	var rainfall_svg2 = d3.select("#rainfall_15min").append("svg")
-		.attr("id", "rainfall-svg")
+		.attr("id", "svg-rainfall")
 		.attr("width", rainfall_width + rainfall_margin.left + rainfall_margin.right)
 		.attr("height", rainfall_height + rainfall_margin.top + rainfall_margin.bottom)
 		.append("g")
@@ -178,21 +177,6 @@
 		
 	var rainfall_tool2 = rainfall_svg2.append("g")                               
 		.style("display", null);  
-	
-	d3.selectAll("#rainfall-svg")
-		.attr("viewBox", "0 0 447 430")
-		.attr("width", "100%")
-		.attr("height", "100%");
-		
-	d3.selectAll("#rainfall_24hr")
-		.attr("viewBox", "0 0 447 430")
-		.attr("width", "100%")
-		.attr("height", "100%");
-		
-	d3.selectAll("#rainfall_15min")
-		.attr("viewBox", "0 0 447 430")
-		.attr("width", "100%")
-		.attr("height", "100%");
 		
 	var rainfall_parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 	var rainfall_formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
@@ -235,14 +219,15 @@
 			  .call(rainfall_xAxis1);
 
 		rainfall_svg1.append("g")
-			  .attr("class", "y axis")
-			  .style("font-size", "13px")
+			  .attr("class", "y axis")  
 			  .call(rainfall_yAxis1)
 			  .append("text")
 			  .attr("transform", "rotate(-90)")
-			  .attr("y", -75)
+			  .attr("y", -45)
+			  .attr("x", rainfall_height/-2 + rainfall_margin.top + rainfall_margin.bottom)
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")
+			  .style("font-size", "15px")
 			  .text(" 24 Hours (mm)");
 	
 <!-- 15 Minute Rain -->
@@ -274,13 +259,14 @@
 
 		rainfall_svg2.append("g")
 			.attr("class", "y axis")
-			.style("font-size", "15px")
 			.call(rainfall_yAxis2)
 			.append("text")
 			.attr("transform", "rotate(-90)")
-			.attr("y", -75)
+			.attr("y", -45)
+			.attr("x", rainfall_height/-2 + rainfall_margin.top + rainfall_margin.bottom)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
+			.style("font-size", "15px")
 			.text("15 min(mm)");  
 			
 <!-- Tooltips Circle -->
@@ -339,5 +325,5 @@
         rainfall_spinner2.stop();
 		
 		});
-			
-	}
+	
+}
