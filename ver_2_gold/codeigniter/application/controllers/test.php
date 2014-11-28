@@ -134,6 +134,11 @@ class Test extends CI_Controller {
 		$this->load->view('graphs/sitehealth');
 	}
 	
+    public function weather()
+    {
+        $this->load->view('graphs/weather');
+    }
+    
 	public function rainfall()
 	{
 		$this->load->view('graphs/rainfall');
