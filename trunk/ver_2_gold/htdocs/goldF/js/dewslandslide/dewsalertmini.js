@@ -119,9 +119,9 @@ var tip = d3.tip()
 
 //initialize dimensions
 function init_dims() {
-	cWidth = document.getElementById('mini-alert-canvas').clientWidth;
+	cWidth = document.getElementById('mini-alert-canvas').clientWidth * 0.75;
 	//cHeight = document.getElementById('minialertcanvas').offsetHeight;
-	cHeight = cWidth * 0.03;
+	cHeight = document.getElementById('mini-alert-canvas').clientHeight * 1.5;
 	
 	//margin = {top: cHeight * 0.10, right: cWidth * 0.015, bottom: cHeight * 0.10, left: cWidth * 0.065};
 	margin = {top: 0, right: 0, bottom: 0, left: 0};

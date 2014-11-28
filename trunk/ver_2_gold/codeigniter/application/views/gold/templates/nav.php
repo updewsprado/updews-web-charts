@@ -167,7 +167,7 @@
 	                     </div>	
                     </li>
 					<li>
-						<div class="form-group">
+						<div class="form-group" style="overflow-x:hidden; overflow-y:hidden">
 							<label>Slider:</label><br />
 							<div id="div_slider" style="width:220px; height:75px; background-color:white;">
 							</div>

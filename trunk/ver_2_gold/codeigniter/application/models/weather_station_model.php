@@ -42,13 +42,12 @@ class Weather_station_Model extends CI_Model
 		foreach ($query->result_array() as $row)
 		{		    
 		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
-			$dbreturn[$ctr]['name'] = $row['name'];
 			$dbreturn[$ctr]['temp'] = $row['temp'];
 			$dbreturn[$ctr]['wspd'] = $row['wspd'];
 			$dbreturn[$ctr]['wdir'] = $row['wdir'];
 			$dbreturn[$ctr]['rain'] = $row['rain'];
 			$dbreturn[$ctr]['batt'] = $row['batt'];
-			$dbreturn[$ctr]['csq'] = $row['csq'];			
+			$dbreturn[$ctr]['csq'] = $row['csq'];		            
 
 			$ctr = $ctr + 1;
 		}
