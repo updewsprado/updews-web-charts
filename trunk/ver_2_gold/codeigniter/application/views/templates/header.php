@@ -32,7 +32,8 @@
     <link href="/<?php echo $folder; ?>/css/dewslandslide/dewsrainfall.css" rel="stylesheet" type="text/css">
     <link href="/<?php echo $folder; ?>/css/dewslandslide/dewslsbchange.css" rel="stylesheet" type="text/css">
     <link href="/<?php echo $folder; ?>/css/dewslandslide/dewsaccel.css" rel="stylesheet" type="text/css">
-
+	<link href="/<?php echo $folder; ?>/css/dewslandslide/dewsslidersite-d3.css" rel="stylesheet" type="text/css">
+	
 	<!-- Serif Font -->
 	<link href='http://fonts.googleapis.com/css?family=Lato|Droid+Serif|Open+Sans' rel='stylesheet' type='text/css'>
 

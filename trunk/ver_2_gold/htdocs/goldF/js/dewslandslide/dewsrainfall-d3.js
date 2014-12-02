@@ -90,7 +90,7 @@
 	var rainfall_cWidth = document.getElementById('rainfall_24hr').clientWidth;
 		rainfall_cHeight = document.getElementById('rainfall_24hr').clientHeight;
 		
-	var rainfall_margin = {top: rainfall_cHeight * 0.03, right: rainfall_cWidth * 0.01, bottom: rainfall_cHeight * 0.05, left: rainfall_cWidth * 0.1},
+	var rainfall_margin = {top: rainfall_cHeight * 0.03, right: rainfall_cWidth * 0.01, bottom: rainfall_cHeight * 0.05, left: rainfall_cWidth * 0.15},
 		rainfall_width = rainfall_cWidth - rainfall_margin.left - rainfall_margin.right,
 		rainfall_height = rainfall_cHeight - rainfall_margin.top - rainfall_margin.bottom;
 			
@@ -105,19 +105,19 @@
 	
     var rainfall_url = "/test/rain/" + curSite + "/" + fromDate + "/" + toDate;
     
-	var rainfall_x1 = d3.time.scale()
+		rainfall_x1 = d3.time.scale()
 		.range([0, rainfall_width]);
 
-	var rainfall_y1 = d3.scale.linear()
+		rainfall_y1 = d3.scale.linear()
 		.range([rainfall_height, 0]);
 		
-	var rainfall_x2 = d3.time.scale()
+		rainfall_x2 = d3.time.scale()
 		.range([0, rainfall_width]);
 
-	var rainfall_y2 = d3.scale.linear()
+		rainfall_y2 = d3.scale.linear()
 		.range([rainfall_height, 0]);
 
-	var rainfall_xAxis1 = d3.svg.axis()
+		rainfall_xAxis1 = d3.svg.axis()
 		.scale(rainfall_x1)
 		.orient("bottom")
 		.ticks(4);
@@ -126,7 +126,7 @@
 		.scale(rainfall_y1)
 		.orient("left").ticks(4);
 		
-	var rainfall_xAxis2 = d3.svg.axis()
+		rainfall_xAxis2 = d3.svg.axis()
 		.scale(rainfall_x2)
 		.orient("bottom").ticks(4);
 
@@ -134,26 +134,26 @@
 		.scale(rainfall_y2)
 		.orient("left").ticks(4);
 
-	var rainfall_area1 = d3.svg.area()
-		.interpolate("basis")
+		rainfall_area1 = d3.svg.area()
+		.interpolate("linear")
 		.x(function(d) { return rainfall_x1(d.timestamp); })
 		.y0(function (d) {if(d.cummulative < 0){return 0;} else return rainfall_height})
 		.y1(function(d) { return rainfall_y1(d.cummulative); });
 		
-	var rainfall_area2 = d3.svg.area()
-		.interpolate("basis")
+		rainfall_area2 = d3.svg.area()
+		.interpolate("linear")
 		.x(function(d) { return rainfall_x2(d.timestamp); })
 		.y0(function (d) {if(d.rain < 0){return 0;} else return rainfall_height})
 		.y1(function(d) { return rainfall_y2(d.rain); });
 		
-	var rainfall_svg1 = d3.select("#rainfall_24hr").append("svg")
+		rainfall_svg1 = d3.select("#rainfall_24hr").append("svg")
 		.attr("id", "svg-rainfall")
 		.attr("width", rainfall_width + rainfall_margin.left + rainfall_margin.right)
 		.attr("height", rainfall_height + rainfall_margin.top + rainfall_margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + rainfall_margin.left + "," + rainfall_margin.top + ")");
 		
-	var rainfall_svg2 = d3.select("#rainfall_15min").append("svg")
+		rainfall_svg2 = d3.select("#rainfall_15min").append("svg")
 		.attr("id", "svg-rainfall")
 		.attr("width", rainfall_width + rainfall_margin.left + rainfall_margin.right)
 		.attr("height", rainfall_height + rainfall_margin.top + rainfall_margin.bottom)
@@ -183,8 +183,7 @@
 	var rainfall_bisectDate = d3.bisector(function(d) { return d.timestamp; }).left;
 	
 	d3.json(rainfall_url, function (error, data){
-			
-           
+			  
 		data.forEach(function(d){
 			d.timestamp = rainfall_parseDate(d.timestamp);
 			d.cummulative = +d.cumm;
@@ -325,5 +324,4 @@
         rainfall_spinner2.stop();
 		
 		});
-	
 }
