@@ -171,7 +171,16 @@
 							<label>Slider:</label><br />
 							<div id="div_slider" style="width:220px; height:75px; background-color:white;">
 							</div>
+						</div>
 					</li>
+					<li>
+							<label> Timestamp:</label><br />
+							<div id="div_slider_timestamp" style="overflow-x:hidden; overflow-y:hidden width:220px; height:30px; background-color:white;">
+							<b>From:</b> <br/>
+							<b>To:</b>
+							</div>
+					</li>
+						
                     </FORM>
                     
 <!--                    

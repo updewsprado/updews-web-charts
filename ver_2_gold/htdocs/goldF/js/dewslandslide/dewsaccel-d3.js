@@ -1,6 +1,7 @@
 var end_date = new Date();
 //var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
 var start_date = new Date(end_date.getFullYear(), end_date.getMonth(), end_date.getDate()-10);
+var brush_from = "", brush_to = "";
 
 $(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
@@ -31,7 +32,7 @@ var accel_opts = {
 	left: '50%' // Left position relative to parent
 };
 
-function showAccel(frm) {
+function showAccel() {
 	
 	var accel_current;
 		
@@ -59,15 +60,13 @@ function showAccel(frm) {
 		accel_target = document.getElementById('accel-4');
 		accel_target.appendChild(accel_spinner4.el);
 			
-	var accel_width = document.getElementById('accel-1').clientWidth,
-		accel_height = document.getElementById('accel-1').clientHeight,
-		accel_margin = {top: (0.2 * accel_height), right: (0.01 * accel_width), bottom: (0.2 * accel_height), left: (0.08 * accel_width)},
-		accel_width =  accel_width - accel_margin.left - accel_margin.right,
-		accel_height = accel_height - accel_margin.top - accel_margin.bottom,
+	var accel_margin = {top: 20, right: 20, bottom: 30, left: 90},
 		accel_margin2 = {top: 10, right: 10, bottom: 20, left: 40},
-		accel_width2 = parseInt(d3.select('#div_slider').style('width'), 10),
+		accel_width = document.getElementById('accel-1').clientWidth - accel_margin.left - accel_margin.right,
+		accel_width2 = document.getElementById('div_slider').clientWidth,
 		accel_width2 = accel_width2 - accel_margin2.left - accel_margin2.right,
-		accel_height2 = parseInt(d3.select('#div_slider').style('height'), 10),
+		accel_height = document.getElementById('accel-1').clientHeight - accel_margin.top - accel_margin.bottom,
+		accel_height2 =document.getElementById('div_slider').clientHeight,
 		accel_height2 = accel_height2 - accel_margin2.top - accel_margin2.bottom;
 
 	var accel_parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
@@ -84,8 +83,7 @@ function showAccel(frm) {
 
 	var accel_xAxis1 = d3.svg.axis()
 		.scale(accel_x1)
-		.orient("bottom")
-		.ticks(Math.max(accel_width/50, 2));
+		.orient("bottom").ticks(3);
 
 	var accel_yAxis1 = d3.svg.axis()
 		.scale(accel_y1)
@@ -121,8 +119,7 @@ function showAccel(frm) {
 	
 	var accel_xAxis2 = d3.svg.axis()
 		.scale(accel_x2)
-		.orient("bottom")
-		.ticks(Math.max(accel_width/50, 2));
+		.orient("bottom").ticks(3);
 
 	var accel_yAxis2 = d3.svg.axis()
 		.scale(accel_y2)
@@ -158,8 +155,7 @@ function showAccel(frm) {
 	
 	var accel_xAxis3 = d3.svg.axis()
 		.scale(accel_x3)
-		.orient("bottom")
-		.ticks(Math.max(accel_width/50, 2));
+		.orient("bottom").ticks(3);
 		
 	var accel_yAxis3 = d3.svg.axis()
 		.scale(accel_y3)
@@ -195,8 +191,7 @@ function showAccel(frm) {
 
 	var accel_xAxis4 = d3.svg.axis()
 		.scale(accel_x4)
-		.orient("bottom")
-		.ticks(Math.max(accel_width/50, 2));
+		.orient("bottom").ticks(3);
 		
 	var accel_yAxis4 = d3.svg.axis()
 		.scale(accel_y4)
@@ -251,10 +246,7 @@ function showAccel(frm) {
 		.append("g")
 		.attr("transform", "translate(0,0)");
 	
-	var dfrom = document.getElementById("formDate").dateinput.value;
-	var dto = document.getElementById("formDate").dateinput2.value;
-	
-	var accel_url = "/test/accel/" + frm.sitegeneral.value + "/" + frm.node.value + "/" + dfrom + "/" + dto;
+	var accel_url = "/test/accel/" + curSite + "/" + curNode + "/" + fromDate + "/" + toDate;
 	
 	var accel_tool1 = accel_svg1.append("g")                                
 		.style("display", null);   
@@ -318,11 +310,10 @@ function showAccel(frm) {
 
 		accel_svg1.append("g")
 			  .attr("class", "y axis")
-			  .style("font-size", "15px")
+			  .style("font-size", "13px")
 			  .call(accel_yAxis1)
 			  .append("text")
 			  .attr("transform", "rotate(-90)")
-			  .attr("x", accel_height/2 -60)
 			  .attr("y", -75)
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")
@@ -357,11 +348,10 @@ function showAccel(frm) {
 
 		accel_svg2.append("g")
 			.attr("class", "y axis")
-			.style("font-size", "15px")
+			.style("font-size", "13px")
 			.call(accel_yAxis2)
 			.append("text")
 			.attr("transform", "rotate(-90)")
-			.attr("x", accel_height/2 -60)
 			.attr("y", -75)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
@@ -396,11 +386,10 @@ function showAccel(frm) {
 
 		accel_svg3.append("g")
 			  .attr("class", "y axis")
-			  .style("font-size", "15px")
+			  .style("font-size", "13px")
 			  .call(accel_yAxis3)
 			  .append("text")
 			  .attr("transform", "rotate(-90)")
-			  .attr("x", accel_height/2 -60)
 			  .attr("y", -75)
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")
@@ -435,11 +424,10 @@ function showAccel(frm) {
 
 		accel_svg4.append("g")
 			  .attr("class", "y axis")
-			  .style("font-size", "15px")
+			  .style("font-size", "13px")
 			  .call(accel_yAxis4)
 			  .append("text")
 			  .attr("transform", "rotate(-90)")
-			  .attr("x", accel_height/2 -60)
 			  .attr("y", -75)
 			  .attr("dy", ".71em")
 			  .style("text-anchor", "end")
@@ -563,9 +551,14 @@ function showAccel(frm) {
 									 accel_y4((d.mvalue)) + ")");      
 								 
 			accel_current = document.getElementById("accel-4-timestamp");
-			accel_current.innerHTML = "<b>Timestamp: </b>" + accel_formatDate(d.timestamp) + "<b>M-Value: </b>" + d.mvalue;
+			accel_current.innerHTML = "<b>Timestamp: </b>" + accel_formatDate(d.timestamp) + "<b>X-Value: </b>" + d.mvalue;
 		}
-	
+		
+		brush_from = d3.min(accel_x5.domain()).toLocaleDateString() + " " + d3.min(accel_x5.domain()).toLocaleTimeString();
+		brush_to = d3.max(accel_x5.domain()).toLocaleDateString() + " " + d3.max(accel_x5.domain()).toLocaleTimeString();
+		brush_target = document.getElementById("div_slider_timestamp");
+		brush_target.innerHTML = "<b>From: " + brush_from + "</b><br/><b>To: " + brush_to + "</b>";
+		
 		accel_spinner1.stop();
 		accel_spinner2.stop();
 		accel_spinner3.stop();
@@ -586,105 +579,21 @@ function showAccel(frm) {
 		accel_svg3.select(".x.axis").call(accel_xAxis3);
 		accel_svg4.select(".area4").attr("d", accel_area4);
 		accel_svg4.select(".x.axis").call(accel_xAxis4);
-	}
-
-	d3.select(window).on('resize', resize); 
-
-	function resize() {
-		// update width
-		accel_width = document.getElementById('accel-1').clientWidth;
-		accel_width = accel_width - accel_margin.left - accel_margin.right;
-		accel_height = document.getElementById('accel-1').clientHeight;
-		accel_height = accel_height - accel_margin.top - accel_margin.bottom;
-
-		// resize the chart
-		accel_x1.range([0, accel_width]);
-		accel_y1.range([accel_height, 0]);
-		accel_x2.range([0, accel_width]);
-		accel_y2.range([accel_height, 0]);
-		accel_x3.range([0, accel_width]);
-		accel_y3.range([accel_height, 0]);
-		accel_x4.range([0, accel_width]);
-		accel_y4.range([accel_height, 0]);
 		
-		d3.select("#accel-1")
-			.attr('height', accel_height + accel_margin.top + accel_margin.bottom)
-			.attr('width', accel_width + accel_margin.left + accel_margin.right);
-			
-		d3.select("#accel-2")
-			.attr('height', accel_height + accel_margin.top + accel_margin.bottom)
-			.attr('width', accel_width + accel_margin.left + accel_margin.right);
-			
-		d3.select("#accel-3")
-			.attr('height', accel_height + accel_margin.top + accel_margin.bottom)
-			.attr('width', accel_width + accel_margin.left + accel_margin.right);
-			
-		d3.select("#accel-4")
-			.attr('height', accel_height + accel_margin.top + accel_margin.bottom)
-			.attr('width', accel_width + accel_margin.left + accel_margin.right);
-
-		// update axis
-		accel_xAxis1.ticks(Math.max(accel_width/50, 2));
-		accel_xAxis2.ticks(Math.max(accel_width/50, 2));
-		accel_xAxis3.ticks(Math.max(accel_width/50, 2));
-		accel_xAxis4.ticks(Math.max(accel_width/50, 2));
-		
-		accel_svg1.select('.x.axis')
-			.attr("transform", "translate(0," + accel_height + ")")
-			.call(accel_xAxis1.orient('bottom'));
-		accel_svg1.select('.y.axis').call(accel_yAxis1.orient('left'));
-		
-		accel_svg2.select('.x.axis')
-			.attr("transform", "translate(0," + accel_height + ")")
-			.call(accel_xAxis2.orient('bottom'));
-		accel_svg2.select('.y.axis').call(accel_yAxis2.orient('left'));
-		
-		accel_svg3.select('.x.axis')
-			.attr("transform", "translate(0," + accel_height + ")")
-			.call(accel_xAxis1.orient('bottom'));
-		accel_svg3.select('.y.axis').call(accel_yAxis3.orient('left'));
-		
-		accel_svg4.select('.x.axis')
-			.attr("transform", "translate(0," + accel_height + ")")
-			.call(accel_xAxis4.orient('bottom'));
-		accel_svg4.select('.y.axis').call(accel_yAxis4.orient('left'));
-		
-		//update the clip path and area of graph
-		
-		accel_svg1.selectAll("path")
-			.attr("d", accel_area1);
-		accel_svg2.selectAll("path")
-			.attr("d", accel_area2);
-		accel_svg3.selectAll("path")
-			.attr("d", accel_area3);
-		accel_svg4.selectAll("path")
-			.attr("d", accel_area4);
-		
-		accel_svg1.selectAll("defs")
-			.attr("width", accel_width)
-			.attr("height", accel_height);
-		accel_svg2.selectAll("defs")
-			.attr("width", accel_width)
-			.attr("height", accel_height);
-		accel_svg3.selectAll("defs")
-			.attr("width", accel_width)
-			.attr("height", accel_height);
-		accel_svg4.selectAll("defs")
-			.attr("width", accel_width)
-			.attr("height", accel_height);
-			
-		accel_svg1.selectAll("rect")
-			.attr("width", accel_width)
-			.attr("height", accel_height);
-		accel_svg2.selectAll("rect")
-			.attr("width", accel_width)
-			.attr("height", accel_height);
-		accel_svg3.selectAll("rect")
-			.attr("width", accel_width)
-			.attr("height", accel_height);
-		accel_svg4.selectAll("rect")
-			.attr("width", accel_width)
-			.attr("height", accel_height);
+		if(brush.empty())
+		{
+		brush_from = d3.min(accel_x5.domain()).toLocaleDateString() + " " + d3.min(accel_x5.domain()).toLocaleTimeString();
+		brush_to = d3.max(accel_x5.domain()).toLocaleDateString() + " " + d3.max(accel_x5.domain()).toLocaleTimeString();
+		brush_target = document.getElementById("div_slider_timestamp");
+		brush_target.innerHTML = "<b>From: " + brush_from + "</b><br/><b>To: " + brush_to + "</b>";
+		}
+		else
+		{
+		brush_from = d3.min(brush.extent()).toLocaleDateString() + " " + d3.min(brush.extent()).toLocaleTimeString();
+		brush_to = d3.max(brush.extent()).toLocaleDateString() + " " + d3.max(brush.extent()).toLocaleTimeString();
+		brush_target = document.getElementById("div_slider_timestamp");
+		brush_target.innerHTML = "<b>From: " + brush_from + "</b><br/><b>To: " + brush_to + "</b>";
+		}
 	}
 
 }	

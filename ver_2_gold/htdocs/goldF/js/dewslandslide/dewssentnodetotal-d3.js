@@ -26,7 +26,6 @@
 				
 		d3.selectAll("#svg-sitehealth").remove();
 		
-	var sentnode_focusGraph;
 	var sentnode_target = document.getElementById('sent-node-canvas');
 	var sentnode_spinner = new Spinner(sentnode_opts).spin();
         sentnode_target.appendChild(sentnode_spinner.el);
@@ -41,11 +40,11 @@
 	var sentnode_formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
 	var sentnode_bisectDate = d3.bisector(function(d) { return d.date; }).left;
 	
-	var sentnode_x = d3.time.scale().range([0, sentnode_width]),
+		sentnode_x = d3.time.scale().range([0, sentnode_width]);
 		sentnode_y = d3.scale.linear().range([sentnode_height, 0]);
 	
-	var sentnode_xAxis = d3.svg.axis().scale(sentnode_x).orient("bottom").ticks(4),
-		sentnode_yAxis = d3.svg.axis().scale(sentnode_y).orient("left").ticks(4);
+		sentnode_xAxis = d3.svg.axis().scale(sentnode_x).orient("bottom").ticks(4);
+	var	sentnode_yAxis = d3.svg.axis().scale(sentnode_y).orient("left").ticks(4);
 		
 	var sentnode_svg = d3.select("#sent-node-canvas").append("svg")
 			.attr("id", "svg-sitehealth")
@@ -58,7 +57,7 @@
 			.attr("width", sentnode_width)
 			.attr("height", sentnode_height);
 	
-	var sentnode_focus = sentnode_svg.append("g")
+		sentnode_focus = sentnode_svg.append("g")
 			.attr("class", "focus")
 			.attr("transform", "translate(" + sentnode_margin.left + "," + sentnode_margin.top + ")");
 		

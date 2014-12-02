@@ -155,6 +155,7 @@
 <script>
 var curSite = "<?php echo $site; ?>";
 var curNode = "<?php echo $node; ?>";
+var fromDate = "" , toDate = "" , dataBase = "";
 
 var options = ["select", "blcb", "blct", "bolb", "gamb", "gamt",
 				"humb", "humt", "labb", "labt", "lipb",
@@ -214,6 +215,9 @@ window.onload = function() {
 }	
 
 window.onresize = function() {
+		curNode = document.getElementById("node").value;
+		fromDate = document.getElementById("formDate").dateinput.value;
+		toDate = document.getElementById("formDate").dateinput2.value;
 d3.select("#svg-alertmini").remove();
 svg.selectAll(".dot").remove();
 	svg.selectAll(".dot1").remove();
@@ -223,6 +227,7 @@ svg.selectAll(".dot").remove();
 	svg.selectAll(".tick").remove();
 	svg.selectAll(".axislabel").remove();
 initAlertPlot();
+showAccel();
 }
 
 function redirectNodePlots (frm) {
@@ -230,9 +235,10 @@ function redirectNodePlots (frm) {
 		//do nothing
 	}
 	else {
-		curSite = frm.sitegeneral.value;
+		curSite = document.getElementById("sitegeneral").value;
 		curNode = document.getElementById("node").value;
-		
+		fromDate = document.getElementById("formDate").dateinput.value;
+		toDate = document.getElementById("formDate").dateinput2.value;
 		var urlExt = "gold/node/" + curSite + "/" + curNode;
 		var urlBase = "<?php echo base_url(); ?>";
 		
@@ -245,9 +251,12 @@ function showNodePlots (frm) {
 		//do nothing
 	}
 	else {
+		curNode = document.getElementById("node").value;
+		fromDate = document.getElementById("formDate").dateinput.value;
+		toDate = document.getElementById("formDate").dateinput2.value;
 		//showPositionPlotGeneral(frm);
 		//showLSBChange(frm);
-		showAccel(frm);
+		showAccel();
 	}
 }
 
@@ -256,9 +265,12 @@ function showAccelRelatedPlots (frm) {
 		//do nothing
 	}
 	else {
+		curNode = document.getElementById("node").value;
+		fromDate = document.getElementById("formDate").dateinput.value;
+		toDate = document.getElementById("formDate").dateinput2.value;
 		renameHeader();
 		//showLSBChange(frm);
-		showAccel(frm);
+		showAccel();
 	}
 }
 
@@ -267,7 +279,10 @@ function showDateNodePlots (frm) {
 		//do nothing
 	}
 	else {
-		showAccel(frm);
+		curNode = document.getElementById("node").value;
+		fromDate = document.getElementById("formDate").dateinput.value;
+		toDate = document.getElementById("formDate").dateinput2.value;
+		showAccel();
 	}
 }
 

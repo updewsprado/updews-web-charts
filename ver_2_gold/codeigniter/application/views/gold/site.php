@@ -379,7 +379,7 @@ function showSitePlots (frm) {
 		showSentNodeTotalGeneral();
         showRainGeneral();
 		showCommHealthPlotGeneral();
-		
+		showBrush();
 	}
 }
 
@@ -392,8 +392,12 @@ function showDateSitePlots (frm) {
 		toDate = document.getElementById("formDate").dateinput2.value;
 		showSentNodeTotalGeneral();
 		showRainGeneral();
+		showBrush();
 	}
 }
 
+var slider_x, slider_y, sentnode_x, sentnode_y, sentnode_focus, sentnode_xAxis, sentnode_focusGraph, rainfall_x1, 
+	rainfall_y1, rainfall_x2, rainfall_y2, rainfall_svg1, rainfall_svg2, rainfall_area1, rainfall_area2, 
+	rainfall_xAxis1, rainfall_xAxis2;
 
 </script>

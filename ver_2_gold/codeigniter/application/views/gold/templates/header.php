@@ -77,7 +77,7 @@
     <?php echo $lsbchange; ?>
     <?php echo $accel; ?>
     <?php echo $presence; ?>
-
+	<?php echo $slider; ?>
     
     <!-- Custom DEWS Map JS -->
     <?php echo $gmap; ?>
