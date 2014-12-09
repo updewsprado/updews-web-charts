@@ -46,8 +46,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="mini-alert-canvas">
-								</div>
+                                <div id="mini-alert-canvas" ></div>
                             </div>
                         </div>
                     </div>                                       
@@ -215,19 +214,20 @@ window.onload = function() {
 }	
 
 window.onresize = function() {
-		curNode = document.getElementById("node").value;
-		fromDate = document.getElementById("formDate").dateinput.value;
-		toDate = document.getElementById("formDate").dateinput2.value;
-d3.select("#svg-alertmini").remove();
-svg.selectAll(".dot").remove();
-	svg.selectAll(".dot1").remove();
-	svg.selectAll(".dot2").remove();
-	svg.selectAll(".line").remove();
-	svg.selectAll(".legend").remove();
-	svg.selectAll(".tick").remove();
-	svg.selectAll(".axislabel").remove();
-initAlertPlot();
-showAccel();
+	curNode = document.getElementById("node").value;
+	fromDate = document.getElementById("formDate").dateinput.value;
+	toDate = document.getElementById("formDate").dateinput2.value;
+	d3.select("#svg-alertmini").remove();
+	svg.selectAll(".dot").remove();
+		svg.selectAll(".dot1").remove();
+		svg.selectAll(".dot2").remove();
+		svg.selectAll(".line").remove();
+		svg.selectAll(".legend").remove();
+		svg.selectAll(".tick").remove();
+		svg.selectAll(".axislabel").remove();
+		
+	initAlertPlot();
+	showAccel();
 }
 
 function redirectNodePlots (frm) {
@@ -255,7 +255,7 @@ function showNodePlots (frm) {
 		fromDate = document.getElementById("formDate").dateinput.value;
 		toDate = document.getElementById("formDate").dateinput2.value;
 		//showPositionPlotGeneral(frm);
-		//showLSBChange(frm);
+		showLSBChange(frm);
 		showAccel();
 	}
 }
@@ -269,7 +269,8 @@ function showAccelRelatedPlots (frm) {
 		fromDate = document.getElementById("formDate").dateinput.value;
 		toDate = document.getElementById("formDate").dateinput2.value;
 		renameHeader();
-		//showLSBChange(frm);
+		
+		showLSBChange(frm);
 		showAccel();
 	}
 }

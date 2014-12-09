@@ -105,13 +105,69 @@
 									</div>
 							</div>
                             <div class="panel-body">
-                                <div id="healthbars-canvas">
-                                </div>
+                                <div id="healthbars-canvas"></div>
                             </div>
                         </div>
-                    </div>                                    
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Sent Node Data</h3>
+                            </div>
+                            <div class="panel-body">
+								<div id="sentnode_timestamp"><b>Data Sent: </b></div>   
+								<div id="sent-node-canvas">	                     	     	
+								</div>
+							</div>
+						</div>     
+                    </div>                              
                 </div>
                 <!-- /.row -->
+
+				<div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Rainfall Data (24 Hour Cummulative)</h3>
+                            </div>
+                            <div class="panel-body">
+								<div id="rainfall-canvas">
+									<div id="rainfall_24hr_timestamp"><b>Timestamp: </b></div>
+									<div id="rainfall_24hr">
+									</div>
+								</div>                            	
+                            </div>
+                        </div>
+					</div>
+					<div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Rainfall Data (15 Min Cummulative)</h3>
+                            </div>
+                            <div class="panel-body">
+								<div id="rainfall-canvas">
+									<div id="rainfall_15min_timestamp"><b>Timestamp: </b></div>
+									<div id="rainfall_15min">
+									</div>
+								</div>                            	
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <!-- /.row -->
+
+                <!-- Heading for Dynaslope Analysis Charts   -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard"></i> Dynaslope Analysis Charts                              
+                            </li>
+                        </ol>
+                    </div>
+                </div>                                 	
+                <!-- /.row -->	   
 
 				<div class="row">
                      <div class="col-lg-6">
@@ -198,65 +254,7 @@
                         </div>
                     </div>                                  
                 </div>	
-                <!-- /.row -->	                                
-
-                <!-- Heading for Date Dependent Charts -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-dashboard"></i> Date Dependent Charts                                
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-
-				<div class="row">
-                     <div class="col-lg-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Sent Node Data</h3>
-                            </div>
-                            <div class="panel-body">
-								<div id="sentnode_timestamp"><b>Data Sent: </b></div>   
-								<div id="sent-node-canvas">	                     	     	
-								</div>
-							</div>
-						</div>     
-                    </div>
-				</div>
-				<!-- /.row -->
-				<div class="row">
-                    <div class="col-lg-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Rainfall Data (24 Hour Cummulative)</h3>
-                            </div>
-                            <div class="panel-body">
-								<div id="rainfall-canvas">
-									<div id="rainfall_24hr_timestamp"><b>Timestamp: </b></div>
-									<div id="rainfall_24hr">
-									</div>
-								</div>                            	
-                            </div>
-                        </div>
-					</div>
-					<div class="col-lg-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Rainfall Data (15 Min Cummulative)</h3>
-                            </div>
-                            <div class="panel-body">
-								<div id="rainfall-canvas">
-									<div id="rainfall_15min_timestamp"><b>Timestamp: </b></div>
-									<div id="rainfall_15min">
-									</div>
-								</div>                            	
-                            </div>
-                        </div>
-                    </div>
-                </div>                                  	
-                <!-- /.row -->	    
+                <!-- /.row -->	                                 
                 		
             </div>
             <!-- /.container-fluid -->
