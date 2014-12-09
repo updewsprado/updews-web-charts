@@ -207,7 +207,8 @@ function showDataPres() {
 	//presenceJSON = <?php echo $dataPresence; ?>;
 	//allSitesJSON = <?php echo $allSites; ?>;
 	allSitesJSON = maxNodesJSON;
-	var url = "/test/allpres/24";
+	//var url = "/test/allpres/24";
+	var url = "/test/allpres";
 	
 	generatePresencePlot(url, "Data Presence Map", 0, true, 1);
 }
