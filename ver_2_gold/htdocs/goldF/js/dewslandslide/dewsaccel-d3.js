@@ -92,7 +92,7 @@ function showAccel() {
 	var accel_area1 = d3.svg.area()
 		.interpolate("cardinal")
 		.x(function(d) { return accel_x1(d.timestamp); })
-		.y0(function (d) {if(d.xvalue < 0){return 0;} else return accel_height})
+		.y0(function (d) { return accel_y1(0); })
 		.y1(function(d) { return accel_y1(d.xvalue); });
 		
 	var accel_svg1 = d3.select("#accel-1").append("svg")
@@ -128,19 +128,13 @@ function showAccel() {
 	var accel_area2 = d3.svg.area()
 		.interpolate("cardinal")
 		.x(function(d) { 
-			return accel_x2(d.timestamp); 
+				return accel_x2(d.timestamp); 
 			})
 		.y0(function (d) {
-			/*
-			if(d.yvalue < 0)
-				return 0;
-			else 
-				return accel_height;
-			*/
-			return accel_y2(0); 
+				return accel_y2(0); 
 			})
 		.y1(function(d) { 
-			return accel_y2(d.yvalue); 
+				return accel_y2(d.yvalue); 
 			});
 		
 	var accel_svg2 = d3.select("#accel-2").append("svg")
@@ -176,7 +170,7 @@ function showAccel() {
 	var accel_area3 = d3.svg.area()
 		.interpolate("cardinal")
 		.x(function(d) { return accel_x3(d.timestamp); })
-		.y0(function (d) {if(d.zvalue < 0){return 0;} else return accel_height})
+		.y0(function (d) { return accel_y3(0); })
 		.y1(function(d) { return accel_y3(d.zvalue); });
 
 	var accel_svg3 = d3.select("#accel-3").append("svg")
@@ -212,7 +206,7 @@ function showAccel() {
 	var accel_area4 = d3.svg.area()
 		.interpolate("cardinal")
 		.x(function(d) { return accel_x4(d.timestamp); })
-		.y0(function (d) {if(d.mvalue < 0){return 0;} else return accel_height})
+		.y0(function (d) {return accel_y4(0);})
 		.y1(function(d) { return accel_y4(d.mvalue); });
 
 	var accel_svg4 = d3.select("#accel-4").append("svg")
