@@ -73,7 +73,7 @@ function showAccel() {
 	var accel_formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
 	var accel_bisectDate = d3.bisector(function(d) { return d.timestamp; }).left;
 	
-<!-- X-Value -->
+	//<!-- X-Value -->
 	
 	var accel_x1 = d3.time.scale()
 		.range([0, accel_width]);
@@ -90,7 +90,7 @@ function showAccel() {
 		.orient("left").ticks(2);
 
 	var accel_area1 = d3.svg.area()
-		.interpolate("basis")
+		.interpolate("cardinal")
 		.x(function(d) { return accel_x1(d.timestamp); })
 		.y0(function (d) {if(d.xvalue < 0){return 0;} else return accel_height})
 		.y1(function(d) { return accel_y1(d.xvalue); });
@@ -109,7 +109,7 @@ function showAccel() {
 		.attr("width", accel_width)
 		.attr("height", accel_height);
 		
-<!-- Y-Value -->		
+	//<!-- Y-Value -->		
 	
 	var accel_x2 = d3.time.scale()
 		.range([0, accel_width]);
@@ -126,10 +126,22 @@ function showAccel() {
 		.orient("left").ticks(2);
 
 	var accel_area2 = d3.svg.area()
-		.interpolate("basis")
-		.x(function(d) { return accel_x2(d.timestamp); })
-		.y0(function (d) {if(d.yvalue < 0){return 0;} else return accel_height})
-		.y1(function(d) { return accel_y2(d.yvalue); });
+		.interpolate("cardinal")
+		.x(function(d) { 
+			return accel_x2(d.timestamp); 
+			})
+		.y0(function (d) {
+			/*
+			if(d.yvalue < 0)
+				return 0;
+			else 
+				return accel_height;
+			*/
+			return accel_y2(0); 
+			})
+		.y1(function(d) { 
+			return accel_y2(d.yvalue); 
+			});
 		
 	var accel_svg2 = d3.select("#accel-2").append("svg")
 		.attr("id", "svg-accel")
@@ -145,7 +157,7 @@ function showAccel() {
 		.attr("width", accel_width)
 		.attr("height", accel_height);
 		
-<!-- Z-Value -->	
+	//<!-- Z-Value -->	
 
 	var accel_x3 = d3.time.scale()
 		.range([0, accel_width]);
@@ -162,7 +174,7 @@ function showAccel() {
 		.orient("left").ticks(2);
 
 	var accel_area3 = d3.svg.area()
-		.interpolate("basis")
+		.interpolate("cardinal")
 		.x(function(d) { return accel_x3(d.timestamp); })
 		.y0(function (d) {if(d.zvalue < 0){return 0;} else return accel_height})
 		.y1(function(d) { return accel_y3(d.zvalue); });
@@ -181,7 +193,7 @@ function showAccel() {
 		.attr("width", accel_width)
 		.attr("height", accel_height);
 		
-<!-- Soil Moisture -->
+	//<!-- Soil Moisture -->
 
 	var accel_x4 = d3.time.scale()
 		.range([0, accel_width]);
@@ -198,7 +210,7 @@ function showAccel() {
 		.orient("left").ticks(2);
 
 	var accel_area4 = d3.svg.area()
-		.interpolate("basis")
+		.interpolate("cardinal")
 		.x(function(d) { return accel_x4(d.timestamp); })
 		.y0(function (d) {if(d.mvalue < 0){return 0;} else return accel_height})
 		.y1(function(d) { return accel_y4(d.mvalue); });
@@ -217,7 +229,7 @@ function showAccel() {
 		.attr("width", accel_width)
 		.attr("height", accel_height);
 		
-<!-- Context Brush -->
+	//<!-- Context Brush -->
 	
 	var accel_x5 = d3.time.scale().range([0, accel_width2 + 49]);
 	
@@ -230,7 +242,7 @@ function showAccel() {
 		.range([accel_height2, 0]);
 
 	var accel_area5 = d3.svg.area()
-		.interpolate("basis")
+		.interpolate("cardinal")
 		.x(function(d) { return accel_x5(d.timestamp); })
 		.y0(accel_height2)
 		.y1(0);
@@ -260,7 +272,7 @@ function showAccel() {
 	var accel_tool4 = accel_svg4.append("g")                                
 		.style("display", null);   
 
-<!-- JSON -->
+	//<!-- JSON -->
 			
 	d3.json(accel_url, function(error, data){
 		
@@ -281,7 +293,7 @@ function showAccel() {
 			d.mvalue = +d.mvalue;
 		});
 		
-<!-- X-Value -->
+		//<!-- X-Value -->
 		
 		accel_x1.domain(d3.extent(data, function(d) { return d.timestamp; }));
 		accel_y1.domain([d3.min(data, function(d) {return d.xvalue;}), d3.max(data, function(d) { return d.xvalue; })]);
@@ -319,7 +331,7 @@ function showAccel() {
 			  .style("text-anchor", "end")
 			  .text("X(LSB)");
 	
-<!-- Y-Value -->
+		//<!-- Y-Value -->
 		
 		accel_x2.domain(d3.extent(data, function(d) { return d.timestamp; }));
 		accel_y2.domain([d3.min(data, function(d) {return d.yvalue;}), d3.max(data, function(d) { return d.yvalue; })]);
@@ -357,7 +369,7 @@ function showAccel() {
 			.style("text-anchor", "end")
 			.text("Y(LSB)");  
 
-<!-- Z-Value -->
+		//<!-- Z-Value -->
 		
 		accel_x3.domain(d3.extent(data, function(d) { return d.timestamp; }));
 		accel_y3.domain([d3.min(data, function(d) {return d.zvalue;}), d3.max(data, function(d) { return d.zvalue; })]);
@@ -395,7 +407,7 @@ function showAccel() {
 			  .style("text-anchor", "end")
 			  .text("Z(LSB)");
 			  
-<!-- Soil Moisture -->
+		//<!-- Soil Moisture -->
 		
 		accel_x4.domain(d3.extent(data, function(d) { return d.timestamp; }));
 		accel_y4.domain([d3.min(data, function(d) {return d.mvalue;}), d3.max(data, function(d) { return d.mvalue; })]);
@@ -433,7 +445,7 @@ function showAccel() {
 			  .style("text-anchor", "end")
 			  .text("M(HZ)");
 	 
-<!-- Slider -->
+		//<!-- Slider -->
 		
 		accel_x5.domain(accel_x1.domain());
 		accel_y5.domain(accel_y1.domain());
@@ -480,7 +492,7 @@ function showAccel() {
 			.style("stroke", "FCFF33")                         
 			.attr("r", 2);  
 		
-<!-- Tooltips Function -->
+		//<!-- Tooltips Function -->
 		
 		function accel_mousemove1() {                                 
 			var x0 = accel_x1.invert(d3.mouse(this)[0]);              
@@ -582,17 +594,17 @@ function showAccel() {
 		
 		if(brush.empty())
 		{
-		brush_from = d3.min(accel_x5.domain()).toLocaleDateString() + " " + d3.min(accel_x5.domain()).toLocaleTimeString();
-		brush_to = d3.max(accel_x5.domain()).toLocaleDateString() + " " + d3.max(accel_x5.domain()).toLocaleTimeString();
-		brush_target = document.getElementById("div_slider_timestamp");
-		brush_target.innerHTML = "<b>From: " + brush_from + "</b><br/><b>To: " + brush_to + "</b>";
+			brush_from = d3.min(accel_x5.domain()).toLocaleDateString() + " " + d3.min(accel_x5.domain()).toLocaleTimeString();
+			brush_to = d3.max(accel_x5.domain()).toLocaleDateString() + " " + d3.max(accel_x5.domain()).toLocaleTimeString();
+			brush_target = document.getElementById("div_slider_timestamp");
+			brush_target.innerHTML = "<b>From: " + brush_from + "</b><br/><b>To: " + brush_to + "</b>";
 		}
 		else
 		{
-		brush_from = d3.min(brush.extent()).toLocaleDateString() + " " + d3.min(brush.extent()).toLocaleTimeString();
-		brush_to = d3.max(brush.extent()).toLocaleDateString() + " " + d3.max(brush.extent()).toLocaleTimeString();
-		brush_target = document.getElementById("div_slider_timestamp");
-		brush_target.innerHTML = "<b>From: " + brush_from + "</b><br/><b>To: " + brush_to + "</b>";
+			brush_from = d3.min(brush.extent()).toLocaleDateString() + " " + d3.min(brush.extent()).toLocaleTimeString();
+			brush_to = d3.max(brush.extent()).toLocaleDateString() + " " + d3.max(brush.extent()).toLocaleTimeString();
+			brush_target = document.getElementById("div_slider_timestamp");
+			brush_target.innerHTML = "<b>From: " + brush_from + "</b><br/><b>To: " + brush_to + "</b>";
 		}
 	}
 
