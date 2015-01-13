@@ -109,7 +109,7 @@
 			comm_cWidth = document.getElementById('healthbars-canvas').clientWidth
 			comm_cHeight = document.getElementById('healthbars-canvas').clientHeight;
 	
-		var comm_margin = {top: comm_cHeight * 0.01, right: comm_cWidth * 0.01, bottom: comm_cWidth * 0.15, left: comm_cHeight * 0.15},
+		var comm_margin = {top: comm_cHeight * 0.01, right: comm_cWidth * 0.01, bottom: comm_cWidth * 0.065, left: comm_cHeight * 0.125},
 			comm_width = comm_cWidth - comm_margin.left - comm_margin.right,
 			comm_height = comm_cHeight - comm_margin.top - comm_margin.bottom;
 			

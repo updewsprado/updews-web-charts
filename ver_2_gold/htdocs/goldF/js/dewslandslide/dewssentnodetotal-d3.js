@@ -32,7 +32,7 @@
 			 
 	var sentnode_cWidth = document.getElementById('sent-node-canvas').clientWidth;
 		sentnode_cHeight = document.getElementById('sent-node-canvas').clientHeight;
-	var sentnode_margin = {top: sentnode_cHeight * 0.01, right: sentnode_cWidth * 0.01, bottom: sentnode_cHeight * 0.06, left: sentnode_cWidth * 0.09};
+	var sentnode_margin = {top: sentnode_cHeight * 0.01, right: sentnode_cWidth * 0.005, bottom: sentnode_cHeight * 0.06, left: sentnode_cWidth * 0.095};
 		sentnode_width = sentnode_cWidth - sentnode_margin.left - sentnode_margin.right;
 		sentnode_height = sentnode_cHeight - sentnode_margin.top - sentnode_margin.bottom;
 
@@ -132,8 +132,8 @@
 
 					sentnode_tool.select("circle.y")                         
 						.attr("transform",                           
-							  "translate(" + (sentnode_x(d.date) + 45)  + "," +         
-											 sentnode_y((d.nodes) - 0.5) + ")");      
+							  "translate(" + (sentnode_x(d.date) + sentnode_margin.left + sentnode_margin.right)  + "," +         
+											 sentnode_y((d.nodes) - 0.25) + ")");      
 										 
 					sentnode_current = document.getElementById("sentnode_timestamp");
 					sentnode_current.innerHTML = "<b>Data Sent: </b>" + d.nodes + "<b> Timestamp: </b>" + sentnode_formatDate(d.date);
