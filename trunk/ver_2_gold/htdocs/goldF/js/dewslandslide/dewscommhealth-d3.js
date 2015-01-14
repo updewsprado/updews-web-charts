@@ -109,7 +109,7 @@
 			comm_cWidth = document.getElementById('healthbars-canvas').clientWidth
 			comm_cHeight = document.getElementById('healthbars-canvas').clientHeight;
 	
-		var comm_margin = {top: comm_cHeight * 0.01, right: comm_cWidth * 0.01, bottom: comm_cWidth * 0.065, left: comm_cHeight * 0.125},
+		var comm_margin = {top: comm_cHeight * 0.001, right: comm_cWidth * 0.005, bottom: comm_cWidth * 0.05, left: comm_cHeight * 0.125},
 			comm_width = comm_cWidth - comm_margin.left - comm_margin.right,
 			comm_height = comm_cHeight - comm_margin.top - comm_margin.bottom;
 			
@@ -205,9 +205,9 @@
 					.text("Communication Health Ratio");
 
 				comm_svg.append("text")      // text label for the x axis
-					.attr("transform", "translate(" + (comm_width / 2) + " ," + (comm_height + 40) + ")")
+					.attr("transform", "translate(" + (comm_width / 2) + " ," + (comm_height + comm_margin.bottom) + ")")
 					.style("text-anchor", "middle")
-					.style("font-size", "13.5px")
+					.style("font-size", "11px")
 					.text("Node Number");
 				
 					  	comm_spinner.stop();
