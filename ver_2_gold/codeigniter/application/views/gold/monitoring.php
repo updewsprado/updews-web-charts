@@ -65,6 +65,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map 
                                 	<input type="button" id="alertLegend" onclick="alertLegends(this.form)" value="Show Legends" />
                                 	<button type="button" class="btn btn-sm btn-link"><a href="/ajax/csvmonitoring/lsb7days.csv">(Historical Data)</a></button>
+                                	<a href="#"><img class="imgreport" src="/<?php echo $imgfolder; ?>/report.svg" alt="" /></a>
                                 </h3>
 								<div id="alertcanvaslegend"  style="width:300px; height:100px; visibility:hidden; display:none;">
 									<svg width="290px" height="95px">
@@ -112,15 +113,14 @@
 
 window.onload = function() {
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
-	nodeStatusJSON = <?php echo $nodeStatus; ?>;
 	maxNodesJSON = <?php echo $siteMaxNodes; ?>;
+	nodeStatusJSON = <?php echo $nodeStatus; ?>;
 	
 	$('#formGeneral').hide();
 	$('#formDate').hide();
 	
 	initAlertPlot();
 	dataPresencePlot();
-
 }	
 
 d3.select(window).on("resize", resize2)
