@@ -24,6 +24,7 @@ class Gold extends CI_Controller {
 		$data['title'] = $page;
 		$data['version'] = "gold";
 		$data['folder'] = "goldF";
+		$data['imgfolder'] = "images";
 		
 		$data['charts'] = $data['tables'] = $data['forms'] = $data['bselements'] = '';
 		$data['bsgrid'] = $data['blank'] = $data['home'] = $data['monitoring'] = '';

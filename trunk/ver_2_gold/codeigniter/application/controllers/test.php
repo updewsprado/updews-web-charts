@@ -6,8 +6,8 @@ class Test extends CI_Controller {
 	{
 		$this->load->helper('url');
 		$this->load->model('Alert_model');
-		$data['testname'] = $this->Alert_model->printName();
-		$data['testaccel'] = $this->Alert_model->getAccel('2014-09-01', 'blcb', '4');
+		//$data['testname'] = $this->Alert_model->printName();
+		//$data['testaccel'] = $this->Alert_model->getAccel('2014-09-01', 'blcb', '4');
 
 		$data['nodeAlerts'] = $this->Alert_model->getAlert();
 		$data['siteMaxNodes'] = $this->Alert_model->getSiteMaxNodes();
@@ -16,6 +16,28 @@ class Test extends CI_Controller {
 		
 		$this->load->view('graphs/testAlert', $data);
 		//$this->load->view('graphs/alertPlot', $data);
+	}
+
+	public function modalview()
+	{
+		$this->load->view('graphs/modalview');
+	}
+	
+	public function modalview2()
+	{
+		$this->load->view('graphs/modalview2');
+	}
+
+	public function nodereport()
+	{
+		$this->load->helper('url');
+		$this->load->model('Alert_model');
+
+		$data['nodeAlerts'] = $this->Alert_model->getAlert();
+		$data['siteMaxNodes'] = $this->Alert_model->getSiteMaxNodes();
+		$data['nodeStatus'] = $this->Alert_model->getNodeStatus();
+		
+		$this->load->view('graphs/testNodeReport', $data);
 	}
 
 	public function wsall( $site = 'blcw', $from = '2010-01-01', $to = null )
