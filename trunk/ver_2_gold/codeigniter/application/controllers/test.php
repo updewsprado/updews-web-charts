@@ -27,6 +27,11 @@ class Test extends CI_Controller {
 	{
 		$this->load->view('graphs/modalview2');
 	}
+	
+	public function modalview3()
+	{
+		$this->load->view('graphs/modalview3');
+	}	
 
 	public function nodereport()
 	{

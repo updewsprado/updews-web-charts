@@ -3,7 +3,7 @@
  */
 
 angular.module('plunker', ['ui.bootstrap']);
-var ModalDemoCtrl = function ($scope, $modal, $log) {
+var ModalDemoCtrlx = function ($scope, $modal, $log) {
 
   $scope.items = ['item1', 'item2', 'item3'];
   //$scope.node = "";
@@ -30,7 +30,7 @@ var ModalDemoCtrl = function ($scope, $modal, $log) {
   };
 };
 
-var ModalInstanceCtrl = function ($scope, $modalInstance, node) {
+var ModalInstanceCtrlx = function ($scope, $modalInstance, node) {
   $scope.ok = function () {	
   	//$scope.node = node;
     $modalInstance.close($scope.node);
@@ -41,7 +41,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, node) {
   };
 };
 
-var ModalDemoCtrl2 = function ($scope, $modal, $log) {
+var ModalDemoCtrl = function ($scope, $modal, $log) {
 
   $scope.items = ['item1', 'item2', 'item3'];
   $scope.name = "";
@@ -66,7 +66,7 @@ var ModalDemoCtrl2 = function ($scope, $modal, $log) {
   };
 };
 
-var ModalInstanceCtrl2 = function ($scope, $modalInstance, items) {
+var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
   $scope.items = items;
   $scope.selected = {
     item: $scope.items[0]
