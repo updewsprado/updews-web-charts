@@ -21,7 +21,7 @@
 /* Ease Display */
 
 .pad { padding: 25px; }</style></head><body>
-<html ng-app="modalTest">
+<html ng-app="modalTest" ng-init="alias='holy cow'">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
     <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
@@ -60,6 +60,9 @@
         <p>
           <span class="text-info">Your Name</span>: {{name}}
         </p>
+        <p>
+          <span class="text-info">Your Alternate Name</span>: {{alias}}
+        </p>        
       </div>
     </div>
     <br />
@@ -72,7 +75,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title">
-							<span class="glyphicon glyphicon-star"></span> User\'s Name
+							<span class="glyphicon glyphicon-star"></span> User's Name
 						</h4>
 					</div>
 					<div class="modal-body">
@@ -83,6 +86,7 @@
 							<!--
 							<input type="text" class="form-control" name="username" id="username" ng-model="user.name" ng-keyup="hitEnter($event)" required>
 							-->
+							<p>Alias: <span ng-bind="alias"></span></p>
 							<span class="help-block">Enter your full name, first &amp; last.</span>
 						</div>
 						</ng-form>
