@@ -59,12 +59,14 @@ function callModal() {
 }
 
 $(function () { $('#exampleModal').on('show.bs.modal', function () {
-     	//alert('Hey, I heard you like modals...');
 		var modal = $(this);
 		
-		modal.find('.modal-title').text('New message to ' + gReportData.site + ' ' + gReportData.node);
-	    modal.find('.modal-body input').val(gReportData.site);
-	    modal.find('.modal-body textarea').val('Hello There, Handsome from ' + gReportData.site);
+		modal.find('.modal-title').text('Node Status Report for ' + gReportData.site + ' ' + gReportData.node);
+	    modal.find('#site-column-name').val(gReportData.site);
+	    modal.find('#node-id').val(gReportData.node);
+	    //modal.find('#date-discovered').val(gReportData.node);
+	    modal.find('#status-text').val('Unknown status for ' + gReportData.site);
+	    modal.find('#comment-text').val('Testing this wonderful function called modals');
 	});
 });
 
