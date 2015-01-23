@@ -182,17 +182,29 @@ path {
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+          <h4 class="modal-title" id="exampleModalLabel">Node Status Report</h4>
         </div>
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="recipient-name" class="control-label">Recipient:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <label for="site-column-name" class="control-label">Site Column:</label>
+              <input type="text" class="form-control" id="site-column-name">
             </div>
             <div class="form-group">
-              <label for="message-text" class="control-label">Message:</label>
-              <textarea class="form-control" id="message-text"></textarea>
+              <label for="node-id" class="control-label">Node ID:</label>
+              <input type="text" class="form-control" id="node-id">
+            </div>
+            <div class="form-group">
+              <label for="date-discovered" class="control-label">Date Discovered:</label>
+              <input type="text" class="form-control" id="date-discovered">
+            </div>
+            <div class="form-group">
+              <label for="status-text" class="control-label">Status:</label>
+              <textarea class="form-control" id="status-text"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="comment-text" class="control-label">Comment:</label>
+              <textarea class="form-control" id="comment-text"></textarea>
             </div>
           </form>
         </div>
