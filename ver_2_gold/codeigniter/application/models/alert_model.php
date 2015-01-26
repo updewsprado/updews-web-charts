@@ -163,7 +163,10 @@ class Alert_Model extends CI_Model
 					FROM 
 						node_status 
 					WHERE 
-						status <> 'OK'");
+						status <> 'OK'
+					AND
+						inUse = 1	
+					");
 		
 		$statusAll = array();
 		$ctr = 0;
