@@ -145,6 +145,8 @@ path {
 
 <!-- Custom DEWS Landslide CSS -->
 <link href="/goldF/css/dewslandslide/dewsalert.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/temp/datepicker.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <!-- Custom DEWS Landslide JS -->
 
 <!-- jQuery Version 1.11.0 -->
@@ -158,23 +160,18 @@ path {
 <script src="http://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
 -->
 
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="/temp/bootstrap-datepicker.js"></script>
 
 </head>
 
 <body>
 <br /><br /><br /><br />
 	
-	<div id="alert-canvas"></div>
-    
-<!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal">
-   Launch demo modal
-</button>
-
-<div id="demo">Demo</div>
+<div id="alert-canvas"></div>
+   
 
 <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -194,14 +191,24 @@ path {
               <label for="node-id" class="control-label">Node ID:</label>
               <input type="text" class="form-control" id="node-id">
             </div>
+            
             <div class="form-group">
-              <label for="date-discovered" class="control-label">Date Discovered:</label>
-              <input type="text" class="form-control" id="date-discovered">
-            </div>
+                <label for="date-discovered" class="control-label">Date Discovered:</label>
+				<div class="input-group date">
+				  <input type="text" class="form-control" id="date-discovered"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+				</div>
+			</div>
+            
             <div class="form-group">
-              <label for="status-text" class="control-label">Status:</label>
-              <textarea class="form-control" id="status-text"></textarea>
-            </div>
+                <label for="status-select" class="control-label">Status:</label>
+	            <select class="form-control" id="status-select">
+	                <option value="OK">OK</option>
+	                <option value="Use with Caution">Use with Caution</option>
+					<option value="Not OK">Not OK</option>
+					<option value="Special Case">Special Case</option>
+	            </select>
+            </div>						           
+            
             <div class="form-group">
               <label for="comment-text" class="control-label">Comment:</label>
               <textarea class="form-control" id="comment-text"></textarea>
