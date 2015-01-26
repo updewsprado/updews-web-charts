@@ -54,6 +54,13 @@ var gReportData = 0;
 gReportData.site = 0;
 gReportData.node = 0;
 
+/*
+$('.input-group.date').datepicker({
+    autoclose: true,
+    todayHighlight: true
+});  
+*/
+
 function callModal() {
 	$('#exampleModal').modal('show'); 
 }
@@ -64,8 +71,13 @@ $(function () { $('#exampleModal').on('show.bs.modal', function () {
 		modal.find('.modal-title').text('Node Status Report for ' + gReportData.site + ' ' + gReportData.node);
 	    modal.find('#site-column-name').val(gReportData.site);
 	    modal.find('#node-id').val(gReportData.node);
-	    //modal.find('#date-discovered').val(gReportData.node);
-	    modal.find('#status-text').val('Unknown status for ' + gReportData.site);
+	    //modal.find('#date-discovered').val(gReportData.node);  
+	    modal.find('.input-group.date').datepicker({
+	    	clearBtn: true,
+		    autoclose: true,
+		    todayHighlight: true
+		});  
+	    modal.find('#status-select').val("OK");
 	    modal.find('#comment-text').val('Testing this wonderful function called modals');
 	});
 });
