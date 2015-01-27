@@ -32,17 +32,57 @@ class Test extends CI_Controller {
 	{
 		$this->load->view('graphs/modalview3');
 	}	
+	
+	public function formtest()
+	{
+		$this->load->helper(array('form', 'url'));
+
+		$this->load->library('form_validation');
+		
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('formex');
+		}
+		else
+		{
+			$this->load->view('welcome_message');
+		}		
+	}
 
 	public function nodereport()
 	{
 		$this->load->helper('url');
+		$this->load->helper('form');
+		$this->load->library('form_validation');
 		$this->load->model('Alert_model');
 
 		$data['nodeAlerts'] = $this->Alert_model->getAlert();
 		$data['siteMaxNodes'] = $this->Alert_model->getSiteMaxNodes();
 		$data['nodeStatus'] = $this->Alert_model->getNodeStatus();
 		
-		$this->load->view('graphs/testNodeReport', $data);
+		$this->form_validation->set_rules('site', 'Site Column', 'required');
+		$this->form_validation->set_rules('node', 'Node ID', 'required');
+		$this->form_validation->set_rules('discoverdate', 'Date Discovered', 'required');
+		$this->form_validation->set_rules('status', 'Status', 'required');
+		
+		//$this->load->view('graphs/testNodeReport', $data);
+		
+		if ($this->form_validation->run() === FALSE)
+		{
+			$this->load->view('graphs/testNodeReport', $data);
+		}
+		else
+		{
+			$this->Alert_model->set_node_status();
+			//$this->load->view('welcome_message');
+			//$this->load->view('graphs/testNodeReport', $data);
+			redirect('/test/nodereport');
+		}
 	}
 
 	public function wsall( $site = 'blcw', $from = '2010-01-01', $to = null )

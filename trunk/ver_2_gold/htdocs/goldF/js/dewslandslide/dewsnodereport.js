@@ -54,13 +54,6 @@ var gReportData = 0;
 gReportData.site = 0;
 gReportData.node = 0;
 
-/*
-$('.input-group.date').datepicker({
-    autoclose: true,
-    todayHighlight: true
-});  
-*/
-
 function callModal() {
 	$('#exampleModal').modal('show'); 
 }
@@ -77,7 +70,6 @@ $(function () { $('#exampleModal').on('show.bs.modal', function () {
 		    autoclose: true,
 		    todayHighlight: true
 		});  
-	    modal.find('#status-select').val("OK");
 	    modal.find('#comment-text').val('Testing this wonderful function called modals');
 	});
 });
