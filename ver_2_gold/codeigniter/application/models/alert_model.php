@@ -152,6 +152,28 @@ class Alert_Model extends CI_Model
 		
 		return json_encode($siteArray);
 	}	
+
+	public function set_node_status()
+	{
+		$this->load->helper('url');
+		$this->load->helper('date');
+	
+		//$slug = url_title($this->input->post('title'), 'dash', TRUE);
+		$time = $this->input->post('discoverdate');
+		$doi = date("Y-m-d", strtotime($time));
+	
+		$data = array(
+			'site' => $this->input->post('site'),
+			'flagger' => "Prado",
+			'date_of_identification' => $doi,
+			'node' => $this->input->post('node'),
+			'status' => $this->input->post('status'),
+			'comment' => $this->input->post('comment'),
+			'inUse' => 1
+		);
+	
+		return $this->db->insert('node_status', $data);
+	}
 	
 	public function getNodeStatus()
 	{

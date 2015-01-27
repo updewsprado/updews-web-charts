@@ -167,6 +167,9 @@ path {
 
 </head>
 
+<?php echo validation_errors(); ?>
+<?php echo form_open('test/nodereport') ?>
+
 <body>
 <br /><br /><br /><br />
 	
@@ -184,44 +187,45 @@ path {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="site-column-name" class="control-label">Site Column:</label>
-              <input type="text" class="form-control" id="site-column-name">
+              <label for="site-column-name" class="control-label">Site Column</label>
+              <input type="text" class="form-control" name="site" id="site-column-name">
             </div>
             <div class="form-group">
-              <label for="node-id" class="control-label">Node ID:</label>
-              <input type="text" class="form-control" id="node-id">
-            </div>
-            
+              <label for="node-id" class="control-label">Node ID</label>
+              <input type="text" class="form-control" name="node" id="node-id">
+            </div>          
             <div class="form-group">
-                <label for="date-discovered" class="control-label">Date Discovered:</label>
+                <label for="date-discovered" class="control-label">Date Discovered</label>
 				<div class="input-group date">
-				  <input type="text" class="form-control" id="date-discovered"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+				  <input type="text" class="form-control" name="discoverdate" id="date-discovered"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>
-			</div>
-            
+			</div>     			
             <div class="form-group">
-                <label for="status-select" class="control-label">Status:</label>
-	            <select class="form-control" id="status-select">
+                <label for="status-select" class="control-label">Status</label>
+	            <select class="form-control" name="status" id="status-select">
 	                <option value="OK">OK</option>
 	                <option value="Use with Caution">Use with Caution</option>
 					<option value="Not OK">Not OK</option>
 					<option value="Special Case">Special Case</option>
 	            </select>
-            </div>						           
-            
+            </div>		           				            
             <div class="form-group">
-              <label for="comment-text" class="control-label">Comment:</label>
-              <textarea class="form-control" id="comment-text"></textarea>
-            </div>
+              <label for="comment-text" class="control-label">Comment</label>
+              <textarea class="form-control" name="comment" id="comment-text"></textarea>
+            </div>                 
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" name="submit" value="Send message"/>
+          <!--
           <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="sendMessage()">Send message</button>
+          -->
         </div>
       </div>
     </div>
   </div>
+  
 
 <script src="/goldF/js/dewslandslide/dewsnodereport.js"></script>
 <script>
@@ -236,6 +240,9 @@ window.onload = function() {
 <script src='http://codepen.io/assets/editor/live/css_live_reload_init.js'></script>
 
 </body>
+
+</form>
+
 </html>
 
 
