@@ -20,6 +20,7 @@ class Gold extends CI_Controller {
 		}
 	
 		$data['first_name'] = $this->session->userdata('first_name');
+		$data['last_name'] = $this->session->userdata('last_name');
 	
 		$data['title'] = $page;
 		$data['version'] = "gold";
