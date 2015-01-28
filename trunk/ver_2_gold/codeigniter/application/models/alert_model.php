@@ -159,20 +159,65 @@ class Alert_Model extends CI_Model
 		$this->load->helper('date');
 	
 		//$slug = url_title($this->input->post('title'), 'dash', TRUE);
+		$site = $this->input->post('site');
+		$node = $this->input->post('node');
+		
 		$time = $this->input->post('discoverdate');
 		$doi = date("Y-m-d", strtotime($time));
 	
 		$data = array(
-			'site' => $this->input->post('site'),
+			'site' => $site,
 			'flagger' => "Prado",
 			'date_of_identification' => $doi,
-			'node' => $this->input->post('node'),
+			'node' => $node,
 			'status' => $this->input->post('status'),
 			'comment' => $this->input->post('comment'),
 			'inUse' => 1
 		);
+		
+		$this->updateNodeInUse($this->getActiveNodeID($site, $node), 0);
 	
 		return $this->db->insert('node_status', $data);
+	}
+	
+	public function getActiveNodeID($site, $node)
+	{
+		$query = $this->db->query("
+					SELECT 
+						post_id
+					FROM 
+						node_status 
+					WHERE 
+						site = '$site' AND
+						node = '$node'
+					ORDER BY 
+						post_id 
+					DESC LIMIT 1;
+					");
+		
+		$row = $query->row_array();
+		
+		if ($row != null) {
+			return $row['post_id'];	
+		} else {
+			return null;
+		}	
+	}
+	
+	public function updateNodeInUse($postid, $inuse)
+	{
+		if ($postid == null) {
+			return;
+		}
+		
+		$query = $this->db->query("
+					UPDATE
+						node_status
+					SET 
+						inUse = $inuse
+					WHERE 
+						post_id=$postid;
+					");		
 	}
 	
 	public function getNodeStatus()
