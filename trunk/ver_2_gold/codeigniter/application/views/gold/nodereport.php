@@ -199,7 +199,11 @@ path {
 				<div class="input-group date">
 				  <input type="text" class="form-control" name="discoverdate" id="date-discovered"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>
-			</div>     			
+			</div>
+			<div class="form-group">
+              <label for="flaggername" class="control-label">Flagger</label>
+              <input type="text" class="form-control" name="flaggername" id="flagger" value="<?php echo $first_name . " " . $last_name; ?>" readonly>
+            </div>  
             <div class="form-group">
                 <label for="status-select" class="control-label">Status</label>
 	            <select class="form-control" name="status" id="status-select">
