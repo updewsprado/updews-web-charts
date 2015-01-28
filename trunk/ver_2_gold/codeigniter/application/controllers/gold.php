@@ -140,6 +140,10 @@ class Gold extends CI_Controller {
 				$data['lsbchange'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewslsbchange.js"></script>';
 				$data['accel'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsaccel-d3.js"></script>';
 				break;
+
+			case 'nodereport':
+				$this->nodereport();		
+				break;
 			
 			case 'charts':
 				$data['charts'] = 'class="active"';
@@ -169,10 +173,39 @@ class Gold extends CI_Controller {
 				break;
 		}
 	
-		$this->load->view('gold/templates/header', $data);
-		$this->load->view('gold/templates/nav');
-		$this->load->view('gold/' . $page, $data);
-		$this->load->view('gold/templates/footer');
+		if ($page != 'nodereport') {
+			$this->load->view('gold/templates/header', $data);
+			$this->load->view('gold/templates/nav');
+			$this->load->view('gold/' . $page, $data);
+			$this->load->view('gold/templates/footer');			
+		}
+	}
+
+	public function nodereport()
+	{
+		$this->load->helper('url');
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		$this->load->model('Alert_model');
+
+		$data['nodeAlerts'] = $this->Alert_model->getAlert();
+		$data['siteMaxNodes'] = $this->Alert_model->getSiteMaxNodes();
+		$data['nodeStatus'] = $this->Alert_model->getNodeStatus();
+		
+		$this->form_validation->set_rules('site', 'Site Column', 'required');
+		$this->form_validation->set_rules('node', 'Node ID', 'required');
+		$this->form_validation->set_rules('discoverdate', 'Date Discovered', 'required');
+		$this->form_validation->set_rules('status', 'Status', 'required');
+		
+		if ($this->form_validation->run() === FALSE)
+		{
+			$this->load->view('gold/nodereport', $data);
+		}
+		else
+		{
+			$this->Alert_model->set_node_status();
+			redirect('gold/nodereport');
+		}
 	}
 
 	public function logout() {
