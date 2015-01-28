@@ -188,6 +188,9 @@ class Gold extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('Alert_model');
 
+		$data['first_name'] = $this->session->userdata('first_name');
+		$data['last_name'] = $this->session->userdata('last_name');
+		
 		$data['nodeAlerts'] = $this->Alert_model->getAlert();
 		$data['siteMaxNodes'] = $this->Alert_model->getSiteMaxNodes();
 		$data['nodeStatus'] = $this->Alert_model->getNodeStatus();

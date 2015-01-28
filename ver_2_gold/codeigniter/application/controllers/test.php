@@ -53,7 +53,7 @@ class Test extends CI_Controller {
 			$this->load->view('welcome_message');
 		}		
 	}
-/*
+
 	public function nodereport()
 	{
 		$this->load->helper('url');
@@ -84,7 +84,7 @@ class Test extends CI_Controller {
 			redirect('/test/nodereport');
 		}
 	}
-*/
+
 	public function wsall( $site = 'blcw', $from = '2010-01-01', $to = null )
 	{
 		$this->load->model('Weather_station_Model');

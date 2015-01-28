@@ -167,7 +167,7 @@ class Alert_Model extends CI_Model
 	
 		$data = array(
 			'site' => $site,
-			'flagger' => "Prado",
+			'flagger' => $this->input->post('flaggername'),
 			'date_of_identification' => $doi,
 			'node' => $node,
 			'status' => $this->input->post('status'),
