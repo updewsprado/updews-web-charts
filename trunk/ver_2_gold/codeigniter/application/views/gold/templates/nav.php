@@ -128,6 +128,9 @@
                             </li>
                         </ul>
                     </li>
+                    <li <?php echo $reportevent; ?> >
+                        <a href="<?php echo base_url() . $version; ?>/nodereport"><i class="fa fa-fw fa-list-alt"></i> Report Event</a>
+                    </li>
                     
                     <li></li>
                     
