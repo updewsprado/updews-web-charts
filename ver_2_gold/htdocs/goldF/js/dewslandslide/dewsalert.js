@@ -114,7 +114,9 @@ var tip = d3.tip()
     return id_ts 
 		+ "<strong>Site:</strong> <span style='color:red'>" + d.site + "</span><Br/>"
 		+ "<strong>Node ID:</strong> <span style='color:red'>" + d.node + "</span><Br/>"
-		+ alert + status + comment;
+		+ alert + status + 
+		"<strong>Flagger:</strong> <span style='color:red'>" + d.flagger + "</span><Br/>"
+		+ comment;
   });
 
 //initialize dimensions
