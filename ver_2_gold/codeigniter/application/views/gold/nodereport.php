@@ -1,182 +1,80 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alert Color Map</title>
 
-<head>
-<style> /* set the CSS */
+        <div id="page-wrapper">
 
-body { font: 12px Arial;}
+            <div class="container-fluid">
 
-#alert-canvas { font: 12px Arial;}
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Sensors Overview <small>Current Conditions</small>
+                        </h1>
+                    </div>
+                </div>
+                <!-- /.row -->
 
-path { 
-    stroke: steelblue;
-    stroke-width: 2;
-    fill: none;
-}
+                <!-- New Features!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Implemented the Node Status Reporting
+                        </div>
+                    </div>                   	
+                </div>
+                <!-- /.row -->   
 
-.axis path,
-.axis line {
-    fill: none;
-    stroke: grey;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
-}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard"></i> Monitoring
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->       
 
-.legend {
-    font-size: 16px;
-    font-weight: bold;
-    text-anchor: left;
-}
+                <div class="row">
+                    <div class="col-lg-12">
+                    	<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map 
+                                	<input type="button" id="alertLegend" onclick="alertLegends(this.form)" value="Show Legends" />
+                                	<button type="button" class="btn btn-sm btn-link"><a href="/ajax/csvmonitoring/lsb7days.csv">(Historical Data)</a></button>
+                                	<a href="<?php echo base_url() . $version; ?>/nodereport"><img class="imgreport" src="/<?php echo $imgfolder; ?>/report.svg" alt="" /></a>
+                                </h3>
+								<div id="alertcanvaslegend"  style="width:300px; height:100px; visibility:hidden; display:none;">
+									<svg width="290px" height="95px">
+										<rect x="0" y="0" width="12px" height="14px" fill="#03899C" /> <text x="14" y="12" style="font-size:14px;" fill="#03899C">0 axis alert</text>
+										<rect x="0" y="20" width="12px" height="14px" fill="#55AEAF" /> <text x="14" y="32" style="font-size:14px;" fill="#55AEAF">1 axis alert</text>
+										<rect x="0" y="40" width="12px" height="14px" fill="#AAAE5F" /> <text x="14" y="52" style="font-size:14px;" fill="#AAAE5F">2 axes alerts</text>
+										<rect x="0" y="60" width="12px" height="14px" fill="#FFAE0F" /> <text x="14" y="72" style="font-size:14px;" fill="#FFAE0F">3 axes alerts</text>
+										<polygon points="120,10 120,20 130,10" fill="#FFF500" /> <text x="132" y="20" style="font-size:14px;" fill="#FFF500">Use with Caution</text>
+										<polygon points="120,30 120,40 130,30" fill="#EA0037" /> <text x="132" y="40" style="font-size:14px;" fill="#EA0037">Not OK</text>
+										<polygon points="120,50 120,60 130,50" fill="#0A64A4" /> <text x="132" y="60" style="font-size:14px;" fill="#0A64A4">Special Case</text>
+									</svg>
+								</div>
+                            </div>
+                            <div class="panel-body">
+								<div id="alert-canvas">
+								</div>	
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
 
-.axislabel {
-    font-size: 16px;
-    font-weight: bold;
-    text-anchor: middle;
-}
+            </div>
+            <!-- /.container-fluid -->
 
-.cell_default {
-  fill: #03899C;
-}
+        </div>
+        <!-- /#page-wrapper -->
 
-.cell {
-  /*fill: #FFAE00;*/
-}
-
-.cell:hover {
-  fill: #FF1300 ;
-}
-
-.dot {
-  fill: orangered;
-}
-
-.dot:hover {
-  fill: black ;
-}
-
-.dot1 {
-  fill: gainsboro;
-}
-
-.dot1:hover {
-  fill: black ;
-}
-
-.dot2 {
-  fill: gainsboro;
-}
-
-.dot2:hover {
-  fill: black ;
-}
-
-.grid .tick {
-    stroke: lightgrey;
-    opacity: 0.7;
-}
-
-.grid path {
-      stroke-width: 0;
-}
-
-.d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
-
-/* Style northward tooltips differently */
-.d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-}
-
-#alert-canvas svg {
-    display: block;
-    margin: 0 auto;
-}
-</style>
-
-<style class="cp-pen-styles">/* Fix for Bootstrap 3 with Angular UI Bootstrap */
-
-.modal { 
-	display: block;
-}
-
-/* Custom dialog/modal headers */
-
-.dialog-header-error { background-color: #d2322d; }
-.dialog-header-wait { background-color: #428bca; }
-.dialog-header-notify { background-color: #eeeeee; }
-.dialog-header-confirm { background-color: #333333; }
-.dialog-header-error span, .dialog-header-error h4,
-.dialog-header-wait span, .dialog-header-wait h4,
-.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
-
-/* Ease Display */
-
-.pad { padding: 25px; }
-</style>
-
-<body>
-
-<!-- load the d3.js library -->    
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-
-<!-- Custom DEWS Landslide CSS -->
-<link href="/goldF/css/dewslandslide/dewsalert.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/temp/datepicker.css" />
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<!-- Custom DEWS Landslide JS -->
-
-<!-- jQuery Version 1.11.0 -->
-<!--
-<script src="/js/jquery-1.11.0.js"></script>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="http://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
--->
-
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  <script src="/temp/bootstrap-datepicker.js"></script>
-
-</head>
-
+<!-- Modal -->
 <?php echo validation_errors(); ?>
 <?php echo form_open('gold/nodereport') ?>
 
-<body>
-<br /><br /><br /><br />
-	
-<div id="alert-canvas"></div>
-   
-
-<!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -229,27 +127,24 @@ path {
       </div>
     </div>
   </div>
-  
-
-<script src="/goldF/js/dewslandslide/dewsnodereport.js"></script>
+ 
+</form>    
+        
 <script>
+
 window.onload = function() {
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
 	maxNodesJSON = <?php echo $siteMaxNodes; ?>;
 	nodeStatusJSON = <?php echo $nodeStatus; ?>;
 	
+	$('#formGeneral').hide();
+	$('#formDate').hide();
+	
 	initAlertPlot();
 }	
 </script>
+
 <script src='http://codepen.io/assets/editor/live/css_live_reload_init.js'></script>
-
-</body>
-
-</form>
-
-</html>
-
-
 
 
 

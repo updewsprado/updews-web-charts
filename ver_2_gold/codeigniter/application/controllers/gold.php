@@ -31,8 +31,8 @@ class Gold extends CI_Controller {
 		$data['bsgrid'] = $data['blank'] = $data['home'] = $data['monitoring'] = '';
 		$data['dropdown_chart'] = $data['site'] = $data['node'] = '';
 		$data['alert'] = $data['gmap'] = $data['commhealth'] = $data['analysisdyna'] = '';
-		$data['position'] = $data['presence'] = '';
-		$data['slider'] = '';
+		$data['position'] = $data['presence'] = $data['customgmap'] = '';
+		$data['slider'] = $data['nodereport'] = '';
 		$data['sentnodetotal'] = $data['rainfall'] = $data['lsbchange'] = '';
 		$data['accel'] = $data['showplots'] = $data['showdateplots'] = '';
 		$data['sitesCoord'] = 0;
@@ -60,6 +60,7 @@ class Gold extends CI_Controller {
 				$data['monitoring'] = 'class="active"';
 				$data['alert'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsalert.js"></script>';
 				$data['gmap'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsmaps.js"></script>';
+				$data['customgmap'] = '<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?client385290333225-1olmpades21is0bupii1fk76fgt3bf4k.apps.googleusercontent.com?key=AIzaSyBRAeI5UwPHcYmmjGUMmAhF-motKkQWcms"></script>';
 				$data['presence'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewspresence.js"></script>';
 				
 				$data['ismap'] = true;
@@ -102,6 +103,7 @@ class Gold extends CI_Controller {
 				$data['alert'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsalertmini.js"></script>';
 				$data['position'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsposition.js"></script>';
 				$data['gmap'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsmaps.js"></script>';
+				$data['customgmap'] = '<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?client385290333225-1olmpades21is0bupii1fk76fgt3bf4k.apps.googleusercontent.com?key=AIzaSyBRAeI5UwPHcYmmjGUMmAhF-motKkQWcms"></script>';
 				$data['commhealth'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewscommhealth-d3.js"></script>';
 				$data['analysisdyna'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsanalysisdyna.js"></script>';
 				$data['sentnodetotal'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewssentnodetotal-d3.js"></script>';
@@ -195,6 +197,8 @@ class Gold extends CI_Controller {
 		$data['siteMaxNodes'] = $this->Alert_model->getSiteMaxNodes();
 		$data['nodeStatus'] = $this->Alert_model->getNodeStatus();
 		
+		$data['nodereport'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsnodereport.js"></script>';
+		
 		$this->form_validation->set_rules('site', 'Site Column', 'required');
 		$this->form_validation->set_rules('node', 'Node ID', 'required');
 		$this->form_validation->set_rules('discoverdate', 'Date Discovered', 'required');
@@ -202,7 +206,10 @@ class Gold extends CI_Controller {
 		
 		if ($this->form_validation->run() === FALSE)
 		{
+			$this->load->view('gold/templates/header', $data);
+			$this->load->view('gold/templates/nav');
 			$this->load->view('gold/nodereport', $data);
+			$this->load->view('gold/templates/footer');	
 		}
 		else
 		{

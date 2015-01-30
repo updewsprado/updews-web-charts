@@ -11,11 +11,14 @@
 
     <title><?php echo $title; ?></title>
 
-    <!-- Bootstrap Core CSS -->
+    <!-- Bootstrap Core CSS 
     <link href="/css/bootstrap.css" rel="stylesheet">
+    -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link href="/css/sb-admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/sb-admin.css">
+    <link rel="stylesheet" href="/temp/datepicker.css" />
 
     <!-- Morris Charts CSS -->
     <link href="/css/plugins/morris.css" rel="stylesheet">
@@ -49,6 +52,10 @@
 	<script src="/js/development-bundle/ui/jquery.ui.widget.js"></script>
 	<script src="/js/development-bundle/ui/jquery.ui.datepicker.js"></script>
 
+	<!-- Bootstrap JS -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="/temp/bootstrap-datepicker.js"></script>
+
 	<!-- Spinner -->
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 
@@ -60,9 +67,7 @@
 	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 	<!-- Custom Google Map Location -->	
-	<script type="text/javascript"
-	  src="https://maps.googleapis.com/maps/api/js?client385290333225-1olmpades21is0bupii1fk76fgt3bf4k.apps.googleusercontent.com?key=AIzaSyBRAeI5UwPHcYmmjGUMmAhF-motKkQWcms">
-	</script>
+	<?php echo $customgmap; ?>
 
     <!-- Custom DEWS Landslide JS 
     <script src="js/dewslandslide/dewsalert.js"></script>
@@ -78,6 +83,7 @@
     <?php echo $accel; ?>
     <?php echo $presence; ?>
 	<?php echo $slider; ?>
+	<?php echo $nodereport; ?>
     
     <!-- Custom DEWS Map JS -->
     <?php echo $gmap; ?>
