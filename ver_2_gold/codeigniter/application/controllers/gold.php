@@ -32,7 +32,7 @@ class Gold extends CI_Controller {
 		$data['dropdown_chart'] = $data['site'] = $data['node'] = '';
 		$data['alert'] = $data['gmap'] = $data['commhealth'] = $data['analysisdyna'] = '';
 		$data['position'] = $data['presence'] = $data['customgmap'] = '';
-		$data['slider'] = $data['nodereport'] = '';
+		$data['slider'] = $data['nodereport'] = $data['reportevent'] = '';
 		$data['sentnodetotal'] = $data['rainfall'] = $data['lsbchange'] = '';
 		$data['accel'] = $data['showplots'] = $data['showdateplots'] = '';
 		$data['sitesCoord'] = 0;
@@ -198,6 +198,8 @@ class Gold extends CI_Controller {
 		$data['nodeStatus'] = $this->Alert_model->getNodeStatus();
 		
 		$data['nodereport'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsnodereport.js"></script>';
+		
+		$data['reportevent'] = 'class="active"';
 		
 		$this->form_validation->set_rules('site', 'Site Column', 'required');
 		$this->form_validation->set_rules('node', 'Node ID', 'required');

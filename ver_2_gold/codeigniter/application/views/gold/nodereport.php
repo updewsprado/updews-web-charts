@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Sensors Overview <small>Current Conditions</small>
+                            Event Reports <small>Update Node Statuses</small>
                         </h1>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                     <div class="col-lg-12">
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-dashboard"></i> Monitoring
+                                <i class="fa fa-dashboard"></i> Event Report Page
                             </li>
                         </ol>
                     </div>
@@ -39,10 +39,9 @@
                     <div class="col-lg-12">
                     	<div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer Movement Alert Map 
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Node Report Status 
                                 	<input type="button" id="alertLegend" onclick="alertLegends(this.form)" value="Show Legends" />
                                 	<button type="button" class="btn btn-sm btn-link"><a href="/ajax/csvmonitoring/lsb7days.csv">(Historical Data)</a></button>
-                                	<a href="<?php echo base_url() . $version; ?>/nodereport"><img class="imgreport" src="/<?php echo $imgfolder; ?>/report.svg" alt="" /></a>
                                 </h3>
 								<div id="alertcanvaslegend"  style="width:300px; height:100px; visibility:hidden; display:none;">
 									<svg width="290px" height="95px">
