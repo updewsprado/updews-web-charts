@@ -12,8 +12,8 @@
     <title><?php echo $title; ?></title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/css/bootstrap.css" rel="stylesheet">   
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link href="/css/bootstrap.css" rel="stylesheet"> 
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/sb-admin.css">
@@ -52,9 +52,7 @@
 	<script src="/js/development-bundle/ui/jquery.ui.datepicker.js"></script>
 
 	<!-- Bootstrap JS -->
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="/js/bootstrap-datepicker.js"></script>
-
 	<!-- Spinner -->
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 
