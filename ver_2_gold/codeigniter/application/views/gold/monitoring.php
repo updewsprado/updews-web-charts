@@ -18,21 +18,9 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Data Presence Map for monitoring data sending from sites!
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Implemented the Node Status Reporting
                         </div>
                     </div>                   	
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Now using "models" for faster database accessing
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> All nodes from Alert Map are now clickable!
-                        </div>
-                    </div>
                 </div>
                 <!-- /.row -->   
 

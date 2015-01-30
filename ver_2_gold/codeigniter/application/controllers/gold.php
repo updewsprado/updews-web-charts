@@ -142,7 +142,7 @@ class Gold extends CI_Controller {
 				break;
 
 			case 'nodereport':
-				$this->nodereport();		
+				$this->nodereport($data);		
 				break;
 			
 			case 'charts':
@@ -181,7 +181,7 @@ class Gold extends CI_Controller {
 		}
 	}
 
-	public function nodereport()
+	public function nodereport($data)
 	{
 		$this->load->helper('url');
 		$this->load->helper('form');
