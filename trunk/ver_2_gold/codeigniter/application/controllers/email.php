@@ -13,22 +13,22 @@ class Email extends CI_Controller {
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'updews.prado@gmail.com',
+			'smtp_user' => 'senslopenotification@gmail.com',
 			'smtp_pass' => 'september172013'
 		);
 		
 		$this->load->library('email', $config);
 		$this->email->set_newline("\r\n");
 		
-		$this->email->from('updews.prado@gmail.com', 'Prado Bognot');
+		$this->email->from('senslopenotification@gmail.com', 'Senslope Notification');
 		$this->email->to('updews.prado@gmail.com');
 		$this->email->subject('This is an email test');
 		$this->email->message('It is working. Great!');
 		
-		$path = $this->config->item('server_root');
-		$file = $path . '/attachments/yourInfo.txt';
+		//$path = $this->config->item('server_root');
+		//$file = $path . '/attachments/yourInfo.txt';
 		
-		$this->email->attach($file);
+		//$this->email->attach($file);
 		
 		if ($this->email->send()) {
 			echo "Your email was sent, handsome";

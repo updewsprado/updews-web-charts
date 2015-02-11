@@ -12,12 +12,6 @@
  */
 class Data_presence_Model extends CI_Model
 {
-	/*
-	* A private variable to represent each column in the database
-	*/
-	private $_id;
-	private $_username;
-	private $_password;
 
 	function __construct()
 	{
