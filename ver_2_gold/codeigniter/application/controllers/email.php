@@ -37,6 +37,26 @@ class Email extends CI_Controller {
 			show_error($this->email->print_debugger());
 		}
 	}
+	
+	public function alertcol()
+	{
+		//Load Required Models
+		$this->load->model('Alert_model');
+		
+		$data['nodeAlerts'] = $this->Alert_model->getAlertArr();
+		
+		echo $data['nodeAlerts'];
+		//echo count($data['nodeAlerts']);
+		
+		$count = count($data['nodeAlerts']);
+		
+		/*
+		foreach ($data['nodeAlerts'] as $nodeStatus) {
+			echo $nodeStatus['site'] + " " + $nodeStatus['node'] + "<Br/>";
+		}
+		 */
+		 
+	}
 }
 
 /* End of file email.php */

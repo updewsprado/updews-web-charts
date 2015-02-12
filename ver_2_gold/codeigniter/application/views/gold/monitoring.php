@@ -103,6 +103,7 @@ window.onload = function() {
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
 	maxNodesJSON = <?php echo $siteMaxNodes; ?>;
 	nodeStatusJSON = <?php echo $nodeStatus; ?>;
+	//presenceJSON = <?php //echo $dataPresence; ?>;
 	
 	$('#formGeneral').hide();
 	$('#formDate').hide();

@@ -48,11 +48,13 @@ class Gold extends CI_Controller {
 				//Load Required Models
 				$this->load->model('Alert_model');
 				$this->load->model('Gmap_model');
+				$this->load->model('Data_presence_model');
 				
 				//Data for Alert Map
 				$data['nodeAlerts'] = $this->Alert_model->getAlert();
 				$data['siteMaxNodes'] = $this->Alert_model->getSiteMaxNodes();
 				$data['nodeStatus'] = $this->Alert_model->getNodeStatus();
+				//$data['dataPresence'] = $this->Data_presence_model->getAllDataPresence($interval);
 				
 				//Data for Google Map Site Coordinates
 				$data['sitesCoord'] = $this->Gmap_model->getSitesCoord();
