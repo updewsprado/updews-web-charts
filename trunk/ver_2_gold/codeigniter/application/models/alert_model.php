@@ -43,6 +43,80 @@ class Alert_Model extends CI_Model
 		return $arr; 
 	}
 	
+	public function getAlertArr()
+	{
+		// Arrays we'll use later
+		$keys = array();
+		$arrayAlert = array();
+		$arrayPlot = array();
+		$columnAlert = array();
+		
+		$file = 'lsbalerts2.csv';
+		
+		if(strcmp(base_url(),"http://localhost/") == 0) {
+			$path = base_url() . 'temp/csvmonitoring/';
+		}
+		else {
+			$path = base_url() . 'ajax/csvmonitoring/';
+		}
+		
+		// Set your CSV feed
+		$feed = $path . $file;
+		
+		// Do it
+		$dataAlert = $this->csvToArray($feed, ',');
+		 
+		// Set number of elements (minus 1 because we shift off the first row)
+		$count = count($dataAlert);
+		
+		//Use first row for names
+		$labels = ["site","node","xalert","yalert","zalert"];
+		 
+		foreach ($labels as $label) {
+			$keys[] = $label;
+		}
+		
+		// Bring it all together
+		for ($j = 0; $j < $count; $j++) {
+			$dX = array_combine($keys, $dataAlert[$j]);
+			$arrayAlert[$j] = $dX;
+		}
+		
+		$pSite = null;
+		$pNode = null;
+		$pCtr = 1;
+		$colAlertCtr = 0;
+		
+		foreach ($arrayAlert as $alert) {
+			//echo $alert['site'] . ", ";
+			
+			if ($alert['site'] == $pSite) {
+				if ($alert['node'] == $pNode + 1) {
+					$pCtr++;
+				} else {
+					 $pCtr = 1;				
+				}
+				
+				if ($pCtr >= 3) {
+					if (in_array($pSite, $columnAlert) == FALSE) {
+					    echo "Column Alert for: " . $pSite . " with max consecutive alert nodes of " . $pCtr . "<Br/>";
+						$columnAlert[$colAlertCtr++] = $pSite;
+					}
+
+					$pCtr = 1;
+				} 
+			} else {
+				//echo "total alerts for " . $pSite . " = " . $pCtr;
+				$pCtr = 1;
+			}
+			
+			$pSite = $alert['site'];
+			$pNode = $alert['node'];
+		}
+		
+		return json_encode($columnAlert);		
+	}
+	
 	public function getAlert()
 	{
 		// Arrays we'll use later
