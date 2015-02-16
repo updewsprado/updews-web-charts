@@ -43,7 +43,7 @@ class Alert_Model extends CI_Model
 		return $arr; 
 	}
 	
-	public function getAlertArr()
+	public function getColumnAlerts()
 	{
 		// Arrays we'll use later
 		$keys = array();
@@ -99,7 +99,7 @@ class Alert_Model extends CI_Model
 				
 				if ($pCtr >= 3) {
 					if (in_array($pSite, $columnAlert) == FALSE) {
-					    echo "Column Alert for: " . $pSite . " with max consecutive alert nodes of " . $pCtr . "<Br/>";
+					    //echo "Column Alert for: " . $pSite . " with max consecutive alert nodes of " . $pCtr . "<Br/>";
 						$columnAlert[$colAlertCtr++] = $pSite;
 					}
 
@@ -114,7 +114,8 @@ class Alert_Model extends CI_Model
 			$pNode = $alert['node'];
 		}
 		
-		return json_encode($columnAlert);		
+		//return json_encode($columnAlert);
+		return $columnAlert;
 	}
 	
 	public function getAlert()
