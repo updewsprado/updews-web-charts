@@ -43,7 +43,8 @@ class Alert_Model extends CI_Model
 		return $arr; 
 	}
 	
-	public function getColumnAlerts()
+	// Needs 3 consecutive alert nodes in order to trigger a column alert
+	public function getColumnAlerts($sensitivity = 3)
 	{
 		// Arrays we'll use later
 		$keys = array();
@@ -97,7 +98,7 @@ class Alert_Model extends CI_Model
 					 $pCtr = 1;				
 				}
 				
-				if ($pCtr >= 3) {
+				if ($pCtr >= $sensitivity) {
 					if (in_array($pSite, $columnAlert) == FALSE) {
 					    //echo "Column Alert for: " . $pSite . " with max consecutive alert nodes of " . $pCtr . "<Br/>";
 						$columnAlert[$colAlertCtr++] = $pSite;
