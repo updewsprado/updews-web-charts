@@ -38,6 +38,64 @@ class Data_presence_Model extends CI_Model
 		return $arr; 
 	}
 
+	public function getSingleLastDataReceived($site = 'blcb')
+	{
+		$sql_last_timestamp = $this->db->query("SELECT timestamp FROM $site ORDER BY timestamp DESC LIMIT 1;");
+		
+		$last_timestamp = $sql_last_timestamp->row()->timestamp;
+		
+		//echo json_encode($last_timestamp);
+		return $last_timestamp;
+	}
+	
+	public function getAllLastDataReceived()
+	{
+		$dbreturn = array();
+		$sitesAll = $this->db->query("SELECT name FROM site_column");	
+		$ctr = 0;
+		
+		foreach ($sitesAll->result_array() as $row)
+		{
+			$site = $row['name'];
+			$dbreturn[$ctr]['site'] = $site;
+			$dbreturn[$ctr]['timestamp'] = $this->getSingleLastDataReceived($site);
+			
+			$ctr = $ctr + 1;
+		}		
+		
+		return $dbreturn;
+	}
+
+	public function getAllDataPresAlert($daysnodata = 3)
+	{
+		$dbreturn = array();
+		$sitesAll = $this->db->query("SELECT name FROM site_column");	
+		$ctr = 0;
+		
+		foreach ($sitesAll->result_array() as $row)
+		{
+			$site = $row['name'];
+			
+			$dbreturn[$ctr]['site'] = $site;
+			$lastTimestamp = $this->getSingleLastDataReceived($site);
+			
+			date_default_timezone_set("Asia/Manila");
+			$datetime1 = time();
+			$datetime2 = strtotime($lastTimestamp);
+
+			$secs = $datetime1 - $datetime2;// == <seconds between the two times>
+			$days = $secs / 86400;
+			$days = number_format((float)$days, 2, '.', '');
+			
+			if ($days > $daysnodata) {
+				$dbreturn[$ctr]['timestamp'] = number_format((float)$days, 2, '.', '');
+				$ctr = $ctr + 1;				
+			}
+		}		
+		
+		return $dbreturn;
+	}
+
 	public function getSingleDataPresence($site, $interval = 1)
 	{
 		$sql_maxnode = $this->db->query("SELECT * FROM site_column_props WHERE s_id IN 
