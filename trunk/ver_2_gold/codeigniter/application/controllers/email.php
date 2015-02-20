@@ -153,12 +153,11 @@ class Email extends CI_Controller {
 	
 		$this->load->helper('url');
 		$this->load->model('Alert_model');
-		$this->load->model('Data_presence_Model');
 	    $this->load->library('email', $config);
 	    $this->email->set_newline("\r\n");
 		
-		$mailList = ['updews.prado@gmail.com', 'senslopenotification@gmail.com'];
-		/*
+		//$mailList = ['updews.prado@gmail.com', 'senslopenotification@gmail.com'];
+
 		$mailList = ['earl.mendoza@gmail.com',
 					'ricsatjr@gmail.com',
 					'piereluya@gmail.com',
@@ -166,7 +165,6 @@ class Email extends CI_Controller {
 					'mizpah.capina@gmail.com',
 					'marklaurence07@gmail.com',
 					'updews.prado@gmail.com'];
-		*/
 		
 	    $this->email->from('senslopenotification@gmail.com', 'Senslope Notification');
 		$this->email->to($mailList);
@@ -199,6 +197,71 @@ class Email extends CI_Controller {
 		        echo 'succeeded to send html email';
 		    }
 		}
+	}
+
+	public function alertdatapres()
+	{       
+	    $config = array(
+	        'protocol' => 'smtp',
+	        'smtp_host' => 'tls://smtp.gmail.com',
+	        'smtp_port' => 465,
+	        'smtp_user' => 'senslopenotification@gmail.com',
+			'smtp_pass' => 'september172013',
+	        'mailtype'  => 'html',
+	        'charset'   => 'utf-8'
+	    );
+	
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+	    $this->load->library('email', $config);
+	    $this->email->set_newline("\r\n");
+		
+		/*
+		$mailList = ['updews.prado@gmail.com', 'senslopenotification@gmail.com'];
+		 */
+		 
+		$mailList = ['micofelicio@gmail.com',
+					'updews.prado@gmail.com'];
+		
+	    $this->email->from('senslopenotification@gmail.com', 'Senslope Notification');
+		$this->email->to($mailList);
+	
+	    $this->email->subject('Senslope No Data Alert (' . date("Y-m-d") . ')');
+	
+		$data['noData'] = $this->Data_presence_Model->getAllDataPresAlert();
+		
+		/*
+		foreach ($data['noData'] as $col) {
+			echo "Column: " . $col['site'] . ", Last Data Received: " . $col['timestamp'] . "\n";
+		}
+		 */
+		
+		if ($data['noData'] == null) {
+			echo "no data found, no email was sent";
+		} else {
+			$body = '<p>Good Day Senslope and Dynaslope!</p>
+					<p>You received this email because the system has detected columns that are not sending data.
+					Please check the links below to verify the conditions of the detected columns or to give an early warning to the
+					locals residing in the areas of concern.</p><br/>
+					<p>Regards,</p>
+					<p>Senslope Automated Alert Notification</p><br/>
+					<p><a href="http://www.dewslandslide.com">Visit Main Monitoring Page</a></p>';
+					
+			foreach ($data['noData'] as $col) {
+				$body = $body . '<p><a href="http://www.dewslandslide.com/gold/site/' . $col['site'] . '">' . 
+						$col['site'] . '</a>' . ': no data received for ' . $col['timestamp'] . ' days</p>';
+			}
+		
+		    $this->email->message($body);
+		
+		    if (!$this->email->send()){
+		        echo 'fail to load html email';
+		    }
+		    else {
+		        echo 'succeeded to send html email';
+		    }
+		}
+
 	}
 }
 
