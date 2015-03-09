@@ -22,7 +22,7 @@
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 	
 	<script type="text/javascript" src="/goldF/js/dewslandslide/dewsaccel-dy.js"></script>
-
+	<script type="text/javascript" src="/goldF/js/dewslandslide/dewslsbchange.js"></script>
 	<script type="text/javascript" src="/goldF/js/dewslandslide/dewsalertmini.js"></script>
 
 	
@@ -67,15 +67,9 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Mini Alert Map for a more convenient way of mapping alerts on the node level analysis page
+                            <i class="fa fa-info-circle"></i>  <strong>Revert to Old Feature!</strong> Using DyGraph again for the Accelerometer Data
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> All nodes from Alert Map are now clickable!
-                        </div>
-                    </div>                        
+                    </div>                      
                 </div>
                 <!-- /.row -->                                             
                 
@@ -250,10 +244,16 @@
 		popDropDownGeneral();
 		initAlertPlot();
 		
+		var targetForm = getMainForm();
+		
 		setTimeout(function(){
 			initNode();
-			showAccel(getMainForm());
+			showAccel(targetForm);
 		}, 1000); 
+		
+		setTimeout(function(){
+			showLSBChange(targetForm);
+		}, 2500); 
 	}
 	
 	function redirectNodePlots (frm) {
