@@ -169,6 +169,8 @@
 		                    End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php echo $showdateplots; ?>" size="10"/>
 	                     </div>	
                     </li>
+                    
+                    <!-- Slider and Timestamp made by Kyle (causes a lot of problems though)
 					<li>
 						<div class="form-group" style="overflow-x:hidden; overflow-y:hidden">
 							<label>Slider:</label><br />
@@ -183,6 +185,11 @@
 							<b>To:</b>
 							</div>
 					</li>
+					
+					<li>
+						<input type="button" value="go" onclick="showAccel(getMainForm())">	
+					</li>
+					-->
 						
                     </FORM>
                     

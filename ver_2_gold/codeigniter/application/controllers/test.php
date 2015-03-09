@@ -120,6 +120,11 @@ class Test extends CI_Controller {
 		echo $data['weatherJSON'];
 	}	
 	
+	public function simplechart ()
+	{
+		$this->load->view('gold/dynode');
+	}
+	
 	public function accel( $site = 'blcb', $nid = 1, $from = '2010-01-01', $to = null )
 	{
 		$this->load->model('Accel_model');

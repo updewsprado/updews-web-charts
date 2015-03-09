@@ -41,7 +41,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Lato|Droid+Serif|Open+Sans' rel='stylesheet' type='text/css'>
 
 	<!-- jQuery Skins -->
-	<link href="/css/dewslandslide/south-street/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	<link href="/js/development-bundle/themes/south-street/jquery-ui.css" rel="stylesheet">
 
     <!-- jQuery Version 1.11.0 -->
     <script src="/js/jquery-1.11.0.js"></script>
@@ -57,7 +57,7 @@
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 
 	<!-- load DyGraphs -->
-	<script type="text/javascript" src="http://dygraphs.com/dygraph-combined.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.0/dygraph-combined.js"></script>
 
 	<!-- load the d3.js library -->    
 	<script src="http://d3js.org/d3.v3.min.js"></script>

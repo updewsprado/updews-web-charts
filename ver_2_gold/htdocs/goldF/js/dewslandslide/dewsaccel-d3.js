@@ -90,7 +90,7 @@ function showAccel() {
 		.orient("left").ticks(2);
 
 	var accel_area1 = d3.svg.area()
-		.interpolate("linear")
+		.interpolate("cardinal")
 		.x(function(d) { return accel_x1(d.timestamp); })
 		.y0(function (d) { return accel_y1(0); })
 		.y1(function(d) { return accel_y1(d.xvalue); });
@@ -126,7 +126,7 @@ function showAccel() {
 		.orient("left").ticks(2);
 
 	var accel_area2 = d3.svg.area()
-		.interpolate("linear")
+		.interpolate("cardinal")
 		.x(function(d) { 
 				return accel_x2(d.timestamp); 
 			})
@@ -168,7 +168,7 @@ function showAccel() {
 		.orient("left").ticks(2);
 
 	var accel_area3 = d3.svg.area()
-		.interpolate("linear")
+		.interpolate("cardinal")
 		.x(function(d) { return accel_x3(d.timestamp); })
 		.y0(function (d) { return accel_y3(0); })
 		.y1(function(d) { return accel_y3(d.zvalue); });
@@ -204,7 +204,7 @@ function showAccel() {
 		.orient("left").ticks(2);
 
 	var accel_area4 = d3.svg.area()
-		.interpolate("linear")
+		.interpolate("cardinal")
 		.x(function(d) { return accel_x4(d.timestamp); })
 		.y0(function (d) {return accel_y4(0);})
 		.y1(function(d) { return accel_y4(d.mvalue); });
@@ -236,7 +236,7 @@ function showAccel() {
 		.range([accel_height2, 0]);
 
 	var accel_area5 = d3.svg.area()
-		.interpolate("linear")
+		.interpolate("cardinal")
 		.x(function(d) { return accel_x5(d.timestamp); })
 		.y0(accel_height2)
 		.y1(0);
@@ -275,7 +275,7 @@ function showAccel() {
 					accel_spinner2.stop();
 					accel_spinner3.stop();
 					accel_spinner4.stop();
-                    alert("No data retrieved. Please check input values.");
+                    //alert("No data retrieved. Please check input values.");
                     return;
         } 
 				

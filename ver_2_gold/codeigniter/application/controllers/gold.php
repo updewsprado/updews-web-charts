@@ -11,7 +11,7 @@ class Gold extends CI_Controller {
 		echo "Gold Version index page";
 	}
 
-	public function view( $page = 'monitoring', $site = null, $node = 1 )
+	public function view( $page = 'monitoring', $site = null, $node = 1, $dateto = null, $datefrom = null )
 	{
 		$this->load->helper('url');
 	
@@ -113,7 +113,8 @@ class Gold extends CI_Controller {
 				$data['ismap'] = true;
 				break;
 				
-			case 'node':
+			//Uses D3 (Something fucked up here that I don't know of)
+			case 'noded3':
 				//Load Required Models
 				$this->load->model('Alert_model');			
 			
@@ -143,6 +144,37 @@ class Gold extends CI_Controller {
 				$data['rainfall'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsrainfall.js"></script>';
 				$data['lsbchange'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewslsbchange.js"></script>';
 				$data['accel'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsaccel-d3.js"></script>';
+				
+				$page = 'node';
+				
+				break;
+
+			//Uses DY graph
+			case 'node':
+				//Load Required Models
+				$this->load->model('Alert_model');	
+			
+				$data['site'] = $site;
+				$data['node'] = $node;
+
+				//Data for Alert Map
+				if ($site) {
+					$data['nodeAlerts'] = $this->Alert_model->getSingleAlert($site);
+					$data['siteMaxNodes'] = $this->Alert_model->getSingleMaxNode($site);
+					$data['nodeStatus'] = $this->Alert_model->getSingleNodeStatus($site);						
+				}
+				else {
+					$data['nodeAlerts'] = 0;
+					$data['siteMaxNodes'] = 0;
+					$data['nodeStatus'] = 0;						
+				}				
+				
+				$data['showplots'] = 'redirectNodePlots(this.form)';
+				$data['showdateplots'] = "showAccel(getMainForm())";
+				
+				$data['dropdown_chart'] = 'class="active"';
+				
+				$page = 'dynode';
 				break;
 
 			case 'nodereport':
@@ -177,7 +209,7 @@ class Gold extends CI_Controller {
 				break;
 		}
 	
-		if ($page != 'nodereport') {
+		if (($page != 'nodereport') && ($page != 'node2')) {
 			$this->load->view('gold/templates/header', $data);
 			$this->load->view('gold/templates/nav');
 			$this->load->view('gold/' . $page, $data);

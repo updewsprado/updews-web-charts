@@ -1,3 +1,54 @@
+<!--
+<!doctype html>
+<html lang="en">
+<head>
+
+	<STYLE TYPE="text/css">
+	BODY	{
+   		font-family:sans-serif;
+   	}
+	</STYLE>
+	<meta charset="utf-8">
+	<title>View Senslope Data</title>
+-->	
+	
+	<link href="/js/development-bundle/themes/south-street/jquery-ui.css" rel="stylesheet">
+
+	<script type="text/javascript" src="/js/jquery-ui-1.10.4.custom.js"></script>
+	<script type="text/javascript" src="/js/development-bundle/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="/js/development-bundle/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/js/development-bundle/ui/jquery.ui.datepicker.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.0/dygraph-combined.js"></script>
+	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+	
+	<script type="text/javascript" src="/goldF/js/dewslandslide/dewsaccel-dy.js"></script>
+
+	<script type="text/javascript" src="/goldF/js/dewslandslide/dewsalertmini.js"></script>
+
+	
+	<style type="text/css">
+		#demodiv {
+			margin-left: auto;
+			margin-right: auto;
+			min-width: 90%;
+			height: auto;
+		}
+		
+		#myFlashContent {
+			margin-left: auto;
+			margin-right: auto;
+			min-width: 50%;
+			min-height: 70%;		
+		}
+		
+		#flashIE {
+			margin-left: auto;
+			margin-right: auto;
+			min-width: 50%;
+			min-height: 70%;		
+		}
+    </style>
+
 
         <div id="page-wrapper">
 
@@ -83,10 +134,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer: X Value</h3>
                             </div>
                             <div class="panel-body">
-								<div id="accel-1-canvas">
-									<div id="accel-1-timestamp"><b>Timestamp: </b></div>
-									<div id="accel-1"></div>
-								</div>                               	
+								<div id="accel-1"></div>                             	
                             </div>
                         </div>
                     </div>                                     
@@ -100,10 +148,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer: Y Value</h3>
                             </div>
                             <div class="panel-body">
-								<div id="accel-2-canvas">
-									<div id="accel-2-timestamp"><b>Timestamp: </b></div>
-									<div id="accel-2"></div>
-								</div>                               	
+								<div id="accel-2"></div>                             	
                             </div>
                         </div>
                     </div>                                     
@@ -117,10 +162,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer: Z Value</h3>
                             </div>
                             <div class="panel-body">
-								<div id="accel-3-canvas">
-									<div id="accel-3-timestamp"><b>Timestamp: </b></div>
-									<div id="accel-3"></div>
-								</div>                               	
+								<div id="accel-3"></div>        	
                             </div>
                         </div>
                     </div>                                     
@@ -134,11 +176,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Soil Moisture</h3>
                             </div>
                             <div class="panel-body">
-								<div id="accel-4-canvas">
-									<div id="accel-4-timestamp"><b>Timestamp: </b></div>
-									<div id="accel-4">
-									</div>
-								</div>                               	
+								<div id="accel-4"></div>         	
                             </div>
                         </div>
                     </div>                                     
@@ -150,150 +188,120 @@
 
         </div>
         <!-- /#page-wrapper -->
-        
+
+<!--
+<div id="gdiv1" style="width:100%; height:120px;"></div><hr>
+<div id="gdiv2" style="width:100%; height:120px;"></div><hr>
+<div id="gdiv3" style="width:100%; height:120px;"></div><hr>
+<div id="gdiv4" style="width:100%; height:120px;"></div><hr>
+<div id="raindiv" style="width:100%; height:120px;"></div><hr>
+
+<div id="demodiv"></div>
+-->
+
 <script>
-var curSite = "<?php echo $site; ?>";
-var curNode = "<?php echo $node; ?>";
-var fromDate = "" , toDate = "" , dataBase = "";
-
-var options = ["select", "blcb", "blct", "bolb", "gamb", "gamt",
-				"humb", "humt", "labb", "labt", "lipb",
-				"lipt", "mamb", "mamt", "oslb", "oslt",
-				"plab", "plat", "pugb", "pugt", "sinb",
-				"sinu"];
-
-function popDropDownGeneral() {
-	var select = document.getElementById('sitegeneral');
-	var i;
-	for (i = 0; i < options.length; i++) {
-		var opt = options[i];
-		var el = document.createElement("option");
-		el.textContent = opt.toUpperCase();
-		
-		if(opt == "select") {
-			el.value = "none";
-		}
-		else {
-			el.value = opt;
-		}
-		
-		select.appendChild(el);
-	}
-}
-
-function renameHeader() {
-	document.getElementById("node").value = curNode;
+	var curSite = "<?php echo $site; ?>";
+	var curNode = "<?php echo $node; ?>";
+	var fromDate = "" , toDate = "" , dataBase = "";
 	
-	var element = document.getElementById("header-site");
-	var targetForm = document.getElementById("formGeneral");
-	element.innerHTML = targetForm.sitegeneral.value.toUpperCase() + " Node " + targetForm.node.value + ": Overview";	
-}
-
-function initNode() {
-	if (curSite != "") {
-		$('#sitegeneral').val(curSite);
-		renameHeader();
-		
-		var targetForm = document.getElementById("formGeneral");
-		showNodePlots(targetForm);
-	}
-}
-
-window.onload = function() {
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
 	nodeStatusJSON = <?php echo $nodeStatus; ?>;
-	maxNodesJSON = <?php echo $siteMaxNodes; ?>;		
+	maxNodesJSON = <?php echo $siteMaxNodes; ?>;	
 	
-	//positionPlot.init_dims();
-	popDropDownGeneral();
+	var options = ["select", "blcb", "blct", "bolb", "gamb", "gamt",
+					"humb", "humt", "labb", "labt", "lipb",
+					"lipt", "mamb", "mamt", "oslb", "oslt",
+					"plab", "plat", "pugb", "pugt", "sinb",
+					"sinu"];
 	
-	setTimeout(function(){
-		initNode();
+	function popDropDownGeneral() {
+		var select = document.getElementById('sitegeneral');
+		var i;
+		for (i = 0; i < options.length; i++) {
+			var opt = options[i];
+			var el = document.createElement("option");
+			el.textContent = opt.toUpperCase();
+			
+			if(opt == "select") {
+				el.value = "none";
+			}
+			else {
+				el.value = opt;
+			}
+			
+			select.appendChild(el);
+		}
+	}
+	
+	function initNode() {
+		if (curSite != "") {
+			$('#sitegeneral').val(curSite);
+			document.getElementById("node").value = curNode;
+		}
+	}
+	
+	function getMainForm() {
+		var targetForm = document.getElementById("formGeneral");
+		
+		return targetForm;
+	}
+	
+	window.onload = function() {					
+		popDropDownGeneral();
 		initAlertPlot();
-	}, 1500); 
-}	
-
-window.onresize = function() {
-	curNode = document.getElementById("node").value;
-	fromDate = document.getElementById("formDate").dateinput.value;
-	toDate = document.getElementById("formDate").dateinput2.value;
-	d3.select("#svg-alertmini").remove();
-	svg.selectAll(".dot").remove();
-	svg.selectAll(".dot1").remove();
-	svg.selectAll(".dot2").remove();
-	svg.selectAll(".line").remove();
-	svg.selectAll(".legend").remove();
-	svg.selectAll(".tick").remove();
-	svg.selectAll(".axislabel").remove();
 		
-	initAlertPlot();
-	showAccel();
-}
-
-function redirectNodePlots (frm) {
-	if(frm.sitegeneral.value == "none") {
-		//do nothing
+		setTimeout(function(){
+			initNode();
+			showAccel(getMainForm());
+		}, 1000); 
 	}
-	else {
-		curSite = document.getElementById("sitegeneral").value;
-		curNode = document.getElementById("node").value;
-		fromDate = document.getElementById("formDate").dateinput.value;
-		toDate = document.getElementById("formDate").dateinput2.value;
-		var urlExt = "gold/node/" + curSite + "/" + curNode;
-		var urlBase = "<?php echo base_url(); ?>";
-		
-		window.location.href = urlBase + urlExt;
-	}
-}
-
-function showNodePlots (frm) {
-	if(frm.sitegeneral.value == "none") {
-		//do nothing
-	}
-	else {
-		var tempFrom = new Date(document.getElementById("formDate").dateinput.value);
-		var tempTo = new Date(document.getElementById("formDate").dateinput2.value);		
-		
-		curNode = document.getElementById("node").value;
-		fromDate = tempFrom.getFullYear() + "-" + (tempFrom.getMonth() + 1) + "-" + tempFrom.getDate();
-		toDate = tempTo.getFullYear() + "-" + (tempTo.getMonth() + 1) + "-" + tempTo.getDate();
-		//showPositionPlotGeneral(frm);
-		//showLSBChange(frm);
-		showAccel();
-	}
-}
-
-function showAccelRelatedPlots (frm) {
-	if(frm.sitegeneral.value == "none") {
-		//do nothing
-	}
-	else {
-		var tempFrom = new Date(document.getElementById("formDate").dateinput.value);
-		var tempTo = new Date(document.getElementById("formDate").dateinput2.value);		
-		
-		curNode = document.getElementById("node").value;
-		fromDate = tempFrom.getFullYear() + "-" + (tempFrom.getMonth() + 1) + "-" + tempFrom.getDate();
-		toDate = tempTo.getFullYear() + "-" + (tempTo.getMonth() + 1) + "-" + tempTo.getDate();
-		renameHeader();
-		
-		showLSBChange(frm);
-		showAccel();
-	}
-}
-
-function showDateNodePlots (frm) {
-	if(frm.sitegeneral.value == "none") {
-		//do nothing
-	}
-	else {
-		var tempFrom = new Date(document.getElementById("formDate").dateinput.value);
-		var tempTo = new Date(document.getElementById("formDate").dateinput2.value);
-		
-		curNode = document.getElementById("node").value;
-		fromDate = tempFrom.getFullYear() + "-" + (tempFrom.getMonth() + 1) + "-" + tempFrom.getDate();
-		toDate = tempTo.getFullYear() + "-" + (tempTo.getMonth() + 1) + "-" + tempTo.getDate();
-		showAccel();
-	}
-}
-
+	
+	function redirectNodePlots (frm) {
+		if(frm.sitegeneral.value == "none") {
+			//do nothing
+		}
+		else {
+			curSite = document.getElementById("sitegeneral").value;
+			curNode = document.getElementById("node").value;
+			fromDate = document.getElementById("formDate").dateinput.value;
+			toDate = document.getElementById("formDate").dateinput2.value;
+			var urlExt = "gold/node/" + curSite + "/" + curNode;
+			var urlBase = "<?php echo base_url(); ?>";
+			
+			window.location.href = urlBase + urlExt;
+		}
+	}	
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
