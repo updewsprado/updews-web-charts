@@ -104,12 +104,14 @@ class Position_Model extends CI_Model
 		}
 		
 		$count_xy = 0;
+		$num_elems = 4;
 		
 		//PANB: Fixed Bug, Position Intervals is no longer limited to just 6 days
 		//	new code is now capable of catering intervals that are as big as the
 		//	maximum data count from the Position CSVs
-		for ($l = 0; ($l < $count) && ($l < $interval * 4); $l = $l + $interval) {
+		for ($l = $count - 1; ($l > 0) && ($num_elems > 0); $l = $l - $interval) {	
 			//echo "L counter: " . $l . ", \n";
+			$num_elems--;
 			
 			$date = $arrayX[$l]["ts"];
 			$data_cnt = count($keys);
