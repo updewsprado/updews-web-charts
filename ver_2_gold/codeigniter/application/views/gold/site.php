@@ -343,7 +343,12 @@ window.onload = function() {
 window.onresize = function() {
 	d3.select("#svg-alertmini").remove();
 	initAlertPlot();
-	showCommHealthPlotGeneral();
+	
+	//+PANB: Quick Fix for repeated drawing is to not call the
+	//	plot generator that was created by Kyle. Gotta clean
+	//	this up in the future.
+	//showCommHealthPlotGeneral();
+	
 	showPositionPlotGeneral();
 	showSentNodeTotalGeneral();
 	showRainGeneral();
