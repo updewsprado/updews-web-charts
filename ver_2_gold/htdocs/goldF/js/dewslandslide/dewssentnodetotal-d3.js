@@ -71,6 +71,12 @@
 	
 		d3.json(sentnode_url, function(error, data) {
 
+			//++PANB: Don't draw anything if there is no data
+			if(!data) {
+				sentnode_spinner.stop();
+				return;
+			}	
+
 			data.forEach(function(d) {
 				d.date = sentnode_parseDate(d.timestamp);
 				d.nodes = +d.count;
@@ -123,7 +129,7 @@
 				.on("mouseout", sentnode_mouseout)
 				.on("mousemove", sentnode_mousemove); 
 			  
-			function sentnode_mousemove() {                                 
+			function sentnode_mousemove() {      						                           
 				var x0 = sentnode_x.invert(d3.mouse(this)[0]);              
 					i = sentnode_bisectDate(data, x0, 1),                   
 					d0 = data[i - 1],                              
