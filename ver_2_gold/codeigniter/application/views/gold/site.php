@@ -25,15 +25,27 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Mini Alert Map for a more convenient way of mapping alerts on the site level analysis page
+                            <i class="fa fa-info-circle"></i>  <strong>Feature Improvement!</strong> Increased Position Plot Day Intervals to 10 and made it more adaptive
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> All nodes from Alert Map are now clickable!
+                            <i class="fa fa-info-circle"></i>  <strong>Fixed Bug!</strong> Communication Health is Displaying Properly Again
                         </div>
-                    </div>                        
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Fixed Bug!</strong> Total Sent Node Graph is Displaying Properly Again
+                        </div>
+                    </div>   
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Fixed Bug!</strong> Rainfall Graph is Displaying Properly Again
+                        </div>
+                    </div>             
                 </div>
                 <!-- /.row -->                                             
                 
