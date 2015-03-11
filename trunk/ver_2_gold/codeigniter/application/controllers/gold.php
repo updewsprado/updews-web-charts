@@ -101,7 +101,7 @@ class Gold extends CI_Controller {
 				$data['showdateplots'] = "showDateSitePlots(document.getElementById('formGeneral'))";
 				
 				$data['dropdown_chart'] = 'class="active"';
-				$data['slider'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsbrush-d3.js"></script>';
+				//$data['slider'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsbrush-d3.js"></script>';
 				$data['alert'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsalertmini.js"></script>';
 				$data['position'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsposition.js"></script>';
 				$data['gmap'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsmaps.js"></script>';

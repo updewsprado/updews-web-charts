@@ -184,6 +184,13 @@
 	
 	d3.json(rainfall_url, function (error, data){
 			  
+		//++PANB: Don't draw anything if there is no data
+		if(!data) {
+			rainfall_spinner1.stop();
+	        rainfall_spinner2.stop();
+			return;
+		}	  
+			  
 		data.forEach(function(d){
 			d.timestamp = rainfall_parseDate(d.timestamp);
 			d.cummulative = +d.cumm;

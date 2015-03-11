@@ -1,3 +1,12 @@
+	<link href="/js/development-bundle/themes/south-street/jquery-ui.css" rel="stylesheet">
+
+	<script type="text/javascript" src="/js/jquery-ui-1.10.4.custom.js"></script>
+	<script type="text/javascript" src="/js/development-bundle/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="/js/development-bundle/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/js/development-bundle/ui/jquery.ui.datepicker.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.0/dygraph-combined.js"></script>
+	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+
 
         <div id="page-wrapper">
 
@@ -335,8 +344,11 @@ window.onload = function() {
 	
 	setTimeout(function(){
 		initSite();
+	}, 500); 
+	
+	setTimeout(function(){
 		initAlertPlot();
-	}, 1500); 
+	}, 1000); 
 }	
 
 
@@ -386,7 +398,7 @@ function showSitePlots (frm) {
 		showSentNodeTotalGeneral();
         showRainGeneral();
 		showCommHealthPlotGeneral();
-		showBrush();
+		//showBrush();
 	}
 }
 
@@ -399,7 +411,7 @@ function showDateSitePlots (frm) {
 		toDate = document.getElementById("formDate").dateinput2.value;
 		showSentNodeTotalGeneral();
 		showRainGeneral();
-		showBrush();
+		//showBrush();
 	}
 }
 
