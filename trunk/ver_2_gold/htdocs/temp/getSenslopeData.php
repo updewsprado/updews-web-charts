@@ -4,7 +4,7 @@
 	require_once('getSiteHealth.php'); 
 	require_once('getAccel.php');
 	require_once('getSitesCoord.php');
-	//require_once('getAlert.php');
+	require_once('getAlert.php');
 	
 	if(isset($_GET['db'])) {
 		$mysql_database = $_GET['db'];
@@ -45,6 +45,21 @@
 		
 		getAccel($q, $site, $nid, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 	}
+	
+	if(isset($_GET['accelsite'])) {
+		$q = $_GET['q'];
+		$site = $_GET['site'];
+		
+		//getAccelSite($q, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+		
+		if(isset($site) && isset($q)) {
+			//echo "site info & date data is incomplete<Br/>";
+			getAccelSite($q, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+		}
+		else {
+			echo "site info & date data is incomplete<Br/>";
+		}
+	}	
 	
 	if(isset($_GET['accel2'])) {
 		//echo "accel exists <Br/>";	
