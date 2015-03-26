@@ -11,7 +11,7 @@
 		//echo "db exists: $mysql_database<Br/>";	
 	}
 	else {
-		//echo "db exists: $mysql_database<Br/>";	
+		echo "ERROR: DB does not exist<Br/>";	
 	}	
 	
 	if(isset($_GET['health'])) {
@@ -31,10 +31,8 @@
 			getSiteHealth($date, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 		}
 		else {
-			echo "site info & date data is incomplete<Br/>";
+			echo "ERROR: site info & date data is incomplete<Br/>";
 		}
-		
-		//getSiteHealth($site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 	}
 	
 	if(isset($_GET['accel'])) {
@@ -52,12 +50,12 @@
 		
 		//getAccelSite($q, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 		
-		if(isset($site) && isset($q)) {
+		if(isset($site) && !empty($site) && isset($q) && !empty($q)) {
 			//echo "site info & date data is incomplete<Br/>";
 			getAccelSite($q, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 		}
 		else {
-			echo "site info & date data is incomplete<Br/>";
+			echo "ERROR: site info & date data is incomplete<Br/>";
 		}
 	}	
 	
@@ -84,7 +82,6 @@
 		$site = $_GET['site'];
 		$nid = (int)($_GET['nid']);
 		
-		//getAlert($q, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 		getAlert($site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 	}	
 ?>	
