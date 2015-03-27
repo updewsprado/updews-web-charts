@@ -42,6 +42,14 @@ $route['test'] = "test";
 $route['test/(:any)'] = "test/$1";
 $route['dice'] = "dice/view";
 $route['dice/(:any)'] = "dice/view/$1";
+
+//V3 Alpha
+$route['v3alpha'] = "v3alpha/view";
+$route['v3alpha/logout'] = "v3alpha/logout";
+$route['v3alpha/site/(:any)/(:num)'] = "v3alpha/view/node/$1/$2";
+$route['v3alpha/site/(:any)'] = "v3alpha/view/site/$1";
+$route['v3alpha/(:any)'] = "v3alpha/view/$1";
+
 $route['gold'] = "gold/view";
 $route['logout'] = "gold/logout";
 $route['gold/logout'] = "gold/logout";
