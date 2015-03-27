@@ -220,8 +220,7 @@ class Email extends CI_Controller {
 		$mailList = ['updews.prado@gmail.com', 'senslopenotification@gmail.com'];
 		 */
 		 
-		$mailList = ['micofelicio@gmail.com',
-					'updews.prado@gmail.com'];
+		$mailList = ['micofelicio@gmail.com'];
 		
 	    $this->email->from('senslopenotification@gmail.com', 'Senslope Notification');
 		$this->email->to($mailList);

@@ -126,6 +126,8 @@ path {
 
 <body>
 	<div id="alert-canvas"></div>
+	<button id="save">Save as Image</button>
+	<canvas style="display:none"></canvas>
 </body>
 
 <script>
@@ -249,6 +251,11 @@ function init_dims() {
 	              "translate(" + margin.left + "," + margin.top + ")");
 	
 	svg.call(tip);	
+	
+	// Set dimension for canvas to copy for downloading
+	d3.select("canvas")
+        .attr("width", cWidth)
+        .attr("height", cHeight);
 }
 
 // Define the axes
@@ -599,6 +606,39 @@ function showData() {
 	generateAlertPlot(nodeAlertJSON, "Accelerometer Movement Alert Map", 0, true, 1);
 	
 }
+
+d3.select("#save").on("click", function(){
+  var html = d3.select("svg")
+        .attr("version", 1.1)
+        .attr("xmlns", "http://www.w3.org/2000/svg")
+        .node().parentNode.innerHTML;
+
+  //console.log(html);
+  var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html);
+  var img = '<img src="'+imgsrc+'">'; 
+  //d3.select("#svgdataurl").html(img);
+
+
+  var canvas = document.querySelector("canvas"),
+	  context = canvas.getContext("2d");
+
+  var image = new Image;
+  image.src = imgsrc;
+  image.onload = function() {
+	  context.drawImage(image, 0, 0);
+
+	  var canvasdata = canvas.toDataURL("image/png");
+
+	  //var pngimg = '<img src="'+canvasdata+'">'; 
+  	  //d3.select("#pngdataurl").html(pngimg);
+
+	  var a = document.createElement("a");
+	  a.download = "sample.png";
+	  a.href = canvasdata;
+          document.body.appendChild(a);
+	  a.click();
+  };
+});
 
 window.onload = function() {
 	init_dims();
