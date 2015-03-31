@@ -314,6 +314,11 @@ class Test extends CI_Controller {
 		
 		$this->load->view('graphs/dataPres', $data);
 	}
+	
+	public function timeline()
+	{	
+		$this->load->view('graphs/timeline');
+	}	
 }
 
 /* End of file pages.php */

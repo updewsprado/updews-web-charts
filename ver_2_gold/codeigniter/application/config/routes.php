@@ -46,20 +46,25 @@ $route['dice/(:any)'] = "dice/view/$1";
 //V3 Alpha
 $route['v3alpha'] = "v3alpha/view";
 $route['v3alpha/logout'] = "v3alpha/logout";
-$route['v3alpha/site/(:any)/(:num)'] = "v3alpha/view/node/$1/$2";
+$route['v3alpha/node/(:any)/(:num)'] = "v3alpha/view/node/$1/$2";
 $route['v3alpha/site/(:any)'] = "v3alpha/view/site/$1";
 $route['v3alpha/(:any)'] = "v3alpha/view/$1";
 
+//Gold
 $route['gold'] = "gold/view";
 $route['logout'] = "gold/logout";
 $route['gold/logout'] = "gold/logout";
 $route['gold/site/(:any)/(:num)'] = "gold/view/node/$1/$2";
 $route['gold/site/(:any)'] = "gold/view/site/$1";
 $route['gold/(:any)'] = "gold/view/$1";
+
+//Beta
 $route['beta'] = "beta/view";
 $route['beta/site/(:any)/(:num)'] = "beta/view/node/$1/$2";
 $route['beta/site/(:any)'] = "beta/view/site/$1";
 $route['beta/(:any)'] = "beta/view/$1";
+
+//Alpha
 $route['alpha'] = "alpha/view";
 $route['alpha/(:any)'] = "alpha/view/$1";
 $route['mempage'] = "mempage";
