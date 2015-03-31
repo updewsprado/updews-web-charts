@@ -239,7 +239,7 @@ function redirectNodePlots (frm) {
 		curNode = document.getElementById("node").value;
 		fromDate = document.getElementById("formDate").dateinput.value;
 		toDate = document.getElementById("formDate").dateinput2.value;
-		var urlExt = "gold/node/" + curSite + "/" + curNode;
+		var urlExt = "v3alpha/node/" + curSite + "/" + curNode;
 		var urlBase = "<?php echo base_url(); ?>";
 		
 		window.location.href = urlBase + urlExt;

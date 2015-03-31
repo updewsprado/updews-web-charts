@@ -385,7 +385,7 @@ function redirectSitePlots (frm) {
 	else {
 		curSite = frm.sitegeneral.value;
 		
-		var urlExt = "gold/site/" + curSite;
+		var urlExt = "v3alpha/site/" + curSite;
 		var urlBase = "<?php echo base_url(); ?>";
 		
 		window.location.href = urlBase + urlExt;
