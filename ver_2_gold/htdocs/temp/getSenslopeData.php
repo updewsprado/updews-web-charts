@@ -45,17 +45,43 @@
 	}
 	
 	if(isset($_GET['accelsite'])) {
-		$q = $_GET['q'];
-		$site = $_GET['site'];
+		$from_flag = false;
+		$to_flag = false;
+		$site_flag = false;
 		
-		//getAccelSite($q, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
-		
-		if(isset($site) && !empty($site) && isset($q) && !empty($q)) {
-			//echo "site info & date data is incomplete<Br/>";
-			getAccelSite($q, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+		if(isset($_GET['site']) && !empty($_GET['site'])) {
+			$site = $_GET['site'];
+			$site_flag = true;
 		}
 		else {
-			echo "ERROR: site info & date data is incomplete<Br/>";
+			echo "ERROR: site info is incomplete<Br/>";
+			return;
+		}
+		
+		if(isset($_GET['start']) && !empty($_GET['start'])) {
+			$from = $_GET['start'];
+			$from_flag = true;
+		}
+		else {
+			echo "ERROR: start date info is incomplete<Br/>";
+			return;
+		}
+		
+		if(isset($_GET['end']) && !empty($_GET['end'])) {
+			$to = $_GET['end'];
+			$to_flag = true;
+		}
+		
+		if($site_flag && $from_flag && $to_flag) {
+			//echo "site info & date data is incomplete<Br/>";
+			getAccelSite2($from, $to, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+		}
+		elseif($site_flag && $from_flag && !$to_flag) {
+			//echo "site info & date data is incomplete<Br/>";
+			getAccelSite($from, $site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+		}
+		else {
+			echo "ERROR: site info or date data is incomplete<Br/>";
 		}
 	}	
 	
