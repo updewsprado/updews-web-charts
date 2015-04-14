@@ -147,6 +147,8 @@ class V3alpha extends CI_Controller {
 				$data['lsbchange'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewslsbchange.js"></script>';
 				$data['accel'] = '<script src="/' . $data['folder'] . '/js/dewslandslide/dewsaccel-d3.js"></script>';
 				
+				$data['ismap'] = false;
+				
 				$page = 'node';
 				
 				break;
@@ -175,6 +177,8 @@ class V3alpha extends CI_Controller {
 				$data['showdateplots'] = "showAccel(getMainForm())";
 				
 				$data['dropdown_chart'] = 'class="active"';
+				
+				$data['ismap'] = false;
 				
 				$page = 'dynode';
 				break;
