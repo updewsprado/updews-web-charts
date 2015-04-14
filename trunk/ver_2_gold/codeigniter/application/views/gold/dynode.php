@@ -251,9 +251,9 @@
 			showAccel(targetForm);
 		}, 1000); 
 		
-		setTimeout(function(){
-			showLSBChange(targetForm);
-		}, 2500); 
+		// setTimeout(function(){
+			// showLSBChange(targetForm);
+		// }, 2500); 
 	}
 	
 	function redirectNodePlots (frm) {

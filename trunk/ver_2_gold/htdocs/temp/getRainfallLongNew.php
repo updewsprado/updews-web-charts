@@ -10,12 +10,8 @@
 	}		
 
 	//Sagada - 467; Tadian, Mt Province - 469; Hingyon, Ifugao - 391
-	$site_noah = array(467,469,391);
+	$site_noah = array(204,1236,782,789,389,152,65,454,467,469,391);
 	date_default_timezone_set("Asia/Manila");
-
-    //$rsite = $_GET['rsite'];
-    //$fdate = $_GET['fdate'];
-    //$tdate = $_GET['tdate'];
 	
 	//Loop through all available rainfall noah sites
 	foreach ($site_noah as $site) {
@@ -49,18 +45,6 @@
 		if($output[0]) {
 			$rain = json_decode($output[0]);
 		
-			//echo "test: " . $rain[0]->index;
-			/*
-			$queryLatestEntry = "SELECT * FROM rain_noah WHERE site = $site ORDER BY timestamp DESC LIMIT 1";
-			$result  = mysqli_query($con, $queryLatestEntry);
-			
-			$lastEntry = "2014-01-01 00:00:00";
-			while($row = mysqli_fetch_array($result)) {
-				$lastEntry = $row['timestamp'];
-				
-				echo "latest timestamp = " . $lastEntry;
-			}		
-			 */
 			$i = 0;
 			foreach ($rain as $value) {
 				//echo $value->index;

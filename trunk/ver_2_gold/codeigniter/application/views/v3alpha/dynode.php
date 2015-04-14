@@ -21,9 +21,9 @@
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.0/dygraph-combined.js"></script>
 	<script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 	
-	<script type="text/javascript" src="/goldF/js/dewslandslide/dewsaccel-dy.js"></script>
-	<script type="text/javascript" src="/goldF/js/dewslandslide/dewslsbchange.js"></script>
-	<script type="text/javascript" src="/goldF/js/dewslandslide/dewsalertmini.js"></script>
+	<script type="text/javascript" src="/v3alphaF/js/dewslandslide/dewsaccel-dy.js"></script>
+	<script type="text/javascript" src="/v3alphaF/js/dewslandslide/dewslsbchange.js"></script>
+	<script type="text/javascript" src="/v3alphaF/js/dewslandslide/dewsalertmini.js"></script>
 
 	
 	<style type="text/css">
@@ -251,9 +251,9 @@
 			showAccel(targetForm);
 		}, 1000); 
 		
-		setTimeout(function(){
-			showLSBChange(targetForm);
-		}, 2500); 
+		// setTimeout(function(){
+			// showLSBChange(targetForm);
+		// }, 2500); 
 	}
 	
 	function redirectNodePlots (frm) {
@@ -265,7 +265,7 @@
 			curNode = document.getElementById("node").value;
 			fromDate = document.getElementById("formDate").dateinput.value;
 			toDate = document.getElementById("formDate").dateinput2.value;
-			var urlExt = "gold/node/" + curSite + "/" + curNode;
+			var urlExt = "v3alpha/node/" + curSite + "/" + curNode;
 			var urlBase = "<?php echo base_url(); ?>";
 			
 			window.location.href = urlBase + urlExt;
