@@ -1,10 +1,14 @@
 <?php
+	//header('Content-type: application/json');
+
 	require_once('connectDB.php'); 
 	require_once('getHealth.php'); 
 	require_once('getSiteHealth.php'); 
 	require_once('getAccel.php');
 	require_once('getSitesCoord.php');
-	require_once('getAlert.php');
+	require_once('getSiteColumnInfo.php');
+	require_once('getNodeStatusNew.php');
+	//require_once('getAlert.php');
 	
 	if(isset($_GET['db'])) {
 		$mysql_database = $_GET['db'];
@@ -110,6 +114,70 @@
 		
 		getAlert($site, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
 	}	
+	
+	if(isset($_GET['sitecolumn'])) {
+		//echo "sitecolumn getter exists <Br/>";	
+
+		if(isset($_GET['sidlatest']) && !empty($_GET['sidlatest'])) {
+			$sid = (int)($_GET['sidlatest']);
+		}
+		else {
+			$sid = 0;
+		}		
+		
+		//echo "sid = " . $sid;
+		getSiteColumn($sid, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+	}	
+
+	if(isset($_GET['columninfo'])) {
+		//echo "columninfo getter exists <Br/>";	
+
+		if(isset($_GET['sidlatest']) && !empty($_GET['sidlatest'])) {
+			$sid = (int)($_GET['sidlatest']);
+		}
+		else {
+			$sid = 0;
+		}		
+		
+		//echo "sid = " . $sid;
+		getSiteColumnProps($sid, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+	}	
+
+	if(isset($_GET['siteraininfo'])) {
+		//echo "siteraininfo getter exists <Br/>";	
+
+		if(isset($_GET['sidlatest']) && !empty($_GET['sidlatest'])) {
+			$sid = (int)($_GET['sidlatest']);
+		}
+		else {
+			$sid = 0;
+		}		
+		
+		//echo "sid = " . $sid;
+		getSiteRainProps($sid, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+	}	
+
+	if(isset($_GET['nodestatus'])) {
+		//echo "nodestatus getter exists <Br/>";	
+
+		if(isset($_GET['pid']) && !empty($_GET['pid'])) {
+			$pid = (int)($_GET['pid']);
+		}
+		else {
+			$pid = 0;
+		}		
+		
+		//echo "pid = " . $pid;
+
+		if(isset($_GET['json'])) {
+			getNodeStatusJSON($pid, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+		}
+		else {
+			getNodeStatus($pid, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+		}
+
+		//getNodeStatus($pid, $mysql_host, $mysql_database, $mysql_user, $mysql_password);
+	}		
 ?>	
 
 
