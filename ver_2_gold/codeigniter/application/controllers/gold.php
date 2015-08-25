@@ -11,7 +11,7 @@ class Gold extends CI_Controller {
 		echo "Gold Version index page";
 	}
 
-	public function view( $page = 'monitoring', $site = null, $node = 1, $dateto = null, $datefrom = null )
+	public function view( $page = 'monitoring', $site = null, $node = 1, $datefrom = null, $dateto = null )
 	{
 		$this->load->helper('url');
 	
@@ -36,6 +36,7 @@ class Gold extends CI_Controller {
 		$data['sentnodetotal'] = $data['rainfall'] = $data['lsbchange'] = '';
 		$data['accel'] = $data['showplots'] = $data['showdateplots'] = '';
 		$data['sitesCoord'] = 0;
+		$data['datefrom'] = $data['dateto'] = '';
 		
 		$data['ismap'] = false;
 
@@ -120,6 +121,8 @@ class Gold extends CI_Controller {
 			
 				$data['site'] = $site;
 				$data['node'] = $node;
+				$data['datefrom'] = $datefrom;
+				$data['dateto'] = $dateto;
 				
 				//Data for Alert Map
 				if ($site) {
@@ -156,6 +159,8 @@ class Gold extends CI_Controller {
 			
 				$data['site'] = $site;
 				$data['node'] = $node;
+				$data['datefrom'] = $datefrom;
+				$data['dateto'] = $dateto;
 
 				//Data for Alert Map
 				if ($site) {

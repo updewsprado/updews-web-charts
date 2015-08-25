@@ -46,7 +46,7 @@ class Gmap_Model extends CI_Model
 	
 	public function getSitesCoord()
 	{
-		$query = $this->db->query("SELECT * FROM site_column");
+		$query = $this->db->query("SELECT * FROM site_column WHERE s_id < 100");
 		
 		$dbreturn = array();
 		$ctr = 0;
@@ -56,7 +56,13 @@ class Gmap_Model extends CI_Model
 			$dbreturn[$ctr]['name'] = $row['name'];
 			$dbreturn[$ctr]['lat'] = $row['lat'];
 			$dbreturn[$ctr]['long'] = $row['long'];
-			$dbreturn[$ctr]['place_installed'] = $row['place_installed'];
+
+			if ($row['sitio']) {
+				$dbreturn[$ctr]['place_installed'] = $row['sitio'].", ".$row['barangay'].', '.$row['municipality'].', '.$row['province'];
+			}
+			else {
+				$dbreturn[$ctr]['place_installed'] = $row['barangay'].', '.$row['municipality'].', '.$row['province'];
+			}
 			
 			$ctr = $ctr + 1;
 		}

@@ -69,7 +69,7 @@ class Data_presence_Model extends CI_Model
 	public function getAllDataPresAlert($daysnodata = 3)
 	{
 		$dbreturn = array();
-		$sitesAll = $this->db->query("SELECT name FROM site_column");	
+		$sitesAll = $this->db->query("SELECT name FROM site_column WHERE s_id < 100");	
 		$ctr = 0;
 		
 		foreach ($sitesAll->result_array() as $row)
@@ -162,8 +162,58 @@ class Data_presence_Model extends CI_Model
 		
 		//echo $dbtstamp;
 	}	
+
+	public function getNodeDataPresence($curdb = 'default', $site, $date = null, $interval = 1)
+	{
+		$sql_maxnode = $this->db->query("SELECT * FROM site_column_props WHERE s_id IN 
+									(SELECT s_id FROM site_column WHERE name = '" . $site . "')");
+		
+		$dbreturn = array();
+		$ctr = 0;
+		$accum = $interval * 1800;
+		$days = $interval;
+		
+		if ($date == null) {
+			//Set time to limit DB query
+			date_default_timezone_set("Asia/Manila");
+			$date_cur = "'" . date('Y-m-d H:i:s') . "'";
+			
+			$date_string = "-$days days";
+			$date_from =  "'" . date('Y-m-d H:i:s',strtotime($date_string)) . "'";
+		} else {
+			$date_cur = "'" . date($date) . "'";
+			$date_string = "-$days days";
+			$date_from = "'" . date($date, $date_string) . "'";
+		}
+		
+		//echo "Current Date: $date_cur, Range: $date_from";
+		
+		$maxnode = $sql_maxnode->row()->num_nodes;
+
+		$dbSelected = $this->load->database($curdb, TRUE);
+
+		for ($i=1; $i <= $maxnode; $i++) { 
+			$sql = $dbSelected->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
+				AS timeslice
+				FROM (SELECT * FROM $site 
+						WHERE 
+							timestamp BETWEEN $date_from AND $date_cur 
+						AND id = $i 
+						AND xvalue IS NOT NULL) AS site
+				GROUP BY timeslice DESC LIMIT 48");							
+
+			foreach ($sql->result_array() as $row)
+			{
+				$dbreturn[$ctr]['site'] = $i;
+				$dbreturn[$ctr]['timestamp'] = $row['timeslice'];
+				$ctr = $ctr + 1;
+			}
+		}
+
+		return json_encode($dbreturn);
+	}
 	
-	public function getAllDataPresence($interval = 1)
+	public function getAllDataPresence($curdb = 'default', $interval = 1)
 	{	
 		$dbreturn = array();
 		$ctr = 0;
@@ -177,15 +227,16 @@ class Data_presence_Model extends CI_Model
 		$date_string = "-$days days";
 		$date_from =  "'" . date('Y-m-d H:i:s',strtotime($date_string)) . "'";
 		
-		$sitesAll = $this->db->query("SELECT name FROM site_column");	
+		$dbSelected = $this->load->database($curdb, TRUE);
+		$sitesAll = $dbSelected->query("SELECT name FROM site_column WHERE s_id < 100");	
 		
 		foreach ($sitesAll->result_array() as $row)
 		{
 			$site = $row['name'];
 
-			$sql = $this->db->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
+			$sql = $dbSelected->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
 							AS timeslice
-							FROM (SELECT * FROM $site WHERE timestamp > $date_from) AS site
+							FROM (SELECT * FROM $site WHERE timestamp > $date_from and xvalue IS NOT NULL) AS site
 							GROUP BY timeslice DESC LIMIT 48");							
 
 			foreach ($sql->result_array() as $row)
@@ -284,7 +335,7 @@ class Data_presence_Model extends CI_Model
 		$siteArray = array();
 		$ctr = 0;
 		
-		$sql_maxnode = $this->db->query("SELECT name FROM site_column");
+		$sql_maxnode = $this->db->query("SELECT name FROM site_column WHERE s_id < 100");
 		
 		foreach ($sql_maxnode->result_array() as $row)
 		{
@@ -293,6 +344,20 @@ class Data_presence_Model extends CI_Model
 		}
 		
 		return json_encode($siteArray);
+	}	
+
+	public function getAllNodesOfSite($site)
+	{
+		$sql_maxnode = $this->db->query("SELECT * FROM site_column_props WHERE s_id IN 
+									(SELECT s_id FROM site_column WHERE name = '" . $site . "')");
+		
+		$maxnode = $sql_maxnode->row()->num_nodes;
+
+		for ($i=0; $i < $maxnode; $i++) { 
+			$dbreturn[$i]['site'] = $maxnode - $i;
+		}
+
+		return json_encode($dbreturn);
 	}	
 
 	//Move this to the Site Health Model!!!

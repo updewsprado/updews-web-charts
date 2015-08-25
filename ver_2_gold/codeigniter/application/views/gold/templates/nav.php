@@ -138,7 +138,7 @@
                     <li>
 	                    <div class="form-group">
 	                        <label>Site:</label>
-	                        <select class="form-control" name="sitegeneral" id="sitegeneral" onchange="<?php echo $showplots; ?>">
+	                        <select class="form-control" name="sitegeneral" id="sitegeneral" onchange="<?php //echo $showplots; ?>">
 	                        </select>
 	                    </div>
                     </li>
@@ -146,7 +146,7 @@
                     <li>
 	                    <div id="nodeGeneral" class="form-group">
 	                        <label>Node:</label>
-	                        <input class="form-control" name="node" id="node" onchange="<?php echo $showplots; ?>" type="number" min="1" max="41" value="" maxlength="2" size="2">
+	                        <input class="form-control" name="node" id="node" onchange="<?php //echo $showplots; ?>" type="number" min="1" max="41" value="" maxlength="2" size="2">
 	                    </div>
                     </li>
                     
@@ -159,16 +159,21 @@
 	                        </select>
                         </div>						
                     </li>
+                                   
                     </FORM>  
                     
                     <FORM id="formDate">
                     <li>	
                     	<div class="form-group">
                             <label>Date:</label><br />                              
-		                    Start: <input type="text" id="datepicker" name="dateinput" onchange="<?php echo $showdateplots; ?>" size="10"/><br />  
-		                    End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php echo $showdateplots; ?>" size="10"/>
+		                    Start: <input type="text" id="datepicker" name="dateinput" onchange="<?php //echo $showdateplots; ?>" size="10"/><br />  
+		                    End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php //echo $showdateplots; ?>" size="10"/>
 	                     </div>	
                     </li>
+                    
+					<li>
+						<input type="button" value="go" onclick="<?php echo $showplots; ?>">	
+					</li>                      
                     
                     <!-- Slider and Timestamp made by Kyle (causes a lot of problems though)
 					<li>

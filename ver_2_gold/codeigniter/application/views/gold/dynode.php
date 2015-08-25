@@ -67,9 +67,15 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Navigation!</strong> Restructured the search process for navigating through Accelerometer Data
+                        </div>
+                    </div>        
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <i class="fa fa-info-circle"></i>  <strong>Revert to Old Feature!</strong> Using DyGraph again for the Accelerometer Data
                         </div>
-                    </div>                      
+                    </div>                                    
                 </div>
                 <!-- /.row -->                                             
                 
@@ -194,9 +200,12 @@
 -->
 
 <script>
+	var toDate = "<?php echo $dateto; ?>";
+	var fromDate = "<?php echo $datefrom; ?>";
+
 	var curSite = "<?php echo $site; ?>";
 	var curNode = "<?php echo $node; ?>";
-	var fromDate = "" , toDate = "" , dataBase = "";
+	var dataBase = "";
 	
 	nodeAlertJSON = <?php echo $nodeAlerts; ?>;
 	nodeStatusJSON = <?php echo $nodeStatus; ?>;
@@ -207,6 +216,8 @@
 					"lipt", "mamb", "mamt", "oslb", "oslt",
 					"plab", "plat", "pugb", "pugt", "sinb",
 					"sinu"];
+	
+	setDate(fromDate, toDate);
 	
 	function popDropDownGeneral() {
 		var select = document.getElementById('sitegeneral');
@@ -231,6 +242,10 @@
 		if (curSite != "") {
 			$('#sitegeneral').val(curSite);
 			document.getElementById("node").value = curNode;
+			
+			var element = document.getElementById("header-site");
+			var targetForm = document.getElementById("formGeneral");
+			element.innerHTML = targetForm.sitegeneral.value.toUpperCase() + " Node " + curNode + " Overview";			
 		}
 	}
 	
@@ -251,21 +266,25 @@
 			showAccel(targetForm);
 		}, 1000); 
 		
-		// setTimeout(function(){
-			// showLSBChange(targetForm);
-		// }, 2500); 
+		setTimeout(function(){
+			showLSBChange(targetForm);
+		}, 2500); 
 	}
 	
 	function redirectNodePlots (frm) {
-		if(frm.sitegeneral.value == "none") {
+		//if(frm.sitegeneral.value == "none") {
+		if(document.getElementById("sitegeneral").value == "none") {
 			//do nothing
+		}
+		else if ((curSite == document.getElementById("sitegeneral").value) && (curNode == document.getElementById("node").value)) {
+			showAccel(getMainForm());
 		}
 		else {
 			curSite = document.getElementById("sitegeneral").value;
 			curNode = document.getElementById("node").value;
 			fromDate = document.getElementById("formDate").dateinput.value;
 			toDate = document.getElementById("formDate").dateinput2.value;
-			var urlExt = "gold/node/" + curSite + "/" + curNode;
+			var urlExt = "gold/node/" + curSite + "/" + curNode + "/" + fromDate + "/" + toDate;
 			var urlBase = "<?php echo base_url(); ?>";
 			
 			window.location.href = urlBase + urlExt;

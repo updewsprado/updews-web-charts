@@ -25,27 +25,9 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Feature Improvement!</strong> Increased Position Plot Day Intervals to 10 and made it more adaptive
+                            <i class="fa fa-info-circle"></i>  <strong>Feature Update!</strong> The "Dynaslope Analysis Charts" have been removed for lack of usage in monitoring [July 27, 2015]
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Fixed Bug!</strong> Communication Health is Displaying Properly Again
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Fixed Bug!</strong> Total Sent Node Graph is Displaying Properly Again
-                        </div>
-                    </div>   
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Fixed Bug!</strong> Rainfall Graph is Displaying Properly Again
-                        </div>
-                    </div>             
+                    </div>         
                 </div>
                 <!-- /.row -->                                             
                 
@@ -182,7 +164,7 @@
                 </div> 
                 <!-- /.row -->
 
-                <!-- Heading for Dynaslope Analysis Charts   -->
+                <!-- Heading for Dynaslope Analysis Charts   
                 <div class="row">
                     <div class="col-lg-12">
                         <ol class="breadcrumb">
@@ -191,8 +173,7 @@
                             </li>
                         </ol>
                     </div>
-                </div>                                 	
-                <!-- /.row -->	   
+                </div>                                 	  
 
 				<div class="row">
                      <div class="col-lg-6">
@@ -221,7 +202,6 @@
                         </div>
                     </div>                                  
                 </div>	
-                <!-- /.row -->		
                 
 				<div class="row">
                      <div class="col-lg-6">
@@ -250,7 +230,6 @@
                         </div>
                     </div>                                  
                 </div>	
-                <!-- /.row -->	
                 
 				<div class="row">
                      <div class="col-lg-6">
@@ -278,8 +257,8 @@
                             </div>
                         </div>
                     </div>                                  
-                </div>	
-                <!-- /.row -->	                                 
+                </div>	        
+                -->                     
                 		
             </div>
             <!-- /.container-fluid -->
@@ -288,20 +267,18 @@
         <!-- /#page-wrapper -->
   
 <script>
-
 var end_date = new Date();
-	//var start_date = new Date(end_date.getMonth() + '-' + end_date.getDate() + '-' + end_date.getFullYear());
-	var start_date = new Date(end_date.getFullYear(), end_date.getMonth(), end_date.getDate()-10);
+var start_date = new Date(end_date.getFullYear(), end_date.getMonth(), end_date.getDate()-10);
 
-	$(function() {
-		$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
-		$( "#datepicker" ).datepicker("setDate", start_date); 
-	});
+$(function() {
+	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+	$( "#datepicker" ).datepicker("setDate", start_date); 
+});
 
-	$(function() {
-		$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
-		$( "#datepicker2" ).datepicker("setDate", end_date);
-	});
+$(function() {
+	$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
+	$( "#datepicker2" ).datepicker("setDate", end_date);
+});
 	
 var curSite = "<?php echo $site; ?>";
 var fromDate = "" , toDate = "" , dataBase = "";

@@ -258,12 +258,12 @@ class Test extends CI_Controller {
 		$data['dataPresence'] = $this->Data_presence_Model->getSingleDataPresenceCSV($site, $interval);
 	}
 	
-	public function allpres( $interval = 1 )
+	public function allpres( $curdb = 'default', $interval = 1 )
 	{
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
-		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($interval);
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($curdb, $interval);
 		echo $data['dataPresence'];
 	}
 	
@@ -293,28 +293,146 @@ class Test extends CI_Controller {
 		$this->load->view('graphs/testDataPres', $data);
 	}	
 
-	public function presmap( $interval = 1 )
+	public function presmap( $curdb = 'default', $interval = 1 )
 	{
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
 		$data['allSites'] = $this->Data_presence_Model->getAllSiteNames();
-		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($interval);
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($curdb, $interval);
+		$data['graphTitle'] = "Data Presence Map";
+		$data['verticalLabel'] = "Column|Site";
 		
 		$this->load->view('graphs/testDataPres', $data);
 	}
 	
-	public function presmap2( $interval = 1 )
+	public function presmap2( $curdb = 'default', $interval = 1 )
 	{
 		$this->load->helper('url');
 		$this->load->model('Data_presence_Model');
 		
 		$data['allSites'] = $this->Data_presence_Model->getAllSiteNames();
-		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($interval);
+		$data['dataPresence'] = $this->Data_presence_Model->getAllDataPresence($curdb, $interval);
 		
 		$this->load->view('graphs/dataPres', $data);
 	}
+
+	public function presmaprawpurged( $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['allSites'] = $this->Data_presence_Model->getAllSiteNames();
+		$data['dataPresenceRaw'] = $this->Data_presence_Model->getAllDataPresence("default", $interval);
+		$data['dataPresencePurged'] = $this->Data_presence_Model->getAllDataPresence("purged", $interval);
+
+		$data['graphTitle'] = "Data Presence Map";
+		$data['verticalLabel'] = "Column|Site";
+		
+		$this->load->view('graphs/testDataPresRawPurged', $data);
+	}
+
+	//Site Data Presence per node
+	public function dpsite( $site = 'blcb', $date = null, $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['dataPresence'] = $this->Data_presence_Model->getNodeDataPresence('default', $site, $date, $interval);
+		echo $data['dataPresence'];
+	}	
 	
+	//Site Data Presence per node Map
+	public function dpsitemap( $site = 'blcb', $date = null, $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		$this->load->model('Alert_Model');
+		
+		$data['allSites'] = $this->Data_presence_Model->getAllNodesOfSite($site);
+
+		$data['dataPresenceRaw'] = $this->Data_presence_Model->getNodeDataPresence('default', $site, $date, $interval);
+		//$data['dataPresencePurged'] = $this->Data_presence_Model->getNodeDataPresence('purged', $site, $date, $interval);
+		$data['dataPresencePurged'] = $this->Alert_Model->getSingleSiteAlert24Hour($site);
+
+		$data['graphTitle'] = "Raw (Black) & LSB Change (Blue, Green, Orange) | Data Presence Map for $site";
+		$data['verticalLabel'] = "Node ID";
+
+		$this->load->view('graphs/testNodeDataPresRawPurged', $data);
+		
+		//echo $this->Alert_Model->getSingleSiteAlert24Hour($site);
+	}	
+
+	public function dpsitemap2( $site = 'blcb', $date = null, $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['allSites'] = $this->Data_presence_Model->getAllNodesOfSite($site);		
+		$data['dataPresence'] = $this->Data_presence_Model->getNodeDataPresence('default', $site, $date, $interval);
+		$data['graphTitle'] = "Data Presence Map for $site";
+		$data['verticalLabel'] = "Node ID";
+
+		//$this->load->view('graphs/testNodeDataPres', $data);
+		echo $data['dataPresence'];
+	}	
+
+	//Site Data Presence per node Map. Raw vs Purged Data
+	public function dpsitemap3( $site = 'blcb', $date = null, $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		
+		$data['allSites'] = $this->Data_presence_Model->getAllNodesOfSite($site);
+		$data['dataPresenceRaw'] = $this->Data_presence_Model->getNodeDataPresence('default', $site, $date, $interval);
+		$data['dataPresencePurged'] = $this->Data_presence_Model->getNodeDataPresence('purged', $site, $date, $interval);
+
+		$data['graphTitle'] = "Raw (Black) vs Purged (Grey) | Data Presence Map for $site";
+		$data['verticalLabel'] = "Node ID";
+
+		$this->load->view('graphs/testNodeDataPresRawPurged', $data);
+	}	
+
+	public function multi_array_search($array, $search)
+	{
+		$result = array();
+
+		// Iterate over each array element
+		foreach ($array as $key => $value)
+		{
+			foreach ($search as $k => $v)
+			{
+				// If the array element does not meet the search condition then continue to the next element
+				if (!isset($value[$k]) || $value[$k] != $v)
+					continue 2;
+			}
+			$result[] = $key;
+		}
+
+		return $result;
+	}
+
+	//Site Data Presence per node Map but with a different View
+	public function dpsitemap4( $site = 'blcb', $date = null, $interval = 1 )
+	{
+		$this->load->helper('url');
+		$this->load->model('Data_presence_Model');
+		$this->load->model('Alert_Model');
+		
+		$data['allSites'] = $this->Data_presence_Model->getAllNodesOfSite($site);
+
+		$data['dataPresenceRaw'] = $this->Data_presence_Model->getNodeDataPresence('default', $site, $date, $interval);
+		$data['dataPresencePurged'] = $this->Alert_Model->getSingleSiteAlert24Hour($site);
+	/*
+		$data['graphTitle'] = "Raw (Black) & LSB Change (Blue, Green, Orange) | Data Presence Map for $site";
+		$data['verticalLabel'] = "Node ID";
+
+		$this->load->view('graphs/testNodeDataPresRawPurged2', $data);
+	*/
+		echo multi_array_search($data['dataPresencePurged'], array('site' => 1.0));
+		//echo json_encode($data['dataPresencePurged']);
+	}		
+
 	public function timeline()
 	{	
 		$this->load->view('graphs/timeline');

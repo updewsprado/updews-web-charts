@@ -179,10 +179,40 @@ class Alert_Model extends CI_Model
 		
 		return json_encode($siteAlerts);
 	}
+
+	//Get single site node alerts for 24 hours
+	public function getSingleSiteAlert24Hour($site = 'blcb')
+	{
+		if(strcmp(base_url(),"http://localhost/") == 0) {
+			$path = base_url() . 'temp/';
+			echo "Currently at localhost";
+		}
+		else {
+			$query = $this->db->query("SELECT num_nodes FROM site_column_props WHERE s_id IN (SELECT s_id FROM site_column WHERE name ='".$site."')");
+			$maxNode = $query->row()->num_nodes;
+
+			$path = '/var/www/html/ajax/';
+
+			//exec('/home/ubuntu/anaconda/bin/python '.$path.'getLsbChange24Hours.py ' . $site . ' ' . $node, $output, $return);  
+			exec('/home/ubuntu/anaconda/bin/python '.$path.'getLsbChange24HoursAll.py ' . $site, $output, $return); 
+			//echo "Executing Site: $site, Max Nodes: $maxNode, Node: $node<Br>";
+
+			if ($output[0]) {
+				//echo($output[0]);
+				return $output[0];
+			} elseif ($output[1]) {
+				//echo($output[1]);
+				return $output[1];
+			} else {
+				echo "No Output<Br>";
+			}
+		}
+		//return json_encode($siteAlerts);
+	}
 	
 	public function getSiteMaxNodes()
 	{
-		$query = $this->db->query("SELECT name FROM site_column");
+		$query = $this->db->query("SELECT name FROM site_column where s_id < 100");
 		
 		$sitesAll = array();
 		$ctr = 0;

@@ -258,7 +258,7 @@ function showNodePlots (frm) {
 		fromDate = tempFrom.getFullYear() + "-" + (tempFrom.getMonth() + 1) + "-" + tempFrom.getDate();
 		toDate = tempTo.getFullYear() + "-" + (tempTo.getMonth() + 1) + "-" + tempTo.getDate();
 		//showPositionPlotGeneral(frm);
-		//showLSBChange(frm);
+		showLSBChange(frm);
 		showAccel();
 	}
 }
