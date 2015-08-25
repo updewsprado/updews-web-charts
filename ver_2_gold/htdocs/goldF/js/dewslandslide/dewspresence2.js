@@ -112,10 +112,67 @@ var siteMaxNodes = [];
 var maxNode;
 var maxNodesJSON = 0;
 
-function getRawDataPresence(xOffset) {
+var maxRaw;
+var maxPurged;
 
+function getRawDataPresence(xOffset) {
 	var delay = 500;
 	var data = presenceRawJSON;
+	
+	siteMaxNodes = data;
+	
+	//add node links to nodes with normal status
+	var urlBase = "http://www.dewslandslide.com/";
+	var urlNodeExt = "test/dpsitemap/";	
+	
+	var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+	//maxNode = d3.max(siteMaxNodes, function(d) { return parseDate(d.timestamp); });
+	maxNode = 48;
+	
+	//var maxRaw = d3.max(presenceRawJSON, function(d) { return parseDate(d.timestamp); });
+	//var maxPurged = d3.max(presencePurgedJSON, function(d) { return parseDate(d.timestamp); });
+	maxRaw = d3.max(presenceRawJSON, function(d) { return parseDate(d.timestamp); });
+	maxPurged = d3.max(presencePurgedJSON, function(d) { return parseDate(d.timestamp); });
+
+	// Scale the range of the data
+	if(maxRaw > maxPurged) {
+		//x.domain(d3.extent(presenceRawJSON, function(d) { return parseDate(d.timestamp); }));
+		presencePlot.x.domain(d3.extent(presenceRawJSON, function(d) { return parseDate(d.timestamp); }));
+	} 
+	else {
+		//x.domain(d3.extent(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }));
+		presencePlot.x.domain(d3.extent(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }));
+	}
+
+	presencePlot.yOrd.domain(allSitesJSON.map(function(d) { return d.site; }));
+	
+	var cellw = (presencePlot.graphDim.gWidth / maxNode) * 0.9;
+	var cellh = presencePlot.yOrd.rangeBand(); //9;
+
+	presencePlot.svg.selectAll(".cell")
+		.data(siteMaxNodes)
+	.enter().append("rect")
+		.attr("class", "cell")
+		.attr('x', function(d){
+			return presencePlot.x(parseDate(d.timestamp)) + xOffset;
+		})
+		.attr('y', function(d){
+			return presencePlot.yOrd(d.site);
+		})
+		.attr('width', cellw)
+		.attr('height', cellh)
+		.on('mouseover', presencePlot.tip.show)
+		.on('mouseout', presencePlot.tip.hide)
+		.style("cursor", "pointer")
+		.on("click", function(d){
+			window.open(urlBase + urlNodeExt + d.site);
+	    });	
+}
+
+/*
+function getPurgedDataPresence(xOffset) {
+	var delay = 500;
+	var data = presencePurgedJSON;
 	
 	siteMaxNodes = data;
 	
@@ -140,101 +197,56 @@ function getRawDataPresence(xOffset) {
 		presencePlot.x.domain(d3.extent(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }));
 	}
 
-	// Scale the range of the data
-	//presencePlot.x.domain(d3.extent(siteMaxNodes, function(d) { return parseDate(d.timestamp); }));
-	//yOrd.domain(siteMaxNodes.map(function(d) { return d.site; }));
-	presencePlot.yOrd.domain(allSitesJSON.map(function(d) { return d.site; }));
+	//presencePlot.yOrd.domain(allSitesJSON.map(function(d) { return d.site; }));
 	
 	var cellw = (presencePlot.graphDim.gWidth / maxNode) * 0.9;
 	var cellh = presencePlot.yOrd.rangeBand(); //9;
 
-	presencePlot.svg.selectAll(".cell")
-		.data(siteMaxNodes)
-	.enter().append("rect")
-		.attr("class", "cell")
-		.attr('x', function(d){
-			return presencePlot.x(parseDate(d.timestamp)) + xOffset;
-		})
-		.attr('y', function(d){
-			return presencePlot.yOrd(d.site);
-		})
-		.attr('width', cellw)
-		.attr('height', cellh)
-		.on('mouseover', presencePlot.tip.show)
-		.on('mouseout', presencePlot.tip.hide)
-		.style("cursor", "pointer")
-		.on("click", function(d){
-			window.open(urlBase + urlNodeExt + d.site);
-			//document.location.href = urlBase + urlNodeExt + d.site;
-	        //document.location.href = urlBase + urlNodeExt + d.site + '/' + d.node;
-	        //document.location.href = "www.google.com";
-	    });	
+	svg.selectAll(".cellpurged")
+			.data(siteMaxNodes)
+		.enter().append("polygon")
+			.attr("class", "cellpurged")
+			.style("stroke", "none")  // colour the line	
+			.attr("points", function(d){
+				var xStart = presencePlot.x(parseDate(d.timestamp)) + xOffset;
+				var yStart = presencePlot.yOrd(d.site);
+				var xWidth = xStart + cellw * 0.9;
+				var yHeight = yStart + cellh * 0.9;
+				var points = xStart + "," + yStart + "," +
+							xWidth + "," + yStart + "," +
+							xStart + "," + yHeight + "";
+				return points;
+			})
+			.on('mouseover', tip.show)
+			.on('mouseout', tip.hide)
+			.style("cursor", "pointer")
+			.on("click", function(d){
+		        //document.location.href = urlBase + urlNodeExt + d.site + '/' + d.node;
+		        //document.location.href = "www.google.com";
+		    });	
+
 }
-
-function getPurgedDataPresence(xOffset) {
-
-	var delay = 500;
-	var data = presencePurgedJSON;
-	
-	siteMaxNodes = data;
-	
-	//add node links to nodes with normal status
-	var urlBase = "http://www.dewslandslide.com/";
-	var urlNodeExt = "test/dpsitemap/";	
-	
-	var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
-	//maxNode = d3.max(siteMaxNodes, function(d) { return parseDate(d.timestamp); });
-	maxNode = 48;
-	
-	// Scale the range of the data
-	presencePlot.x.domain(d3.extent(siteMaxNodes, function(d) { return parseDate(d.timestamp); }));
-	//yOrd.domain(siteMaxNodes.map(function(d) { return d.site; }));
-	presencePlot.yOrd.domain(allSitesJSON.map(function(d) { return d.site; }));
-	
-	var cellw = (presencePlot.graphDim.gWidth / maxNode) * 0.9;
-	var cellh = presencePlot.yOrd.rangeBand(); //9;
-
-	presencePlot.svg.selectAll(".cell")
-		.data(siteMaxNodes)
-	.enter().append("rect")
-		.attr("class", "cell")
-		.attr('x', function(d){
-			return presencePlot.x(parseDate(d.timestamp)) + xOffset;
-		})
-		.attr('y', function(d){
-			return presencePlot.yOrd(d.site);
-		})
-		.attr('width', cellw)
-		.attr('height', cellh)
-		.on('mouseover', presencePlot.tip.show)
-		.on('mouseout', presencePlot.tip.hide)
-		.style("cursor", "pointer")
-		.on("click", function(d){
-			window.open(urlBase + urlNodeExt + d.site);
-			//document.location.href = urlBase + urlNodeExt + d.site;
-	        //document.location.href = urlBase + urlNodeExt + d.site + '/' + d.node;
-	        //document.location.href = "www.google.com";
-	    });	
-}
+*/
 
 var nodeStatuses = [];
 var nodeStatusJSON = 0;
 
 var alertdata = [];
+
 function generatePresencePlot(urlRaw, urlPurged, title, xOffset, isLegends, graphNum) {
 	// Get the data
 	var jsondata = [];
 
 	d3.json(urlPurged, function(error, data) {
 		presencePurgedJSON = data;
-		jsondata = data;		  
+		//jsondata = data;		  
 	});	
 
 	//var data = urlRaw;
 	d3.json(urlRaw, function(error, data) {
 		presenceRawJSON = data;
-		jsondata = data;
-		
+		//jsondata = data;	
+
 		getRawDataPresence(xOffset);
 		var horOff = xOffset + ((presencePlot.graphDim.gWidth / maxNode) * 0.9)/2;	
 			
@@ -243,7 +255,7 @@ function generatePresencePlot(urlRaw, urlPurged, title, xOffset, isLegends, grap
 			.attr("class", "yAxisDataPresence")
 			.attr("transform", "translate(" + xOffset + ",0)")
 			.call(presencePlot.make_yOrd_axis());
-	
+
 		var textMOver = function() {
 			var text = d3.select(this);
 			//text.attr("color", "steelblue" );
@@ -266,10 +278,9 @@ function generatePresencePlot(urlRaw, urlPurged, title, xOffset, isLegends, grap
 		    .on('mouseover', textMOver)
 			.on('mouseout', textMOut)
 		    .on("click", function(d){
-		        //document.location.href = urlBase + urlExt + d;
 		        window.open(urlBase + urlExt + d);
-		    });		
-	});			
+		    });			
+	});		
 
 	//getPurgedDataPresence(xOffset);  
 }
@@ -281,8 +292,18 @@ function showDataPres() {
 	//var urlRaw = "/test/allpres/24";
 	var urlRaw = "/test/allpres";
 	var urlPurged = "/test/allpres/purged";
-	
-	generatePresencePlot(urlRaw, urlPurged, "Data Presence Map", 0, true, 1);
+
+	d3.json(urlRaw, function(error, data) {
+		presenceRawJSON = data;
+		//jsondata = data;	
+	});		
+
+	d3.json(urlPurged, function(error, data) {
+		presencePurgedJSON = data;
+		//jsondata = data;		  
+	});	
+
+	//generatePresencePlot(urlRaw, urlPurged, "Data Presence Map", 0, true, 1);
 }
 
 function dataPresencePlot() {

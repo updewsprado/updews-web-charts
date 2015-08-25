@@ -37,7 +37,7 @@
 		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		}
 
-		$sql = "SELECT * FROM $site WHERE timestamp >= '".$q."' ORDER BY timestamp ASC";
+		$sql = "SELECT * FROM $site WHERE timestamp > '".$q."' ORDER BY timestamp ASC";
 		$result = mysqli_query($con, $sql);
 
 		$dbreturn;
@@ -77,7 +77,7 @@
 		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		}
 
-		$sql = "SELECT * FROM $site WHERE timestamp >= '".$from."' AND timestamp <= '".$to."' ORDER BY timestamp ASC";
+		$sql = "SELECT * FROM $site WHERE timestamp > '".$from."' AND timestamp <= '".$to."' ORDER BY timestamp ASC";
 		$result = mysqli_query($con, $sql);
 
 		$dbreturn;

@@ -34,9 +34,15 @@
 	24. Pinagkamaligan -> Brgy. Villahermosa, Quezon (Device ID: 1096)
 	25. Magsaysay -> Dangcagan, Bukidnon (Device ID: 867)	 */
 	
+	
 	$site_noah = array(204,1236,782,789,389,152,65,454,467,469,391,
 					1103,733,1450,557,79,89,760,867,607,363,1459,
 					858,1289,180,1561,289,1096);
+	
+
+	//test case if code will still crash
+	//$site_noah = array(789,389,204);
+
 	date_default_timezone_set("Asia/Manila");
 	
 	//Loop through all available rainfall noah sites
@@ -59,7 +65,7 @@
 		echo "Start date: " . date_format($date, $format) . "<Br/>";
 		$fdate =  date_format($date, $format);
 		
-		date_add($date, date_interval_create_from_date_string("3 days"));
+		date_add($date, date_interval_create_from_date_string("50 days"));
 		echo "End date: " . date_format($date, $format) . "<Br/>";
 		$tdate = date_format($date, $format);
 		
@@ -69,7 +75,37 @@
 		//$rain = $output[0];
 		//echo $rain;
 		
-		if($output[1]) {
+		if($output[0]) {
+			echo "output[0]";
+			$rain = json_decode($output[0]);
+		
+			$i = 0;
+			foreach ($rain as $value) {
+				//echo $value->index;
+				if ($value->index > $lastEntry) {
+					//$query = "INSERT INTO rain_noah(id, site, timestamp, cumm, rval) 
+					//		VALUES ('','$site', '$value->index', '$value->cummulative', '$value->rain')";
+							
+					$query = "INSERT INTO rain_noah(site, timestamp, cumm, rval) 
+							VALUES ('$site', '$value->index', '$value->cummulative', '$value->rain')";		
+			
+					if (!mysqli_query($con,$query)) {
+						die('Error: ' . mysqli_error($con));
+					}
+					//echo "#$i th record added <Br/>";
+			
+					$i++;
+				}
+				else {
+					//echo "timestamp: " . $value->index . " is less than Latest <Br/>";
+				}
+			}
+		
+			$output[0] = 0;
+			echo "Finished with: $site ! Added $i Entries <Br/>";			
+		}
+		elseif($output[1]) {
+			echo "output[1]";
 			$rain = json_decode($output[1]);
 		
 			$i = 0;
@@ -94,10 +130,69 @@
 				}
 			}
 		
+			$output[1] = 0;
+			echo "Finished with: $site ! Added $i Entries <Br/>";			
+		}
+		elseif($output[2]) {
+			echo "output[0]";
+			$rain = json_decode($output[2]);
+		
+			$i = 0;
+			foreach ($rain as $value) {
+				//echo $value->index;
+				if ($value->index > $lastEntry) {
+					//$query = "INSERT INTO rain_noah(id, site, timestamp, cumm, rval) 
+					//		VALUES ('','$site', '$value->index', '$value->cummulative', '$value->rain')";
+							
+					$query = "INSERT INTO rain_noah(site, timestamp, cumm, rval) 
+							VALUES ('$site', '$value->index', '$value->cummulative', '$value->rain')";		
+			
+					if (!mysqli_query($con,$query)) {
+						die('Error: ' . mysqli_error($con));
+					}
+					//echo "#$i th record added <Br/>";
+			
+					$i++;
+				}
+				else {
+					//echo "timestamp: " . $value->index . " is less than Latest <Br/>";
+				}
+			}
+		
+			$output[2] = 0;
+			echo "Finished with: $site ! Added $i Entries <Br/>";			
+		}
+		elseif($output[3]) {
+			echo "output[0]";
+			$rain = json_decode($output[3]);
+		
+			$i = 0;
+			foreach ($rain as $value) {
+				//echo $value->index;
+				if ($value->index > $lastEntry) {
+					//$query = "INSERT INTO rain_noah(id, site, timestamp, cumm, rval) 
+					//		VALUES ('','$site', '$value->index', '$value->cummulative', '$value->rain')";
+							
+					$query = "INSERT INTO rain_noah(site, timestamp, cumm, rval) 
+							VALUES ('$site', '$value->index', '$value->cummulative', '$value->rain')";		
+			
+					if (!mysqli_query($con,$query)) {
+						die('Error: ' . mysqli_error($con));
+					}
+					//echo "#$i th record added <Br/>";
+			
+					$i++;
+				}
+				else {
+					//echo "timestamp: " . $value->index . " is less than Latest <Br/>";
+				}
+			}
+		
+			$output[3] = 0;
 			echo "Finished with: $site ! Added $i Entries <Br/>";			
 		}
 		else {
-			echo "No JSON data";
+			echo "No JSON data <Br/>";
 		}			
 		
 	}

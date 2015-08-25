@@ -1,14 +1,36 @@
-    var end_date = new Date();
-    var from_date = new Date(end_date.getMonth()-1 + '-' + end_date.getDate() + '-' + end_date.getFullYear());
-	$(function() {
-    	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
-        $( "#datepicker" ).datepicker("setDate", from_date);        
-	});
+	function setDate(fromDate, toDate) {
+	    var end_date;
+	    var from_date;		
 
-    $(function() {
-    	$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
-        $( "#datepicker2" ).datepicker("setDate", end_date);
-	});
+		if(toDate == "") {
+			end_date = new Date();
+		}
+		else {
+			end_date = new Date(toDate);
+		}	
+		
+		if(fromDate == "") {
+			from_date = new Date(end_date.getMonth()-1 + '-' + end_date.getDate() + '-' + end_date.getFullYear());
+		}
+		else {
+			from_date = new Date(fromDate);
+		}	
+		
+	    //var end_date = new Date();
+	    //var from_date = new Date(end_date.getMonth()-1 + '-' + end_date.getDate() + '-' + end_date.getFullYear());
+	    
+		$(function() {
+	    	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+	        $( "#datepicker" ).datepicker("setDate", from_date);        
+		});
+	
+	    $(function() {
+	    	$( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
+	        $( "#datepicker2" ).datepicker("setDate", end_date);
+		});		
+	}
+	
+	//setDate();
 	
 	function createCORSRequest(method, url) {
 		var xhr = new XMLHttpRequest();
