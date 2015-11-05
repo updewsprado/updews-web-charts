@@ -1,0 +1,152 @@
+/************************************************************************************/
+Get all data from past 7 days:
+select * from senslopedb.gamt where timestamp > date_sub(curdate(), interval 7 day)
+
+/************************************************************************************/
+Get all data from past 1 month:
+select * from senslopedb.gamt where timestamp > date_sub(curdate(), interval 1 month)
+
+/************************************************************************************/
+Get all data between months
+select * from senslopedb.labb where timestamp between date_sub(curdate(), interval 2 month) and date_sub(curdate(), interval 1 month) ORDER BY timestamp DESC 
+
+/************************************************************************************/
+Get all data for a specific month
+select * from senslopedb.labb where timestamp between '2014-02-01' and '2014-02-31' ORDER BY timestamp DESC 
+
+/************************************************************************************/
+Get total number of Rows
+select count(timestamp) as totalRows from senslopedb.gamt
+
+/************************************************************************************/
+Get count of data received in a single month from a specific site
+select count(timestamp) as uptime from senslopedb.labb where id=1 and timestamp between '2014-02-01' and '2014-02-31' ORDER BY timestamp DESC 
+
+/************************************************************************************/
+Limit the results
+select * from senslopedb.gamt where timestamp > date_sub(curdate(), interval 1 month) LIMIT 0,2000
+
+/************************************************************************************/
+Alter Table and add a default value
+ALTER TABLE senslopedb.abcd ADD isFill char(1) NOT null default 'F';
+
+/************************************************************************************/
+Select latest 100 data from a table
+SELECT * FROM senslopedb.sinu ORDER BY timestamp DESC LIMIT 100;
+
+/************************************************************************************/
+Select unique timestamp data
+select distinct timestamp from senslopedb.gamt where timestamp > date_sub(curdate(), interval 1 month)
+
+/************************************************************************************/
+Select unique rows based on a data entry time & a node id
+select distinct * from senslopedb.gamt where timestamp > date_sub(curdate(), interval 1 month) and id = 1 ORDER BY timestamp DESC 
+
+/************************************************************************************/
+Select unique rows based on a data entry time, a node id & if the data was just filled or not
+select distinct * from senslopedb.labb where timestamp > date_sub(curdate(), interval 1 month) and id = 1 and isFill = 'F' ORDER BY timestamp DESC 
+
+/************************************************************************************/
+Count the number of entries for a specific node for a specific site (total entries since start of sensor data)
+select count(timestamp) as totalData from senslopedb.labb where id = 1
+
+/************************************************************************************/
+Count the number of entries for a specific node for a specific site for the last 30 days
+select count(timestamp) as totalData from senslopedb.labb where id = 1 and timestamp > date_sub(curdate(), interval 30 day);
+
+/*******************************************************************/
+SQL export data to CSV:
+	select * from senslopedb.gamb where isFill = 'F' and timestamp > '2014-02' limit 100
+	INTO OUTFILE 'd:/gamb.csv'
+	FIELDS TERMINATED BY ','
+	ENCLOSED BY '"'
+	LINES TERMINATED BY '\n';
+/*******************************************************************/
+Update/Modify the Database Entries:
+	update senslopedb.oslb 
+	set id = id - 5
+	where id > 5 and timestamp > '2014-01-01 0:00:00';
+/************************************************************************************/
+Get all available IDs from the Database of a single site:
+	select distinct id from senslopedb.gamt order by id ASC;
+/************************************************************************************/
+Get count results for 30 min interval. 1800 = 30 min * 60 sec:
+	SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/1800)*1800 ) AS 
+	timeslice , COUNT(*) AS mycount FROM `pugb` GROUP BY timeslice;
+/************************************************************************************/
+Get count results for 30 min interval. 1800 = 30 min * 60 sec:
+	SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/1800)*1800 ) AS 
+	timeslice , COUNT(*) AS mycount FROM `pugb` WHERE timestamp > '2014-01-01'
+	GROUP BY timeslice;
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+/************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

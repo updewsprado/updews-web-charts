@@ -1,0 +1,66 @@
+Instructions:
+	1. All commands here are executed using "Command Prompt" in windows
+
+Note:
+	- Make sure that you include the mysql bin folder to your environment
+		PATH so that it'll be easier to use using the command prompt
+
+/*******************************************************************/
+SQL Dump:
+	mysqldump -u [user] -p [database] > [File Path]\[sqldump].sql
+
+Ex:
+	mysqldump -u Admin -p senslopedb > D:\senslopedb_Apr232014.sql
+	mysqldump -u root -p senslopedb_purged > D:\purgeddb_July302014_1326.sql
+	mysqldump -u root -p senslopedb_purged > D:\purgeddb_July312014_1252.sql
+	mysqldump -u root -p senslopedb_purged > D:\purgeddb_Aug152014_0937.sql
+	
+/*******************************************************************/
+SQL Dump a Query:
+	mysqldump -u [user] -p [database] [table] --where="[insert your where query here]"
+			> [File Path]\[sqldump].sql
+
+Ex:
+	mysqldump -u Admin -p senslopedb gamb --where="timestamp > 2014-01-01" > D:\gamb.sql
+
+/*******************************************************************/
+SQL Dump a Query (w/o deleting all data in your table when you restore):
+	mysqldump -u [user] -p [database] [table] --where="[insert your where query here]"
+			--no-create-info > [File Path]\[sqldump].sql
+
+Ex:
+	mysqldump -u Admin -p senslopedb gamb --where="timestamp > 2014-01-01" --no-create-info > D:\gamb.sql
+
+/*******************************************************************/
+
+Remote Access to Senslope Server:
+
+Ex:
+	mysql --host=192.168.0.116 --user=testuser --password=test
+
+/*******************************************************************/
+
+SQL Import to local database:
+	mysql -u <user> -p<password> <dbname> <filename>.sql
+
+Ex:
+	mysql -u root -psenslope senslopedb_purged < item.sql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
