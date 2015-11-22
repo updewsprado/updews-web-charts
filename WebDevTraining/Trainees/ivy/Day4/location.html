@@ -1,7 +1,31 @@
 
 <html>
 <head>
-	
+	<script src="http://maps.googleapis.com/maps/api/js">
+	</script>
+
+	<script>
+	var myCenter=new google.maps.LatLng(14.6543024,121.0660332);
+
+	function initialize()
+	{
+	var mapProp = {
+	  center:myCenter,
+	  zoom:18,
+	  mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+
+	var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+	var marker=new google.maps.Marker({
+	  position:myCenter,
+	  });
+
+	marker.setMap(map);
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 
 	
 	
@@ -147,9 +171,9 @@ SIDE BAR
 			<li>
 				<a href="#"> MENU </a>
 				<ul>
-				<li><a href="#"> Home </a></li>
+				<li><a href="home.html"> Home </a></li>
 				<li><a href="about.html"> About Us </a></li>
-				<li><a href="location.html"> Find Us </a></li>
+				<li><a href="#"> Find Us </a></li>
 				</ul>
 			</li>
 		</ul>
@@ -157,15 +181,10 @@ SIDE BAR
 		</div>
 		<BR>
 		
-			<p><center><h1> HOME PAGE </H1><BR>
-			 <h3> Quote for The Day </h3>
+			<p><center><h1> LOCATION </H1><BR>
+			 <h3> UP Diliman EEEI Building </h3>
 	
-			<script language="javascript" src="i.js"></script>
-			<form name="quoteForm">
-			  <textarea wrap="virtual" name="quoteHere" rows="4" cols="60">
-			  </textarea><br />
-			  <input type=button value="Random" onClick="randQuote();" />
-			</form>
+			<div id="googleMap" style="width:500px;height:380px;"></div>
 			
 			</center>
 			</p>
