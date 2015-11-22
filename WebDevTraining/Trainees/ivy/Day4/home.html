@@ -1,0 +1,179 @@
+
+<html>
+<head>
+	
+
+	
+	
+<style>
+#container
+{
+width: 100%;
+margin: 10px auto;
+background-color: black;
+color: white;
+border: 1px solid gray;
+line-height: 130%;
+}
+
+#top
+{
+padding: .5em;
+background-color: #ddd;
+border-bottom: 1px solid gray;
+}
+
+#top h1
+{
+padding: 0;
+margin: 0;
+}
+
+#leftnav
+{
+float: left;
+width: 15%;
+margin: 10px auto;
+padding: 1em;
+}
+
+#content
+{
+margin-left: 20%;
+border-left: 1px solid gray;
+padding: 1em;
+max-width: 36em;
+}
+
+#footer
+{
+clear: both;
+margin: 0;
+padding: .5em;
+color: #333;
+background-color: #ddd;
+border-top: 1px solid gray;
+}
+
+
+#leftnav 
+p { margin: 0 0 .5em 0; }
+#content h2 { margin: 0 0 .5em 0; }
+
+ul.drop
+{
+	list-style-type: none;
+	margin:0px;
+	padding : 0px;
+	
+
+
+}
+
+ul.drop li
+{
+	float:left;
+	background-color: white;
+	text-align: center;
+	padding: 5px 10px;
+	border-right: solid 1px black;
+	margin-left: 260px;
+	
+
+
+}
+
+ul.drop li:hover
+{
+background: gray;
+
+
+}
+ul.drop li:hover ul
+{
+display:block;
+
+
+}
+
+
+ul.drop li ul li
+{
+float: none;
+border-right: none;
+border-top: solid 1px black;
+
+
+
+}
+
+ul.drop a
+{
+text-decoration:     none;
+color: black;
+
+}
+
+ul.drop li ul
+{
+	list-style-type: none;
+	margin:0px;
+	padding : 0px;
+	position: absolute;
+	margin-top: 5px;
+	margin-left: -270px;
+	display: none;
+
+}
+
+</style>
+
+</head>
+</body>
+<div id="container">
+<div id="top">
+<h1>Header</h1>
+</div>
+<div id="leftnav">
+<p>
+SIDE BAR
+</p>
+</div>
+<div id="content">
+<h2>Subheading</h2>
+		<div id="drop">
+		<nav>
+		<ul class="drop">
+			<li>
+				<a href="#"> MENU </a>
+				<ul>
+				<li><a href="#"> Home </a></li>
+				<li><a href="about.html"> About Us </a></li>
+				<li><a href="#"> Find Us </a></li>
+				</ul>
+			</li>
+		</ul>
+		</nav>
+		</div>
+		<BR> <br>
+		
+			<p><center><h1> HOME PAGE </H1><BR>
+			 <h3> Quote for The Day </h3>
+	
+			<script language="javascript" src="i.js"></script>
+			<form name="quoteForm">
+			  <textarea wrap="virtual" name="quoteHere" rows="4" cols="60">
+			  </textarea><br />
+			  <input type=button value="Random" onClick="randQuote();" />
+			</form>
+			
+			</center>
+			</p>
+			<BR> <br><BR> <br><BR> <br>
+</div>
+<div id="footer">
+Footer
+</div>
+</div>
+</body>
+</html>
