@@ -1,6 +1,8 @@
 Comments:
 
-1. Good job, the form is working.
-2. Please remember to always remove lines of code that aren't part of the deliverables.
+1. Good job, the form is working. :)
+2. Your code is missing "data storing" though. You need to store the code to either
+	a file or to a local database.
+3. Please remember to always remove lines of code that aren't part of the deliverables.
 	This is a practice that should be made into a habit in order to make our
 	collective code in github more readable and lean.
