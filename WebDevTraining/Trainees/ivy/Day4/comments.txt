@@ -1,0 +1,13 @@
+Comments:
+
+- Its working but it needs major modifications
+
+1.d. User Interface / User Experience
+	- the dropdown has a tendency to close immediately. This is not good for user experience.
+	- move the dropdown selection to the navigation bar.
+
+2. Use "main.css" for your CSS and link it to your pages. This is standard practice for web development
+	and should be made a habit as early as possible. :)
+
+3. Make sure to implement proper indentations before moving to the next exercises. This will make
+	the coding life of everyone that is part of a collaborative work (like github) a lot easier. :)

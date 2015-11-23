@@ -1,0 +1,39 @@
+Comment/s:
+
+1. Good job, it is working as well. :)
+2. For good code practice, please make it into a habit to put proper indentation to your code.
+	Having proper indentation will make our collective code more readable. This is very
+	important especially for times that debugging is needed for very lengthy codes.
+
+Ex: (your current code)
+<div id="top">
+<h1>Header</h1>
+</div>
+<div id="leftnav">
+<p>
+SIDE BAR
+</p>
+</div>
+<div id="content">
+<h2>Subheading</h2>
+<p>
+A city car also known as urban car or mini is a small car intended primarily for urban areas and conurbations..
+</p>
+</div>
+
+Ex: (proper indentation)
+<div id="top">
+	<h1>Header</h1>
+</div>
+<div id="leftnav">
+	<p>SIDE BAR</p>
+</div>
+<div id="content">
+	<h2>Subheading</h2>
+	<p>
+	A city car also known as urban car or mini is a small car intended primarily for urban areas and conurbations..
+	</p>
+</div>
+
+3. Bonus! Store your CSS into a file named "main.css" and link it to your home.html
+
