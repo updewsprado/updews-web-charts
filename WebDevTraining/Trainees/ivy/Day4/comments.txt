@@ -1,5 +1,29 @@
 Comments:
 
+Date: 2015 Nov 25 - 4:40 pm
+- Indentation and code organization has improved.
+- More indentation has to be implemented though. A sample of these are as follows:
+1. about.html
+	-> lines 17,18,19,30,42,46
+	-> all elements inside element id "container"
+	etc
+2. i.js
+	-> tabs for lines 19 & 21
+3. mystyle.css
+	-> looks organized but lets follow a format here:
+	#nameOfHTMLelement {
+		attribute1: value1;
+		attr2: value2;
+		attr3: value3;
+	}
+	-> choose that specific positioning for the brackets :)
+4. home.html
+	-> comments similar to "about.html"
+5. location.html
+	-> comments similar to "about.html"
+	
+
+Date: 2015 Nov 23 - 11:12 am
 - Its working but it needs major modifications
 
 1.d. User Interface / User Experience
