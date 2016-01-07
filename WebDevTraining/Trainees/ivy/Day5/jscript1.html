@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="http://dygraphs.com/dygraph-combined.js">
+	 </script>
+  	 <script type="text/javascript" src="http://dygraphs.com/1.1.1/dygraph-combined-dev.js"></script>
+	<script src="papaparse.min.js"></script>
+</head>
+<body onload="loadNodeAndTimestmp()">
+	<select id="loadedNode">
+	</select>
+	<button onclick="showDetails()"> submit </button>
+	<div id="div_g"></div>
+<script>
+var g;
+var isStacked = false;
+function loadNodeAndTimestmp() {
+	var all_data=[];
+	Papa.parse("gamb.csv", {
+		download: true,
+		header: true,
+		complete: function data(results) {
+			var loadedNode = document.getElementById("loadedNode");
+			for (var j in results.data) {
+
+				// Exit for{} loop if reach last index of results.data
+				if (j == results.data.length-1){
+					break;
+				}
+
+				// Create <option> for data[j]
+				var option = document.createElement("option");
+				option.text = parseInt(results.data[j]['node']);
+				option.value = parseInt(results.data[j]['node']);
+				loadedNode.add(option);
+
+				// Append data[j] to all_data
+				all_data.push([
+					new Date(results.data[j]['timestamp']),
+					parseInt(results.data[j]['node']),
+					parseInt(results.data[j]['x']),
+					parseInt(results.data[j]['y']),
+					parseInt(results.data[j]['z']),
+					parseInt(results.data[j]['soms'])
+				]);
+			}
+
+			// Remove repeating option items
+			for(a = 0; a<loadedNode.length; a++) {
+				for(e=a+1;e<loadedNode.length;e++) {
+					if (a!==e && loadedNode.options[a].text == loadedNode.options[e].text) {
+						loadedNode.remove(e);
+					}
+				}
+			}
+	  		loadedNode.remove(loadedNode.length-1);
+
+			// Create graph, use data from all_data.
+			g = new Dygraph(document.getElementById("div_g"), all_data,
+			{
+				width: 480,
+				height: 320,
+				stackedGraph: isStacked,
+				rollPeriod: 1,
+				showRoller: true,
+				colors: ['violet', 'red', 'blue', 'pink', 'maroon'],
+				legend: 'always',
+				drawPoints: true,
+				labels: ['timestamp', 'node', 'x', 'y', 'z', 'soms'],
+				labelsSeparateLines: true,
+				labelsDivWidth: 80,
+				highlightCircleSize: 5,
+				strokeWidth: 1,
+				strokeBorderWidth: isStacked ? null : 1,
+				highlightSeriesOpts: {
+					strokeWidth: 5,
+					strokeBorderWidth: 1,
+					highlightCircleSize: 5,
+				},
+			});
+		}
+	});
+}
+
+function showDetails() {
+	var selected_data = [];
+	Papa.parse("gamb.csv", {
+		download: true,
+		header: true,
+		complete: function data(results) {
+			var selectedNode = document.getElementById("loadedNode");
+			var strSelectedNode = selectedNode.options[selectedNode.selectedIndex].value;
+			for (var j in results.data) {
+
+				// Check if current results.data[j] is equal to the value of <select>
+				if (parseInt(results.data[j]['node']) == strSelectedNode){
+					// Append results.data[j] to selected_data
+					selected_data.push([
+						new Date(results.data[j]['timestamp']),
+						parseInt(results.data[j]['node']),
+						parseInt(results.data[j]['x']),
+						parseInt(results.data[j]['y']),
+						parseInt(results.data[j]['z']),
+						parseInt(results.data[j]['soms'])
+					]);
+				}
+			}
+
+			// Update graph by using selected_data
+			g.updateOptions( { 'file': selected_data } );
+		}
+	});
+}
+
+</script>
+</body>
+</html>
