@@ -67,15 +67,31 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Navigation!</strong> Restructured the search process for navigating through Accelerometer Data
+                            <i class="fa fa-info-circle"></i>  <strong>Bug Fixed!</strong> "No Chart Display for some 
+                            	new site columns" occurred from sudden change in msgid values. (Update: Jan 25, 2015)
                         </div>
-                    </div>        
+                    </div>  
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Revert to Old Feature!</strong> Using DyGraph again for the Accelerometer Data
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> Battery Level Plots for 
+                            	version 2+ sensors are available (Update: Dec 17, 2015)
                         </div>
-                    </div>                                    
+                    </div>  
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> You can now view 
+                            	Filtered/Purged Data using the left Navigation Bar (Update: Dec 3, 2015)
+                        </div>
+                    </div> 
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>New Feature!</strong> You can now view the 2nd 
+                            	Accelerometer Data for version 2 sensors (Update: Nov 12, 2015)
+                        </div>
+                    </div>                                                            
                 </div>
                 <!-- /.row -->                                             
                 
@@ -94,7 +110,7 @@
                      <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Mini Alert Map</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> <b>Mini Alert Map</b></h3>
                             </div>
                             <div class="panel-body">
                                 <div id="mini-alert-canvas" ></div>
@@ -108,7 +124,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> LSB Change Plot</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> <b>LSB Change Plot</b></h3>
                             </div>
                             <div class="panel-body">
                                 <div id="lsb-change-canvas" ></div>
@@ -131,10 +147,21 @@
                      <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer: X Value</h3>
+                                <h3 class="panel-title">
+                                	<i class="fa fa-bar-chart-o fa-fw"></i> <b>Accelerometer: X Value</b>
+									<div class="btn-group switch-graph-view" data-toggle="buttons">
+										<label class="btn btn-info btn-ds-1 active" onclick="toggleGraphView(1)">
+											<input type="radio" name="options" id="option1" autocomplete="off" checked> Dataset 1
+										</label>
+										<label class="btn btn-info btn-ds-2" onclick="toggleGraphView(0)">
+											<input type="radio" name="options" id="option2" autocomplete="off"> Dataset 2
+										</label>
+									</div>
+	                            </h3>
                             </div>
                             <div class="panel-body">
-								<div id="accel-1"></div>                             	
+								<div id="accel-1" class="first-dataset"></div>         
+								<div id="accel-21" class="second-dataset"></div>                     	
                             </div>
                         </div>
                     </div>                                     
@@ -145,10 +172,21 @@
                      <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer: Y Value</h3>
+                                <h3 class="panel-title">
+                                	<i class="fa fa-bar-chart-o fa-fw"></i> <b>Accelerometer: Y Value</b>
+									<div class="btn-group switch-graph-view" data-toggle="buttons">
+										<label class="btn btn-info btn-ds-1 active" onclick="toggleGraphView(1)">
+											<input type="radio" name="options" id="option1" autocomplete="off" checked> Dataset 1
+										</label>
+										<label class="btn btn-info btn-ds-2" onclick="toggleGraphView(0)">
+											<input type="radio" name="options" id="option2" autocomplete="off"> Dataset 2
+										</label>
+									</div>
+                                </h3>
                             </div>
                             <div class="panel-body">
-								<div id="accel-2"></div>                             	
+								<div id="accel-2" class="first-dataset"></div>      
+								<div id="accel-22" class="second-dataset"></div>                        	
                             </div>
                         </div>
                     </div>                                     
@@ -159,24 +197,46 @@
                      <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Accelerometer: Z Value</h3>
+                                <h3 class="panel-title">
+                                	<i class="fa fa-bar-chart-o fa-fw"></i> <b>Accelerometer: Z Value</b>
+									<div class="btn-group switch-graph-view" data-toggle="buttons">
+										<label class="btn btn-info btn-ds-1 active" onclick="toggleGraphView(1)">
+											<input type="radio" name="options" id="option1" autocomplete="off" checked> Dataset 1
+										</label>
+										<label class="btn btn-info btn-ds-2" onclick="toggleGraphView(0)">
+											<input type="radio" name="options" id="option2" autocomplete="off"> Dataset 2
+										</label>
+									</div>
+                                </h3>
                             </div>
                             <div class="panel-body">
-								<div id="accel-3"></div>        	
+								<div id="accel-3" class="first-dataset"></div>    
+								<div id="accel-23" class="second-dataset"></div>     	
                             </div>
                         </div>
                     </div>                                     
                 </div>	
                 <!-- /.row -->	 
                 
-                <div class="row">
+                <div class="row" id="moisture-panel">
                      <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Soil Moisture</h3>
+                                <h3 class="panel-title">
+                                	<i class="fa fa-bar-chart-o fa-fw"></i> <b>Soil Moisture: M Value</b>
+									<div class="btn-group switch-graph-view" data-toggle="buttons">
+										<label class="btn btn-info btn-ds-1 active" onclick="toggleGraphView(1)">
+											<input type="radio" name="options" id="option1" autocomplete="off" checked> Dataset 1
+										</label>
+										<label class="btn btn-info btn-ds-2" onclick="toggleGraphView(0)">
+											<input type="radio" name="options" id="option2" autocomplete="off"> Dataset 2
+										</label>
+									</div>
+                                </h3>
                             </div>
                             <div class="panel-body">
-								<div id="accel-4"></div>         	
+								<div id="accel-4" class="first-dataset"></div>      
+								<div id="accel-24" class="second-dataset"></div>    	
                             </div>
                         </div>
                     </div>                                     
@@ -188,16 +248,6 @@
 
         </div>
         <!-- /#page-wrapper -->
-
-<!--
-<div id="gdiv1" style="width:100%; height:120px;"></div><hr>
-<div id="gdiv2" style="width:100%; height:120px;"></div><hr>
-<div id="gdiv3" style="width:100%; height:120px;"></div><hr>
-<div id="gdiv4" style="width:100%; height:120px;"></div><hr>
-<div id="raindiv" style="width:100%; height:120px;"></div><hr>
-
-<div id="demodiv"></div>
--->
 
 <script>
 	var toDate = "<?php echo $dateto; ?>";
@@ -211,13 +261,26 @@
 	nodeStatusJSON = <?php echo $nodeStatus; ?>;
 	maxNodesJSON = <?php echo $siteMaxNodes; ?>;	
 	
-	var options = ["select", "blcb", "blct", "bolb", "gamb", "gamt",
-					"humb", "humt", "labb", "labt", "lipb",
-					"lipt", "mamb", "mamt", "oslb", "oslt",
-					"plab", "plat", "pugb", "pugt", "sinb",
-					"sinu"];
-	
-	setDate(fromDate, toDate);
+	var options;
+	var isSecondSetLoaded = false;
+
+	function getAllSites() {	
+		var baseURL = "<?php echo $_SERVER['SERVER_NAME']; ?>";
+		var URL;
+		if (baseURL == "localhost") {
+			URL = "http://localhost/temp/getSenslopeData.php?sitenames&db=senslopedb";
+		}
+		else {
+			URL = "http://www.dewslandslide.com/ajax/getSenslopeData.php?sitenames&db=senslopedb";
+		}
+		
+		$.getJSON(URL, function(data, status) {
+			options = data;
+			popDropDownGeneral();
+		});
+	}
+
+	//getAllSites();	
 	
 	function popDropDownGeneral() {
 		var select = document.getElementById('sitegeneral');
@@ -256,14 +319,36 @@
 	}
 	
 	window.onload = function() {					
-		popDropDownGeneral();
+		//popDropDownGeneral();
+		getAllSites();
+		setDate(fromDate, toDate);
 		initAlertPlot();
 		
 		var targetForm = getMainForm();
 		
 		setTimeout(function(){
 			initNode();
-			showAccel(targetForm);
+
+			if ((document.getElementById("sitegeneral").value).length == 5) {
+				//$("#moisture-panel").hide();
+				$("#moisture-panel").find("b").text("Voltage Level: V Value");
+				resetSecondSetLoaded();
+			}
+			else {
+				$("#moisture-panel").find("b").text("Soil Moisture: M Value");
+				$(".switch-graph-view").hide();
+			}
+
+			if (document.getElementById("dbase").value == "filtered") {
+				$("#moisture-panel").hide();
+			} 
+			else{
+				$("#moisture-panel").show();
+			};
+
+			$(".first-dataset").show();
+			$(".second-dataset").hide();
+			showAccel(getMainForm());
 		}, 1000); 
 		
 		setTimeout(function(){
@@ -277,7 +362,26 @@
 			//do nothing
 		}
 		else if ((curSite == document.getElementById("sitegeneral").value) && (curNode == document.getElementById("node").value)) {
+			if ((document.getElementById("sitegeneral").value).length == 5) {
+				//$("#moisture-panel").hide();
+				$("#moisture-panel").find("b").text("Battery Level: V Value");
+				resetSecondSetLoaded();
+			}
+			else {
+				$("#moisture-panel").find("b").text("Soil Moisture: M Value");
+			}
+
+			if (document.getElementById("dbase").value == "filtered") {
+				$("#moisture-panel").hide();
+			} 
+			else{
+				$("#moisture-panel").show();
+			};
+
+			$(".first-dataset").show();
+			$(".second-dataset").hide();
 			showAccel(getMainForm());
+			showLSBChange(getMainForm());
 		}
 		else {
 			curSite = document.getElementById("sitegeneral").value;
@@ -290,37 +394,65 @@
 			window.location.href = urlBase + urlExt;
 		}
 	}	
+
+	function checkIfSecondSet(elemid) {
+		var JSON = ["#accel-21","#accel-22","#accel-23","#accel-24"];	
+		var hasMatch = false;
+
+		for (var index = 0; index < JSON.length; ++index) {
+			var graphName = JSON[index];
+
+			if(graphName == elemid){
+				hasMatch = true;
+				return hasMatch;
+			}
+		}	
+
+		return hasMatch;
+	}
+
+	function checkSecondSetLoaded() {
+		return isSecondSetLoaded;	
+	}
+
+	function setSecondSetLoaded(val) {
+		isSecondSetLoaded = val;	
+	}
+
+	function resetSecondSetLoaded() {
+		isSecondSetLoaded = false;
+	}
+
+	function switchGraphView (toshow, tohide) {
+		if(checkIfSecondSet(toshow)) {
+			if (checkSecondSetLoaded() == false) {
+				showAccelSecond(getMainForm());
+				setSecondSetLoaded(true);
+			}
+		}
+
+		$(toshow).show();
+		$(tohide).hide();
+	}
+
+	function toggleGraphView (setNum) {
+		if (setNum == 1) {
+			//Show the first data set
+			$(".btn-ds-1").addClass("active");
+			$(".btn-ds-2").removeClass("active");
+			$(".first-dataset").show();
+			$(".second-dataset").hide();
+		} else{
+			//Show the second data set
+			$(".btn-ds-1").removeClass("active");
+			$(".btn-ds-2").addClass("active");
+			$(".first-dataset").hide();
+			$(".second-dataset").show();
+
+			if (checkSecondSetLoaded() == false) {
+				showAccelSecond(getMainForm());
+				setSecondSetLoaded(true);
+			}			
+		};
+	}
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

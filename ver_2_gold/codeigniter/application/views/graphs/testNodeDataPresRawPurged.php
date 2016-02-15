@@ -356,17 +356,31 @@ function getDataPresence(xOffset) {
 	var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 	//maxNode = d3.max(siteMaxNodes, function(d) { return parseDate(d.timestamp); });
 	maxNode = 48;
-	
-	var maxRaw = d3.max(presenceRawJSON, function(d) { return parseDate(d.timestamp); });
-	var maxPurged = d3.max(presencePurgedJSON, function(d) { return parseDate(d.timestamp); });
+
+	var maxRaw = d3.max(presenceRawJSON, function(d) { return d.timestamp; });
+	var maxPurged = d3.max(presencePurgedJSON, function(d) { return d.timestamp; });
 
 	// Scale the range of the data
-	if(maxRaw > maxPurged) {
-		x.domain(d3.extent(presenceRawJSON, function(d) { return parseDate(d.timestamp); }));
+	if(minTSRaw < minTSPurged) {
+		if(maxRaw > maxPurged) {
+			x.domain(d3.extent(presenceRawJSON, function(d) { return parseDate(d.timestamp); }));
+		} 
+		else {
+			x.domain([d3.min(presenceRawJSON, function(d) { return parseDate(d.timestamp); }), 
+				d3.max(presencePurgedJSON, function(d) { return parseDate(d.timestamp); })]);
+		}
 	} 
 	else {
-		x.domain(d3.extent(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }));
+		if(maxRaw > maxPurged) {
+			x.domain([d3.min(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }), 
+				d3.max(presenceRawJSON, function(d) { return parseDate(d.timestamp); })]);
+		} 
+		else {
+			x.domain(d3.extent(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }));
+		}
 	}
+
+	//x.domain(d3.extent(presenceRawJSON, function(d) { return parseDate(d.timestamp); }));
 
 	//yOrd.domain(siteMaxNodes.map(function(d) { return d.site; }));
 	yOrd.domain(allSitesJSON.map(function(d) { return d.site; }));
@@ -412,15 +426,27 @@ function getDataPresencePurged(xOffset) {
 	//maxNode = d3.max(siteMaxNodes, function(d) { return parseDate(d.timestamp); });
 	maxNode = 48;
 	
-	var maxRaw = d3.max(presenceRawJSON, function(d) { return parseDate(d.timestamp); });
-	var maxPurged = d3.max(presencePurgedJSON, function(d) { return parseDate(d.timestamp); });
+	var maxRaw = d3.max(presenceRawJSON, function(d) { return d.timestamp; });
+	var maxPurged = d3.max(presencePurgedJSON, function(d) { return d.timestamp; });
 
 	// Scale the range of the data
-	if(maxRaw > maxPurged) {
-		x.domain(d3.extent(presenceRawJSON, function(d) { return parseDate(d.timestamp); }));
+	if(minTSRaw < minTSPurged) {
+		if(maxRaw > maxPurged) {
+			x.domain(d3.extent(presenceRawJSON, function(d) { return parseDate(d.timestamp); }));
+		} 
+		else {
+			x.domain([d3.min(presenceRawJSON, function(d) { return parseDate(d.timestamp); }), 
+				d3.max(presencePurgedJSON, function(d) { return parseDate(d.timestamp); })]);
+		}
 	} 
 	else {
-		x.domain(d3.extent(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }));
+		if(maxRaw > maxPurged) {
+			x.domain([d3.min(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }), 
+				d3.max(presenceRawJSON, function(d) { return parseDate(d.timestamp); })]);
+		} 
+		else {
+			x.domain(d3.extent(presencePurgedJSON, function(d) { return parseDate(d.timestamp); }));
+		}
 	}
 
 	//yOrd.domain(siteMaxNodes.map(function(d) { return d.site; }));
@@ -551,7 +577,7 @@ function generateAlertPlot(dataRaw, dataPurged, title, xOffset, isLegends, graph
 		d.yalert = parseFloat(d.yalert);
 		d.zalert = parseFloat(d.zalert);
 	});
-	
+
 	var horOff = xOffset + ((graphDim.gWidth / maxNode) * 0.9)/2;
 	
 	// Graph Label
@@ -579,6 +605,8 @@ function generateAlertPlot(dataRaw, dataPurged, title, xOffset, isLegends, graph
 	return;				
 }
 
+var minTSRaw = 0;
+var minTSPurged = 0;
 var nodeAlertJSON = 0;
 function showData() {
 	//nodeAlertJSON = 
@@ -588,8 +616,8 @@ function showData() {
 	graphTitle = "<?php echo $graphTitle; ?>";
 	verticalLabel = "<?php echo $verticalLabel ?>";
 	
-	var minTSRaw = d3.min(presenceRawJSON, function(d) { return parseDate(d.timestamp); });
-	var minTSPurged = d3.min(presencePurgedJSON, function(d) { return parseDate(d.timestamp); });
+	minTSRaw = d3.min(presenceRawJSON, function(d) { return d.timestamp; });
+	minTSPurged = d3.min(presencePurgedJSON, function(d) { return d.timestamp; });
 
 	// Scale the range of the data
 	if(minTSRaw < minTSPurged) {
@@ -598,6 +626,8 @@ function showData() {
 	else {
 		minTimestamp = minTSPurged;
 	}
+	
+	//minTimestamp = d3.min(presenceRawJSON, function(d) { return parseDate(d.timestamp); });
 
 	generateAlertPlot(presenceRawJSON, presencePurgedJSON, graphTitle, 0, true, 1);
 }

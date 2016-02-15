@@ -186,9 +186,35 @@ class Alert_Model extends CI_Model
 		if(strcmp(base_url(),"http://localhost/") == 0) {
 			$path = base_url() . 'temp/';
 			echo "Currently at localhost";
+
+			$query = $this->db->query("SELECT num_nodes FROM site_column_props WHERE name ='".$site."'");
+			$maxNode = $query->row()->num_nodes;
+
+			$pythonPath = "C:\\Anaconda\\python.exe";
+			$filePath = "C:\\xampp\\htdocs\\temp\\";
+			$fullPath = $pythonPath.' '.$filePath;
+			//echo $fullPath;
+ 
+			exec($fullPath.'getLsbChange24HoursAll.py ' . $site, $output, $return); 
+			//echo "Executing Site: $site, Max Nodes: $maxNode, Node: $node<Br>";
+
+			if ($output == null) {
+				//echo "output is null";
+				return null;
+			}
+
+			if ($output[0]) {
+				//echo($output[0]);
+				return $output[0];
+			} elseif ($output[1]) {
+				//echo($output[1]);
+				return $output[1];
+			} else {
+				echo "No Output<Br>";
+			}			
 		}
 		else {
-			$query = $this->db->query("SELECT num_nodes FROM site_column_props WHERE s_id IN (SELECT s_id FROM site_column WHERE name ='".$site."')");
+			$query = $this->db->query("SELECT num_nodes FROM site_column_props WHERE name ='".$site."'");
 			$maxNode = $query->row()->num_nodes;
 
 			$path = '/var/www/html/ajax/';
@@ -196,6 +222,11 @@ class Alert_Model extends CI_Model
 			//exec('/home/ubuntu/anaconda/bin/python '.$path.'getLsbChange24Hours.py ' . $site . ' ' . $node, $output, $return);  
 			exec('/home/ubuntu/anaconda/bin/python '.$path.'getLsbChange24HoursAll.py ' . $site, $output, $return); 
 			//echo "Executing Site: $site, Max Nodes: $maxNode, Node: $node<Br>";
+
+			if ($output == null) {
+				//echo "output is null";
+				return null;
+			}
 
 			if ($output[0]) {
 				//echo($output[0]);
@@ -212,7 +243,7 @@ class Alert_Model extends CI_Model
 	
 	public function getSiteMaxNodes()
 	{
-		$query = $this->db->query("SELECT name FROM site_column where s_id < 100");
+		$query = $this->db->query("SELECT name FROM site_column where s_id < 100 order by name desc");
 		
 		$sitesAll = array();
 		$ctr = 0;
@@ -220,13 +251,22 @@ class Alert_Model extends CI_Model
 		foreach ($query->result_array() as $row)
 		{		    
 			$sitesAll[$ctr]['site'] = $row['name'];
-			
-			$sql_maxnode = $this->db->query("SELECT num_nodes FROM site_column_props WHERE s_id IN (SELECT s_id FROM site_column WHERE name = '" . $row['name'] . "')");
-			
-			$node = $sql_maxnode->row();
-			$sitesAll[$ctr]['nodes'] = $node->num_nodes;
-			
-			$ctr = $ctr + 1;
+			$site = $row['name'];
+
+			$result = mysql_query("SHOW TABLES LIKE '$site'");
+			$tableExists = mysql_num_rows($result) > 0;			
+
+			$result2 = mysql_query("SELECT name FROM site_column_props WHERE name = '$site'");
+			$columnPropsExists = mysql_num_rows($result2) > 0;			
+
+			if ($tableExists && $columnPropsExists) {
+				$sql_maxnode = $this->db->query("SELECT num_nodes FROM site_column_props WHERE s_id IN (SELECT s_id FROM site_column WHERE name = '" . $row['name'] . "')");
+				
+				$node = $sql_maxnode->row();
+				$sitesAll[$ctr]['nodes'] = $node->num_nodes;
+				
+				$ctr = $ctr + 1;
+			}
 		}
 		
 		return json_encode($sitesAll);

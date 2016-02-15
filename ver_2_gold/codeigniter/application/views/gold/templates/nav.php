@@ -129,7 +129,18 @@
                         </ul>
                     </li>
                     <li <?php echo $reportevent; ?> >
-                        <a href="<?php echo base_url() . $version; ?>/nodereport"><i class="fa fa-fw fa-list-alt"></i> Report Event</a>
+                        <a href="<?php echo base_url() . $version; ?>/nodereport"><i class="fa fa-fw fa-list-alt"></i> Report Node Status</a>
+                    </li>
+                    <li <?php echo $dropdown_chart; ?> >
+                        <a href="javascript:;" data-toggle="collapse" data-target="#dropdown_public_release"><i class="fa fa-fw fa-bar-chart-o"></i> Public Release <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="dropdown_public_release" class="collapse">
+                            <li>
+                                <a href="<?php echo base_url() . $version; ?>/publicreleaseinput">Report Public Release</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url() . $version; ?>/publicreleaseedit">Edit Previous Releases</a>
+                            </li>
+                        </ul>
                     </li>
                     
                     <li></li>
@@ -152,10 +163,10 @@
                     
                     <li>
                         <div class="form-group">
-                            <label>Database:</label>
+                            <label>Filter:</label>
 	                        <select class="form-control" name="dbase" id="dbase">
-		                        <option value="senslopedb">Raw</option>
-								<option value="senslopedb_purged">Purged</option>
+		                        <option value="raw">Raw</option>
+								<option value="filtered">Filtered</option>
 	                        </select>
                         </div>						
                     </li>
@@ -163,39 +174,17 @@
                     </FORM>  
                     
                     <FORM id="formDate">
-                    <li>	
-                    	<div class="form-group">
-                            <label>Date:</label><br />                              
-		                    Start: <input type="text" id="datepicker" name="dateinput" onchange="<?php //echo $showdateplots; ?>" size="10"/><br />  
-		                    End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php //echo $showdateplots; ?>" size="10"/>
-	                     </div>	
-                    </li>
-                    
-					<li>
-						<input type="button" value="go" onclick="<?php echo $showplots; ?>">	
-					</li>                      
-                    
-                    <!-- Slider and Timestamp made by Kyle (causes a lot of problems though)
-					<li>
-						<div class="form-group" style="overflow-x:hidden; overflow-y:hidden">
-							<label>Slider:</label><br />
-							<div id="div_slider" style="width:220px; height:75px; background-color:white;">
-							</div>
-						</div>
-					</li>
-					<li>
-							<label> Timestamp:</label><br />
-							<div id="div_slider_timestamp" style="overflow-x:hidden; overflow-y:hidden width:220px; height:30px; background-color:white;">
-							<b>From:</b> <br/>
-							<b>To:</b>
-							</div>
-					</li>
-					
-					<li>
-						<input type="button" value="go" onclick="showAccel(getMainForm())">	
-					</li>
-					-->
-						
+                        <li>	
+                        	<div class="form-group">
+                                <label>Date:</label><br />                              
+    		                    Start: <input type="text" id="datepicker" name="dateinput" onchange="<?php //echo $showdateplots; ?>" size="10"/><br />  
+    		                    End: <input type="text" id="datepicker2" name="dateinput2" onchange="<?php //echo $showdateplots; ?>" size="10"/>
+    	                    </div>	
+                        </li>
+                        
+    					<li>
+    						<input type="button" value="go" onclick="<?php echo $showplots; ?>">	
+    					</li>   
                     </FORM>
                     
 <!--                    

@@ -18,6 +18,12 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong> Update!</strong> Data Presence Map per Node for Sites has been updated with New Filter Algorithm [Nov 13, 2015]
+                        </div>
+                    </div>  
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <i class="fa fa-info-circle"></i>  <strong> New Feature!</strong> Implemented the Initial Data Presence Map per Node for Sites [July 13, 2015]
                         </div>
                     </div>                   	

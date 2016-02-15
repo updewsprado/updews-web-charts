@@ -234,16 +234,21 @@ class Data_presence_Model extends CI_Model
 		{
 			$site = $row['name'];
 
-			$sql = $dbSelected->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
-							AS timeslice
-							FROM (SELECT * FROM $site WHERE timestamp > $date_from and xvalue IS NOT NULL) AS site
-							GROUP BY timeslice DESC LIMIT 48");							
+			$result = mysql_query("SHOW TABLES LIKE '$site'");
+			$tableExists = mysql_num_rows($result) > 0;			
 
-			foreach ($sql->result_array() as $row)
-			{
-				$dbreturn[$ctr]['site'] = $site;
-				$dbreturn[$ctr]['timestamp'] = $row['timeslice'];
-				$ctr = $ctr + 1;
+			if ($tableExists) {
+				$sql = $dbSelected->query("SELECT FROM_UNIXTIME( CEILING(UNIX_TIMESTAMP(`timestamp`)/$accum ) * $accum ) 
+								AS timeslice
+								FROM (SELECT * FROM $site WHERE timestamp > $date_from and xvalue IS NOT NULL) AS site
+								GROUP BY timeslice DESC LIMIT 48");							
+
+				foreach ($sql->result_array() as $row)
+				{
+					$dbreturn[$ctr]['site'] = $site;
+					$dbreturn[$ctr]['timestamp'] = $row['timeslice'];
+					$ctr = $ctr + 1;
+				}
 			}
 		}
 		
@@ -329,7 +334,7 @@ class Data_presence_Model extends CI_Model
 		return json_encode($arrayPresence);
 	}
 
-	public function getAllSiteNames()
+	public function getAllSiteNames($format = 'json')
 	{
 		
 		$siteArray = array();
@@ -343,7 +348,13 @@ class Data_presence_Model extends CI_Model
 			$ctr = $ctr + 1;
 		}
 		
-		return json_encode($siteArray);
+		if ($format == 'json') {
+			return json_encode($siteArray);
+		}
+		elseif ($format == 'csv') {
+			return $siteArray;
+		}
+		
 	}	
 
 	public function getAllNodesOfSite($site)

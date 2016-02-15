@@ -55,7 +55,7 @@ class Gmap_Model extends CI_Model
 		{		    
 			$dbreturn[$ctr]['name'] = $row['name'];
 			$dbreturn[$ctr]['lat'] = $row['lat'];
-			$dbreturn[$ctr]['long'] = $row['long'];
+			$dbreturn[$ctr]['long'] = $row['lon'];
 
 			if ($row['sitio']) {
 				$dbreturn[$ctr]['place_installed'] = $row['sitio'].", ".$row['barangay'].', '.$row['municipality'].', '.$row['province'];

@@ -230,9 +230,11 @@ window.onresize = function() {
 	showAccel();
 }
 
+var testVar = 0;
 function redirectNodePlots (frm) {
 	if(frm.sitegeneral.value == "none") {
 		//do nothing
+		testVar = "none";
 	}
 	else {
 		curSite = document.getElementById("sitegeneral").value;
@@ -243,6 +245,7 @@ function redirectNodePlots (frm) {
 		var urlBase = "<?php echo base_url(); ?>";
 		
 		window.location.href = urlBase + urlExt;
+		testVar = "activate"
 	}
 }
 
@@ -292,6 +295,8 @@ function showDateNodePlots (frm) {
 		curNode = document.getElementById("node").value;
 		fromDate = tempFrom.getFullYear() + "-" + (tempFrom.getMonth() + 1) + "-" + tempFrom.getDate();
 		toDate = tempTo.getFullYear() + "-" + (tempTo.getMonth() + 1) + "-" + tempTo.getDate();
+
+		showLSBChange(frm);
 		showAccel();
 	}
 }

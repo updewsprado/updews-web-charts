@@ -160,7 +160,7 @@ class Email extends CI_Controller {
 
 		$mailList = ['earl.mendoza@gmail.com',
 					'ricsatjr@gmail.com',
-					'piereluya@gmail.com',
+					//'piereluya@gmail.com',
 					'kennexrazon@gmail.com',
 					'mizpah.capina@gmail.com',
 					'marklaurence07@gmail.com',

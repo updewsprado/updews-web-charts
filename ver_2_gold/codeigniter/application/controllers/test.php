@@ -18,6 +18,63 @@ class Test extends CI_Controller {
 		//$this->load->view('graphs/alertPlot', $data);
 	}
 
+	public function publicreleasequery($internalAlertLevel = 'A0')
+	{
+		// Database login information
+		$servername = "localhost";
+		$username = "updews";
+		$password = "october50sites";
+		$dbname = "senslopedb";
+
+		//$internalAlertLevel = $_GET["alertLevel"];
+
+		$alertsResponses;
+
+		// Create connection
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+		// Check connection
+		if (!$conn) {
+		    die("Connection failed: " . mysqli_connect_error());
+		}
+
+		$sql = "SELECT 
+		          lut_alerts.internal_alert_level, 
+		          lut_alerts.internal_alert_desc, 
+		          lut_alerts.public_alert_level, 
+		          lut_alerts.public_alert_desc,
+		          lut_responses.response_llmc_lgu,
+		          lut_responses.response_community
+		        FROM 
+		          lut_alerts
+		        INNER JOIN 
+		          lut_responses
+		        ON 
+		          lut_alerts.public_alert_level=lut_responses.public_alert_level
+		        WHERE
+		          internal_alert_level='$internalAlertLevel'";
+		$result = mysqli_query($conn, $sql);
+
+		$numSites = 0;
+		if (mysqli_num_rows($result) > 0) {
+		    // output data of each row
+		    while($row = mysqli_fetch_assoc($result)) {
+		        $alertsResponses[$numSites]["internal_alert_level"] = $row["internal_alert_level"];
+		        $alertsResponses[$numSites]["internal_alert_desc"] = $row["internal_alert_desc"];
+		        $alertsResponses[$numSites]["public_alert_level"] = $row["public_alert_level"];
+		        $alertsResponses[$numSites]["public_alert_desc"] = $row["public_alert_desc"];
+		        $alertsResponses[$numSites]["response_llmc_lgu"] = $row["response_llmc_lgu"];
+		        $alertsResponses[$numSites++]["response_community"] = $row["response_community"];
+		    }
+
+		    echo json_encode($alertsResponses);
+		} else {
+		    echo "0 results for internal alert level";
+		}
+
+		mysqli_close($conn);
+	}
+
 	public function modalview()
 	{
 		$this->load->view('graphs/modalview');
@@ -184,6 +241,41 @@ class Test extends CI_Controller {
 	{
 		$this->load->model('Comm_health_model');
 		$this->Comm_health_model->getHealthOptimized($site);
+		
+		//$this->load->view('graphs/healthbars');
+	}		
+
+	public function commhealth2( $site = 'blcb', $format = 'json' )
+	{
+		$this->load->model('Data_presence_Model');
+		$this->load->model('Comm_health_model');
+
+		$data['allSites'] = $this->Data_presence_Model->getAllSiteNames('csv');
+
+/*		foreach ($data['allSites'] as $siteNames) {
+			$this->Comm_health_model->getHealthTotal($siteNames['site'], $format);
+		}*/
+		$this->Comm_health_model->getHealthTotal($site, $format);
+		
+		//$this->load->view('graphs/healthbars');
+	}		
+
+	public function yearenderdatapres( $site = 'blcb', $format = 'json' )
+	{
+		$this->load->model('Data_presence_Model');
+		$this->load->model('Comm_health_model');
+
+		$data['allSites'] = $this->Data_presence_Model->getAllSiteNames('csv');
+
+		if ($format == 'csv') {
+			echo "site,actualsent,maxpossible,ratio<Br>";
+			
+			foreach ($data['allSites'] as $siteNames) {
+				$this->Comm_health_model->getDataPresenceTotal($siteNames['site'], $format);
+			}
+		}
+
+		//$this->Comm_health_model->getDataPresenceTotal($site, $format);
 		
 		//$this->load->view('graphs/healthbars');
 	}		
@@ -355,10 +447,14 @@ class Test extends CI_Controller {
 		//$data['dataPresencePurged'] = $this->Data_presence_Model->getNodeDataPresence('purged', $site, $date, $interval);
 		$data['dataPresencePurged'] = $this->Alert_Model->getSingleSiteAlert24Hour($site);
 
-		$data['graphTitle'] = "Raw (Black) & LSB Change (Blue, Green, Orange) | Data Presence Map for $site";
-		$data['verticalLabel'] = "Node ID";
+		if ($data['dataPresencePurged'] == null) {
+			echo "Selected site has no data for the last 24 hours.";
+		} else {
+			$data['graphTitle'] = "Raw (Black) & LSB Change (Blue, Green, Orange) | Data Presence Map for $site";
+			$data['verticalLabel'] = "Node ID";
 
-		$this->load->view('graphs/testNodeDataPresRawPurged', $data);
+			$this->load->view('graphs/testNodeDataPresRawPurged', $data);
+		}
 		
 		//echo $this->Alert_Model->getSingleSiteAlert24Hour($site);
 	}	

@@ -65,7 +65,7 @@
 			return str;
 			
 		}
-	
+		/*
 		function initialize_map() {
 			if (window.XMLHttpRequest) {
 				// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -141,6 +141,7 @@
 			var map = new google.maps.Map(document.getElementById("map-canvas"),
 				mapOptions);
 		}		
+		*/
 		
 		function initialize_map2() {
 			gmapJSON = <?php echo $sitesCoord; ?>;

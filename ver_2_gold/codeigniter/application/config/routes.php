@@ -40,6 +40,10 @@
 
 $route['test'] = "test";
 $route['test/(:any)'] = "test/$1";
+
+$route['pubrelease'] = "pubrelease";
+$route['pubrelease/(:any)'] = "pubrelease/$1";
+
 $route['dice'] = "dice/view";
 $route['dice/(:any)'] = "dice/view/$1";
 
