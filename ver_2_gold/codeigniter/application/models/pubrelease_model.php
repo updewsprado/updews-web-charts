@@ -75,6 +75,38 @@ class Pubrelease_Model extends CI_Model
 		
 		return json_encode( $siteAlertPublic );
 	}
+
+	public function updatePublicAlerts($dataSet)
+	{
+		$alertid = $dataSet['alertid'];
+		$entryts = $dataSet['entryts'];
+		$time_post = $dataSet['time_post'];
+		$ial = $dataSet['ial'];
+		$recipient = $dataSet['recipient'];
+		$acknowledged = $dataSet['acknowledged'];
+		$flagger = $dataSet['flagger'];
+
+		$sql = "UPDATE 
+		            public_alert 
+		        SET 
+		            entry_timestamp = '$entryts',
+		            time_released = '$time_post',
+		            internal_alert_level = '$ial',
+		            recipient = '$recipient',
+		            acknowledged = '$acknowledged',
+		            flagger = '$flagger'
+		        WHERE 
+		            public_alert_id = $alertid";
+
+		$result = $this->db->query($sql);
+		
+		if ($this->db->affected_rows() > 0) {
+		    return "Successfully updated entry! (alert id: $alertid)";
+		}
+		else {
+		    return "Update Failed....";
+		}
+	}
 	
 	public function getAccel($q, $site, $nid)
 	{
