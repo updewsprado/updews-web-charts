@@ -104,7 +104,7 @@ class Pubrelease extends CI_Controller {
 		$publicAlerts = $this->Pubrelease_model->getPublicAlerts($site);
 
 		if ($publicAlerts == "[]") {
-			echo "Variable is empty<Br><Br>";
+			echo "0";
 		}
 		else {
 			echo "$publicAlerts";
@@ -132,7 +132,7 @@ class Pubrelease extends CI_Controller {
 		    return;
 		}
 
-		//TODO: Get time of post
+		//Get time of post
 		if(isset($_GET['time_post'])) {
 		    $dataSet['time_post'] = $time_post = $_GET["time_post"];
 		}
@@ -141,7 +141,7 @@ class Pubrelease extends CI_Controller {
 		    return;
 		}
 
-		//TODO: Get internal alert level
+		//Get internal alert level
 		if(isset($_GET['ial'])) {
 		    $dataSet['ial'] = $ial = $_GET["ial"];
 		}
@@ -150,7 +150,7 @@ class Pubrelease extends CI_Controller {
 		    return;
 		}
 
-		//TODO: Get recipients
+		//Get recipients
 		if(isset($_GET['recipient'])) {
 		    $dataSet['recipient'] = $recipient = $_GET["recipient"];
 		}
@@ -159,7 +159,7 @@ class Pubrelease extends CI_Controller {
 		    return;
 		}
 
-		//TODO: Get time of acknowledgment from recipients
+		//Get time of acknowledgment from recipients
 		if(isset($_GET['acknowledged'])) {
 		    $dataSet['acknowledged'] = $acknowledged = $_GET["acknowledged"];
 		}
@@ -168,7 +168,7 @@ class Pubrelease extends CI_Controller {
 		    return;
 		}
 
-		//TODO: Get name of flagger
+		//Get name of flagger
 		if(isset($_GET['flagger'])) {
 		    $dataSet['flagger'] = $flagger = $_GET["flagger"];
 		}
@@ -184,14 +184,6 @@ class Pubrelease extends CI_Controller {
 	// Delete data in public alerts table
 	public function deletedata()
 	{
-		// Database login information
-		$servername = "localhost";
-		$username = "updews";
-		$password = "october50sites";
-		$dbname = "senslopedb";
-
-		//$site = $_GET["entrySite"];
-
 		//get alert id
 		if(isset($_GET['alertid'])) {
 		    $alertid = $_GET["alertid"];
@@ -201,30 +193,8 @@ class Pubrelease extends CI_Controller {
 		    return;
 		}
 
-		//echo "Received Data: $timestamp, $site, $alert, $timeRelease, $comments, $recipient, $acknowledged, $flagger";
-
-		// Create connection
-		$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-		// Check connection
-		if (!$conn) {
-		    die("Connection failed: " . mysqli_connect_error());
-		}
-
-		$sql = "DELETE FROM
-		            public_alert
-		        WHERE 
-		            public_alert_id = $alertid";
-
-		$result = mysqli_query($conn, $sql);
-
-		if ($result > 0) {
-		    echo "Successfully deleted entry! (alert id: $alertid)";
-		}
-		else {
-		    echo "Delete Failed....";
-		}
-		mysqli_close($conn);
+		$deletePublicAlerts = $this->Pubrelease_model->deletePublicAlerts($alertid);
+		echo "$deletePublicAlerts";
 	}
 
 }

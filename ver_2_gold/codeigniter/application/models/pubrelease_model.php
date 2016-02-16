@@ -107,6 +107,23 @@ class Pubrelease_Model extends CI_Model
 		    return "Update Failed....";
 		}
 	}
+
+	public function deletePublicAlerts($alertid)
+	{
+		$sql = "DELETE FROM
+		            public_alert
+		        WHERE 
+		            public_alert_id = $alertid";
+
+		$result = $this->db->query($sql);
+		
+		if ($this->db->affected_rows() > 0) {
+		    return "Successfully deleted entry! (alert id: $alertid)";
+		}
+		else {
+		    return "Delete Failed....";
+		}
+	}
 	
 	public function getAccel($q, $site, $nid)
 	{
