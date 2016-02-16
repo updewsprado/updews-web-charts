@@ -124,49 +124,5 @@ class Pubrelease_Model extends CI_Model
 		    return "Delete Failed....";
 		}
 	}
-	
-	public function getAccel($q, $site, $nid)
-	{
-		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp > '".$q."' ORDER BY timestamp ASC");
-		
-		$dbreturn;
-		$ctr = 0;
-		foreach ($query->result_array() as $row)
-		{
-		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
-			$dbreturn[$ctr]['xvalue'] = $row['xvalue'];
-			$dbreturn[$ctr]['yvalue'] = $row['yvalue'];
-			$dbreturn[$ctr]['zvalue'] = $row['zvalue'];
-			$dbreturn[$ctr]['mvalue'] = $row['mvalue'];
-
-			$ctr = $ctr + 1;
-		}
-		
-		return json_encode( $dbreturn );
-	}
-	
-	public function getAccel2($from, $to, $site, $nid)
-	{
-		$query = $this->db->query("SELECT * FROM $site WHERE id = $nid and timestamp between $from and $to ORDER BY timestamp ASC");
-		
-		$dbreturn;
-		$ctr = 0;
-		foreach ($query->result_array() as $row)
-		{
-		    //echo $row->title;
-		    //echo $row->name;
-		    //echo $row->email;
-		    
-		    $dbreturn[$ctr]['timestamp'] = $row['timestamp'];
-			$dbreturn[$ctr]['xvalue'] = $row['xvalue'];
-			$dbreturn[$ctr]['yvalue'] = $row['yvalue'];
-			$dbreturn[$ctr]['zvalue'] = $row['zvalue'];
-			$dbreturn[$ctr]['mvalue'] = $row['mvalue'];
-
-			$ctr = $ctr + 1;
-		}
-		
-		return json_encode( $dbreturn );
-	}
 
 }
